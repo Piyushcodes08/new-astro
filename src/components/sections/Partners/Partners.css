@@ -1,0 +1,212 @@
+.partners-section {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  color: #ffffff;
+}
+
+.partners-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, #dd2727 50%, #b0a10291 50%);
+  filter: blur(80px);
+  opacity: 0.7;
+  transform: scale(1.1);
+  z-index: -1;
+}
+
+.partner-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  --color: #ffffff;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.neural-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-conic-gradient(
+      from 0deg at 50% 50%,
+      var(--color) 0deg 1deg,
+      transparent 2deg 30deg
+    );
+  filter: blur(1px) drop-shadow(0 0 10px var(--color));
+  opacity: 0.22;
+  animation: rotate-lattice 24s linear infinite;
+}
+
+.neural-dots {
+  position: absolute;
+  inset: -100%;
+  background-image:
+    radial-gradient(var(--color) 1px, transparent 1px),
+    radial-gradient(var(--color) 1px, transparent 1px);
+  background-size: 42px 42px;
+  background-position: 0 0, 21px 21px;
+  mask-image: radial-gradient(circle at center, #ffffff, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, #ffffff, transparent 80%);
+  animation: pulse-dots 4s ease-in-out infinite alternate;
+}
+
+.partners-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  text-align: center;
+}
+
+.partners-header {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 50px;
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.partners-label {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(221, 39, 39, 0.1);
+  border: 1px solid rgba(221, 39, 39, 0.25);
+  color: #dd2727;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.partners-content h2.title-batangas {
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.1;
+  margin-bottom: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.partners-content .subtitle-poppins {
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.partner-card {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 48px 32px;
+  border-radius: 34px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: 0.35s ease;
+}
+
+.partner-card:hover {
+  transform: translateY(-10px);
+  box-shadow:
+    0 40px 110px rgba(0, 0, 0, 0.38),
+    0 0 45px rgba(255, 255, 255, 0.24);
+}
+
+.partner-logo-ring {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 26px;
+  border-radius: 50%;
+  padding: 10px;
+  border: 4px solid transparent;
+  box-shadow:
+    0 0 0 10px rgba(255, 255, 255, 0.08),
+    0 18px 45px rgba(0, 0, 0, 0.25);
+  animation: logo-pulse 2.8s ease-in-out infinite;
+}
+
+.partner-logo-ring img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.partner-card h3 {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.partner-card p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+@keyframes rotate-lattice {
+  from {
+    transform: scale(2) rotate(0deg);
+  }
+
+  to {
+    transform: scale(2) rotate(360deg);
+  }
+}
+
+@keyframes pulse-dots {
+  0% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0.75;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes logo-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 8px rgba(255, 255, 255, 0.08),
+      0 18px 45px rgba(0, 0, 0, 0.25);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 18px rgba(255, 255, 255, 0.02),
+      0 18px 55px rgba(255, 255, 255, 0.28);
+  }
+}
+
+@media (max-width: 768px) {
+  .partners-header .subtitle-poppins {
+    font-size: 15px;
+    margin-bottom: 34px;
+  }
+
+  .partner-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 30px 15px !important;
+    border-radius: 20px;
+  }
+
+  .partner-logo-ring {
+    width: 120px;
+    height: 120px;
+  }
+}

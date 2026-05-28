@@ -1,0 +1,63 @@
+/* Astro-themed styling */
+.visualizer-container {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #050505; /* Black space background */
+  position: relative;
+}
+
+.fullscreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 1s;
+  z-index: 10;
+}
+
+.bg {
+  background: radial-gradient(circle, #1a0a0a 0%, #050505 100%); /* Cosmic red glow */
+}
+
+.fullscreen.notready {
+  color: #888;
+}
+
+.fullscreen.loaded > div {
+  cursor: pointer;
+}
+
+.fullscreen.clicked {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.pmndrs-menu,
+.pmndrs-menu > div b {
+  color: #eee;
+}
+
+.pmndrs-menu svg {
+  fill: #eee;
+}
+
+/* Typography */
+.visualizer-container b {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #dc2626; /* Vahlay Red */
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.visualizer-container span {
+  color: #aaa;
+  font-family: 'Batangas', 'Inter', sans-serif;
+}

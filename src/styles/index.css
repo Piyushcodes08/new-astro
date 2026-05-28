@@ -1,0 +1,404 @@
+@import "tailwindcss";
+@source "../../src";
+
+@theme {
+  --color-brand-red: #dd2727;
+  --color-brand-cream: #ffead3;
+  --spacing-section: 50px;
+  --spacing-section-mobile: 50px;
+  --container-max-width: 1170px;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  max-width: 100vw;
+}
+
+:root {
+  --spacing: 0.25rem;
+}
+
+/* Global Fonts */
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Batangas';
+  src: url('../assets/fonts/Batangas/Batangas-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Global Reset & Typography */
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: #ffffff;
+  background-color: #000;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+  max-width: 100vw;
+  position: relative;
+}
+
+#root {
+  overflow-x: clip;
+  width: 100%;
+}
+
+/* 
+  High Performance Fixed Background for Mobile & Desktop 
+  Using fixed pseudo-elements is better than background-attachment: fixed
+  which is poorly supported or laggy on mobile devices.
+*/
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url('../assets/images/pages/home/bgimage.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -2;
+  pointer-events: none;
+  transform: translateZ(0);
+  contain: layout style;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.1) 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Batangas', sans-serif;
+  line-height: 1.2;
+}
+
+@layer base {
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+    outline: none;
+    background: transparent;
+  }
+}
+
+/* Standard Section Container - Ensures all sections align perfectly */
+.section-container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .section-container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    overflow-x: hidden;
+  }
+}
+
+section {
+  width: 100%;
+  position: relative;
+}
+
+
+.hero-section {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 !important;
+}
+
+.hero-section .section-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding-top: 180px !important;
+}
+
+@media (min-width: 1024px) {
+  section:not(.no-full-height):not(.hero-section) {
+    display: block;
+  }
+}
+
+/* Premium Background Glows */
+.bg-glow-red {
+  background: radial-gradient(circle at center, rgba(221, 39, 39, 0.15) 0%, transparent 70%);
+  filter: blur(80px);
+}
+
+.bg-glow-gold {
+  background: radial-gradient(circle at center, rgba(176, 161, 2, 0.1) 0%, transparent 70%);
+  filter: blur(80px);
+}
+
+.bg-glow-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Premium Container for new pages - Aligned with landing page grid */
+.premium-container {
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+  }
+}
+
+/* Shared Slider Header & Navigation Styles */
+.head {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.title-batangas {
+  font-family: 'Batangas', sans-serif;
+  color: #ffffff;
+}
+
+.subtitle-poppins {
+  font-family: 'Poppins', sans-serif;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.nav-btn {
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  color: white;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: #dd2727;
+  color: white;
+  border-color: #dd2727;
+  transform: translateY(-2px);
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+@media (max-width: 767px) {
+  .head {
+    padding: 0 0 20px 0;
+  }
+}
+
+/* Support for Old Project Auth/Admin Pages */
+.bg-backgroundImage {
+  background-size: cover;
+  background-position: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+/* Admin Portal - Perfect Premium Theme */
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: transparent;
+  color: #0f172a !important;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Fluid Content for Admin Panel */
+.admin-fluid-container {
+  flex: 1;
+  min-width: 0;
+  background: #ffffff;
+}
+
+.admin-layout aside {
+  background: linear-gradient(180deg, #dd2727 0%, #b91c1c 100%) !important;
+  border-right: none !important;
+  box-shadow: 10px 0 40px rgba(221, 39, 39, 0.15) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.admin-layout .admin-card {
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 24px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.02), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+@media (min-width: 768px) {
+  .admin-layout .admin-card {
+    padding-left: 50px !important;
+    padding-right: 50px !important;
+  }
+}
+
+.admin-layout .admin-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.05);
+  border-color: #dd2727;
+}
+
+/* Removed specific aside scrollbar overrides to use .custom-scrollbar */
+
+.admin-layout input,
+.admin-layout select,
+.admin-layout textarea {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+.admin-layout input:focus,
+.admin-layout select:focus,
+.admin-layout textarea:focus {
+  border-color: #dd2727 !important;
+  box-shadow: 0 0 0 4px rgba(221, 39, 39, 0.05) !important;
+}
+
+/* Custom Premium Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #dd2727;
+}
+
+/* For dark sidebar specifically */
+.bg-\[\#dd2727\] .custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.bg-\[\#dd2727\] .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.bg-\[\#dd2727\] .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: white;
+}

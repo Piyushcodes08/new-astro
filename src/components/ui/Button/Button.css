@@ -1,0 +1,6 @@
+/* Base styles for the reusable Button component */
+
+.button-common {
+    display: inline-block;
+    text-align: center;
+}

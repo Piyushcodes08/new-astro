@@ -1,0 +1,412 @@
+.article-section {
+  width: 100%;
+  background: radial-gradient(ellipse at center, rgba(221, 39, 39, 0.04) 0%, transparent 70%);
+  overflow: visible;
+  position: relative;
+}
+
+
+/* Redundant .article-container styles removed in favor of global .section-container */
+
+/* Slider Container — breaks out of the constrained section-container to span full viewport */
+.article-slider-container {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 20px;
+  padding: 0;
+}
+
+.article-track {
+  display: flex;
+  width: 100%;
+  will-change: transform;
+}
+
+.article-slide {
+  padding: 0 15px;
+  display: flex;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.article-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Article/Book 3D structure - KEPT EXACTLY THE SAME */
+.article-wrapper {
+  cursor: pointer;
+  display: block;
+  width: 250px;
+  height: 350px;
+  position: relative;
+  background: #fdf2d0;
+  z-index: 10;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 10px 25px rgba(0, 0, 0, 0.2);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  perspective: 1500px;
+  /* Slightly increased for smoother carousel feel */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.article-wrapper:hover {
+  transform: translateY(-10px) rotateY(-5deg);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 20px 45px rgba(0, 0, 0, 0.4);
+  z-index: 50;
+}
+
+/* Cover Container - Now rotates instead of just the image */
+.article-cover-container {
+  width: 100%;
+  height: 100%;
+  background: #fdf2d0;
+  transform-origin: left center;
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  position: relative;
+  z-index: 5;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  /* Proper grey border for the book cover */
+  border-left: 4px solid #aaa;
+  /* Thicker left border for the spine */
+}
+
+/* Spine crease effect */
+.article-cover-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 15px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.2) 0%, rgba(255, 255, 255, 0.3) 30%, transparent 100%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.article-wrapper:hover .article-cover-container,
+.article-wrapper.is-open .article-cover-container {
+  transform: rotateY(-110deg);
+}
+
+/* Cover Image - Flexible Height */
+.article-cover {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  transition: none;
+  /* Transition handled by parent */
+  border-bottom: 1px solid #ccc;
+  /* Separator between image and text */
+}
+
+/* Cover Content - Takes remaining space */
+.article-cover-content {
+  flex: 1;
+  padding: 1rem 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.article-cover-title {
+  font-family: 'Batangas', sans-serif;
+  font-size: 1.1rem;
+  color: #dd2727;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.article-cover-author {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+  color: #555;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.article-cover-date {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.7rem;
+  color: #777;
+  margin: 0;
+}
+
+/* Inner page content style */
+.article-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1rem 15px;
+  background: #fdf2d0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.4s ease 0.2s;
+  overflow: hidden;
+}
+
+.article-wrapper:hover .article-inner,
+.article-wrapper.is-open .article-inner {
+  opacity: 1;
+}
+
+.article-inner-title {
+  font-family: 'Batangas', sans-serif;
+  font-size: 1.1rem;
+  color: var(--color-brand-red);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  text-align: center;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.article-inner-desc {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+  color: #333;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  /* Add line clamping to prevent overflow */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  width: 100%;
+}
+
+.article-inner-hindi-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.article-inner-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-bottom: 0.8rem;
+  width: 100%;
+  text-align: center;
+}
+
+.article-inner-author {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  color: #dd2727;
+  font-weight: 600;
+}
+
+.article-inner-date {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.7rem;
+  color: #555555;
+}
+
+.article-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0.8rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #dd2727;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.article-read-more::after {
+  content: '→';
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+
+
+.article-read-more:hover::after {
+  transform: translateX(5px);
+}
+
+/* Page layers (simulating thickness) - KEPT EXACTLY THE SAME */
+.article-wrapper::before,
+.article-wrapper::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  background: #fff;
+  border: 1px solid #eee;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  z-index: -1;
+}
+
+.article-wrapper::before {
+  left: -3px;
+  z-index: 2;
+}
+
+.article-wrapper::after {
+  left: -6px;
+  z-index: 1;
+}
+
+/* Article/Book Title - KEPT EXACTLY THE SAME */
+.article-title {
+  font-family: 'Batangas', sans-serif;
+  font-size: 1.2rem;
+  color: #dd2727;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  max-width: 220px;
+  line-height: 1.3;
+  margin-top: 1rem;
+  text-shadow: 0 0 20px rgba(221, 39, 39, 0.4);
+}
+
+@media (max-width: 1024px) {
+  .article-slide {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .article-slide {
+    padding: 0 0.5rem;
+  }
+
+  .article-wrapper {
+    width: 240px;
+    height: 330px;
+    margin: 0 auto;
+  }
+
+  .article-cover-content {
+    padding: 1rem;
+    gap: 0.4rem;
+  }
+
+  .article-cover-title {
+    font-size: 1rem;
+    -webkit-line-clamp: 2;
+  }
+
+  .article-inner-title {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .article-inner-hindi-title {
+    font-size: 0.85rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .article-inner {
+    padding: 1rem;
+    justify-content: center;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .article-wrapper {
+    width: 210px;
+    height: 290px;
+  }
+
+  .article-cover-content {
+    padding: 0.8rem;
+    gap: 0.3rem;
+  }
+
+  .article-cover-title {
+    font-size: 0.85rem;
+    letter-spacing: 0;
+  }
+
+  .article-cover-author {
+    font-size: 0.7rem;
+  }
+
+  .article-cover-date {
+    font-size: 0.65rem;
+  }
+
+  .article-inner-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .article-inner-hindi-title {
+    font-size: 0.8rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .article-inner-meta {
+    gap: 0.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .article-read-more {
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+  }
+}

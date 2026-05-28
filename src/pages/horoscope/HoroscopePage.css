@@ -1,0 +1,618 @@
+/* ══════════════════════════════════════════
+   VAHLAY ASTRO — Horoscope Detail Page CSS
+   ══════════════════════════════════════════ */
+
+/* ── page shell ── */
+.horo-page {
+  background: #0a0002;
+  min-height: 100vh;
+  color: #fff;
+  padding-top: 64px; /* header height */
+}
+
+/* ── not found ── */
+.horo-not-found {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: #fff;
+}
+.horo-back-btn {
+  padding: 10px 28px;
+  background: #dd2727;
+  color: #fff;
+  border-radius: 4px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+}
+
+/* ══════════════
+   HERO BANNER
+══════════════ */
+.horo-hero {
+  position: relative;
+  width: 100%;
+  padding: 80px 20px 70px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.horo-hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(221,39,39,0.22), transparent 55%),
+    radial-gradient(ellipse at 80% 30%, rgba(180,10,10,0.18), transparent 50%),
+    linear-gradient(180deg, #12010220 0%, #0a0002 100%);
+}
+
+.horo-hero-nebula {
+  position: absolute;
+  inset: -15%;
+  background:
+    radial-gradient(circle at 30% 60%, rgba(221,39,39,0.14), transparent 38%),
+    radial-gradient(circle at 75% 25%, rgba(255,60,60,0.1), transparent 30%);
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+.horo-hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1170px;
+}
+
+/* breadcrumb */
+.horo-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.horo-breadcrumb a {
+  color: rgba(255,209,132,0.7);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.horo-breadcrumb a:hover { color: #ffd184; }
+.horo-bc-sep { color: #dd2727; font-size: 0.55rem; }
+
+/* hero content row */
+.horo-hero-content {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+/* icon orb */
+.horo-icon-orb {
+  position: relative;
+  flex-shrink: 0;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.horo-orb-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255,80,80,0.25);
+  pointer-events: none;
+}
+.horo-orb-ring--outer {
+  inset: -20px;
+  animation: horoOrbitSpin 18s linear infinite;
+  border-style: dashed;
+  border-color: rgba(255,209,132,0.18);
+}
+.horo-orb-ring--inner {
+  inset: 8px;
+  background: radial-gradient(circle, rgba(145,21,21,0.95), rgba(34,4,8,0.98));
+  border: 1px solid rgba(255,195,135,0.22);
+  box-shadow:
+    inset 0 0 30px rgba(255,74,74,0.28),
+    0 0 40px rgba(221,39,39,0.52),
+    0 0 60px rgba(0,0,0,0.7);
+}
+.horo-orb-img {
+  position: relative;
+  z-index: 2;
+  width: 65%;
+  height: 65%;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 10px rgba(255,70,70,0.95))
+    drop-shadow(0 0 22px rgba(221,39,39,0.62));
+}
+
+@keyframes horoOrbitSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* hero text block */
+.horo-hero-text { flex: 1; }
+
+.horo-order-label {
+  margin: 0 0 8px;
+  color: #ffd184;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(255,209,132,0.3);
+}
+
+.horo-name {
+  margin: 0;
+  color: #fff4e6;
+  font-family: var(--ff-heading, "Georgia", serif);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 8px rgba(255,255,255,0.12), 0 0 18px rgba(221,39,39,0.3);
+}
+
+.horo-title-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0 12px;
+}
+.horo-divider-line {
+  flex: 1;
+  max-width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,220,160,0.75), transparent);
+}
+.horo-divider-gem {
+  color: #ffd49a;
+  font-size: 12px;
+  text-shadow: 0 0 18px rgba(255,180,80,0.9);
+}
+
+.horo-date-range {
+  margin: 0 0 16px;
+  color: #ffd184;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* meta chips */
+.horo-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.horo-meta-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 14px;
+  background: rgba(25,6,6,0.6);
+  border: 1px solid rgba(255,215,160,0.18);
+  border-radius: 2px;
+  box-shadow: inset 0 0 8px rgba(255,255,255,0.02);
+}
+.horo-chip-label {
+  color: rgba(255,209,132,0.6);
+  font-size: 0.5rem;
+  font-weight: 900;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+.horo-chip-val {
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* trait badges */
+.horo-trait-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.horo-trait-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  background: rgba(25,6,6,0.5);
+  border: 1px solid rgba(255,215,160,0.2);
+  color: #fff;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: 0.3s ease;
+}
+.horo-trait-badge:hover {
+  border-color: rgba(255,65,65,0.55);
+  transform: translateY(-2px);
+}
+.horo-badge-icon {
+  color: #ff4a4a;
+  text-shadow: 0 0 12px rgba(221,39,39,0.9);
+}
+
+/* ══════════════
+   MAIN CONTENT
+══════════════ */
+.horo-main {
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 60px 20px 80px;
+}
+
+.horo-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ── cards ── */
+.horo-card {
+  background: linear-gradient(135deg, #2a0408 0%, #150204 100%);
+  border: 1px solid rgba(255,180,80,0.18);
+  border-radius: 2px;
+  padding: 28px 24px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.85), inset 0 0 28px rgba(221,39,39,0.08);
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.horo-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255,70,70,0.14), transparent 36%),
+    radial-gradient(circle at 20% 80%, rgba(255,255,255,0.04), transparent 36%);
+  pointer-events: none;
+}
+
+.horo-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 22px;
+}
+.horo-card-line {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,209,132,0.55), transparent);
+}
+.horo-card-title {
+  margin: 0;
+  color: #ffd184;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.horo-card-gem {
+  color: #ffd184;
+  font-size: 10px;
+  text-shadow: 0 0 10px rgba(255,209,132,0.8);
+  margin-top: -2px;
+}
+
+/* description */
+.horo-description {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: rgba(255,255,255,0.88);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+/* strengths */
+.horo-strengths-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+.horo-strength-item {
+  display: flex;
+  align-items: center;
+  height: 42px;
+  transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1);
+}
+.horo-strength-item:hover { transform: translateX(8px); }
+.horo-strength-num {
+  width: 50px;
+  height: 36px;
+  background: linear-gradient(135deg, #a41515 0%, #750d12 100%);
+  clip-path: polygon(15% 0, 100% 0, 85% 50%, 100% 100%, 15% 100%, 0% 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 5;
+  box-shadow: 6px 0 14px rgba(0,0,0,0.3);
+}
+.horo-strength-num span {
+  color: #ffd184;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.horo-strength-content {
+  flex: 1;
+  height: 36px;
+  background: rgba(15,3,5,0.9);
+  margin-left: -12px;
+  clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  border: 1px solid rgba(255,60,60,0.22);
+  border-left: none;
+}
+.horo-strength-content span {
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+/* compatibility */
+.horo-compat-intro {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 18px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.85rem;
+}
+.horo-compat-row {
+  display: flex;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+.horo-compat-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 10px;
+  background: rgba(15,3,5,0.8);
+  border: 1px solid rgba(255,180,80,0.18);
+  border-radius: 2px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.horo-compat-card:hover {
+  border-color: rgba(221,39,39,0.55);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(221,39,39,0.2);
+}
+.horo-compat-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(255,70,70,0.7));
+}
+.horo-compat-name {
+  color: #ffd184;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ── lucky card ── */
+.horo-lucky-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+.horo-lucky-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px;
+  background: rgba(15,3,5,0.7);
+  border: 1px solid rgba(255,215,160,0.14);
+  border-radius: 2px;
+  transition: 0.25s ease;
+}
+.horo-lucky-item:hover {
+  border-color: rgba(221,39,39,0.45);
+  transform: translateY(-2px);
+}
+.horo-lucky-icon { font-size: 1.1rem; }
+.horo-lucky-label {
+  color: rgba(255,209,132,0.6);
+  font-size: 0.48rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.horo-lucky-value {
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* all signs */
+.horo-all-signs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
+.horo-sign-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  background: rgba(15,3,5,0.65);
+  border: 1px solid rgba(255,180,80,0.12);
+  border-radius: 2px;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+}
+.horo-sign-pill:hover,
+.horo-sign-pill--active {
+  background: linear-gradient(90deg, rgba(141,15,15,0.7), rgba(40,4,8,0.9));
+  border-color: rgba(255,60,60,0.45);
+  color: #ffd184;
+  padding-left: 20px;
+}
+.horo-pill-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 4px rgba(255,70,70,0.7));
+}
+
+/* ── prev/next ── */
+.horo-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 48px;
+  gap: 16px;
+}
+
+.horo-prev-btn,
+.horo-next-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 22px;
+  background: linear-gradient(135deg, #2a0408, #150204);
+  border: 1px solid rgba(255,180,80,0.18);
+  border-radius: 2px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  max-width: 220px;
+}
+.horo-prev-btn:hover,
+.horo-next-btn:hover {
+  border-color: rgba(221,39,39,0.55);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(221,39,39,0.2);
+}
+.horo-prev-btn div,
+.horo-next-btn div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.horo-pag-label {
+  color: rgba(255,209,132,0.6);
+  font-size: 0.5rem;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+.horo-pag-name {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.horo-pag-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(255,70,70,0.7));
+}
+.horo-next-btn { text-align: right; }
+
+.horo-home-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: linear-gradient(90deg, #8a1111, #dd2727, #8a1111);
+  clip-path: polygon(5% 0, 95% 0, 100% 50%, 95% 100%, 5% 100%, 0 50%);
+  border: 1px solid rgba(255,209,132,0.5);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.horo-home-btn:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 8px 30px rgba(221,39,39,0.45);
+}
+
+/* ══════════════
+   RESPONSIVE
+══════════════ */
+@media (max-width: 900px) {
+  .horo-content-grid {
+    grid-template-columns: 1fr;
+  }
+  .horo-hero-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+  .horo-title-divider {
+    justify-content: center;
+  }
+  .horo-meta-row {
+    justify-content: center;
+  }
+  .horo-trait-badges {
+    justify-content: center;
+  }
+  .horo-lucky-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .horo-hero { padding: 50px 16px 50px; }
+  .horo-icon-orb { width: 130px; height: 130px; }
+  .horo-compat-row { flex-direction: column; }
+  .horo-lucky-grid { grid-template-columns: 1fr 1fr; }
+  .horo-pagination { flex-direction: column; align-items: stretch; }
+  .horo-prev-btn, .horo-next-btn { max-width: 100%; }
+  .horo-home-btn { clip-path: none; border-radius: 4px; justify-content: center; }
+  .horo-next-btn { text-align: left; }
+  .horo-all-signs { display: grid; grid-template-columns: 1fr 1fr; }
+}

@@ -1,0 +1,285 @@
+.course-section-container {
+  width: 100%;
+  --gap: 1.25rem;
+  --speed: 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --closed: 5.5rem;
+  --open: 36rem;
+  --accent: #dd2727;
+  background: transparent;
+  position: relative;
+}
+
+.course-section-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, #dd2727 50%, #b0a10291 50%);
+  filter: blur(80px);
+  opacity: 0.7;
+  transform: scale(1.1);
+  z-index: -1;
+}
+
+.slider-wrapper {
+  width: 100%;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.slider {
+  width: 100%;
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.track {
+  display: flex;
+  gap: var(--gap);
+  align-items: flex-start;
+  justify-content: center;
+  /* ✅ FIX: prevent horizontal overflow/layout shift on mobile */
+  overflow-x: hidden;
+}
+
+.project-card {
+  position: relative;
+  flex: 1 0 var(--closed);
+  height: 28rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  /* ✅ FIX: will-change tells browser to GPU-composite this element */
+  will-change: flex-basis, transform;
+  transition: flex-basis var(--speed), height var(--speed), transform var(--speed), box-shadow var(--speed);
+  border: 4px solid white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.project-card[active] {
+  flex-basis: var(--open);
+  /* transform: translateY(-8px); */
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+.project-card__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.95);
+  transition: filter 0.3s, transform var(--speed);
+}
+
+.project-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.1) 100%);
+  z-index: 1;
+}
+
+.project-card[active]::after {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.1) 100%);
+}
+
+.project-card:hover .project-card__bg {
+  transform: scale(1.1);
+}
+
+.project-card__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  z-index: 2;
+}
+
+.project-card__title {
+  color: #fff;
+  font-family: 'Batangas', sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-shadow: 0 0 25px rgba(221, 39, 39, 0.8), 2px 2px 10px rgba(0, 0, 0, 0.8);
+  transition: all var(--speed);
+}
+
+/* Expanded active card */
+.project-card[active] .project-card__content {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+.project-card[active] .project-card__title {
+  writing-mode: horizontal-tb;
+  transform: none;
+  font-size: 25px;
+  line-height: 1.1;
+  white-space: normal;
+  max-width: 300px;
+  text-align: left;
+}
+
+.project-card__active-layout {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.project-card__thumb {
+  width: 260px;
+  height: 340px;
+  border-radius: 1.25rem;
+  object-fit: cover;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  border: 5px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.6s ease;
+}
+
+.project-card__btn-circle {
+  position: absolute;
+  bottom: -15px;
+  right: -15px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #dd2727;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 1.2;
+  box-shadow: 0 10px 30px rgba(221, 39, 39, 0.5);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.project-card__btn-circle:hover {
+  transform: scale(1.15) rotate(10deg);
+  background: #fff;
+  color: #dd2727;
+  box-shadow: 0 15px 40px rgba(221, 39, 39, 0.6);
+}
+
+.dots {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.dot.active {
+  background: #dd2727;
+  transform: scale(1.4);
+  width: 35px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(221, 39, 39, 0.6);
+}
+
+@media (max-width: 1024px) {
+  .project-card__thumb {
+    width: 200px;
+    height: 280px;
+  }
+
+  .project-card__title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .track {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .project-card {
+    width: 100%;
+    /* ✅ FIX: Use min-height instead of height — avoids double-animation reflow glitch */
+    flex: 0 0 80px;
+    min-height: 80px;
+    height: auto;
+    border-radius: 1rem;
+    /* ✅ FIX: Smoother GPU-powered transition on mobile */
+    transition: flex-basis var(--speed), min-height var(--speed), transform var(--speed), box-shadow var(--speed);
+  }
+
+  .project-card[active] {
+    /* ✅ FIX: Let height grow naturally — no fixed 450px conflict */
+    flex: 0 0 auto;
+    min-height: 450px;
+  }
+
+  .project-card__content {
+    flex-direction: column !important;
+    text-align: center;
+    padding: 20px 15px !important;
+  }
+
+  /* ✅ FIX: writing-mode always horizontal on mobile — eliminates rotate/transition glitch */
+  .project-card .project-card__title,
+  .project-card[active] .project-card__title {
+    writing-mode: horizontal-tb !important;
+    transform: none !important;
+    text-align: center !important;
+    max-width: 100% !important;
+    line-height: 1.2 !important;
+  }
+
+  .project-card .project-card__title {
+    font-size: 1rem !important;
+    margin-bottom: 12px;
+  }
+
+  .project-card[active] .project-card__title {
+    font-size: 1.6rem !important;
+    margin-bottom: 20px;
+  }
+
+  .project-card__active-layout {
+    justify-content: center;
+  }
+
+  .project-card__thumb {
+    width: 200px;
+    height: 200px;
+    border-radius: 1.25rem;
+  }
+
+  .project-card__btn-circle {
+    width: 80px;
+    height: 80px;
+    font-size: 0.75rem;
+    bottom: -10px;
+    right: 10px;
+  }
+}

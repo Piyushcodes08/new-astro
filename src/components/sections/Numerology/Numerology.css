@@ -1,0 +1,351 @@
+.numerology-section {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  color: white !important;
+}
+
+.numerology-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, #dd2727 50%, #b0a10291 50%);
+  filter: blur(80px);
+  opacity: 0.7;
+  transform: scale(1.1);
+  z-index: -1;
+}
+
+.numerology-form-card,
+.numerology-intro-card,
+.loshu-wrapper {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 24px;
+  margin-bottom: 30px;
+}
+
+.numerology-form-card {
+  padding: 30px;
+  text-align: center;
+}
+
+.numerology-form-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  align-items: center;
+}
+
+.numerology-input {
+  width: 100%;
+  min-height: 56px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.numerology-input:focus {
+  border-color: rgba(244, 210, 124, 0.75);
+  background: rgba(255, 255, 255, 0.11);
+  box-shadow: 0 0 0 3px rgba(244, 210, 124, 0.14);
+}
+
+.numerology-input::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.numerology-input option {
+  background: #1b1111;
+  color: #ffffff;
+}
+
+.numerology-error {
+  margin-top: 20px;
+  color: #ff8080;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.numerology-intro-card {
+  padding: 30px;
+}
+
+.numerology-intro-card h3 {
+  color: #dd2727;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  font-family: 'Batangas', sans-serif;
+  text-align: center;
+}
+
+.numerology-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.numerology-mini-item {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.numerology-mini-item:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.numerology-mini-item h4 {
+  color: #f4d27c;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  font-family: 'Batangas', sans-serif;
+}
+
+.numerology-mini-item p {
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.numerology-result-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.numerology-cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.numerology-card {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 24px;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.numerology-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #f4d27c;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.numerology-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  border-color: rgba(244, 210, 124, 0.4);
+}
+
+.numerology-card:hover::before {
+  transform: scaleX(1);
+}
+
+.numerology-card span {
+  display: block;
+  color: #f4d27c;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.numerology-card h3 {
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 15px;
+  font-family: 'Batangas', sans-serif;
+  line-height: 1;
+}
+
+.numerology-card p {
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.loshu-wrapper {
+  padding: 30px;
+}
+
+.loshu-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.loshu-header h3 {
+  color: #dd2727;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  font-family: 'Batangas', sans-serif;
+}
+
+.loshu-header p {
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.loshu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 0 auto 35px;
+  max-width: 500px;
+}
+
+.loshu-box {
+  aspect-ratio: 1;
+  padding: 15px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.loshu-box:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  border-color: rgba(244, 210, 124, 0.4);
+}
+
+.loshu-number {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.loshu-box p {
+  color: #f4d27c;
+  font-size: 1.8rem;
+  font-weight: 800;
+  font-family: 'Batangas', sans-serif;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.numerology-info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.numerology-info-card {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.numerology-info-card h4 {
+  color: #f4d27c;
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+  font-family: 'Batangas', sans-serif;
+}
+
+.numerology-info-card p {
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.7;
+  font-size: 1rem;
+  margin: 0;
+}
+
+@media (max-width: 1200px) {
+  .numerology-form-grid,
+  .numerology-mini-grid,
+  .numerology-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .numerology-name-input {
+    grid-column: span 3;
+  }
+}
+
+@media (max-width: 992px) {
+  .numerology-form-grid,
+  .numerology-mini-grid,
+  .numerology-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .numerology-name-input {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .numerology-form-card,
+  .numerology-intro-card,
+  .loshu-wrapper {
+    padding: 24px 15px !important;
+    border-radius: 16px;
+  }
+
+  .numerology-form-grid,
+  .numerology-mini-grid,
+  .numerology-cards,
+  .numerology-info-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .numerology-name-input {
+    grid-column: span 1;
+  }
+
+  .numerology-card h3 {
+    font-size: 2.5rem;
+  }
+
+  .loshu-grid {
+    gap: 10px;
+  }
+
+  .loshu-box {
+    padding: 10px;
+  }
+
+  .loshu-box p {
+    font-size: 1.35rem;
+  }
+}
