@@ -1,22 +1,17 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import { LuMinus, LuPlus } from "react-icons/lu";
+import { Navigation, Autoplay } from 'swiper/modules';
 import { Link } from 'react-router-dom';
 import SliderHeader from '../../ui/Slider/SliderHeader';
 import { useProducts } from '../../../hooks/useProducts';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-coverflow';
-
 import "./products.css";
 
 export const fallbackProducts = [
     {
         theme: "gold",
-       
         title: "Pyrite Bracelet",
         desc: "Attract wealth, confidence, and positive energy with this premium Pyrite crystal bracelet.",
         price: "₹999",
@@ -25,7 +20,6 @@ export const fallbackProducts = [
     },
     {
         theme: "purple",
-      
         title: "7 Chakra Bracelet",
         desc: "Balance your chakras and improve spiritual harmony with natural healing stones.",
         price: "₹799",
@@ -34,7 +28,6 @@ export const fallbackProducts = [
     },
     {
         theme: "cyan",
-      
         title: "Nazar Suraksha Bracelet",
         desc: "Designed to protect against negative energy and evil eye with spiritual power.",
         price: "₹699",
@@ -43,7 +36,6 @@ export const fallbackProducts = [
     },
     {
         theme: "green",
-       
         title: "Green Jade Ring",
         desc: "Elegant jade ring crafted for prosperity, peace, and emotional balance.",
         price: "₹1299",
@@ -52,7 +44,6 @@ export const fallbackProducts = [
     },
     {
         theme: "orange",
-      
         title: "Rudraksha Mala",
         desc: "Authentic spiritual Rudraksha mala for meditation, peace, and divine connection.",
         price: "₹1499",
@@ -61,7 +52,6 @@ export const fallbackProducts = [
     },
     {
         theme: "pink",
-       
         title: "Rose Quartz Bracelet",
         desc: "Enhance love, self-confidence, and emotional healing with Rose Quartz crystals.",
         price: "₹899",
@@ -70,98 +60,53 @@ export const fallbackProducts = [
     },
 ];
 
-export const ProductCard = ({ p, index }) => {
-    const cardRef = useRef(null);
-    const [quantity, setQuantity] = useState(1);
-    const [isAdded, setIsAdded] = useState(false);
+// Helper to compute discount %
+const getDiscount = (price, oldPrice) => {
+    if (!price || !oldPrice) return null;
+    const p = parseFloat(String(price).replace(/[^\d.]/g, ''));
+    const op = parseFloat(String(oldPrice).replace(/[^\d.]/g, ''));
+    if (!p || !op || op <= p) return null;
+    return Math.round(((op - p) / op) * 100);
+};
 
-    // 3D Tilt Logic
-    const handleMouseMove = (e) => {
-        const card = cardRef.current;
-        if (!card) return;
-
-        const wrapper = e.currentTarget;
-        const rect = wrapper.getBoundingClientRect();
-
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -10;
-        const rotateY = ((x - centerX) / centerX) * 10;
-
-        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-    };
-
-    const handleMouseLeave = () => {
-        const card = cardRef.current;
-        if (!card) return;
-        card.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)";
-    };
-
-    // Actions Logic
-    const handleBuy = () => {
-        setIsAdded(true);
-        setTimeout(() => {
-            setIsAdded(false);
-            setQuantity(1);
-        }, 2000);
-    };
-
-    const increase = () => setQuantity((prev) => prev + 1);
-    const decrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+export const ProductCard = ({ p }) => {
+    const productId = p.id || p.title.replace(/\s+/g, '-').toLowerCase();
+    const discount = getDiscount(p.price, p.oldPrice);
 
     return (
-        <div
-            className="card-wrapper"
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-        >
-            <div className={`neon-card ${p.theme}`} ref={cardRef}>
-                {/* Animations and decorations */}
-                <div className="scan-line" aria-hidden="true" />
-                <div className="corner corner-tl" aria-hidden="true" />
-                <div className="corner corner-tr" aria-hidden="true" />
-                <div className="corner corner-bl" aria-hidden="true" />
-                <div className="corner corner-br" aria-hidden="true" />
+        <div className="pc-card">
+            {/* Discount Badge */}
+            {discount && (
+                <div className="pc-badge">{discount}% OFF</div>
+            )}
 
-                <div className="card-inner">
-                    
+            {/* Image Area */}
+            <Link to={`/products/${productId}`} className="pc-image-link" tabIndex={-1}>
+                <div className="pc-image">
+                    <img src={p.image} alt={p.title} loading="lazy" />
+                    <div className="pc-image-overlay" />
+                </div>
+            </Link>
 
-                    <div className="card-image">
-                        <div className="glow-orb" aria-hidden="true" />
-                        <img src={p.image} alt={p.title} loading="lazy" />
+            {/* Card Content */}
+            <div className="pc-body">
+                <Link to={`/products/${productId}`} className="pc-title-link">
+                    <h3 className="pc-title">{p.title}</h3>
+                </Link>
+                <p className="pc-desc">{p.desc}</p>
+
+                <div className="pc-footer">
+                    <div className="pc-price-block">
+                        <span className="pc-price">₹ {p.price}</span>
+                        {p.oldPrice && <span className="pc-old-price">₹ {p.oldPrice}</span>}
                     </div>
-
-                    <h3 className="card-title">{p.title}</h3>
-                    <p className="card-desc flex-grow">{p.desc}</p>
-
-                    <div className="card-bottom mb-4">
-                        <div className="card-price">
-                            {p.price}
-                            <span>{p.oldPrice}</span>
-                        </div>
-                    </div>
-
-                    {/* Quantity & Buy Button Row */}
-                    <div className="flex items-center justify-between gap-3 pt-4 border-t border-white/10 mt-auto relative z-20 pointer-events-auto">
-                        <div className="flex items-center bg-white/5 border border-white/10 rounded-lg p-1">
-                            <button onClick={decrease} className="w-8 h-8 flex items-center justify-center rounded-md text-white hover:bg-white/10 transition-colors" aria-label="Decrease quantity">
-                                <LuMinus size={16} />
-                            </button>
-                            <span className="w-8 text-center text-sm font-semibold text-white">{quantity}</span>
-                            <button onClick={increase} className="w-8 h-8 flex items-center justify-center rounded-md text-white hover:bg-white/10 transition-colors" aria-label="Increase quantity">
-                                <LuPlus size={16} />
-                            </button>
-                        </div>
-                        <button
-                            className={`flex-1 py-2.5 px-4 rounded-lg font-batangas text-sm font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center border border-red-500/50 shadow-[0_4px_15px_rgba(221,39,39,0.3)] hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(221,39,39,0.5)] ${isAdded ? 'bg-green-600 text-white !border-green-500 !shadow-[0_4px_15px_rgba(34,197,94,0.3)] !translate-y-0 cursor-default' : 'bg-gradient-to-br from-[#dd2727] to-[#b91c1c] text-white hover:from-[#ff3333] hover:to-[#dd2727]'}`}
-                            onClick={handleBuy}
-                            disabled={isAdded}
-                        >
-                            {isAdded ? "✓ ADDED" : "BUY NOW"}
-                        </button>
-                    </div>
+                    <Link
+                        to={`/products/${productId}`}
+                        className="pc-btn"
+                        id={`product-card-${productId}`}
+                    >
+                        Buy Now
+                    </Link>
                 </div>
             </div>
         </div>
@@ -171,7 +116,6 @@ export const ProductCard = ({ p, index }) => {
 const Products = () => {
     const [swiperInstance, setSwiperInstance] = useState(null);
     const { products, loading } = useProducts();
-
     const displayProducts = products.length > 0 ? products : fallbackProducts;
 
     return (
@@ -187,31 +131,31 @@ const Products = () => {
                         modules={[Navigation, Autoplay]}
                         onSwiper={setSwiperInstance}
                         grabCursor={true}
+                        navigation={true}
+                        loop={true}
                         breakpoints={{
                             320: { slidesPerView: 1, spaceBetween: 20 },
-                            768: { slidesPerView: 2, spaceBetween: 30 },
-                            1024: { slidesPerView: 3, spaceBetween: 40 },
+                            640: { slidesPerView: 2, spaceBetween: 24 },
+                            1024: { slidesPerView: 3, spaceBetween: 32 },
                         }}
-                        autoplay={{
-                            delay: 3500,
-                            disableOnInteraction: false,
-                        }}
-                        className="w-full px-4 md:px-12"
+                        autoplay={{ delay: 3800, disableOnInteraction: false }}
+                        className="w-full px-2 md:px-8 pb-8!"
                     >
                         {displayProducts.map((p, index) => (
-                            <SwiperSlide key={index} className="flex justify-center transition-all duration-300">
-                                <ProductCard p={p} index={index} />
+                            <SwiperSlide key={index} className="flex justify-center py-3">
+                                <ProductCard p={p} />
                             </SwiperSlide>
                         ))}
                     </Swiper>
                 </div>
 
-                <div className="flex justify-center mt-8">
-                    <Link 
-                        to="/products" 
-                        className="inline-block bg-[#dd2727] text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-[0.2em] transition-all duration-500 hover:bg-white hover:text-[#dd2727] shadow-[0_10px_40px_rgba(221,39,39,0.4)] text-sm md:text-base"
+                <div className="flex justify-center mt-10">
+                    <Link
+                        to="/products"
+                        className="inline-flex items-center gap-2 bg-linear-to-br from-[#ff3131] to-[#c30000] text-white px-4 py-4 rounded-full font-black uppercase tracking-[0.12em] transition-all duration-300 hover:shadow-[0_14px_30px_rgba(221,39,39,0.45)] hover:from-[#ff4f4f] hover:to-brand-red shadow-[0_10px_25px_rgba(221,39,39,0.25)] text-sm hover:-translate-y-1"
                     >
                         View All Products
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                     </Link>
                 </div>
             </div>

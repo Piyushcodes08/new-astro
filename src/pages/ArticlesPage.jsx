@@ -76,7 +76,7 @@ const ArticlesPage = () => {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-transparent backdrop-blur-sm">
-                <div className="text-brand-red text-2xl font-bold animate-pulse uppercase tracking-widest">
+                <div className="text-brand-red text-brand-redxl font-bold animate-pulse uppercase tracking-widest">
                     Consulting Stars...
                 </div>
             </div>
@@ -96,11 +96,11 @@ const ArticlesPage = () => {
                     </div>
 
                     <div className="section-container">
-                        <div className="relative z-10 max-w-5xl w-full mx-auto text-center">
+                        <div className="relative z-10 max-w-125xl w-full mx-auto text-center">
 
 
                             {/* Bold White Title */}
-                            <h1 className="title-batangas text-4xl sm:text-5xl md:text-7xl text-white font-black mb-8 leading-[1.1] tracking-tight">
+                            <h1 className="title-batangas text-4xl sm:text-5xl md:text-brand-redxl text-white font-black mb-8 leading-[1.1] tracking-tight">
                                 Cosmic Insights <br /> & <span className="text-brand-red">Sacred Wisdom</span>
                             </h1>
 
@@ -112,9 +112,9 @@ const ArticlesPage = () => {
 
                             {/* Red Dot Divider */}
                             <div className="mt-16 flex items-center justify-center gap-6">
-                                <div className="h-px w-16 bg-linear-to-r from-transparent to-white/10"></div>
+                                <div className="h-150x w-16 bg-linear-to-r from-transparent to-white/10"></div>
                                 <div className="w-3 h-3 rounded-full bg-brand-red shadow-[0_0_20px_#dd2727,0_0_40px_#dd2727]"></div>
-                                <div className="h-px w-16 bg-linear-to-l from-transparent to-white/10"></div>
+                                <div className="h-150x w-16 bg-linear-to-l from-transparent to-white/10"></div>
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@ const ArticlesPage = () => {
                         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
 
                             {/* Article Grid (Main Content) */}
-                            <div className="w-full lg:flex-1 min-w-0">
+                            <div className="w-full lg:flex-1 min-w-150">
                                 {currentArticles.length > 0 ? (
                                     <>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-16 gap-x-8">
@@ -188,9 +188,9 @@ const ArticlesPage = () => {
                                                     disabled={currentPage === 1}
                                                     className={`w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all ${currentPage === 1 ? 'opacity-20 cursor-not-allowed' : 'hover:bg-white/10 hover:border-brand-red'}`}
                                                 >
-                                                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+                                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
                                                 </button>
-                                                
+
                                                 <div className="flex gap-2">
                                                     {[...Array(totalPages)].map((_, i) => (
                                                         <button
@@ -208,7 +208,7 @@ const ArticlesPage = () => {
                                                     disabled={currentPage === totalPages}
                                                     className={`w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all ${currentPage === totalPages ? 'opacity-20 cursor-not-allowed' : 'hover:bg-white/10 hover:border-brand-red'}`}
                                                 >
-                                                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+                                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
                                                 </button>
                                             </div>
                                         )}
@@ -232,24 +232,27 @@ const ArticlesPage = () => {
 
                                 {/* Search Widget */}
                                 <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-lg p-5 shadow-2xl">
-                                    <h4 className="title-batangas text-2xl mb-8 text-white border-b border-white/10 pb-4">Search Wisdom</h4>
+                                    <h4 className="title-batangas text-xl mb-6 text-white border-b border-white/10 pb-4">Search Wisdom</h4>
                                     <div className="relative">
                                         <input
                                             type="text"
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
                                             placeholder="Search topics..."
-                                            className="w-full bg-white/5 border border-white/10 rounded-full px-8 py-4 text-white placeholder-white/30 focus:outline-none focus:border-brand-red/50 subtitle-poppins text-sm transition-all"
+                                            className="w-full bg-white/5 border border-white/10 rounded-full pl-5 pr-14 py-4 text-white placeholder-white/30 focus:outline-none focus:border-brand-red/50 subtitle-poppins text-sm transition-all"
                                         />
-                                        <button className="absolute right-6 top-1/2 -translate-y-1/2 text-brand-red hover:scale-110 transition-transform">
-                                            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                        <button
+                                            onClick={() => setSearchQuery(searchQuery)}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-brand-red text-white hover:scale-110 transition-transform shadow-lg"
+                                        >
+                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                                         </button>
                                     </div>
                                 </div>
 
                                 {/* Sacred Wisdom (Dynamic Articles List) */}
                                 <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-lg p-5 shadow-2xl">
-                                    <h4 className="title-batangas text-2xl mb-8 text-white border-b border-white/10 pb-4">Sacred Wisdom</h4>
+                                    <h4 className="title-batangas text-xl mb-6 text-white border-b border-white/10 pb-4">Sacred Wisdom</h4>
                                     <ul className="space-y-6 subtitle-poppins text-base">
                                         {sidebarArticles.map((article, i) => (
                                             <li key={article.id || i} className="group">
@@ -288,9 +291,9 @@ const ArticlesPage = () => {
                                 </div>
 
                                 {/* Premium CTA Sidebar Banner */}
-                                <div className="relative rounded-lg overflow-hidden group shadow-[0_25px_60px_rgba(221,39,39,0.4)] transition-all duration-700 hover:-translate-y-2">
+                                <div className="relative rounded-lg overflow-hidden group shadow-[0_25px_60px_rgba(221,39,39,0.4)] transition-all duration-700 hover:-translate-y-0.5">
                                     <div className="absolute inset-0 bg-linear-to-br from-brand-red via-brand-red to-[#801313] opacity-100"></div>
-                                    <div className="relative z-10 py-12 px-[15px] md:px-10 text-center">
+                                    <div className="relative z-10 py-12 px-[15px] md:px-3.750 text-center">
                                         <h4 className="title-batangas text-4xl mb-6 text-white! leading-tight drop-shadow-2xl">
                                             Unlock Your <br /> Destiny
                                         </h4>
@@ -312,30 +315,30 @@ const ArticlesPage = () => {
                 {/* Newsletter Section */}
                 <section className="py-[50px] no-full-height">
                     <div className="section-container">
-                        <div className="relative bg-white/5 backdrop-blur-3xl border border-white/10 rounded-xl p-8 md:p-16 overflow-hidden group shadow-[0_30px_100px_rgba(0,0,0,0.6)]">
+                        <div className="relative bg-white/5 backdrop-blur-3xl border border-white/10 rounded-3xlxll p-8 md:p-16 overflow-hidden group shadow-[0_30px_100px_rgba(0,0,0,0.6)]">
                             {/* Decorative Glow */}
                             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-red/10 blur-[150px] -z-10 group-hover:bg-brand-red/20 transition-all duration-1000"></div>
-                            
+
                             <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
                                 <div className="inline-block px-6 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl">
                                     <span className="text-white text-[10px] font-bold uppercase tracking-[0.4em]">Stay Connected</span>
                                 </div>
-                                
+
                                 <h2 className="title-batangas text-4xl md:text-6xl text-white leading-tight drop-shadow-2xl font-black uppercase">
                                     Never Miss a <br /> <span className="text-brand-red">Cosmic Update</span>
                                 </h2>
-                                
+
                                 <p className="subtitle-poppins text-base md:text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
                                     Subscribe to our newsletter to receive the latest astrological insights and exclusive offers directly in your inbox.
                                 </p>
-                                
+
                                 <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto pt-4">
                                     <input
                                         type="email"
                                         placeholder="Enter your email address"
                                         className="flex-1 bg-white/5 border border-white/10 rounded-full px-8 py-4 text-white placeholder-white/30 focus:outline-none focus:border-brand-red/50 subtitle-poppins text-sm transition-all"
                                     />
-                                    <button className="bg-white text-black px-10 py-4 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-brand-red hover:text-white transition-all duration-500 shadow-2xl">
+                                    <button className="bg-white text-black px-3.750 py-4 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-brand-red hover:text-white transition-all duration-500 shadow-2xl">
                                         Subscribe
                                     </button>
                                 </div>

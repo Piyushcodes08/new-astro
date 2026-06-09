@@ -159,16 +159,6 @@ const Contact = () => {
                   required
                 />
               </div>
-
-              <div className="recaptcha-container my-4 flex justify-center">
-                <ReCAPTCHA
-                  ref={recaptchaRef}
-                  sitekey={recaptchaSiteKey}
-                  onChange={onCaptchaChange}
-                  theme="dark"
-                />
-              </div>
-
               {status === "success" && (
                 <p className="text-green-400 text-sm text-center subtitle-poppins mb-2">
                   ✅ Message sent! We'll get back to you shortly.

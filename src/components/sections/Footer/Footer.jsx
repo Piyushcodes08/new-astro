@@ -76,49 +76,7 @@ const Footer = () => {
               </a>
 
               {/* Premium Map Card */}
-              <div className="footer-map-wrapper">
-                {/* Header label */}
-                <div className="footer-map-header">
-                  <span className="footer-map-pin-dot" />
-                  <span className="footer-map-label">Find Us Here</span>
-                </div>
-
-                {/* Map Frame */}
-                <div className="footer-map-container">
-                  {/* Glow border layer */}
-                  <div className="footer-map-glow" />
-
-                  <iframe
-                    title="Vahlay Astro Location"
-                    src={contact.mapUrl}
-                    width="100%"
-                    height="180"
-                    style={{ border: 0, display: 'block' }}
-                    allowFullScreen=""
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  ></iframe>
-
-                  {/* Bottom overlay ribbon */}
-                  <div className="footer-map-ribbon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#dd2727" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                    </svg>
-                    <span>{contact.address}</span>
-                  </div>
-                </div>
-
-                {/* CTA */}
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.address)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-map-cta"
-                >
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
-                  View on Google Maps
-                </a>
-              </div>
+              
             </div>
           </div>
         </div>

@@ -21,23 +21,6 @@
   z-index: -1;
 }
 
-/* .about-section::after {
-  content: "";
-  position: absolute;
-  width: 420px;
-  height: 420px;
-  right: -10%;
-  bottom: 5%;
-  background: radial-gradient(
-    circle,
-    rgba(221, 39, 39, 0.35),
-    transparent 70%
-  );
-  filter: blur(80px);
-  opacity: 0.65;
-  z-index: -1;
-  pointer-events: none;
-} */
 
 .about-container {
   width: 100%;

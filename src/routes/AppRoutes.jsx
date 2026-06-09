@@ -27,6 +27,7 @@ const TermsConditionsPage = lazy(() => import('../pages/TermsConditionsPage'));
 const NotFoundPage        = lazy(() => import('../pages/NotFoundPage'));
 const ConsultingPage      = lazy(() => import('../pages/ConsultingPage'));
 const ProductsPage        = lazy(() => import('../pages/ProductsPage'));
+const ProductDetailsPage  = lazy(() => import('../pages/ProductDetailsPage'));
 const Unauthorized        = lazy(() => import('../pages/Unauthorized'));
 
 // ── Auth (lazy loaded) ──
@@ -102,6 +103,7 @@ const AppRoutes = () => {
                 <Route path="/courses/:courseType/:slug" element={<CourseDetail />} />
                 <Route path="/consulting"     element={<ConsultingPage />} />
                 <Route path="/products"       element={<ProductsPage />} />
+                <Route path="/products/:id"   element={<ProductDetailsPage />} />
                 <Route path="/services"       element={<Services />} />
                 <Route path="/articles"       element={<ArticlesPage />} />
                 <Route path="/articles/:id"   element={<ArticleDetailsPage />} />

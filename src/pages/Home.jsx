@@ -3,6 +3,7 @@ import Hero from '../components/sections/Hero/Hero';
 import Header from '../components/sections/Header/Header';
 import CourseSection from '../components/sections/Courses/CourseSection';
 
+
 // Below-fold sections — lazy loaded
 const ArticleSection = lazy(() => import('../components/sections/Article/ArticleSection'));
 const About          = lazy(() => import('../components/sections/About/About'));
@@ -10,6 +11,7 @@ const Products       = lazy(() => import('../components/sections/products/Produc
 const Horoscope      = lazy(() => import('../components/sections/Horoscope/Horoscope'));
 const Numerology     = lazy(() => import('../components/sections/Numerology/Numerology'));
 const Testimonials   = lazy(() => import('../components/sections/Testimonials/Testimonials'));
+const Gallery        = lazy(() => import('../components/sections/gallery/Gallery'));
 const Partners       = lazy(() => import('../components/sections/Partners/Partners'));
 const Contact        = lazy(() => import('../components/sections/Contact/Contact'));
 const Footer         = lazy(() => import('../components/sections/Footer/Footer'));
@@ -41,18 +43,21 @@ const Home = () => {
                 <Suspense fallback={<SectionPlaceholder />}>
                     <Products />
                 </Suspense>
+                  <Suspense fallback={<SectionPlaceholder />}>
+                    <Numerology />
+                </Suspense>
                 <Suspense fallback={<SectionPlaceholder />}>
                     <Horoscope />
                 </Suspense>
                 <Suspense fallback={<SectionPlaceholder />}>
-                    <Numerology />
-                </Suspense>
-                <Suspense fallback={<SectionPlaceholder />}>
                     <Testimonials />
+                </Suspense>
+                 <Suspense fallback={<SectionPlaceholder />}>
+                   <Gallery/>
                 </Suspense>
                 <Suspense fallback={<SectionPlaceholder />}>
                     <Partners />
-                </Suspense>
+                </Suspense>  
                 <Suspense fallback={<SectionPlaceholder />}>
                     <Contact />
                 </Suspense>

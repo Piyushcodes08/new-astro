@@ -175,6 +175,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 12px;
   text-align: center;
   box-sizing: border-box;
   opacity: 0;

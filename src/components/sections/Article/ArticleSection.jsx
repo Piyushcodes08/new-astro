@@ -13,7 +13,7 @@ const ArticleSection = () => {
       // Prioritize rawDate (Post Date) for editorial order
       const timeA = a.rawDate ? new Date(a.rawDate).getTime() : (a.createdAt?.seconds ? a.createdAt.seconds * 1000 : 0);
       const timeB = b.rawDate ? new Date(b.rawDate).getTime() : (b.createdAt?.seconds ? b.createdAt.seconds * 1000 : 0);
-      
+
       return timeB - timeA; // Descending order (newest first)
     });
   }, [slugMap]);
@@ -156,7 +156,7 @@ const ArticleSection = () => {
             {clonedData.map((article, index) => {
               const uniqueId = `${article.id}-${index}`;
               const isOpen = openCardId === uniqueId;
-              
+
               return (
                 <div
                   key={uniqueId}
@@ -164,7 +164,7 @@ const ArticleSection = () => {
                   style={{ flex: `0 0 ${100 / visibleItems}%` }}
                 >
                   <div className="article-item">
-                    <div 
+                    <div
                       className={`article-wrapper ${isOpen ? 'is-open' : ''}`}
                       onClick={() => handleCardClick(uniqueId)}
                     >
@@ -188,7 +188,7 @@ const ArticleSection = () => {
                           <img
                             src={article.imageUrl || article.img}
                             alt={article.title}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain"
                             loading="eager"
                           />
                         </div>
@@ -203,7 +203,7 @@ const ArticleSection = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                   </div>
                 </div>
               );
