@@ -44,7 +44,7 @@
 
 .testimonial-slide {
     flex: 0 0 auto;
-    padding: 0 15px;
+    padding: 0 10px;
     /* Spacing between cards */
     box-sizing: border-box;
     display: flex;

@@ -129,19 +129,20 @@ const Testimonials = () => {
 
   const clonedData = React.useMemo(() => {
     if (testimonialsData.length === 0) return [];
+    const cloneCount = visibleItems;
     return [
-      ...testimonialsData.slice(-3),
+      ...testimonialsData.slice(-cloneCount),
       ...testimonialsData,
-      ...testimonialsData.slice(0, 3),
+      ...testimonialsData.slice(0, cloneCount),
     ];
-  }, [testimonialsData]);
+  }, [testimonialsData, visibleItems]);
 
   const totalRealItems = testimonialsData.length;
 
-  // Reset index when data changes
+  // Reset index when data or visible item count changes
   useEffect(() => {
-    setCurrentIndex(3);
-  }, [totalRealItems]);
+    setCurrentIndex(visibleItems);
+  }, [totalRealItems, visibleItems]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -168,28 +169,31 @@ const Testimonials = () => {
   }, [currentIndex, moveToIndex]);
 
   const getTranslateX = () => {
-    const percentage = (100 / visibleItems) * currentIndex;
+    if (clonedData.length === 0) return "translateX(0)";
+    const percentage = (100 / clonedData.length) * currentIndex;
     return `translateX(-${percentage}%)`;
   };
 
   // Infinite loop boundary jump
   useEffect(() => {
     if (!isTransitioning) return;
-    if (currentIndex >= totalRealItems + 3) {
+    const maxIndex = totalRealItems + visibleItems;
+    const minIndex = visibleItems - 1;
+    if (currentIndex >= maxIndex) {
       const timer = setTimeout(() => {
         setIsTransitioning(false);
-        setCurrentIndex(3);
+        setCurrentIndex(visibleItems);
       }, 700);
       return () => clearTimeout(timer);
     }
-    if (currentIndex <= 2) {
+    if (currentIndex <= minIndex) {
       const timer = setTimeout(() => {
         setIsTransitioning(false);
-        setCurrentIndex(totalRealItems + 2);
+        setCurrentIndex(totalRealItems + minIndex);
       }, 700);
       return () => clearTimeout(timer);
     }
-  }, [currentIndex, isTransitioning, totalRealItems]);
+  }, [currentIndex, isTransitioning, totalRealItems, visibleItems]);
 
   const startAutoPlay = useCallback(() => {
     stopAutoPlay();
