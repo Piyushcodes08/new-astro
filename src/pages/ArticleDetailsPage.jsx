@@ -167,7 +167,7 @@ const ArticleDetailsPage = () => {
 
             <main className="min-h-screen relative z-10 text-white overflow-hidden bg-transparent">
                 {/* Page Title Header */}
-                <div className="pt-24 md:pt-[150px] px-[15px] md:px-3.750 text-center border-b border-white/5 mb-8 bg-black/40 backdrop-blur-sm shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                <div className="pt-24 md:pt-[150px] px-4 sm:px-6 text-center border-b border-white/5 mb-8 bg-black/40 backdrop-blur-sm shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
                     <h1 className="title-batangas text-3xl sm:text-5xl md:text-6xl lg:text-brand-redxl font-black tracking-wide text-white uppercase leading-tight">
                         <span className="text-[#dd2727]">Astrology</span>
                         <br className="sm:hidden" /> Articles & Publications
@@ -181,44 +181,52 @@ const ArticleDetailsPage = () => {
                 </div>
 
                 {/* Main 70/30 Layout */}
-                <section className="no-full-height max-w-[1170px] mx-auto px-[15px] pb-[50px] grid grid-cols-1 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] gap-4 lg:gap-6 items-start">
+                <section className="no-full-height max-w-7xl mx-auto px-4 sm:px-6 pb-12 grid grid-cols-1 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] gap-6 lg:gap-8 items-start">
 
                     {/* Left Column: Article Content - 70% */}
-                    <article className="w-full min-w-0 bg-white/5 backdrop-blur-xl p-0 sm:p-4 md:p-6 rounded-none sm:rounded-3xlxl border-x-0 sm:border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.5)] overflow-hidden">
+                    <article className="w-full min-w-0 bg-white/5 backdrop-blur-xl p-0 sm:p-4 md:p-6 rounded-none sm:rounded-3xl border-x-0 sm:border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.5)] overflow-hidden">
 
                         {/* Article Header Actions */}
-                        <div className="flex justify-between items-center px-6 py-6 sm:px-0 sm:pt-0 sm:pb-6 border-b border-white/10 gap-2">
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-4 sm:px-0 sm:py-6 border-b border-white/10">
                             {/* Left: Back to Articles */}
-                            <div className="flex-1 flex justify-start">
+                            <div className="flex items-center justify-start w-full sm:w-auto">
                                 <Link
                                     to="/articles"
-                                    className="w-8 h-14.5 md:w-10 md:h-10 flex items-center justify-center bg-[#dd2727] text-white rounded-full hover:bg-white hover:text-[#dd2727] transition-all duration-300 shadow-[0_0_15px_rgba(221,39,39,0.3)] hover:scale-110"
+                                    className="w-10 h-10 flex items-center justify-center bg-[#dd2727] text-white rounded-full hover:bg-white hover:text-[#dd2727] transition-all duration-300 shadow-[0_0_15px_rgba(221,39,39,0.3)] hover:scale-110"
                                 >
                                     <span className="text-sm md:text-xl font-bold">←</span>
                                 </Link>
                             </div>
 
-                            {/* Center: Language Toggle */}
-                            <div className="flex-1 flex justify-center">
+                            {/* Center: Language Toggle + Mobile Sidebar */}
+                            <div className="flex flex-wrap items-center justify-center gap-3 w-full sm:w-auto">
                                 <button
                                     onClick={toggleLanguage}
-                                    className="bg-[#dd2727] text-white px-3 md:px-8 py-1.5 md:py-2.5 text-[8px] md:text-[10px] font-black tracking-[0.3em] uppercase rounded-full hover:bg-white hover:text-[#dd2727] transition-all duration-300 shadow-[0_0_20px_rgba(221,39,39,0.3)] hover:scale-105 active:scale-95"
+                                    className="bg-[#dd2727] text-white px-4 md:px-8 py-2 text-[9px] md:text-[10px] font-black tracking-[0.3em] uppercase rounded-full hover:bg-white hover:text-[#dd2727] transition-all duration-300 shadow-[0_0_20px_rgba(221,39,39,0.3)] hover:scale-105 active:scale-95"
                                 >
                                     {language === "hindi" ? "In English" : "हिंदी में"}
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() => setIsSidebarOpen(true)}
+                                    className="lg:hidden bg-white/10 text-white px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300"
+                                >
+                                    Other Articles
                                 </button>
                             </div>
 
                             {/* Right: Share Button */}
-                            <div className="flex-1 flex justify-end relative share-container">
+                            <div className="flex items-center justify-end w-full sm:w-auto relative share-container">
                                 <button
                                     onClick={handleShareClick}
-                                    className="w-8 h-14.5 md:w-10 md:h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full transition-all duration-300 border border-white/20 shadow-lg hover:scale-110"
+                                    className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full transition-all duration-300 border border-white/20 shadow-lg hover:scale-110"
                                 >
-                                    <RiShareForwardFill className="w-3.5 h-3.5 md:w-125 md:h-125" />
+                                    <RiShareForwardFill className="w-4 h-4 md:w-5 md:h-5" />
                                 </button>
 
                                 {showShareOptions && (
-                                    <div className="absolute right-0 mt-4 w-1252 bg-black/95 backdrop-blur-2xl rounded-3xlxl shadow-[0_20px_60px_rgba(0,0,0,0.8)] border border-white/20 z-50 overflow-hidden animate-in fade-in zoom-in duration-300">
+                                    <div className="absolute right-0 mt-4 w-52 bg-black/95 backdrop-blur-2xl rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] border border-white/20 z-50 overflow-hidden animate-in fade-in zoom-in duration-300">
                                         {[
                                             { icon: RiFacebookFill, color: "text-blue-500", action: shareOnFacebook, text: "Facebook" },
                                             { icon: RiTwitterFill, color: "text-blue-400", action: shareOnTwitter, text: "Twitter" },
@@ -243,7 +251,7 @@ const ArticleDetailsPage = () => {
                         </div>
 
                         {/* Image: 16:9 Aspect Ratio */}
-                        <div className="w-full px-[15px] sm:px-0 aspect-video overflow-hidden sm:rounded-3xlxll border-y sm:border border-white/10 bg-white/5 flex items-center justify-center">
+<div className="w-full px-[15px] sm:px-0 aspect-video overflow-hidden sm:rounded-3xl border-y sm:border border-white/10 bg-white/5 flex items-center justify-center">
                             <img
                                 src={article.imageUrl || article.img}
                                 alt={article.title}
@@ -305,7 +313,7 @@ const ArticleDetailsPage = () => {
                     </article>
 
                     {/* Right Column: Sidebar Desktop - 30% */}
-                    <aside className="hidden lg:block w-full min-w-0 bg-white/5 backdrop-blur-md p-5 rounded-3xlxl border border-white/10 shadow-lg h-fit sticky top-10">
+                    <aside className="hidden lg:block w-full min-w-0 bg-white/5 backdrop-blur-md p-5 rounded-3xl border border-white/10 shadow-lg h-fit sticky top-10">
                         <h3 className="text-brand-redxl title-batangas text-white mb-6 border-b border-white/10 pb-4 tracking-wide uppercase">
                             Other Articles
                         </h3>
@@ -314,7 +322,7 @@ const ArticleDetailsPage = () => {
                             {paginatedOtherArticles.map((item) => (
                                 <li key={item.id} className="flex flex-col">
                                     <div
-                                        className="flex items-center cursor-pointer rounded-3xlxll p-2 hover:bg-white/10 transition-all border border-transparent hover:border-white/10 group"
+                                        className="flex items-center cursor-pointer rounded-3xl p-2 hover:bg-white/10 transition-all border border-transparent hover:border-white/10 group"
                                         onClick={() => toggleDropdown(item.id)}
                                     >
                                         <span className="text-[#dd2727] mr-3 group-hover:scale-125 transition-transform">
@@ -408,7 +416,7 @@ const ArticleDetailsPage = () => {
                                     {otherArticles.map((item) => (
                                         <li key={item.id} className="flex flex-col">
                                             <div
-                                                className="flex items-center cursor-pointer rounded-3xlxll hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
+                                                className="flex items-center cursor-pointer rounded-3xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
                                                 onClick={() => toggleDropdown(item.id)}
                                             >
                                                 <span className="text-[#dd2727] mr-3">✦</span>
@@ -443,7 +451,7 @@ const ArticleDetailsPage = () => {
                 </section>
 
                 {/* Related Articles Accordion */}
-                <section className="max-w-[1170px] mx-auto px-[15px] md:px-[50px] pb-5">
+                <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 pb-5">
                     <h2 className="title-batangas text-brand-redxl sm:text-3xl md:text-4xl text-white mb-10 text-center uppercase tracking-tight">
                         <span className="text-[#dd2727]">Related</span> Celestial Knowledge
                     </h2>
@@ -452,7 +460,7 @@ const ArticleDetailsPage = () => {
                         {otherArticles.slice(0, 5).map((faq, index) => (
                             <div
                                 key={faq.id}
-                                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xlxl overflow-hidden transition-all duration-300"
+                                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl overflow-hidden transition-all duration-300"
                             >
                                 <button
                                     onClick={() => toggleAccordion(index)}

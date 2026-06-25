@@ -59,8 +59,8 @@ background: linear-gradient(
 .article-wrapper {
   cursor: pointer;
   display: block;
-  width: 250px;
-  height: 350px;
+  width: min(100%, 380px);
+  min-height: 350px;
   position: relative;
   background: #fdf2d0;
   z-index: 10;
@@ -70,6 +70,7 @@ background: linear-gradient(
   perspective: 1500px;
   /* Slightly increased for smoother carousel feel */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 0 auto;
 }
 
 .article-wrapper:hover {

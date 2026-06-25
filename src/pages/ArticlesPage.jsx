@@ -96,7 +96,7 @@ const ArticlesPage = () => {
                     </div>
 
                     <div className="section-container">
-                        <div className="relative z-10 max-w-125xl w-full mx-auto text-center">
+                        <div className="relative z-10 max-w-7xl w-full mx-auto text-center">
 
 
                             {/* Bold White Title */}
@@ -112,9 +112,9 @@ const ArticlesPage = () => {
 
                             {/* Red Dot Divider */}
                             <div className="mt-16 flex items-center justify-center gap-6">
-                                <div className="h-150x w-16 bg-linear-to-r from-transparent to-white/10"></div>
+                                <div className="h-1.5 w-16 bg-linear-to-r from-transparent to-white/10"></div>
                                 <div className="w-3 h-3 rounded-full bg-brand-red shadow-[0_0_20px_#dd2727,0_0_40px_#dd2727]"></div>
-                                <div className="h-150x w-16 bg-linear-to-l from-transparent to-white/10"></div>
+                                <div className="h-1.5 w-16 bg-linear-to-l from-transparent to-white/10"></div>
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@ const ArticlesPage = () => {
                         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
 
                             {/* Article Grid (Main Content) */}
-                            <div className="w-full lg:flex-1 min-w-150">
+                            <div className="w-full lg:flex-1 min-w-0">
                                 {currentArticles.length > 0 ? (
                                     <>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-16 gap-x-8">
@@ -293,7 +293,7 @@ const ArticlesPage = () => {
                                 {/* Premium CTA Sidebar Banner */}
                                 <div className="relative rounded-lg overflow-hidden group shadow-[0_25px_60px_rgba(221,39,39,0.4)] transition-all duration-700 hover:-translate-y-0.5">
                                     <div className="absolute inset-0 bg-linear-to-br from-brand-red via-brand-red to-[#801313] opacity-100"></div>
-                                    <div className="relative z-10 py-12 px-[15px] md:px-3.750 text-center">
+                                    <div className="relative z-10 py-12 px-4 md:px-8 text-center">
                                         <h4 className="title-batangas text-4xl mb-6 text-white! leading-tight drop-shadow-2xl">
                                             Unlock Your <br /> Destiny
                                         </h4>
@@ -313,9 +313,9 @@ const ArticlesPage = () => {
                 </section>
 
                 {/* Newsletter Section */}
-                <section className="py-[50px] no-full-height">
+                <section className="py-[50px]">
                     <div className="section-container">
-                        <div className="relative bg-white/5 backdrop-blur-3xl border border-white/10 rounded-3xlxll p-8 md:p-16 overflow-hidden group shadow-[0_30px_100px_rgba(0,0,0,0.6)]">
+                        <div className="relative bg-white/5 backdrop-blur-3xl border border-white/10 rounded-3xl p-8 md:p-16 overflow-hidden group shadow-[0_30px_100px_rgba(0,0,0,0.6)]">
                             {/* Decorative Glow */}
                             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-red/10 blur-[150px] -z-10 group-hover:bg-brand-red/20 transition-all duration-1000"></div>
 
@@ -338,7 +338,7 @@ const ArticlesPage = () => {
                                         placeholder="Enter your email address"
                                         className="flex-1 bg-white/5 border border-white/10 rounded-full px-8 py-4 text-white placeholder-white/30 focus:outline-none focus:border-brand-red/50 subtitle-poppins text-sm transition-all"
                                     />
-                                    <button className="bg-white text-black px-3.750 py-4 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-brand-red hover:text-white transition-all duration-500 shadow-2xl">
+                                    <button className="bg-white text-black px-6 py-4 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-brand-red hover:text-white transition-all duration-500 shadow-2xl">
                                         Subscribe
                                     </button>
                                 </div>
