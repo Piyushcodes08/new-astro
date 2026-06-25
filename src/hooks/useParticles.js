@@ -7,7 +7,7 @@ const useParticles = (canvasRef) => {
 
         const ctx = canvas.getContext('2d');
         let particles = [];
-        const particleCount = 60; // Reduced from 100 for performance
+        const particleCount = 80; // Reduced from 100 for performance
         let animationFrameId;
 
         const mouse = {
@@ -32,7 +32,7 @@ const useParticles = (canvasRef) => {
                 this.x = Math.random() * canvas.width;
                 this.y = canvas.height + Math.random() * 100;
                 this.size = Math.random() * 2 + 1.5;
-                this.speed = Math.random() * 1.8 + 1.2;
+                this.speed = Math.random() * 1.2 + 1;
                 this.swaySpeed = Math.random() * 0.04 + 0.02;
                 this.swayAmount = Math.random() * 2.5 + 1.5;
                 this.angle = Math.random() * Math.PI * 2;
@@ -51,18 +51,18 @@ const useParticles = (canvasRef) => {
                     const force = (mouse.radius - distance) / mouse.radius;
                     const dirX = dx / distance;
                     const dirY = dy / distance;
-                    this.x += dirX * force * 7;
-                    this.y += dirY * force * 7;
+                    this.x += dirX * force * 9;
+                    this.y += dirY * force * 9;
                 }
 
                 if (this.y + this.size < 0) this.reset();
             }
             draw() {
                 ctx.save();
-                ctx.globalAlpha = 0.85;
-                ctx.shadowBlur = 12;
-                ctx.shadowColor = '#64c8ff';
-                ctx.fillStyle = '#ffffff';
+                ctx.globalAlpha = 1.85;
+                ctx.shadowBlur = 48;
+                ctx.shadowColor = '#ffffffff';
+                ctx.fillStyle = '#ffffffff';
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();

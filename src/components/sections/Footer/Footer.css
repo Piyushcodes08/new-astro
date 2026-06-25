@@ -4,7 +4,6 @@
     background: #0d0101; /* Even deeper dark for premium feel */
     color: #fff;
     overflow: hidden;
-    padding-top: 60px;
 }
 
 .footer-section .section-container {
@@ -15,7 +14,7 @@
     display: grid;
     grid-template-columns: 1.5fr 0.8fr 1fr 1.2fr;
     gap: 60px;
-    padding-bottom: 80px;
+    padding-bottom: 30px;
     border-bottom: 1px solid rgba(221, 39, 39, 0.1);
 }
 

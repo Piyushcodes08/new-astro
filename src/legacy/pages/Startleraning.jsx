@@ -345,15 +345,15 @@ const PersonalCourse = () => {
     }
 
     return (
-      <div className="bg-red-100 p-4 rounded-lg shadow-md w-72 h-auto">
-        <h3 className="text-lg font-semibold text-center text-red-600 mb-2">
+      <div className="bg-slate-50 p-4 rounded-3xl shadow-sm w-72 h-auto border border-slate-200">
+        <h3 className="text-lg font-semibold text-center text-slate-900 mb-2">
           Subscription Validity
         </h3>
         {typeof validityPercentage === "string" &&
           validityPercentage === "Lifetime Access" ? (
-          <p className="text-center text-xl text-red-700">Lifetime Access</p>
+          <p className="text-center text-xl text-slate-900">Lifetime Access</p>
         ) : validityPercentage === "0" ? (
-          <p className="text-center text-xl text-red-700">Expired</p>
+          <p className="text-center text-xl text-slate-900">Expired</p>
         ) : (
           <div>
             <PieChart
@@ -361,19 +361,19 @@ const PersonalCourse = () => {
                 {
                   title: "Remaining",
                   value: parseInt(validityPercentage) || 0,
-                  color: "#FF5252",
+                  color: "#0f172a",
                 },
                 {
                   title: "Expired",
                   value: 100 - (parseInt(validityPercentage) || 0),
-                  color: "#fcfafa",
+                  color: "#e2e8f0",
                 },
               ]}
               lineWidth={20}
               rounded
               animate
             />
-            <p className="text-center mt-2 text-red-700">
+            <p className="text-center mt-2 text-slate-700">
               {validityPercentage || 0}% Validity Remaining
             </p>
           </div>
@@ -584,7 +584,7 @@ const PersonalCourse = () => {
    */
   if (!videos.length && !studyMaterials.length) {
     return (
-      <div className="text-center mt-10 text-red-500">
+      <div className="text-center mt-10 text-slate-500">
         No data found for <strong>{courseName}</strong>.
       </div>
     );
@@ -603,15 +603,15 @@ const PersonalCourse = () => {
       <div className="flex flex-1 relative z-10 pt-16 gap-0">
         <Aside />
 
-        <main className="flex-1 min-w-0 py-10 px-[15px] md:px-[50px] bg-white">
-          <div className="max-w-7xl mx-auto pt-8">
+        <main className="flex-1 min-w-0 py-10 px-4 md:px-10 bg-slate-100">
+          <div className="max-w-7xl mx-auto pt-8 space-y-10">
 
             {/* Page Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-200 pb-8 mb-10">
               <div>
-                <h4 className="text-[#dd2727] font-black uppercase tracking-[0.3em] text-[10px] mb-2">Academic Portal</h4>
+                <h4 className="text-slate-500 font-black uppercase tracking-[0.3em] text-[10px] mb-2">Academic Portal</h4>
                 <h1 className="text-4xl font-black text-slate-900 tracking-tight uppercase">
-                  <span className="text-[#dd2727]">{courseName}</span>
+                  <span className="text-slate-900">{courseName}</span>
                 </h1>
               </div>
             </div>
@@ -619,17 +619,19 @@ const PersonalCourse = () => {
             {/* Live Session Marquee */}
             {meetings.length > 0 && (
               <Link to={`/${courseName}/meetings`} className="block mb-8">
-                <div className="bg-gradient-to-r from-[#dd2727] to-[#f43f5e] p-5 rounded-2xl text-white shadow-lg shadow-red-200 flex items-center justify-between hover:scale-[1.01] transition-all">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                      <span className="w-3 h-3 rounded-full bg-white animate-ping"></span>
+                <div className="bg-white border border-slate-200 p-5 rounded-3xl shadow-sm hover:shadow-md transition-all">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center">
+                        <span className="w-3 h-3 rounded-full bg-emerald-500 animate-ping" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Live Session Active</p>
+                        <h4 className="font-bold text-lg text-slate-900">Join the live session for {courseName}</h4>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-[10px] font-black uppercase tracking-widest opacity-80">Live Session Active</p>
-                      <h4 className="font-bold text-lg">Join the sacred live session for {courseName}</h4>
-                    </div>
+                    <div className="bg-slate-900 text-white px-5 py-2.5 rounded-2xl font-black uppercase tracking-widest text-[10px]">Join Room</div>
                   </div>
-                  <div className="bg-white text-[#dd2727] px-6 py-2.5 rounded-xl font-black uppercase tracking-widest text-[10px] hidden md:block">Join Room</div>
                 </div>
               </Link>
             )}
@@ -641,24 +643,22 @@ const PersonalCourse = () => {
 
             {/* Upcoming EMI Payments */}
             {upcomingEMIs.length > 0 && (
-              <div className="mb-8 admin-card border-l-4 border-l-amber-500 bg-amber-50/30 p-8">
-                <h3 className="text-sm font-black text-amber-800 uppercase tracking-widest mb-6 flex items-center gap-3">
-                  <span>⚠</span> Upcoming EMI Payments
-                </h3>
+              <div className="mb-8 bg-white border border-slate-200 p-8 rounded-3xl shadow-sm">
+                <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest mb-6">Upcoming Payments</h3>
                 <div className="space-y-4">
                   {upcomingEMIs.map((emi, index) => (
-                    <div key={index} className="flex flex-col md:flex-row justify-between items-start md:items-center p-5 bg-white border border-amber-100 rounded-2xl gap-6">
+                    <div key={index} className="flex flex-col md:flex-row justify-between items-start md:items-center p-5 bg-slate-50 border border-slate-200 rounded-3xl gap-6">
                       <div>
-                        <p className="text-[9px] font-black text-amber-600 uppercase tracking-widest mb-1">EMI #{emi.emiNumber}</p>
+                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">EMI #{emi.emiNumber}</p>
                         <h4 className="font-bold text-slate-800">Payment for {emi.courseId}</h4>
                         <p className="text-xs text-slate-500 mt-1">Due: <span className="font-bold text-slate-700">{emi.dueDate.toLocaleDateString()}</span></p>
                       </div>
                       <div className="flex items-center gap-6">
                         <div>
-                          <p className={`text-xs font-black uppercase tracking-widest ${emi.daysRemaining <= 3 ? "text-red-600" : "text-amber-600"}`}>{emi.daysRemaining} days left</p>
+                          <p className={`text-xs font-black uppercase tracking-widest ${emi.daysRemaining <= 3 ? "text-slate-700" : "text-slate-500"}`}>{emi.daysRemaining} days left</p>
                           <p className="text-xl font-black text-slate-900">₹{emi.amountDue}</p>
                         </div>
-                        <Link to="/finalize" className="bg-amber-500 text-white px-6 py-3 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-amber-600 transition-all">Pay Now</Link>
+                        <Link to="/finalize" className="bg-slate-900 text-white px-6 py-3 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-800 transition-all">Pay Now</Link>
                       </div>
                     </div>
                   ))}
@@ -666,125 +666,12 @@ const PersonalCourse = () => {
               </div>
             )}
 
-            {/* Top Row: Validity, Progress, Modules, Study Materials */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-              {/* Subscription Status Card */}
-              <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm flex flex-col items-center justify-between text-center min-h-[280px]">
-                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6">Subscription</h3>
-                <div className="flex-1 flex flex-col items-center justify-center">
-                  {validityPercentage === "Lifetime Access" ? (
-                    <>
-                      <div className="text-4xl mb-4">♾️</div>
-                      <p className="text-sm font-black text-slate-900 uppercase tracking-widest">Lifetime Access</p>
-                    </>
-                  ) : (validityPercentage === "0" || !validityPercentage) ? (
-                    <>
-                      <div className="text-4xl mb-4">⌛</div>
-                      <p className="text-xl font-black text-red-600 uppercase tracking-widest">Expired</p>
-                    </>
-                  ) : (
-                    <>
-                      <div className="relative w-28 h-28">
-                        <PieChart
-                          data={[{ value: parseInt(validityPercentage), color: "#dd2727" }]}
-                          totalValue={100}
-                          lineWidth={15}
-                          label={({ dataEntry }) => `${dataEntry.value}%`}
-                          labelStyle={{ fontSize: '18px', fontWeight: '900', fill: '#0f172a' }}
-                          labelPosition={0}
-                          background="#f1f5f9"
-                          rounded
-                          animate
-                        />
-                      </div>
-                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-6">Validity Remaining</p>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              {/* Course Progress Card */}
-              <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm flex flex-col items-center justify-between text-center min-h-[280px] hover:border-red-100 transition-all">
-                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6">Course Progress</h3>
-                <div className="flex-1 flex flex-col items-center justify-center">
-                  <div className="relative w-28 h-28">
-                    <PieChart
-                      data={[{ value: watchedPercentage, color: "#dd2727" }]}
-                      totalValue={100}
-                      lineWidth={15}
-                      label={({ dataEntry }) => `${dataEntry.value}%`}
-                      labelStyle={{ fontSize: '18px', fontWeight: '900', fill: '#0f172a' }}
-                      labelPosition={0}
-                      background="#f1f5f9"
-                      rounded
-                      animate
-                    />
-                  </div>
-                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-6">
-                    {watchedVideos.length}/{totalVideos} Videos Watched
-                  </p>
-                </div>
-              </div>
-
-              {/* Curriculum Card */}
-              <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm flex flex-col items-center justify-between text-center min-h-[280px]">
-                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6">Curriculum</h3>
-                <div className="flex-1 flex flex-col items-center justify-center">
-                  <div className="relative w-28 h-28">
-                    <PieChart
-                      data={[{ value: modulesCoveredPercentage, color: "#dd2727" }]}
-                      totalValue={100}
-                      lineWidth={15}
-                      label={({ dataEntry }) => `${dataEntry.value}%`}
-                      labelStyle={{ fontSize: '18px', fontWeight: '900', fill: '#0f172a' }}
-                      labelPosition={0}
-                      background="#f1f5f9"
-                      rounded
-                      animate
-                    />
-                  </div>
-                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-6">
-                    {modulesCovered}/{totalModules} Modules Covered
-                  </p>
-                </div>
-              </div>
-
-              {/* Study Materials Card */}
-              <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm flex flex-col items-center justify-between text-center min-h-[280px]">
-                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6">Study Materials</h3>
-                <div className="flex-1 w-full flex flex-col justify-center">
-                  {studyMaterials.length > 0 ? (
-                    <div className="space-y-3 max-h-[160px] overflow-y-auto custom-scrollbar pr-1 w-full">
-                      {studyMaterials.map((material) => (
-                        <div key={material.id} className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between gap-3">
-                          <p className="text-[10px] font-bold text-slate-700 truncate text-left flex-1">{material.title}</p>
-                          <a
-                            href={material.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 bg-slate-900 text-white rounded-lg hover:bg-[#dd2727] transition-all"
-                            title="Download"
-                          >
-                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                          </a>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-center justify-center opacity-30">
-                      <div className="text-4xl mb-4">📚</div>
-                      <p className="text-[9px] font-black uppercase tracking-[0.2em] italic">No Materials Yet</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
 
 
             {/* COURSE VIDEOS */}
             <div className="mt-10 mb-10">
               <div className="flex items-center gap-4 mb-8">
-                <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Course <span className="text-[#dd2727]">Videos</span></h2>
+                <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Course Videos</h2>
                 <div className="flex-1 h-px bg-slate-200"></div>
               </div>
               {Object.keys(groupedVideos).reverse().map((title, index) => {
@@ -799,21 +686,23 @@ const PersonalCourse = () => {
                 const { prev, next } = swiperNavRefs.current[index];
 
                 return (
-                  <div key={index} className="mb-10 p-6 bg-black/20 border border-white/10 rounded-2xl">
-                    <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
-                      <span className="w-2 h-8 bg-[#dd2727] rounded-full inline-block"></span>
-                      {title}
-                    </h3>
-
-                    {/* Swiper Container */}
-                    <div className="relative group px-8">
-                      {/* Left Nav */}
-                      <div className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button ref={prev}>
-                          <FaChevronLeft className="text-white w-10 h-10 bg-black/50 border border-white/20 rounded-full p-2 backdrop-blur hover:bg-[#dd2727] transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)]" />
+                  <div key={index} className="mb-10 bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-slate-50 border-b border-slate-200 px-6 py-5">
+                      <div className="flex items-center gap-3">
+                        <span className="w-1.5 h-10 bg-slate-900 rounded-full"></span>
+                        <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">{title}</h3>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <button ref={prev} className="text-slate-900 w-11 h-11 bg-white border border-slate-200 rounded-full hover:bg-slate-100 transition-all shadow-sm">
+                          <FaChevronLeft className="w-5 h-5" />
+                        </button>
+                        <button ref={next} className="text-slate-900 w-11 h-11 bg-white border border-slate-200 rounded-full hover:bg-slate-100 transition-all shadow-sm">
+                          <FaChevronRight className="w-5 h-5" />
                         </button>
                       </div>
+                    </div>
 
+                    <div className="px-4 py-6">
                       <Swiper
                         modules={[Navigation, Pagination]}
                         navigation={{
@@ -832,33 +721,27 @@ const PersonalCourse = () => {
                           1024: { slidesPerView: 3 },
                           1280: { slidesPerView: 4 },
                         }}
-                        className="w-full pb-10"
+                        className="w-full"
                       >
                         {groupedVideos[title].map((video) => (
                           <SwiperSlide key={video.id} className="h-auto">
-                            <div className="bg-white/5 border border-white/10 shadow-lg rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(221,39,39,0.15)] hover:border-white/20 h-full flex flex-col group/card">
+                            <div className="bg-slate-50 border border-slate-200 rounded overflow-hidden transition-all duration-300  h-full flex flex-col">
                               <Link to={`/course/${courseName}/video/${video.id}`} className="flex flex-col h-full">
-                                <div className="relative w-full aspect-video bg-black overflow-hidden border-b border-white/10">
+                                <div className="relative w-full aspect-video bg-black overflow-hidden">
                                   <video
                                     src={video.url}
-                                    className="w-full h-full object-cover opacity-80 group-hover/card:opacity-100 transition-opacity"
+                                    className="w-full h-full object-cover"
                                     controlsList="nodownload"
                                     onEnded={() => handleMarkAsWatched(video.id)}
                                     muted
                                   />
-                                  {/* Play icon overlay */}
-                                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity bg-black/40 backdrop-blur-sm">
-                                    <div className="w-12 h-12 rounded-full bg-[#dd2727]/80 flex items-center justify-center shadow-[0_0_20px_rgba(221,39,39,0.5)]">
-                                      <div className="w-0 h-0 border-t-[8px] border-t-transparent border-l-[12px] border-l-white border-b-[8px] border-b-transparent ml-1"></div>
-                                    </div>
-                                  </div>
                                 </div>
                                 <div className="p-4 flex-1 flex flex-col">
-                                  <p className="text-white font-bold text-sm line-clamp-2 group-hover/card:text-[#dd2727] transition-colors">
+                                  <p className="text-slate-900 font-bold text-sm line-clamp-2">
                                     {video.description}
                                   </p>
                                   {watchedVideos.includes(video.id) && (
-                                    <span className="mt-auto pt-3 inline-flex items-center text-xs font-bold text-green-400 uppercase tracking-wider">
+                                    <span className="mt-auto pt-3 inline-flex items-center text-xs font-bold text-slate-700 uppercase tracking-wider">
                                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
                                       Watched
                                     </span>
@@ -869,13 +752,6 @@ const PersonalCourse = () => {
                           </SwiperSlide>
                         ))}
                       </Swiper>
-
-                      {/* Right Nav */}
-                      <div className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button ref={next}>
-                          <FaChevronRight className="text-white w-10 h-10 bg-black/50 border border-white/20 rounded-full p-2 backdrop-blur hover:bg-[#dd2727] transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)]" />
-                        </button>
-                      </div>
                     </div>
                   </div>
                 );
@@ -885,9 +761,9 @@ const PersonalCourse = () => {
 
 
             {/* Q&A SECTION */}
-            <div className="mt-10 mb-8 admin-card p-10 bg-white">
+            <div className="mt-10 mb-8 p-10 bg-white border border-slate-200 rounded-3xl shadow-sm">
               <div className="flex items-center gap-4 mb-8">
-                <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Cosmic <span className="text-[#dd2727]">Q&A</span></h2>
+                <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Cosmic Q&A</h2>
                 <div className="flex-1 h-px bg-slate-100"></div>
               </div>
               <QandASection courseName={courseName} />

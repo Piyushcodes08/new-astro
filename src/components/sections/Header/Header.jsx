@@ -13,6 +13,7 @@ const Header = () => {
     const [user, setUser] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [activeMobileSubmenu, setActiveMobileSubmenu] = useState(null);
     const location = useLocation();
 
     // Check if we are on admin or dashboard-related pages to keep header always visible/blurred
@@ -50,6 +51,13 @@ const Header = () => {
         return () => {
             document.body.style.overflow = 'unset';
         };
+    }, [isOpen]);
+
+    // Reset mobile submenu state when main menu closes
+    useEffect(() => {
+        if (!isOpen) {
+            setActiveMobileSubmenu(null);
+        }
     }, [isOpen]);
 
     useEffect(() => {
@@ -108,7 +116,7 @@ const Header = () => {
                     />
                 </div>
 
-                <nav className="mx-auto grid items-center transition-all duration-500 relative max-w-container-max-width px-[15px] md:px-[50px] py-0 h-full w-full"
+                <nav className="mx-auto grid items-center transition-all duration-500 max-w-container-max-width px-[15px] md:px-[50px] py-0 h-full w-full"
                     style={{ gridTemplateColumns: 'auto 1fr auto' }}
                 >
                     {/* Col 1 — Logo (Left) */}
@@ -123,18 +131,83 @@ const Header = () => {
                         </Link>
                     </div>
 
-                    {/* Col 2 — Nav Links (True Center) */}
+                    {/* Col 2 — Nav Links (True Center) with 2-Column Mega Menus */}
                     <ul className="hidden lg:flex items-center justify-center gap-5 xl:gap-7">
-                        {navLinks.map((link) => (
-                            <li key={link.name}>
-                                <Link
-                                    to={link.path}
-                                    className="text-[13px] xl:text-[14px] font-medium uppercase tracking-[0.15em] xl:tracking-[0.2em] transition-all duration-300 hover:text-brand-red whitespace-nowrap"
-                                >
-                                    {link.name}
-                                </Link>
-                            </li>
-                        ))}
+                        {navLinks.map((link) => {
+                            const hasSubLinks = link.subLinks && link.subLinks.length > 0;
+
+                            if (hasSubLinks) {
+                                return (
+                                    <li key={link.name} className="group py-6">
+                                        <button className="flex items-center gap-1.5 text-[13px] xl:text-[14px] font-medium uppercase tracking-[0.15em] xl:tracking-[0.2em] transition-all duration-300 hover:text-brand-red whitespace-nowrap cursor-pointer">
+                                            {link.name}
+                                            <svg className="w-3 h-3 transition-transform duration-300 group-hover:rotate-180 text-white/50 group-hover:text-brand-red" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </button>
+
+                                        {/* Full-Width Mega Dropdown Menu panel */}
+                                        <div className="absolute left-0 right-0 top-0 w-full opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 -z-1 pointer-events-none group-hover:pointer-events-auto">
+                                            <div className="bg-[#0e0404]/98 border-b border-t border-white/10 backdrop-blur-[25px] shadow-[0_25px_60px_rgba(0,0,0,0.85)] relative py-8">
+                                                {/* Centered content grid aligned to container grid */}
+                                                <div className="mx-auto max-w-container-max-width px-[15px] pt-25 md:px-[50px] w-full grid grid-cols-12 gap-8">
+                                                    
+                                                    {/* Left Column (Visual Promo Box) */}
+                                                    <div className="col-span-4 bg-white/[0.02] border border-white/5 rounded-2xl p-6 flex flex-col justify-between gap-6 relative overflow-hidden group/promo">
+                                                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-red/5 rounded-full blur-2xl"></div>
+                                                        <div className="space-y-1.5 relative z-10">
+                                                            <span className="text-[9px] font-black text-brand-red uppercase tracking-[0.25em]">Vahlay Astro</span>
+                                                            <h3 className="text-base font-bold text-white tracking-wide leading-tight">
+                                                                {link.name === 'Services' ? 'Sacred Services & Wisdom' : 'Consecrated Spiritual Items'}
+                                                            </h3>
+                                                            <p className="text-[11px] text-white/50 font-medium leading-relaxed">
+                                                                {link.name === 'Services' 
+                                                                    ? 'Explore Vedic courses, planetary remedies, rituals, and direct consultations.' 
+                                                                    : 'Authentic malas, crystal bracelets, and rings energized to invite prosperity.'}
+                                                            </p>
+                                                        </div>
+                                                        <Link 
+                                                            to={link.name === 'Services' ? '/services' : '/products'}
+                                                            className="inline-flex items-center gap-1.5 text-[9.5px] font-black text-white bg-brand-red hover:bg-white hover:text-brand-red px-4 py-2.5 w-fit rounded-lg uppercase tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(221,39,39,0.3)] relative z-10"
+                                                        >
+                                                            {link.name === 'Services' ? 'See Overview' : 'View Shop'}
+                                                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                                                        </Link>
+                                                    </div>
+
+                                                    {/* Right Column (Links Navigation List - Plain Text Links) */}
+                                                    <div className="col-span-8 p-4 flex flex-col gap-1.5 justify-center max-w-md">
+                                                        <span className="text-[10px] font-bold text-white/30 uppercase tracking-[0.25em] pl-4 mb-2">
+                                                            {link.name === 'Services' ? 'Explore Services' : 'Browse Categories'}
+                                                        </span>
+                                                        {link.subLinks.map((subLink) => (
+                                                            <Link
+                                                                key={subLink.name}
+                                                                to={subLink.path}
+                                                                className="block py-2.5 px-4 rounded-xl text-white/60 hover:text-white hover:bg-white/5 text-[13px] font-bold uppercase tracking-[0.15em] transition-all duration-200"
+                                                            >
+                                                                {subLink.name}
+                                                            </Link>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                );
+                            }
+
+                            return (
+                                <li key={link.name}>
+                                    <Link
+                                        to={link.path}
+                                        className="text-[13px] xl:text-[14px] font-medium uppercase tracking-[0.15em] xl:tracking-[0.2em] transition-all duration-300 hover:text-brand-red whitespace-nowrap"
+                                    >
+                                        {link.name}
+                                    </Link>
+                                </li>
+                            );
+                        })}
                     </ul>
 
                     {/* Col 3 — Right Controls */}
@@ -185,26 +258,63 @@ const Header = () => {
                 </nav>
             </header>
 
-            {/* Mobile Navigation Menu - Moved outside header to fix backdrop-filter positioning bugs */}
+            {/* Mobile Navigation Menu */}
             <div
-                className={`fixed inset-0 bg-[#080808] transition-all duration-500 lg:hidden flex flex-col items-center justify-center gap-8 z-1050 ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-full'
+                className={`fixed inset-0 bg-[#080808]/98 backdrop-blur-lg transition-all duration-500 lg:hidden flex flex-col items-center justify-center gap-8 z-1050 ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-full'
                     }`}
             >
                 {/* Background Decorative Glow */}
                 <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] bg-brand-red/20 blur-[100px] rounded-full pointer-events-none"></div>
                 <div className="absolute bottom-[-10%] left-[-10%] w-[300px] h-[300px] bg-[#b0a102]/10 blur-[100px] rounded-full pointer-events-none"></div>
 
-                <div className="relative z-10 flex flex-col items-center gap-6 w-full px-6">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={`mobile_${link.name}`}
-                            to={link.path}
-                            onClick={() => setIsOpen(false)}
-                            className="text-2xl font-bold uppercase tracking-[0.25em] text-white hover:text-brand-red transition-all duration-300"
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
+                <div className="relative z-10 flex flex-col items-center gap-6 w-full max-h-[70vh] overflow-y-auto px-6 custom-scrollbar">
+                    {navLinks.map((link) => {
+                        const hasSubLinks = link.subLinks && link.subLinks.length > 0;
+                        const isSubmenuOpen = activeMobileSubmenu === link.name;
+
+                        if (hasSubLinks) {
+                            return (
+                                <div key={`mobile_${link.name}`} className="w-full flex flex-col items-center">
+                                    <button
+                                        onClick={() => setActiveMobileSubmenu(isSubmenuOpen ? null : link.name)}
+                                        className="text-xl font-bold uppercase tracking-[0.25em] text-white hover:text-brand-red flex items-center gap-2 transition-all duration-300 focus:outline-none cursor-pointer"
+                                    >
+                                        {link.name}
+                                        <svg className={`w-4 h-4 transition-transform duration-350 ${isSubmenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </button>
+
+                                    {/* Expandable Sublinks Menu */}
+                                    <div className={`w-full flex flex-col items-center gap-4 transition-all duration-500 overflow-hidden ${
+                                        isSubmenuOpen ? 'max-h-[350px] mt-4 opacity-100' : 'max-h-0 opacity-0'
+                                    }`}>
+                                        {link.subLinks.map((subLink) => (
+                                            <Link
+                                                key={`mobile_sub_${subLink.name}`}
+                                                to={subLink.path}
+                                                onClick={() => { setIsOpen(false); }}
+                                                className="text-[14px] font-semibold uppercase tracking-[0.2em] text-white/60 hover:text-brand-red transition-all duration-300"
+                                            >
+                                                {subLink.name}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+                            );
+                        }
+
+                        return (
+                            <Link
+                                key={`mobile_${link.name}`}
+                                to={link.path}
+                                onClick={() => setIsOpen(false)}
+                                className="text-xl font-bold uppercase tracking-[0.25em] text-white hover:text-brand-red transition-all duration-300"
+                            >
+                                {link.name}
+                            </Link>
+                        );
+                    })}
 
                     <div className="flex flex-col items-center gap-4 mt-6 w-full max-w-[280px]">
                         {user ? (
@@ -225,11 +335,11 @@ const Header = () => {
                             </>
                         ) : (
                             <Link
-                                to="/login"
-                                onClick={() => setIsOpen(false)}
-                                className="w-full text-center py-3.5 rounded-full font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black"
-                            >
-                                Login
+                                  to="/login"
+                                  onClick={() => setIsOpen(false)}
+                                  className="w-full text-center py-3.5 rounded-full font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black"
+                              >
+                                  Login
                             </Link>
                         )}
                         <Link

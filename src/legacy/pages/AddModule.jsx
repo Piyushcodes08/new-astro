@@ -412,7 +412,7 @@ const AddModule = () => {
                         <button
                           onClick={() => handleUpload(newVideoTitle, newVideoDescription, newVideoFile, "videos")}
                           disabled={uploading}
-                          className="flex-1 bg-[#dd2727] text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/30 transition-all disabled:opacity-50"
+                          className="flex-1 bg-[#dd2727] text-white py-2 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/30 transition-all disabled:opacity-50"
                         >
                           {uploading ? "Transmitting..." : "Upload Video"}
                         </button>
@@ -457,7 +457,7 @@ const AddModule = () => {
                       <button
                         onClick={() => handleUpload(newMaterialTitle, "", newMaterialFile, "materials")}
                         disabled={uploading}
-                        className="w-full bg-[#b0a102] text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-yellow-500/20 transition-all disabled:opacity-50"
+                        className="w-full bg-[#b0a102] text-white py-2 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-yellow-500/20 transition-all disabled:opacity-50"
                       >
                         {uploading ? "Transmitting..." : "Upload Material"}
                       </button>

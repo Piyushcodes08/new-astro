@@ -4,6 +4,17 @@
   overflow: visible;
   position: relative;
 }
+.article-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, #dd2727 50%, #b0a10291 50%);
+  filter: blur(80px);
+  opacity: 0.7;
+  transform: scale(1.1);
+  z-index: -1;
+}
+
 
 
 /* Redundant .article-container styles removed in favor of global .section-container */

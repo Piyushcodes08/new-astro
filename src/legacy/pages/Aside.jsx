@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import {
-    IoIosArrowBack,
     IoIosContact,
     IoIosLogOut
 } from "react-icons/io";
@@ -66,10 +65,10 @@ const Aside = () => {
     };
 
     const menuItems = [
-        { title: "My Profile", path: "/profile" },
-        { title: "Enrolled Courses", path: "/enrolledcourse" },
-        { title: "Add Courses", path: "/courses" },
-        { title: "Payments", path: "/finalize" },
+        { title: "My Profile", path: "/profile", icon: IoIosContact },
+        { title: "Enrolled Courses", path: "/enrolledcourse", icon: IoIosContact },
+        { title: "Add Courses", path: "/courses", icon: IoIosContact },
+        { title: "Payments", path: "/finalize", icon: IoIosContact },
     ];
 
   return (
@@ -98,7 +97,7 @@ const Aside = () => {
 
       <aside
         ref={sidebarRef}
-        className={`fixed lg:sticky top-0 lg:top-16 left-0 w-72 bg-[#dd2727] transition-all duration-700 cubic-bezier(0.4, 0, 0.2, 1) transform z-[2100] flex flex-col h-screen lg:h-[calc(100vh-64px)] overflow-hidden self-start border-r border-white/10
+        className={`fixed lg:sticky top-0 lg:top-16 left-0 w-64 bg-[#dd2727] transition-all duration-700 cubic-bezier(0.4, 0, 0.2, 1) transform z-[2100] flex flex-col h-screen lg:h-[calc(100vh-64px)] overflow-hidden self-start border-r border-white/10
         ${sidebarOpen ? "translate-x-0 shadow-[40px_0_100px_rgba(0,0,0,0.6)]" : "-translate-x-full lg:translate-x-0 lg:shadow-none"}`}
       >
         {/* Close Button for Mobile - Elegant Top Bar */}
@@ -113,22 +112,22 @@ const Aside = () => {
         </div>
 
         {/* Profile Section - Premium Centered Look */}
-        <div className=" flex flex-col items-center flex-shrink-0 text-center">
+        <div className="flex flex-col items-center flex-shrink-0 text-center px-6 pt-8 pb-6">
           <div className="relative group">
             <div className="absolute -inset-2 bg-white/20 rounded-full blur opacity-0 group-hover:opacity-100 transition duration-1000"></div>
-            <div className="relative w-32 h-32 rounded-full border-4 border-white/30 overflow-hidden shadow-2xl mb-6 bg-white/5 flex items-center justify-center transition-all duration-700 hover:border-white/60">
+            <div className="relative w-24 h-24 rounded-full border-4 border-white/30 overflow-hidden shadow-2xl mb-4 bg-white/5 flex items-center justify-center">
               {formData.profilePic ? (
                 <img
                   src={formData.profilePic}
                   alt="Profile"
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-1000"
                 />
               ) : (
-                <IoIosContact size={80} className="text-white/20" />
+                <IoIosContact size={40} className="text-white/30" />
               )}
             </div>
           </div>
-          <h2 className="text-white text-2xl font-black tracking-tight uppercase px-4 leading-tight">{formData.fullName}</h2>
+          <h2 className="text-white text-xl font-black tracking-tight uppercase px-2 leading-tight">{formData.fullName}</h2>
           <div className="flex items-center gap-2 mt-2">
             <div className="w-1 h-1 rounded-full bg-white animate-pulse"></div>
             <p className="text-[9px] text-white/50 uppercase tracking-[0.4em] font-black">Sacred Seeker</p>
@@ -136,7 +135,7 @@ const Aside = () => {
         </div>
 
         {/* Navigation Menu - Clean & Classic */}
-        <nav className="flex-1 overflow-y-auto custom-scrollbar px-8 space-y-4 pb-12 mt-6">
+        <nav className="flex-1 overflow-y-auto custom-scrollbar px-6 space-y-3 pb-8 mt-6">
           {menuItems.map((item, index) => {
             const isActive = location.pathname === item.path;
             return (
@@ -146,15 +145,12 @@ const Aside = () => {
                   navigate(item.path);
                   if (window.innerWidth < 1024) setSidebarOpen(false);
                 }}
-                className={`w-full group relative overflow-hidden px-6 py-4 rounded-lg font-black text-[10px] uppercase tracking-[0.25em] transition-all duration-500
+                className={`w-full text-left flex items-center gap-3 px-5 py-3 rounded transition-all duration-300 font-semibold uppercase text-[10px] tracking-[0.2em]
                 ${isActive
-                  ? "bg-white text-[#dd2727] shadow-2xl transform scale-[1.02]"
-                  : "bg-white/5 text-white/80 hover:bg-white/10 hover:text-white hover:translate-x-1"}`}
+                  ? "bg-white text-[#dd2727] shadow-lg"
+                  : "bg-white/10 text-white/90 hover:bg-white/15 hover:translate-x-0.5"}`}
               >
-                <span className="relative z-10">{item.title}</span>
-                {!isActive && (
-                    <div className="absolute inset-0 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 opacity-5"></div>
-                )}
+                <span>{item.title}</span>
               </button>
             );
           })}

@@ -31,11 +31,14 @@ const Home = () => {
             <Header />
             <main>
                 <Hero />
-                <CourseSection />
-
                 {/* Below-fold — lazy loaded */}
+ 
+               
                 <Suspense fallback={<SectionPlaceholder />}>
                     <ArticleSection />
+                </Suspense>
+                 <Suspense fallback={<SectionPlaceholder />}>
+                   <CourseSection />
                 </Suspense>
                 <Suspense fallback={<SectionPlaceholder />}>
                     <About />

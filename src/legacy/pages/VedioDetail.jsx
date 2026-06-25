@@ -22,6 +22,7 @@ import ReactPlayer from 'react-player';
 import Header from "../../components/sections/Header/Header";
 import Aside from "./Aside";
 import Footer from "../../components/sections/Footer/Footer";
+import defaultThumbnail from '../../assets/images/common/logos/vahlay_astro logo.webp';
 
 const VideoDetailsPage = () => {
     const { courseName, videoId } = useParams();
@@ -106,14 +107,12 @@ const VideoDetailsPage = () => {
                         id: doc.id,
                         ...data,
                         url: videoUrl,
-                        thumbnail: data.thumbnail || (ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : 'https://images.unsplash.com/photo-1506318137071-a8e063b4bcc0?w=200'),
+                        thumbnail: data.thumbnail || (ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : defaultThumbnail),
                         displayTitle: data.description || data.title || "Untitled Lesson",
                         order: parseInt(data.order) || 0,
                         titleOrder: parseInt(data["title-order"]) || 0
                     };
                 });
-
-                setVideos(allVideos);
 
                 const currentVideo = allVideos.find(video => video.id === videoId);
                 if (!currentVideo) {
@@ -366,7 +365,7 @@ const VideoDetailsPage = () => {
                                                     src={video.thumbnail} 
                                                     alt="" 
                                                     className={`w-full h-full object-cover transition-all duration-500 ${isActive ? 'scale-110' : 'opacity-70 group-hover:opacity-100'}`} 
-                                                    onError={(e) => { e.target.onerror = null; e.target.src = "https://images.unsplash.com/photo-1506318137071-a8e063b4bcc0?w=200"; }}
+                                                    onError={(e) => { e.target.onerror = null; e.target.src = defaultThumbnail; }}
                                                 />
                                                 {isWatched && (
                                                     <div className="absolute inset-0 bg-emerald-500/10 flex items-center justify-center backdrop-blur-[1px]">
