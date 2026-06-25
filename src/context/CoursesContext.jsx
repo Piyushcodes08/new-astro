@@ -1,45 +1,66 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+﻿import React, { createContext, useContext, useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
-// Create context
 const CoursesContext = createContext();
+let cachedSlugMap = null;
+let pendingCoursesRequest = null;
 
 const slugify = (text) =>
   text?.toLowerCase().replace(/[^\w ]+/g, "").replace(/ +/g, "-");
 
+const loadCourses = async () => {
+  if (cachedSlugMap) return cachedSlugMap;
+  if (pendingCoursesRequest) return pendingCoursesRequest;
+
+  pendingCoursesRequest = Promise.all([
+    getDocs(collection(db, "freeCourses")),
+    getDocs(collection(db, "paidCourses")),
+  ]).then(([freeSnap, paidSnap]) => {
+    const map = {};
+
+    freeSnap.forEach((doc) => {
+      const data = doc.data();
+      const slug = slugify(data.title);
+      map[`free/${slug}`] = { id: doc.id, type: "free", slug, ...data };
+    });
+
+    paidSnap.forEach((doc) => {
+      const data = doc.data();
+      const slug = slugify(data.title);
+      map[`paid/${slug}`] = { id: doc.id, type: "paid", slug, ...data };
+    });
+
+    cachedSlugMap = map;
+    return map;
+  }).finally(() => {
+    pendingCoursesRequest = null;
+  });
+
+  return pendingCoursesRequest;
+};
+
 export const CoursesProvider = ({ children }) => {
-  const [slugMap, setSlugMap] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [slugMap, setSlugMap] = useState(cachedSlugMap || {});
+  const [loading, setLoading] = useState(!cachedSlugMap);
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      setLoading(true);
-      const map = {};
+    let active = true;
 
-      // ✅ FIX: Fetch both collections in PARALLEL — ~50% faster than sequential for loop
-      const [freeSnap, paidSnap] = await Promise.all([
-        getDocs(collection(db, "freeCourses")),
-        getDocs(collection(db, "paidCourses")),
-      ]);
-
-      freeSnap.forEach((doc) => {
-        const data = doc.data();
-        const slug = slugify(data.title);
-        map[`free/${slug}`] = { id: doc.id, type: "free", slug, ...data };
+    loadCourses()
+      .then((map) => {
+        if (active) setSlugMap(map);
+      })
+      .catch((error) => {
+        console.error("Error loading courses:", error);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
       });
 
-      paidSnap.forEach((doc) => {
-        const data = doc.data();
-        const slug = slugify(data.title);
-        map[`paid/${slug}`] = { id: doc.id, type: "paid", slug, ...data };
-      });
-
-      setSlugMap(map);
-      setLoading(false);
+    return () => {
+      active = false;
     };
-
-    fetchCourses();
   }, []);
 
   return (
@@ -49,4 +70,10 @@ export const CoursesProvider = ({ children }) => {
   );
 };
 
-export const useCourses = () => useContext(CoursesContext);
+export const useCourses = () => {
+  const context = useContext(CoursesContext);
+  if (!context) {
+    throw new Error("useCourses must be used within a CoursesProvider");
+  }
+  return context;
+};

@@ -116,7 +116,7 @@ const Header = () => {
                     />
                 </div>
 
-                <nav className="mx-auto grid items-center transition-all duration-500 max-w-container-max-width px-[15px] md:px-[50px] py-0 h-full w-full"
+                <nav className="mx-auto grid items-center transition-all duration-500 max-w-container-max-width px-3.75 md:px-12.5 py-0 h-full w-full"
                     style={{ gridTemplateColumns: 'auto 1fr auto' }}
                 >
                     {/* Col 1 — Logo (Left) */}
@@ -126,7 +126,7 @@ const Header = () => {
                                 src={logo}
                                 alt="Vahlay Astro Logo"
                                 loading="lazy"
-                                className={`transition-all duration-500 object-contain hover:scale-105 ${showBg ? 'h-12 w-12 md:h-14 md:w-14' : 'h-20 w-20 md:h-[85px] md:w-[85px]'}`}
+                                className={`transition-all duration-500 object-contain hover:scale-105 ${showBg ? 'h-12 w-12 md:h-14 md:w-14' : 'h-20 w-20 md:h-21.25 md:w-21.25'}`}
                             />
                         </Link>
                     </div>
@@ -150,10 +150,10 @@ const Header = () => {
                                         <div className="absolute left-0 right-0 top-0 w-full opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 -z-1 pointer-events-none group-hover:pointer-events-auto">
                                             <div className="bg-[#0e0404]/98 border-b border-t border-white/10 backdrop-blur-[25px] shadow-[0_25px_60px_rgba(0,0,0,0.85)] relative py-8">
                                                 {/* Centered content grid aligned to container grid */}
-                                                <div className="mx-auto max-w-container-max-width px-[15px] pt-25 md:px-[50px] w-full grid grid-cols-12 gap-8">
+                                                <div className="mx-auto max-w-container-max-width px-3.75 pt-20 md:px-12.5 w-full grid grid-cols-12 gap-8">
                                                     
                                                     {/* Left Column (Visual Promo Box) */}
-                                                    <div className="col-span-4 bg-white/[0.02] border border-white/5 rounded-2xl p-6 flex flex-col justify-between gap-6 relative overflow-hidden group/promo">
+                                                    <div className="col-span-4 bg-white/2 border border-white/5 rounded-2xl p-6 flex flex-col justify-between gap-6 relative overflow-hidden group/promo">
                                                         <div className="absolute top-0 right-0 w-32 h-32 bg-brand-red/5 rounded-full blur-2xl"></div>
                                                         <div className="space-y-1.5 relative z-10">
                                                             <span className="text-[9px] font-black text-brand-red uppercase tracking-[0.25em]">Vahlay Astro</span>
@@ -264,8 +264,8 @@ const Header = () => {
                     }`}
             >
                 {/* Background Decorative Glow */}
-                <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] bg-brand-red/20 blur-[100px] rounded-full pointer-events-none"></div>
-                <div className="absolute bottom-[-10%] left-[-10%] w-[300px] h-[300px] bg-[#b0a102]/10 blur-[100px] rounded-full pointer-events-none"></div>
+                <div className="absolute top-[-10%] right-[-10%] w-75 h-75 bg-brand-red/20 blur-[100px] rounded-full pointer-events-none"></div>
+                <div className="absolute bottom-[-10%] left-[-10%] w-75 h-75 bg-[#b0a102]/10 blur-[100px] rounded-full pointer-events-none"></div>
 
                 <div className="relative z-10 flex flex-col items-center gap-6 w-full max-h-[70vh] overflow-y-auto px-6 custom-scrollbar">
                     {navLinks.map((link) => {
@@ -287,7 +287,7 @@ const Header = () => {
 
                                     {/* Expandable Sublinks Menu */}
                                     <div className={`w-full flex flex-col items-center gap-4 transition-all duration-500 overflow-hidden ${
-                                        isSubmenuOpen ? 'max-h-[350px] mt-4 opacity-100' : 'max-h-0 opacity-0'
+                                        isSubmenuOpen ? 'max-h-87.5 mt-4 opacity-100' : 'max-h-0 opacity-0'
                                     }`}>
                                         {link.subLinks.map((subLink) => (
                                             <Link
@@ -316,7 +316,7 @@ const Header = () => {
                         );
                     })}
 
-                    <div className="flex flex-col items-center gap-4 mt-6 w-full max-w-[280px]">
+                    <div className="flex flex-col items-center gap-4 mt-6 w-full max-w-70">
                         {user ? (
                             <>
                                 <Link

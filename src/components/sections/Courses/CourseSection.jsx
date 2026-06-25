@@ -47,11 +47,11 @@ const CourseSection = () => {
   return (
     <section className="course-section">
       <div className="course-section-header">
-     
+
         <h2 className="title-batangas course-section-title">
           Courses for Astrologer
         </h2>
-      
+
         <p className="subtitle-poppins course-section-subtitle">
           It&apos;s not just a course — it&apos;s a life-changing journey into
           celestial wisdom.
@@ -65,10 +65,12 @@ const CourseSection = () => {
 
 const HorizontalScrollCarousel = ({ items }) => {
   const targetRef = useRef(null);
+  const stickyRef = useRef(null);
   const viewportWidth = useViewportWidth();
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [isDraggingState, setIsDraggingState] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -95,13 +97,201 @@ const HorizontalScrollCarousel = ({ items }) => {
     setActiveIndex(safeIndex);
   });
 
+  // Drag-to-scroll state refs
+  const isDragging = useRef(false);
+  const startXRef = useRef(0);
+  const startYRef = useRef(0);
+  const startScrollY = useRef(0);
+  const currentDeltaX = useRef(0);
+  const isFirstMove = useRef(true);
+  const isSwipeHorizontal = useRef(null);
+  const preventClickRef = useRef(false);
+
+  const handleMouseDown = (e) => {
+    // Only drag with left click
+    if (e.button !== 0) return;
+
+    isDragging.current = true;
+    setIsDraggingState(true);
+    startXRef.current = e.clientX;
+    startScrollY.current = window.scrollY;
+    currentDeltaX.current = 0;
+    preventClickRef.current = false;
+
+    window.addEventListener("mousemove", onWindowMouseMove.current);
+    window.addEventListener("mouseup", onWindowMouseUp.current);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging.current) return;
+
+    const deltaX = e.clientX - startXRef.current;
+    currentDeltaX.current = deltaX;
+
+    if (Math.abs(deltaX) > 5) {
+      preventClickRef.current = true;
+    }
+
+    if (!targetRef.current) return;
+
+    const rect = targetRef.current.getBoundingClientRect();
+    const startScrollLimit = rect.top + window.scrollY;
+    const scrollableDistance = targetRef.current.offsetHeight - window.innerHeight;
+    const endScrollLimit = startScrollLimit + scrollableDistance;
+
+    const translationDistance = Math.abs(startX - endX);
+    if (translationDistance === 0) return;
+
+    const ratio = scrollableDistance / translationDistance;
+    const targetScrollY = Math.max(
+      startScrollLimit,
+      Math.min(endScrollLimit, startScrollY.current - deltaX * ratio)
+    );
+
+    window.scrollTo(0, targetScrollY);
+  };
+
+  const handleMouseUp = () => {
+    isDragging.current = false;
+    setIsDraggingState(false);
+
+    window.removeEventListener("mousemove", onWindowMouseMove.current);
+    window.removeEventListener("mouseup", onWindowMouseUp.current);
+
+    if (preventClickRef.current) {
+      setTimeout(() => {
+        preventClickRef.current = false;
+      }, 50);
+    }
+  };
+
+  const handleTouchStart = (e) => {
+    const touch = e.touches[0];
+    isDragging.current = true;
+    setIsDraggingState(true);
+    startXRef.current = touch.clientX;
+    startYRef.current = touch.clientY;
+    startScrollY.current = window.scrollY;
+    currentDeltaX.current = 0;
+    isFirstMove.current = true;
+    isSwipeHorizontal.current = null;
+    preventClickRef.current = false;
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging.current) return;
+    const touch = e.touches[0];
+
+    const deltaX = touch.clientX - startXRef.current;
+    const deltaY = touch.clientY - startYRef.current;
+    currentDeltaX.current = deltaX;
+
+    if (isFirstMove.current) {
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        isSwipeHorizontal.current = true;
+        preventClickRef.current = true;
+      } else {
+        isSwipeHorizontal.current = false;
+        isDragging.current = false;
+        setIsDraggingState(false);
+      }
+      isFirstMove.current = false;
+    }
+
+    if (isSwipeHorizontal.current) {
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+
+      if (!targetRef.current) return;
+
+      const rect = targetRef.current.getBoundingClientRect();
+      const startScrollLimit = rect.top + window.scrollY;
+      const scrollableDistance = targetRef.current.offsetHeight - window.innerHeight;
+      const endScrollLimit = startScrollLimit + scrollableDistance;
+
+      const translationDistance = Math.abs(startX - endX);
+      if (translationDistance === 0) return;
+
+      const ratio = scrollableDistance / translationDistance;
+      const targetScrollY = Math.max(
+        startScrollLimit,
+        Math.min(endScrollLimit, startScrollY.current - deltaX * ratio)
+      );
+
+      window.scrollTo(0, targetScrollY);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    isDragging.current = false;
+    setIsDraggingState(false);
+
+    if (preventClickRef.current) {
+      setTimeout(() => {
+        preventClickRef.current = false;
+      }, 50);
+    }
+  };
+
+  // Stable listener wrapper ref
+  const dragHandlersRef = useRef({});
+  dragHandlersRef.current = {
+    handleMouseMove,
+    handleMouseUp,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+  };
+
+  const onWindowMouseMove = useRef((e) => {
+    dragHandlersRef.current.handleMouseMove?.(e);
+  });
+  const onWindowMouseUp = useRef((e) => {
+    dragHandlersRef.current.handleMouseUp?.(e);
+  });
+
+  useEffect(() => {
+    const stickyEl = stickyRef.current;
+    if (!stickyEl) return;
+
+    const onTouchStart = (e) => dragHandlersRef.current.handleTouchStart?.(e);
+    const onTouchMove = (e) => dragHandlersRef.current.handleTouchMove?.(e);
+    const onTouchEnd = (e) => dragHandlersRef.current.handleTouchEnd?.(e);
+
+    stickyEl.addEventListener("touchstart", onTouchStart, { passive: true });
+    stickyEl.addEventListener("touchmove", onTouchMove, { passive: false });
+    stickyEl.addEventListener("touchend", onTouchEnd, { passive: true });
+
+    return () => {
+      stickyEl.removeEventListener("touchstart", onTouchStart);
+      stickyEl.removeEventListener("touchmove", onTouchMove);
+      stickyEl.removeEventListener("touchend", onTouchEnd);
+
+      window.removeEventListener("mousemove", onWindowMouseMove.current);
+      window.removeEventListener("mouseup", onWindowMouseUp.current);
+    };
+  }, []);
+
+  const handleClickCapture = (e) => {
+    if (preventClickRef.current) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  };
+
   return (
     <section
       ref={targetRef}
       className="relative h-[300vh] course-carousel-section"
     >
       <div
-        className="sticky top-0 flex h-screen items-center overflow-hidden course-carousel-sticky"
+        ref={stickyRef}
+        onMouseDown={handleMouseDown}
+        onClickCapture={handleClickCapture}
+        className={`sticky top-0 flex h-screen items-center overflow-hidden course-carousel-sticky ${
+          isDraggingState ? "is-dragging" : ""
+        }`}
         style={{ perspective: "1200px" }}
       >
         <motion.div
@@ -189,9 +379,8 @@ const Card = ({
         pointerEvents: "none",
         transformStyle: "preserve-3d",
       }}
-      className={`course-card-shell ${isActive ? "is-active" : ""} ${
-        isHovered ? "is-hovered" : ""
-      }`}
+      className={`course-card-shell ${isActive ? "is-active" : ""} ${isHovered ? "is-hovered" : ""
+        }`}
     >
       <div className="course-card-frame" aria-hidden="true">
         <span className="course-card-corner course-card-corner--tl" />
