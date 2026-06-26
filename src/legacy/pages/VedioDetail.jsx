@@ -293,13 +293,13 @@ const VideoDetailsPage = () => {
                         {/* Comments Section */}
                         <div className="bg-white p-6 md:p-10 rounded-2xl md:rounded-3xl shadow-sm border border-slate-100">
                             <div className="flex items-center gap-4 mb-8">
-                                <div className="w-1.5 h-6 bg-[#dd2727] rounded-full"></div>
+                                <div className="w-1.5 h-6 bg-[#bf0603] rounded-full"></div>
                                 <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight">Disciple Discussions ({comments.length})</h2>
                             </div>
 
                             <form onSubmit={handleCommentSubmit} className="space-y-4 mb-10">
                                 <textarea
-                                    className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-6 py-4 text-sm text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#dd2727]/5 focus:border-[#dd2727] transition-all resize-none h-24 placeholder:text-slate-400 font-medium"
+                                    className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-6 py-4 text-sm text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#bf0603]/5 focus:border-[#bf0603] transition-all resize-none h-24 placeholder:text-slate-400 font-medium"
                                     placeholder="Share your enlightenment..."
                                     value={newComment}
                                     onChange={(e) => setNewComment(e.target.value)}
@@ -307,7 +307,7 @@ const VideoDetailsPage = () => {
                                 <div className="flex justify-end">
                                     <button
                                         type="submit"
-                                        className="bg-[#dd2727] text-white px-10 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:shadow-lg transition-all"
+                                        className="bg-[#bf0603] text-white px-10 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:shadow-lg transition-all"
                                     >
                                         Post Comment
                                     </button>
@@ -317,7 +317,7 @@ const VideoDetailsPage = () => {
                             <div className="space-y-8">
                                 {comments.map((comment) => (
                                     <div key={comment.id} className="flex gap-5 items-start">
-                                        <div className="w-12 h-12 rounded-2xl bg-[#dd2727]/5 border border-[#dd2727]/10 flex items-center justify-center font-black text-[#dd2727] flex-shrink-0 text-lg">
+                                        <div className="w-12 h-12 rounded-2xl bg-[#bf0603]/5 border border-[#bf0603]/10 flex items-center justify-center font-black text-[#bf0603] flex-shrink-0 text-lg">
                                             {comment.userName.charAt(0).toUpperCase()}
                                         </div>
                                         <div className="flex-1 min-w-0">
@@ -358,7 +358,7 @@ const VideoDetailsPage = () => {
                                         <button
                                             key={video.id}
                                             onClick={() => handleVideoSelect(video)}
-                                            className={`w-full group flex items-center gap-4 p-4 transition-all text-left border-b border-slate-50/50 ${isActive ? 'bg-red-50 border-l-4 border-l-[#dd2727]' : 'hover:bg-slate-50'}`}
+                                            className={`w-full group flex items-center gap-4 p-4 transition-all text-left border-b border-slate-50/50 ${isActive ? 'bg-red-50 border-l-4 border-l-[#bf0603]' : 'hover:bg-slate-50'}`}
                                         >
                                             <div className="relative w-20 aspect-video bg-slate-100 rounded-lg overflow-hidden flex-shrink-0 shadow-sm">
                                                 <img 
@@ -374,10 +374,10 @@ const VideoDetailsPage = () => {
                                                 )}
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <p className={`text-[8px] font-black uppercase tracking-widest mb-1 ${isActive ? 'text-[#dd2727]' : 'text-slate-400'}`}>
+                                                <p className={`text-[8px] font-black uppercase tracking-widest mb-1 ${isActive ? 'text-[#bf0603]' : 'text-slate-400'}`}>
                                                     M{video.titleOrder} • L{video.order}
                                                 </p>
-                                                <h5 className={`text-[11px] font-black uppercase tracking-tight leading-tight line-clamp-2 ${isActive ? 'text-[#dd2727]' : 'text-slate-700'}`}>
+                                                <h5 className={`text-[11px] font-black uppercase tracking-tight leading-tight line-clamp-2 ${isActive ? 'text-[#bf0603]' : 'text-slate-700'}`}>
                                                     {video.displayTitle}
                                                 </h5>
                                             </div>
@@ -396,7 +396,7 @@ const VideoDetailsPage = () => {
                                 </div>
                                 {ads.map((ad, index) => (
                                     <a key={index} href={ad.link} target="_blank" rel="noopener noreferrer" className="block group">
-                                        <div className="rounded-2xl overflow-hidden border border-slate-200 bg-white group-hover:border-[#dd2727]/30 transition-all shadow-sm hover:shadow-xl hover:-translate-y-1 duration-500">
+                                        <div className="rounded-2xl overflow-hidden border border-slate-200 bg-white group-hover:border-[#bf0603]/30 transition-all shadow-sm hover:shadow-xl hover:-translate-y-1 duration-500">
                                             <img src={ad.imageUrl} alt="" className="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-1000" />
                                         </div>
                                     </a>

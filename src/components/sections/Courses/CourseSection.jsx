@@ -283,7 +283,7 @@ const HorizontalScrollCarousel = ({ items }) => {
   return (
     <section
       ref={targetRef}
-      className="relative h-[300vh] course-carousel-section"
+      className="relative h-[200vh] course-carousel-section"
     >
       <div
         ref={stickyRef}

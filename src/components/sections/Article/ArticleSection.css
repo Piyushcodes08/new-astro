@@ -1,19 +1,19 @@
 .article-section {
   width: 100%;
-  background: radial-gradient(ellipse at center, rgba(221, 39, 39, 0.04) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(191, 6, 3, 0.04) 0%, transparent 70%);
   overflow: visible;
   position: relative;
+
 }
+
 .article-section::before {
   content: '';
   position: absolute;
   inset: 0;
-background: linear-gradient(
-  145deg,
-  #8B0000 0%,
-  #FF3D00 45%,
-  #FFD700 100%
-);
+  background: linear-gradient(145deg,
+      #8B0000 0%,
+      #FF3D00 45%,
+      #FFD700 100%);
   filter: blur(80px);
   opacity: 0.7;
   transform: scale(1.1);
@@ -59,7 +59,7 @@ background: linear-gradient(
 .article-wrapper {
   cursor: pointer;
   display: block;
-  width: min(100%, 380px);
+  width: min(80%, 380px);
   min-height: 350px;
   position: relative;
   background: #fdf2d0;
@@ -145,7 +145,7 @@ background: linear-gradient(
 .article-cover-title {
   font-family: 'Batangas', sans-serif;
   font-size: 1.1rem;
-  color: #dd2727;
+  color: #bf0603;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   line-height: 1.2;
@@ -263,7 +263,7 @@ background: linear-gradient(
 .article-inner-author {
   font-family: 'Poppins', sans-serif;
   font-size: 0.75rem;
-  color: #dd2727;
+  color: #bf0603;
   font-weight: 600;
 }
 
@@ -281,7 +281,7 @@ background: linear-gradient(
   font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #dd2727;
+  color: #bf0603;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   text-decoration: none;
@@ -330,14 +330,14 @@ background: linear-gradient(
 .article-title {
   font-family: 'Batangas', sans-serif;
   font-size: 1.2rem;
-  color: #dd2727;
+  color: #bf0603;
   text-transform: uppercase;
   letter-spacing: 1px;
   text-align: center;
   max-width: 220px;
   line-height: 1.3;
   margin-top: 1rem;
-  text-shadow: 0 0 20px rgba(221, 39, 39, 0.4);
+  text-shadow: 0 0 20px rgba(191, 6, 3, 0.4);
 }
 
 @media (max-width: 1024px) {

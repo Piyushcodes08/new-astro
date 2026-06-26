@@ -168,9 +168,9 @@ const NewUser = () => {
       <div id="top-sentinel" className="absolute top-0 left-0 w-full h-px pointer-events-none z-[-1]" />
       <Header />
       <div className="min-h-screen bg-[#0a0a0a] text-white pt-[120px] pb-20 px-4 relative z-10">
-        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-[2.5rem] w-full max-w-4xl mx-auto shadow-[0_0_50px_rgba(221,39,39,0.15)]">
+        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-[2.5rem] w-full max-w-4xl mx-auto shadow-[0_0_50px_rgba(191, 6, 3,0.15)]">
           <h1 className="text-3xl md:text-5xl font-bold text-center mb-2 text-white uppercase tracking-tight">
-            Book <span className="text-[#dd2727]">Consultation</span>
+            Book <span className="text-[#bf0603]">Consultation</span>
           </h1>
           <p className="text-center text-gray-400 mb-12 text-sm font-medium uppercase tracking-widest">Map your celestial journey with our expert astrologers</p>
 
@@ -178,7 +178,7 @@ const NewUser = () => {
             {/* Personal Details */}
             <div className="space-y-8">
               <h3 className="text-sm font-bold text-white uppercase tracking-[0.2em] border-b border-white/10 pb-4 flex items-center gap-2">
-                <span className="w-2 h-2 bg-[#dd2727] rounded-full animate-pulse"></span>
+                <span className="w-2 h-2 bg-[#bf0603] rounded-full animate-pulse"></span>
                 Celestial Identity
               </h3>
 
@@ -191,7 +191,7 @@ const NewUser = () => {
                     value={formData.firstName}
                     onChange={handleChange}
                     placeholder="Enter first name"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all placeholder-gray-600"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all placeholder-gray-600"
                     required
                   />
                 </div>
@@ -203,7 +203,7 @@ const NewUser = () => {
                     value={formData.lastName}
                     onChange={handleChange}
                     placeholder="Enter last name"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all placeholder-gray-600"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all placeholder-gray-600"
                     required
                   />
                 </div>
@@ -222,7 +222,7 @@ const NewUser = () => {
                         onChange={handleChange}
                         className="peer sr-only"
                       />
-                      <div className="px-6 py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-400 peer-checked:bg-[#dd2727]/20 peer-checked:border-[#dd2727] peer-checked:text-white transition-all group-hover:bg-white/10">
+                      <div className="px-6 py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-400 peer-checked:bg-[#bf0603]/20 peer-checked:border-[#bf0603] peer-checked:text-white transition-all group-hover:bg-white/10">
                         {g}
                       </div>
                     </label>
@@ -239,7 +239,7 @@ const NewUser = () => {
                     value={formData.dob.day}
                     onChange={handleChange}
                     placeholder="DD"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   />
                 </div>
                 <div className="space-y-2">
@@ -250,7 +250,7 @@ const NewUser = () => {
                     value={formData.dob.month}
                     onChange={handleChange}
                     placeholder="MM"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   />
                 </div>
                 <div className="space-y-2">
@@ -261,7 +261,7 @@ const NewUser = () => {
                     value={formData.dob.year}
                     onChange={handleChange}
                     placeholder="YYYY"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   />
                 </div>
               </div>
@@ -275,7 +275,7 @@ const NewUser = () => {
                     value={formData.birthTime.hour}
                     onChange={handleChange}
                     placeholder="HH"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   />
                 </div>
                 <div className="space-y-2">
@@ -286,7 +286,7 @@ const NewUser = () => {
                     value={formData.birthTime.minute}
                     onChange={handleChange}
                     placeholder="MM"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   />
                 </div>
                 <div className="space-y-2">
@@ -295,7 +295,7 @@ const NewUser = () => {
                     name="birthTime.period"
                     value={formData.birthTime.period}
                     onChange={handleChange}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all appearance-none cursor-pointer"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all appearance-none cursor-pointer"
                   >
                     <option value="AM" className="bg-[#0a0a0a]">AM</option>
                     <option value="PM" className="bg-[#0a0a0a]">PM</option>
@@ -311,7 +311,7 @@ const NewUser = () => {
                   value={formData.birthPlace}
                   onChange={handleChange}
                   placeholder="City, State, Country"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all placeholder-gray-600"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all placeholder-gray-600"
                   required
                 />
               </div>
@@ -333,7 +333,7 @@ const NewUser = () => {
                     value={formData.countryCode}
                     onChange={handleChange}
                     placeholder="+91"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                     required
                   />
                 </div>
@@ -345,7 +345,7 @@ const NewUser = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="Enter phone number"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                     required
                   />
                 </div>
@@ -359,13 +359,13 @@ const NewUser = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="example@celestial.com"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   required
                 />
               </div>
 
               <div className="bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8 space-y-8">
-                <h4 className="text-xs font-bold text-[#dd2727] uppercase tracking-[0.2em]">Temporal Selection</h4>
+                <h4 className="text-xs font-bold text-[#bf0603] uppercase tracking-[0.2em]">Temporal Selection</h4>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
@@ -374,7 +374,7 @@ const NewUser = () => {
                       name="availableDate"
                       value={formData.availableDate}
                       onChange={handleChange}
-                      className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all appearance-none cursor-pointer"
+                      className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all appearance-none cursor-pointer"
                       required
                     >
                       <option value="" disabled className="bg-[#0a0a0a]">Select a Date</option>
@@ -391,7 +391,7 @@ const NewUser = () => {
                         name="slot"
                         value={formData.slot}
                         onChange={handleChange}
-                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all appearance-none cursor-pointer"
+                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all appearance-none cursor-pointer"
                         required
                       >
                         <option value="" disabled className="bg-[#0a0a0a]">Select a Slot</option>
@@ -409,7 +409,7 @@ const NewUser = () => {
 
             <button
               type="submit"
-              className="w-full py-6 bg-gradient-to-r from-[#dd2727] to-[#b0a102] text-white font-bold uppercase tracking-[0.3em] rounded-[1.5rem] hover:scale-[1.02] transition-all shadow-[0_0_30px_rgba(221,39,39,0.4)]"
+              className="w-full py-6 bg-gradient-to-r from-[#bf0603] to-[#b0a102] text-white font-bold uppercase tracking-[0.3em] rounded-[1.5rem] hover:scale-[1.02] transition-all shadow-[0_0_30px_rgba(191, 6, 3,0.4)]"
             >
               Align Destinies
             </button>

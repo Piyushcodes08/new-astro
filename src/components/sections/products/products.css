@@ -22,19 +22,12 @@
 
   border-radius: 20px;
 
-  background:
-    linear-gradient(180deg,
-      rgba(255, 255, 255, 0.08),
-      rgba(255, 255, 255, 0.02));
-
-  backdrop-filter: blur(18px);
+  background:#bf0603;
+    
 
   border: 1px solid rgba(255, 255, 255, 0.08);
 
-  transition:
-    transform .35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    box-shadow .35s ease,
-    border-color .35s ease;
+
 
   display: flex;
   flex-direction: column;
@@ -56,11 +49,9 @@
 }
 
 .pc-card:hover {
-  transform: translateY(-6px);
+
   border-color: rgba(255, 49, 49, 0.25);
-  box-shadow:
-    0 15px 40px rgba(0, 0, 0, 0.35),
-    0 0 25px rgba(255, 49, 49, 0.08);
+
 }
 
 /* ══════════════════════════════════════════
@@ -88,7 +79,7 @@
   letter-spacing: .12em;
 
   box-shadow:
-    0 10px 25px rgba(221, 39, 39, 0.35);
+    0 10px 25px rgba(191, 6, 3, 0.35);
 }
 
 /* ══════════════════════════════════════════
@@ -172,7 +163,7 @@
 
   background: rgba(255, 255, 255, 0.95);
 
-  color: #dd2727;
+  color: #bf0603;
 
   font-size: 12px;
   font-weight: 800;
@@ -220,9 +211,6 @@
   word-break: break-word;
 }
 
-.pc-title-link:hover .pc-title {
-  color: #ff4a4a;
-}
 
 .pc-desc {
   color: rgba(255, 255, 255, 0.65);
@@ -319,7 +307,7 @@
     background .3s ease;
 
   box-shadow:
-    0 10px 25px rgba(221, 39, 39, 0.25);
+    0 10px 25px rgba(191, 6, 3, 0.25);
 }
 
 .pc-btn:hover {
@@ -328,10 +316,10 @@
   background:
     linear-gradient(135deg,
       #ff4f4f,
-      #dd2727);
+      #bf0603);
 
   box-shadow:
-    0 14px 30px rgba(221, 39, 39, 0.45);
+    0 14px 30px rgba(191, 6, 3, 0.45);
 
   color: white;
 }

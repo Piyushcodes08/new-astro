@@ -17,7 +17,7 @@
 }
 
 .contact-label {
-  color: #dd2727;
+  color: #bf0603;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 4px;
@@ -35,7 +35,7 @@
   transform: translateX(-50%);
   width: 40px;
   height: 2px;
-  background: #dd2727;
+  background: #bf0603;
 }
 
 .contact-grid {
@@ -73,20 +73,20 @@
   min-width: 60px;
   height: 60px;
   border-radius: 12px;
-  background: rgba(221, 39, 39, 0.15);
-  border: 1px solid rgba(221, 39, 39, 0.4);
+  background: rgba(191, 6, 3, 0.15);
+  border: 1px solid rgba(191, 6, 3, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #dd2727;
+  color: #bf0603;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
 }
 
 .contact-list li:hover .contact-icon {
-  background: #dd2727;
+  background: #bf0603;
   color: #fff;
-  box-shadow: 0 15px 30px rgba(221, 39, 39, 0.3);
+  box-shadow: 0 15px 30px rgba(191, 6, 3, 0.3);
 }
 
 .contact-text-group h3 {
@@ -109,7 +109,7 @@
 }
 
 .contact-link:hover p {
-  color: #dd2727;
+  color: #bf0603;
 }
 
 /* Glassmorphism Contact Card */
@@ -134,7 +134,7 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at center, rgba(221, 39, 39, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(191, 6, 3, 0.05) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -177,9 +177,9 @@
 
 .input-group input:focus,
 .input-group textarea:focus {
-  border-color: #dd2727;
+  border-color: #bf0603;
   background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 4px rgba(221, 39, 39, 0.1);
+  box-shadow: 0 0 0 4px rgba(191, 6, 3, 0.1);
 }
 
 .contact-submit-btn {
@@ -187,7 +187,7 @@
   border: none;
   border-radius: 12px;
   padding: 10px 25px;
-  background: linear-gradient(135deg, #dd2727, #a51818);
+  background: linear-gradient(135deg, #bf0603, #a51818);
   color: #fff;
   font-size: 1.1rem;
   font-weight: 700;
@@ -201,7 +201,7 @@
 
 .contact-submit-btn:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(221, 39, 39, 0.3);
+  box-shadow: 0 20px 40px rgba(191, 6, 3, 0.3);
   filter: brightness(1.1);
 }
 

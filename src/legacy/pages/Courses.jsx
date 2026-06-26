@@ -118,7 +118,7 @@ const HeroSection = () => {
             {courses.map((course, index) => (
               <div
                 key={index}
-                className="group relative bg-white border-2 border-red-600 shadow-[0_20px_50px_rgba(221,39,39,0.1)] rounded-[2.5rem] hover:shadow-[0_30px_70px_rgba(221,39,39,0.2)] hover:scale-[1.02] transform transition-all duration-500 cursor-pointer flex flex-col h-full overflow-hidden"
+                className="group relative bg-white border-2 border-red-600 shadow-[0_20px_50px_rgba(191, 6, 3,0.1)] rounded-[2.5rem] hover:shadow-[0_30px_70px_rgba(191, 6, 3,0.2)] hover:scale-[1.02] transform transition-all duration-500 cursor-pointer flex flex-col h-full overflow-hidden"
                 onClick={() => handleCourseClick(course)}
               >
                 {/* Header Image Container */}
@@ -154,7 +154,7 @@ const HeroSection = () => {
                   
                   <div className="w-full">
                       <button
-                        className="w-full text-center text-white bg-red-600 font-black py-5 rounded-xl hover:bg-red-700 shadow-[0_15px_30px_rgba(221,39,39,0.2)] transition-all uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-3 group/btn"
+                        className="w-full text-center text-white bg-red-600 font-black py-5 rounded-xl hover:bg-red-700 shadow-[0_15px_30px_rgba(191, 6, 3,0.2)] transition-all uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-3 group/btn"
                       >
                         Begin Your Journey
                         <span className="group-hover:translate-x-2 transition-transform">→</span>

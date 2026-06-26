@@ -48,7 +48,7 @@ const AboutPage = () => {
                             {/* Red Dot Divider */}
                             <div className="mt-12 flex items-center justify-center gap-4">
                                 <div className="h-px w-12 bg-linear-to-r from-transparent to-white/10"></div>
-                                <div className="w-2.5 h-2.5 rounded-full bg-brand-red shadow-[0_0_15px_#dd2727]"></div>
+                                <div className="w-2.5 h-2.5 rounded-full bg-brand-red shadow-[0_0_15px_#bf0603]"></div>
                                 <div className="h-px w-12 bg-linear-to-l from-transparent to-white/10"></div>
                             </div>
                         </div>
@@ -101,7 +101,7 @@ const AboutPage = () => {
                                     <Link
                                         key={idx}
                                         to={srv.link}
-                                        className="bg-[#150a0a]/80 backdrop-blur-lg border border-white/10 rounded-md py-6 px-[15px] md:px-[50px] hover:scale-[1.05] hover:border-brand-red/40 shadow-xl hover:shadow-[0_20px_50px_rgba(221,39,39,0.25)] transition-all duration-500 block text-center group flex flex-col items-center justify-between min-h-[260px]"
+                                        className="bg-[#150a0a]/80 backdrop-blur-lg border border-white/10 rounded-md py-6 px-[15px] md:px-[50px] hover:scale-[1.05] hover:border-brand-red/40 shadow-xl hover:shadow-[0_20px_50px_rgba(191, 6, 3,0.25)] transition-all duration-500 block text-center group flex flex-col items-center justify-between min-h-[260px]"
                                     >
                                         <div className="w-full">
                                             <h3 className="title-batangas text-3xl mb-4 text-brand-red group-hover:scale-110 transition-transform duration-300">
@@ -176,7 +176,7 @@ const AboutPage = () => {
                 {/* 5. CTA */}
                 <section>
                     <div className="section-container">
-                        <div className="bg-linear-to-br from-brand-red/20 to-black border border-brand-red/30 rounded-xl px-[15px] md:px-[50px] py-10 md:py-16 text-center shadow-[0_30px_100px_rgba(221,39,39,0.25)] relative overflow-hidden group">
+                        <div className="bg-linear-to-br from-brand-red/20 to-black border border-brand-red/30 rounded-xl px-[15px] md:px-[50px] py-10 md:py-16 text-center shadow-[0_30px_100px_rgba(191, 6, 3,0.25)] relative overflow-hidden group">
                             <div className="absolute inset-0 bg-glow-red opacity-0 group-hover:opacity-40 transition-opacity duration-1000"></div>
                             <div className="relative z-10">
                                 <h2 className="title-batangas text-4xl md:text-7xl mb-8 text-white">
@@ -189,7 +189,7 @@ const AboutPage = () => {
 
                                 <Link
                                     to="/services"
-                                    className="inline-block bg-brand-red text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-[0.2em] transition-all duration-500 hover:bg-white hover:text-brand-red hover:-translate-y-2 shadow-[0_10px_40px_rgba(221,39,39,0.4)] text-sm md:text-base"
+                                    className="inline-block bg-brand-red text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-[0.2em] transition-all duration-500 hover:bg-white hover:text-brand-red hover:-translate-y-2 shadow-[0_10px_40px_rgba(191, 6, 3,0.4)] text-sm md:text-base"
                                 >
                                     {cta.buttonText}
                                 </Link>

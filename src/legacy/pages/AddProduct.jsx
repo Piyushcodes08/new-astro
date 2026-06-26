@@ -192,11 +192,11 @@ const AddProduct = () => {
           <div className="space-y-8">
             <div className="flex justify-between items-center pt-8">
               <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-                Product <span className="text-[#dd2727]">Management</span>
+                Product <span className="text-[#bf0603]">Management</span>
               </h2>
               <button
                 onClick={() => { setIsFormVisible(!isFormVisible); if (isFormVisible) resetForm(); }}
-                className="bg-[#dd2727] text-white px-3 text-xs py-2 rounded-3xlxl uppercase tracking-widest hover:shadow-[0_0_30px_rgba(221,39,39,0.5)] transition-all"
+                className="bg-[#bf0603] text-white px-3 text-xs py-2 rounded-3xlxl uppercase tracking-widest hover:shadow-[0_0_30px_rgba(191, 6, 3,0.5)] transition-all"
               >
                 {isFormVisible ? "✕ Cancel" : "+ Add New Product"}
               </button>
@@ -204,7 +204,7 @@ const AddProduct = () => {
 
             {isFormVisible && (
               <div className="bg-white border border-slate-200 rounded-3xlxl p-8 md:p-10 shadow-150l shadow-slate-200/50 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-40 h-40 bg-[#dd2727]/5 rounded-full blur-[100px]"></div>
+                <div className="absolute top-0 right-0 w-40 h-40 bg-[#bf0603]/5 rounded-full blur-[100px]"></div>
 
                
 
@@ -214,7 +214,7 @@ const AddProduct = () => {
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Product Title *</label>
                     <input
                       type="text"
-                      className="w-full bg-gray-50 border border-gray-200 rounded-3xlxl px-6 py-4 text-gray-900 focus:ring-brand-red focus:ring-[#dd2727] outline-none transition-all placeholder:text-gray-400"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-3xlxl px-6 py-4 text-gray-900 focus:ring-brand-red focus:ring-[#bf0603] outline-none transition-all placeholder:text-gray-400"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="e.g. Pyrite Bracelet"
@@ -226,7 +226,7 @@ const AddProduct = () => {
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Price *</label>
                     <input
                       type="text"
-                      className="w-full bg-gray-50 border border-gray-200 rounded-3xlxl px-6 py-4 text-gray-900 focus:ring-brand-red focus:ring-[#dd2727] outline-none transition-all placeholder:text-gray-400"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-3xlxl px-6 py-4 text-gray-900 focus:ring-brand-red focus:ring-[#bf0603] outline-none transition-all placeholder:text-gray-400"
                       value={price}
                       onChange={(e) => setPrice(e.target.value)}
                       placeholder="e.g. ₹999"
@@ -238,7 +238,7 @@ const AddProduct = () => {
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Old Price (Optional)</label>
                     <input
                       type="text"
-                      className="w-full bg-gray-50 border border-gray-200 rounded-3xlxl px-6 py-4 text-gray-900 focus:ring-brand-red focus:ring-[#dd2727] outline-none transition-all placeholder:text-gray-400"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-3xlxl px-6 py-4 text-gray-900 focus:ring-brand-red focus:ring-[#bf0603] outline-none transition-all placeholder:text-gray-400"
                       value={oldPrice}
                       onChange={(e) => setOldPrice(e.target.value)}
                       placeholder="e.g. ₹1499"
@@ -249,7 +249,7 @@ const AddProduct = () => {
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Card Theme</label>
                     <select
-                      className="w-full bg-gray-50 border border-gray-200 rounded-3xlxl px-6 py-4 text-gray-900 focus:ring-brand-red focus:ring-[#dd2727] outline-none appearance-none cursor-pointer"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-3xlxl px-6 py-4 text-gray-900 focus:ring-brand-red focus:ring-[#bf0603] outline-none appearance-none cursor-pointer"
                       value={theme}
                       onChange={(e) => setTheme(e.target.value)}
                     >
@@ -267,7 +267,7 @@ const AddProduct = () => {
                 <div className="mt-8 space-y-2">
                   <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Description *</label>
                   <textarea
-                    className="w-full bg-gray-50 border border-gray-200 rounded-3xlxl px-6 py-4 text-gray-900 h-32 focus:ring-brand-red focus:ring-[#dd2727] outline-none transition-all resize-none"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-3xlxl px-6 py-4 text-gray-900 h-32 focus:ring-brand-red focus:ring-[#bf0603] outline-none transition-all resize-none"
                     value={desc}
                     onChange={(e) => setDesc(e.target.value)}
                     placeholder="Enter product description..."
@@ -323,7 +323,7 @@ const AddProduct = () => {
                             <img
                               src={preview}
                               alt={`Preview ${idx + 1}`}
-                              className="w-20 h-20 object-cover rounded-3xlxll border-brand-red border-[#dd2727]/30"
+                              className="w-20 h-20 object-cover rounded-3xlxll border-brand-red border-[#bf0603]/30"
                             />
                             <button
                               onClick={() => removeSelectedImage(idx)}
@@ -342,7 +342,7 @@ const AddProduct = () => {
                   )}
 
                   {/* Upload Area */}
-                  <div className="bg-gray-50 border-brand-red border-brand-redashed border-gray-200 rounded-3xlxl p-8 text-center group/upload hover:border-[#dd2727]/50 transition-all cursor-pointer relative">
+                  <div className="bg-gray-50 border-brand-red border-brand-redashed border-gray-200 rounded-3xlxl p-8 text-center group/upload hover:border-[#bf0603]/50 transition-all cursor-pointer relative">
                     <input
                       type="file"
                       accept="image/*"
@@ -351,11 +351,11 @@ const AddProduct = () => {
                       onChange={handleImageChange}
                     />
                     <div className="space-y-3 pointer-events-none">
-                      <svg className="w-10 h-10 text-gray-400 mx-auto group-hover/upload:text-[#dd2727] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-10 h-10 text-gray-400 mx-auto group-hover/upload:text-[#bf0603] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                       <div>
-                        <p className="text-sm font-semibold text-gray-500 group-hover/upload:text-[#dd2727] transition-colors">
+                        <p className="text-sm font-semibold text-gray-500 group-hover/upload:text-[#bf0603] transition-colors">
                           Click to upload images
                         </p>
                         <p className="text-[11px] text-gray-400 mt-1">PNG, JPG, WEBP up to 5MB each • Max 5 images</p>
@@ -368,7 +368,7 @@ const AddProduct = () => {
                 <div className="mt-10">
                   <button
                     onClick={handleAddOrUpdateProduct}
-                    className={`w-full bg-[#dd2727] text-white py-5 rounded-3xlxll font-bold uppercase tracking-[0.2em] hover:shadow-[0_0_40px_rgba(221,39,39,0.5)] transition-all transform hover:scale-[1.01] active:scale-95 ${isUploading ? "cursor-not-allowed opacity-50" : ""}`}
+                    className={`w-full bg-[#bf0603] text-white py-5 rounded-3xlxll font-bold uppercase tracking-[0.2em] hover:shadow-[0_0_40px_rgba(191, 6, 3,0.5)] transition-all transform hover:scale-[1.01] active:scale-95 ${isUploading ? "cursor-not-allowed opacity-50" : ""}`}
                     disabled={isUploading}
                   >
                     {isUploading
@@ -400,7 +400,7 @@ const AddProduct = () => {
                       >
                         <div className="flex items-center gap-5">
                           {/* Image Grid Preview */}
-                          <div className="w-16 h-16 rounded-3xlxll bg-size-[72px_72px]late-50 overflow-hidden border border-slate-100 group-hover:border-[#dd2727]/30 transition-all shrink-0">
+                          <div className="w-16 h-16 rounded-3xlxll bg-size-[72px_72px]late-50 overflow-hidden border border-slate-100 group-hover:border-[#bf0603]/30 transition-all shrink-0">
                             <img
                               src={product.image}
                               alt={product.title}
@@ -408,13 +408,13 @@ const AddProduct = () => {
                             />
                           </div>
                           <div>
-                            <span className="text-lg text-slate-900 font-bold tracking-tight group-hover:text-[#dd2727] transition-all uppercase">
+                            <span className="text-lg text-slate-900 font-bold tracking-tight group-hover:text-[#bf0603] transition-all uppercase">
                               {product.title}
                             </span>
                             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">
                               Theme: {product.theme} • {product.price}
                               {imgCount > 1 && (
-                                <span className="ml-2 text-[#dd2727]">• {imgCount} images</span>
+                                <span className="ml-2 text-[#bf0603]">• {imgCount} images</span>
                               )}
                             </p>
                           </div>
@@ -428,7 +428,7 @@ const AddProduct = () => {
                           </button>
                           <button
                             onClick={() => handleDeleteProduct(product.id)}
-                            className="text-[10px] font-bold uppercase tracking-widest text-[#dd2727] hover:bg-red-50 px-4 py-2 rounded-lg transition-all"
+                            className="text-[10px] font-bold uppercase tracking-widest text-[#bf0603] hover:bg-red-50 px-4 py-2 rounded-lg transition-all"
                           >
                             Delete
                           </button>

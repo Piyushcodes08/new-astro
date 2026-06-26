@@ -39,7 +39,7 @@ const ContactPage = () => {
 
                             {/* Bold White Title */}
                             <h1 className="title-batangas text-5xl md:text-7xl text-white font-black mb-6 leading-[1.1]">
-                                Get in Touch <br /> with the <span className="text-[#dd2727]">Universe</span>
+                                Get in Touch <br /> with the <span className="text-[#bf0603]">Universe</span>
                             </h1>
 
                             {/* Red Subtitle */}
@@ -50,7 +50,7 @@ const ContactPage = () => {
                             {/* Red Dot Divider */}
                             <div className="mt-12 flex items-center justify-center gap-4">
                                 <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-white/10"></div>
-                                <div className="w-2.5 h-2.5 rounded-full bg-[#dd2727] shadow-[0_0_15px_#dd2727]"></div>
+                                <div className="w-2.5 h-2.5 rounded-full bg-[#bf0603] shadow-[0_0_15px_#bf0603]"></div>
                                 <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-white/10"></div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@ const ContactPage = () => {
                     <div className="section-container">
                         <div className="grid md:grid-cols-2 gap-12 items-center bg-white/5 backdrop-blur-2xl border border-white/10 rounded-xl px-[15px] md:px-[50px] py-10 md:py-16 shadow-2xl relative overflow-hidden group">
                             <div>
-                                <h2 className="title-batangas text-4xl md:text-5xl mb-8 text-white">Need immediate <span className="text-[#dd2727]">assistance?</span></h2>
+                                <h2 className="title-batangas text-4xl md:text-5xl mb-8 text-white">Need immediate <span className="text-[#bf0603]">assistance?</span></h2>
                                 <p className="subtitle-poppins text-white/80 mb-6 leading-relaxed text-lg">
                                     Our team is ready to help you schedule your consultation or answer any questions you might have about our services and courses.
                                 </p>
@@ -74,27 +74,27 @@ const ContactPage = () => {
                             <div className="space-y-6">
                                 <a
                                      href="tel:+917949217538"
-                                     className="flex flex-col sm:flex-row items-center gap-6 bg-white/5 backdrop-blur-lg px-[15px] md:px-[50px] py-6 md:py-8 rounded-lg border border-white/10 hover:border-[#dd2727]/60 hover:bg-white/10 transition-all duration-500 group text-center sm:text-left"
+                                     className="flex flex-col sm:flex-row items-center gap-6 bg-white/5 backdrop-blur-lg px-[15px] md:px-[50px] py-6 md:py-8 rounded-lg border border-white/10 hover:border-[#bf0603]/60 hover:bg-white/10 transition-all duration-500 group text-center sm:text-left"
                                  >
-                                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#dd2727]/40 to-orange-500/20 border border-[#dd2727]/30 flex items-center justify-center text-white text-3xl shadow-[0_0_20px_rgba(221,39,39,0.3)] group-hover:scale-110 transition-transform duration-500">
+                                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#bf0603]/40 to-orange-500/20 border border-[#bf0603]/30 flex items-center justify-center text-white text-3xl shadow-[0_0_20px_rgba(191, 6, 3,0.3)] group-hover:scale-110 transition-transform duration-500">
                                         <IoCallOutline />
                                     </div>
                                     <div>
                                         <p className="subtitle-poppins text-sm text-white/50 mb-1 font-bold uppercase tracking-widest">Call Us Directly</p>
-                                        <p className="title-batangas text-2xl text-white group-hover:text-[#dd2727] transition-colors">+91 79 4921 7538</p>
+                                        <p className="title-batangas text-2xl text-white group-hover:text-[#bf0603] transition-colors">+91 79 4921 7538</p>
                                     </div>
                                 </a>
 
                                 <a
                                      href="mailto:contact@vahlayastro.com"
-                                     className="flex flex-col sm:flex-row items-center gap-6 bg-white/5 backdrop-blur-lg px-[15px] md:px-[50px] py-6 md:py-8 rounded-lg border border-white/10 hover:border-[#dd2727]/60 hover:bg-white/10 transition-all duration-500 group text-center sm:text-left"
+                                     className="flex flex-col sm:flex-row items-center gap-6 bg-white/5 backdrop-blur-lg px-[15px] md:px-[50px] py-6 md:py-8 rounded-lg border border-white/10 hover:border-[#bf0603]/60 hover:bg-white/10 transition-all duration-500 group text-center sm:text-left"
                                  >
-                                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#dd2727]/40 to-orange-500/20 border border-[#dd2727]/30 flex items-center justify-center text-white text-3xl shadow-[0_0_20px_rgba(221,39,39,0.3)] group-hover:scale-110 transition-transform duration-500">
+                                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#bf0603]/40 to-orange-500/20 border border-[#bf0603]/30 flex items-center justify-center text-white text-3xl shadow-[0_0_20px_rgba(191, 6, 3,0.3)] group-hover:scale-110 transition-transform duration-500">
                                         <IoMailOutline />
                                     </div>
                                     <div>
                                         <p className="subtitle-poppins text-sm text-white/50 mb-1 font-bold uppercase tracking-widest">Email Support</p>
-                                        <p className="title-batangas text-2xl text-white group-hover:text-[#dd2727] transition-colors">contact@vahlayastro.com</p>
+                                        <p className="title-batangas text-2xl text-white group-hover:text-[#bf0603] transition-colors">contact@vahlayastro.com</p>
                                     </div>
                                 </a>
                             </div>

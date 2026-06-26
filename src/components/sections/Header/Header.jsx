@@ -109,7 +109,7 @@ const Header = () => {
                     <div
                         className="absolute inset-0"
                         style={{
-                            background: "linear-gradient(145deg, #dd2727 30%, #b0a102 70%)",
+                            background: "linear-gradient(145deg, #bf0603 30%, #b0a102 70%)",
                             filter: "blur(100px)",
                             transform: "scale(1.2)",
                         }}
@@ -147,7 +147,7 @@ const Header = () => {
                                         </button>
 
                                         {/* Full-Width Mega Dropdown Menu panel */}
-                                        <div className="absolute left-0 right-0 top-0 w-full opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 -z-1 pointer-events-none group-hover:pointer-events-auto">
+                                        <div className="absolute inset-x-0 top-0 w-screen left-1/2 -translate-x-1/2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 -z-50  group-hover:pointer-events-auto">
                                             <div className="bg-[#0e0404]/98 border-b border-t border-white/10 backdrop-blur-[25px] shadow-[0_25px_60px_rgba(0,0,0,0.85)] relative py-8">
                                                 {/* Centered content grid aligned to container grid */}
                                                 <div className="mx-auto max-w-container-max-width px-3.75 pt-20 md:px-12.5 w-full grid grid-cols-12 gap-8">
@@ -168,7 +168,7 @@ const Header = () => {
                                                         </div>
                                                         <Link 
                                                             to={link.name === 'Services' ? '/services' : '/products'}
-                                                            className="inline-flex items-center gap-1.5 text-[9.5px] font-black text-white bg-brand-red hover:bg-white hover:text-brand-red px-4 py-2.5 w-fit rounded-lg uppercase tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(221,39,39,0.3)] relative z-10"
+                                                            className="inline-flex items-center gap-1.5 text-[9.5px] font-black text-white bg-brand-red hover:bg-white hover:text-brand-red px-4 py-2.5 w-fit rounded-lg uppercase tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(191, 6, 3,0.3)] relative z-10"
                                                         >
                                                             {link.name === 'Services' ? 'See Overview' : 'View Shop'}
                                                             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
@@ -177,7 +177,7 @@ const Header = () => {
 
                                                     {/* Right Column (Links Navigation List - Plain Text Links) */}
                                                     <div className="col-span-8 p-4 flex flex-col gap-1.5 justify-center max-w-md">
-                                                        <span className="text-[10px] font-bold text-white/30 uppercase tracking-[0.25em] pl-4 mb-2">
+                                                        <span className="underline underline-offset-4 font-bold text-white uppercase tracking-[0.25em] pl-4 mb-2">
                                                             {link.name === 'Services' ? 'Explore Services' : 'Browse Categories'}
                                                         </span>
                                                         {link.subLinks.map((subLink) => (
@@ -238,7 +238,7 @@ const Header = () => {
                             )}
                             <Link
                                 to="/contact"
-                                className="px-4 xl:px-6 py-2 rounded-full font-bold text-[13px] uppercase tracking-[0.15em] transition-all duration-500 bg-brand-red text-white hover:bg-white hover:text-brand-red whitespace-nowrap shadow-[0_0_20px_rgba(221,39,39,0.3)]"
+                                className="px-4 xl:px-6 py-2 rounded-full font-bold text-[13px] uppercase tracking-[0.15em] transition-all duration-500 bg-brand-red text-white hover:bg-white hover:text-brand-red whitespace-nowrap shadow-[0_0_20px_rgba(191, 6, 3,0.3)]"
                             >
                                 Contact Us
                             </Link>
@@ -345,7 +345,7 @@ const Header = () => {
                         <Link
                             to="/contact"
                             onClick={() => setIsOpen(false)}
-                            className="w-full text-center py-4 rounded-full font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 bg-brand-red text-white hover:bg-white hover:text-brand-red shadow-[0_10px_30px_rgba(221,39,39,0.3)]"
+                            className="w-full text-center py-4 rounded-full font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 bg-brand-red text-white hover:bg-white hover:text-brand-red shadow-[0_10px_30px_rgba(191, 6, 3,0.3)]"
                         >
                             Contact us
                         </Link>

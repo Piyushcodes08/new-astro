@@ -110,17 +110,17 @@ const AddMeeting = () => {
 
             {/* Scheduler Form */}
             <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8 pt-8 relative overflow-hidden mt-8">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#dd2727]/5 rounded-full blur-3xl"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#bf0603]/5 rounded-full blur-3xl"></div>
               <div className="flex items-center justify-center gap-3 mb-8">
                 <span className="text-3xl">📅</span>
-                <h2 className="text-2xl font-bold text-[#dd2727]">Schedule RingCentral Meeting</h2>
+                <h2 className="text-2xl font-bold text-[#bf0603]">Schedule RingCentral Meeting</h2>
               </div>
 
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Course</label>
                   <select
-                    className="w-full border border-gray-300 rounded px-4 py-2 text-gray-700 focus:outline-none focus:border-[#dd2727]"
+                    className="w-full border border-gray-300 rounded px-4 py-2 text-gray-700 focus:outline-none focus:border-[#bf0603]"
                     name="courseId"
                     value={sessionData.courseId}
                     onChange={handleInputChange}
@@ -137,7 +137,7 @@ const AddMeeting = () => {
                   <input
                     type="text"
                     name="title"
-                    className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-[#dd2727]"
+                    className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-[#bf0603]"
                     value={sessionData.title}
                     onChange={handleInputChange}
                   />
@@ -148,7 +148,7 @@ const AddMeeting = () => {
                     <label className="block text-sm font-semibold text-gray-700 mb-1">Date</label>
                     <input
                       type="datetime-local"
-                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-[#dd2727]"
+                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-[#bf0603]"
                       onChange={(e) => {
                         const val = e.target.value; // YYYY-MM-DDTHH:mm
                         if (val) {
@@ -163,7 +163,7 @@ const AddMeeting = () => {
                     <input
                       type="number"
                       name="duration"
-                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-[#dd2727]"
+                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-[#bf0603]"
                       value={sessionData.duration}
                       onChange={handleInputChange}
                     />
@@ -173,7 +173,7 @@ const AddMeeting = () => {
                 <button
                   onClick={scheduleMeeting}
                   disabled={loading}
-                  className="w-full bg-[#dd2727] text-white py-3 rounded font-bold text-lg hover:bg-[#c41e1e] transition-colors"
+                  className="w-full bg-[#bf0603] text-white py-3 rounded font-bold text-lg hover:bg-[#c41e1e] transition-colors"
                 >
                   {loading ? "Scheduling..." : "Schedule Meeting"}
                 </button>
@@ -192,7 +192,7 @@ const AddMeeting = () => {
                     <div key={meeting.id} className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm relative">
                       <div className="flex justify-between items-start">
                         <div className="space-y-1">
-                          <h4 className="text-lg font-bold text-[#dd2727]">{meeting.subject}</h4>
+                          <h4 className="text-lg font-bold text-[#bf0603]">{meeting.subject}</h4>
                           <p className="text-gray-700 font-semibold">{meeting.courseId}</p>
                           <p className="text-gray-500 text-sm flex items-center gap-2">
                             <span className="text-lg">🕒</span>
@@ -215,13 +215,13 @@ const AddMeeting = () => {
                             </button>
                             <button
                               onClick={() => deleteMeeting(meeting.id)}
-                              className="text-[#dd2727] hover:underline"
+                              className="text-[#bf0603] hover:underline"
                             >
                               Delete
                             </button>
                           </div>
                         </div>
-                        <div className="bg-red-50 text-[#dd2727] px-3 py-1 rounded text-xs font-bold border border-red-100">
+                        <div className="bg-red-50 text-[#bf0603] px-3 py-1 rounded text-xs font-bold border border-red-100">
                           {meeting.duration} mins
                         </div>
                       </div>

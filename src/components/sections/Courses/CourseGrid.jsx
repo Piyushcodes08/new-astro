@@ -44,7 +44,7 @@ const CourseGrid = () => {
               {/* Content Area */}
               <div className="relative z-20 py-6 px-[15px] bg-linear-to-b from-[#120606]/95 to-[#090101] flex flex-col flex-1">
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-brand-red shadow-[0_0_8px_#dd2727]"></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-red shadow-[0_0_8px_#bf0603]"></div>
 
                   <span className="text-[9px] uppercase tracking-[0.35em] text-brand-red font-bold">
                     Divine Mastery

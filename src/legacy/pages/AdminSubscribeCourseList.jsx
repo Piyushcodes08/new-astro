@@ -331,12 +331,12 @@ const AdminEnrolledUsers = () => {
             <div className="bg-white border border-slate-200 rounded-2xl p-8 md:p-10 shadow-sm relative overflow-hidden group">
               <div className="flex justify-between items-center mb-10 pb-6 border-b border-slate-100 pt-8">
                 <h2 className="text-xl font-extrabold tracking-tight text-slate-900 flex items-center gap-3">
-                  <div className="w-1.5 h-6 bg-[#dd2727] rounded-full"></div>
-                  Manual <span className="text-[#dd2727]">Enrollment</span>
+                  <div className="w-1.5 h-6 bg-[#bf0603] rounded-full"></div>
+                  Manual <span className="text-[#bf0603]">Enrollment</span>
                 </h2>
                 <button
                   onClick={() => setFormVisible(!formVisible)}
-                  className="text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-[#dd2727] transition-colors"
+                  className="text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-[#bf0603] transition-colors"
                 >
                   {formVisible ? "[ Hide Form ]" : "[ Show Form ]"}
                 </button>
@@ -353,7 +353,7 @@ const AdminEnrolledUsers = () => {
                         placeholder="John Doe"
                         value={newSubscriber.name}
                         onChange={(e) => setNewSubscriber({ ...newSubscriber, name: e.target.value })}
-                        className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#dd2727]/5 focus:border-[#dd2727] transition-all"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#bf0603]/5 focus:border-[#bf0603] transition-all"
                       />
                     </div>
 
@@ -365,7 +365,7 @@ const AdminEnrolledUsers = () => {
                         placeholder="user@example.com"
                         value={newSubscriber.userId}
                         onChange={(e) => setNewSubscriber({ ...newSubscriber, userId: e.target.value })}
-                        className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#dd2727]/5 focus:border-[#dd2727] transition-all"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#bf0603]/5 focus:border-[#bf0603] transition-all"
                       />
                     </div>
 
@@ -374,7 +374,7 @@ const AdminEnrolledUsers = () => {
                       <select
                         value={newSubscriber.courseType}
                         onChange={(e) => setNewSubscriber({ ...newSubscriber, courseType: e.target.value })}
-                        className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#dd2727]/5 focus:border-[#dd2727] transition-all appearance-none cursor-pointer shadow-sm"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#bf0603]/5 focus:border-[#bf0603] transition-all appearance-none cursor-pointer shadow-sm"
                       >
                         <option value="paid" className="bg-white">Paid Subscription</option>
                         <option value="free" className="bg-white">Free Access</option>
@@ -387,7 +387,7 @@ const AdminEnrolledUsers = () => {
                         required
                         value={newSubscriber.course}
                         onChange={(e) => setNewSubscriber({ ...newSubscriber, course: e.target.value })}
-                        className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#dd2727]/5 focus:border-[#dd2727] transition-all appearance-none cursor-pointer shadow-sm"
+                        className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#bf0603]/5 focus:border-[#bf0603] transition-all appearance-none cursor-pointer shadow-sm"
                       >
                         <option value="" className="bg-white text-slate-400">Choose from library...</option>
                         {newSubscriber.courseType === "paid"
@@ -412,7 +412,7 @@ const AdminEnrolledUsers = () => {
                             type="date"
                             value={newSubscriber.subscriptionDate}
                             onChange={(e) => setNewSubscriber({ ...newSubscriber, subscriptionDate: e.target.value })}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#dd2727]/5 focus:border-[#dd2727] transition-all shadow-sm"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#bf0603]/5 focus:border-[#bf0603] transition-all shadow-sm"
                           />
                         </div>
                         <div>
@@ -421,7 +421,7 @@ const AdminEnrolledUsers = () => {
                             type="date"
                             value={newSubscriber.expiryDate}
                             onChange={(e) => setNewSubscriber({ ...newSubscriber, expiryDate: e.target.value })}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#dd2727]/5 focus:border-[#dd2727] transition-all shadow-sm"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3 text-slate-900 focus:outline-none focus:ring-4 focus:ring-[#bf0603]/5 focus:border-[#bf0603] transition-all shadow-sm"
                           />
                         </div>
                       </>
@@ -433,7 +433,7 @@ const AdminEnrolledUsers = () => {
 
                   <button
                     type="submit"
-                    className="w-full bg-[#dd2727] text-white py-4 rounded-xl font-extrabold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/20 transform hover:scale-[1.01] transition-all duration-300"
+                    className="w-full bg-[#bf0603] text-white py-4 rounded-xl font-extrabold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/20 transform hover:scale-[1.01] transition-all duration-300"
                   >
                     Confirm Enrollment
                   </button>
@@ -454,7 +454,7 @@ const AdminEnrolledUsers = () => {
                   <select
                     value={selectedCourse}
                     onChange={(e) => setSelectedCourse(e.target.value)}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all appearance-none cursor-pointer"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all appearance-none cursor-pointer"
                   >
                     <option value="" className="bg-white">All Courses</option>
                     {allCourses.map((c) => (
@@ -472,7 +472,7 @@ const AdminEnrolledUsers = () => {
                     </p>
                   )}
                   <p className="text-sm font-medium tracking-wide">
-                    TOTAL SUBSCRIBERS: <strong className="text-[#dd2727] text-lg ml-2">{filteredSubscribers.length}</strong>
+                    TOTAL SUBSCRIBERS: <strong className="text-[#bf0603] text-lg ml-2">{filteredSubscribers.length}</strong>
                   </p>
                 </div>
               </div>
@@ -572,7 +572,7 @@ const AdminEnrolledUsers = () => {
                       className={`p-3 rounded-2xl border transition-all ${
                         currentPage === 1 
                           ? "bg-slate-50 text-slate-300 border-slate-100 cursor-not-allowed" 
-                          : "bg-white text-slate-600 border-slate-200 hover:border-[#dd2727] hover:text-[#dd2727] hover:shadow-lg shadow-sm"
+                          : "bg-white text-slate-600 border-slate-200 hover:border-[#bf0603] hover:text-[#bf0603] hover:shadow-lg shadow-sm"
                       }`}
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
@@ -585,8 +585,8 @@ const AdminEnrolledUsers = () => {
                           onClick={() => setCurrentPage(i + 1)}
                           className={`w-11 h-11 rounded-2xl text-xs font-black transition-all ${
                             currentPage === i + 1
-                              ? "bg-[#dd2727] text-white shadow-[0_8px_20px_rgba(221,39,39,0.3)] scale-110"
-                              : "bg-white text-slate-400 border border-slate-200 hover:border-[#dd2727]/30 hover:text-slate-900"
+                              ? "bg-[#bf0603] text-white shadow-[0_8px_20px_rgba(191, 6, 3,0.3)] scale-110"
+                              : "bg-white text-slate-400 border border-slate-200 hover:border-[#bf0603]/30 hover:text-slate-900"
                           }`}
                         >
                           {i + 1}
@@ -600,7 +600,7 @@ const AdminEnrolledUsers = () => {
                       className={`p-3 rounded-2xl border transition-all ${
                         currentPage === totalPages 
                           ? "bg-slate-50 text-slate-300 border-slate-100 cursor-not-allowed" 
-                          : "bg-white text-slate-600 border-slate-200 hover:border-[#dd2727] hover:text-[#dd2727] hover:shadow-lg shadow-sm"
+                          : "bg-white text-slate-600 border-slate-200 hover:border-[#bf0603] hover:text-[#bf0603] hover:shadow-lg shadow-sm"
                       }`}
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>

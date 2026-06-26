@@ -211,7 +211,7 @@ const AdminVideoManager = () => {
           <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pt-8">
             <div>
               <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-                Video <span className="text-[#dd2727]">Sequencing</span>
+                Video <span className="text-[#bf0603]">Sequencing</span>
               </h2>
               <p className="text-slate-400 text-sm mt-1 font-medium">Drag and drop lessons to structure your course curriculum</p>
             </div>
@@ -219,7 +219,7 @@ const AdminVideoManager = () => {
             {pendingChanges.length > 0 && (
               <button
                 onClick={handleSaveChanges}
-                className="bg-[#dd2727] text-white px-8 py-4 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/30 transition-all"
+                className="bg-[#bf0603] text-white px-8 py-4 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/30 transition-all"
               >
                 Save Changes ({pendingChanges.length})
               </button>
@@ -269,7 +269,7 @@ const AdminVideoManager = () => {
                                   >
                                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-gray-50 border border-slate-100 p-5 rounded-xl group-hover:bg-slate-100 transition-all duration-300 gap-4">
                                       <div className="flex items-center gap-4 flex-1">
-                                        <div {...provided.dragHandleProps} className="p-2 bg-white border border-slate-200 rounded-lg text-slate-400 hover:text-[#dd2727] transition-colors cursor-grab active:cursor-grabbing shadow-sm">
+                                        <div {...provided.dragHandleProps} className="p-2 bg-white border border-slate-200 rounded-lg text-slate-400 hover:text-[#bf0603] transition-colors cursor-grab active:cursor-grabbing shadow-sm">
                                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8h16M4 16h16"/></svg>
                                         </div>
                                         <div>

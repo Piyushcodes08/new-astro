@@ -5,7 +5,7 @@ import ProtectedRoute from '../components/auth/ProtectedRoute';
 // ── Page-level loading fallback ──
 const PageLoader = () => (
   <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#030106' }}>
-    <div style={{ width: 40, height: 40, borderRadius: '50%', border: '3px solid #dd2727', borderTopColor: 'transparent', animation: 'spin 0.7s linear infinite' }} />
+    <div style={{ width: 40, height: 40, borderRadius: '50%', border: '3px solid #bf0603', borderTopColor: 'transparent', animation: 'spin 0.7s linear infinite' }} />
     <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
   </div>
 );

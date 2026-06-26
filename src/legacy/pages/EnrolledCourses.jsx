@@ -34,7 +34,7 @@ const MiniPieChart = ({ usedDays, daysLeft }) => {
     { name: "Used", value: usedDays },
     { name: "Left", value: daysLeft },
   ];
-  const COLORS = ["#f1f5f9", "#dd2727"];
+  const COLORS = ["#f1f5f9", "#bf0603"];
 
   return (
     <PieChart width={40} height={40}>

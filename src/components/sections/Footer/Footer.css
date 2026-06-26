@@ -15,12 +15,12 @@
     grid-template-columns: 1.5fr 0.8fr 1fr 1.2fr;
     gap: 60px;
     padding-bottom: 30px;
-    border-bottom: 1px solid rgba(221, 39, 39, 0.1);
+    border-bottom: 1px solid rgba(191, 6, 3, 0.1);
 }
 
 .footer-brand {
     font-size: 2.2rem;
-    color: #dd2727;
+    color: #bf0603;
     margin-bottom: 30px;
     text-transform: uppercase;
     font-weight: 900;
@@ -53,7 +53,7 @@
     left: 0;
     width: 30px;
     height: 2px;
-    background: #dd2727;
+    background: #bf0603;
 }
 
 .footer-links {
@@ -78,7 +78,7 @@
 }
 
 .footer-links a:hover {
-    color: #dd2727;
+    color: #bf0603;
     transform: translateX(8px);
 }
 
@@ -134,11 +134,11 @@
 }
 
 .social-icon:hover {
-    background: #dd2727;
-    border-color: #dd2727;
+    background: #bf0603;
+    border-color: #bf0603;
     color: #fff;
     transform: translateY(-8px) rotate(8deg);
-    box-shadow: 0 15px 30px rgba(221, 39, 39, 0.3);
+    box-shadow: 0 15px 30px rgba(191, 6, 3, 0.3);
 }
 
 .footer-copyright {

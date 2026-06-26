@@ -11,20 +11,20 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #dd2727, #a51818);
+    background: linear-gradient(135deg, #bf0603, #a51818);
     border: none;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 10px 25px rgba(221, 39, 39, 0.4);
+    box-shadow: 0 10px 25px rgba(191, 6, 3, 0.4);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .chat-toggle-btn:hover {
     transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 15px 30px rgba(221, 39, 39, 0.5);
+    box-shadow: 0 15px 30px rgba(191, 6, 3, 0.5);
 }
 
 /* Chat Window */
@@ -57,7 +57,7 @@
 
 /* Header */
 .chat-header {
-    background: linear-gradient(to right, rgba(221, 39, 39, 0.15), rgba(0, 0, 0, 0.2));
+    background: linear-gradient(to right, rgba(191, 6, 3, 0.15), rgba(0, 0, 0, 0.2));
     padding: 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -71,7 +71,7 @@
 .bot-avatar {
     width: 42px;
     height: 42px;
-    background: #dd2727;
+    background: #bf0603;
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -79,7 +79,7 @@
     font-weight: 800;
     color: white;
     font-size: 14px;
-    box-shadow: 0 4px 10px rgba(221, 39, 39, 0.3);
+    box-shadow: 0 4px 10px rgba(191, 6, 3, 0.3);
 }
 
 .bot-name-group h4 {
@@ -110,7 +110,7 @@
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-    background: rgba(221, 39, 39, 0.3);
+    background: rgba(191, 6, 3, 0.3);
     border-radius: 4px;
 }
 
@@ -133,10 +133,10 @@
 
 .message-bubble.user {
     align-self: flex-end;
-    background: #dd2727;
+    background: #bf0603;
     color: white;
     border-bottom-right-radius: 4px;
-    box-shadow: 0 4px 12px rgba(221, 39, 39, 0.2);
+    box-shadow: 0 4px 12px rgba(191, 6, 3, 0.2);
 }
 
 @keyframes slideInFade {
@@ -177,8 +177,8 @@
 }
 
 .quick-reply-btn:hover {
-    background: rgba(221, 39, 39, 0.2);
-    border-color: #dd2727;
+    background: rgba(191, 6, 3, 0.2);
+    border-color: #bf0603;
     color: #fff;
     transform: translateY(-2px);
 }

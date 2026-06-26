@@ -2,7 +2,7 @@
 @source "../../src";
 
 @theme {
-  --color-brand-red: #dd2727;
+  --color-brand-red: #bf0603;
   --color-brand-cream: #ffead3;
   --spacing-section: 50px;
   --spacing-section-mobile: 50px;
@@ -17,6 +17,22 @@ html {
 
 :root {
   --spacing: 0.25rem;
+  --section-padding-vertical: clamp(40px, 5vw, 70px);
+  --section-padding-vertical-sm: 46px;
+  --section-padding-vertical-xs: 28px;
+  --container-gap: 15px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Global Fonts */
@@ -109,19 +125,21 @@ h6 {
 
 /* Standard Section Container - Ensures all sections align perfectly */
 .section-container {
-  max-width: var(--container-max-width);
-  margin: 0 auto;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  width: 100%;
+  width: min(100%, var(--container-max-width));
+  margin-inline: auto;
+  padding: var(--section-padding-vertical) var(--container-gap);
+  box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .section-container {
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding: var(--section-padding-vertical-sm) var(--container-gap);
+  }
+}
+
+@media (max-width: 640px) {
+  .section-container {
+    padding: var(--section-padding-vertical-xs) calc(var(--container-gap) * 0.75);
     overflow-x: hidden;
   }
 }
@@ -159,7 +177,7 @@ section {
 
 /* Premium Background Glows */
 .bg-glow-red {
-  background: radial-gradient(circle at center, rgba(221, 39, 39, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(191, 6, 3, 0.15) 0%, transparent 70%);
   filter: blur(80px);
 }
 
@@ -187,7 +205,6 @@ section {
 }
 
 @media (max-width: 768px) {
-
   html,
   body {
     overflow-x: hidden;
@@ -237,9 +254,9 @@ section {
 }
 
 .nav-btn:hover:not(:disabled) {
-  background: #dd2727;
+  background: #bf0603;
   color: white;
-  border-color: #dd2727;
+  border-color: #bf0603;
   transform: translateY(-2px);
 }
 
@@ -324,9 +341,9 @@ section {
 }
 
 .admin-layout aside {
-  background: linear-gradient(180deg, #dd2727 0%, #b91c1c 100%) !important;
+  background: linear-gradient(180deg, #bf0603 0%, #b91c1c 100%) !important;
   border-right: none !important;
-  box-shadow: 10px 0 40px rgba(221, 39, 39, 0.15) !important;
+  box-shadow: 10px 0 40px rgba(191, 6, 3, 0.15) !important;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -350,7 +367,7 @@ section {
 .admin-layout .admin-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.05);
-  border-color: #dd2727;
+  border-color: #bf0603;
 }
 
 /* Removed specific aside scrollbar overrides to use .custom-scrollbar */
@@ -366,8 +383,8 @@ section {
 .admin-layout input:focus,
 .admin-layout select:focus,
 .admin-layout textarea:focus {
-  border-color: #dd2727 !important;
-  box-shadow: 0 0 0 4px rgba(221, 39, 39, 0.05) !important;
+  border-color: #bf0603 !important;
+  box-shadow: 0 0 0 4px rgba(191, 6, 3, 0.05) !important;
 }
 
 /* Custom Premium Scrollbar */
@@ -387,18 +404,18 @@ section {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #dd2727;
+  background: #bf0603;
 }
 
 /* For dark sidebar specifically */
-.bg-\[\#dd2727\] .custom-scrollbar::-webkit-scrollbar-track {
+.bg-\[\#bf0603\] .custom-scrollbar::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.1);
 }
 
-.bg-\[\#dd2727\] .custom-scrollbar::-webkit-scrollbar-thumb {
+.bg-\[\#bf0603\] .custom-scrollbar::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3);
 }
 
-.bg-\[\#dd2727\] .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+.bg-\[\#bf0603\] .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: white;
 }

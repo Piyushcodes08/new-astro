@@ -129,7 +129,7 @@ const ArticleDetailsPage = () => {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-transparent backdrop-blur-sm">
-                <div className="text-[#dd2727] text-brand-redxl font-bold animate-pulse">
+                <div className="text-[#bf0603] text-brand-redxl font-bold animate-pulse">
                     Decoding Celestial Message...
                 </div>
             </div>
@@ -148,7 +148,7 @@ const ArticleDetailsPage = () => {
 
                         <Link
                             to="/articles"
-                            className="text-[#dd2727] hover:text-white transition-colors font-bold uppercase tracking-widest"
+                            className="text-[#bf0603] hover:text-white transition-colors font-bold uppercase tracking-widest"
                         >
                             ← Back to Articles
                         </Link>
@@ -169,7 +169,7 @@ const ArticleDetailsPage = () => {
                 {/* Page Title Header */}
                 <div className="pt-24 md:pt-[150px] px-4 sm:px-6 text-center border-b border-white/5 mb-8 bg-black/40 backdrop-blur-sm shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
                     <h1 className="title-batangas text-3xl sm:text-5xl md:text-6xl lg:text-brand-redxl font-black tracking-wide text-white uppercase leading-tight">
-                        <span className="text-[#dd2727]">Astrology</span>
+                        <span className="text-[#bf0603]">Astrology</span>
                         <br className="sm:hidden" /> Articles & Publications
                     </h1>
 
@@ -192,7 +192,7 @@ const ArticleDetailsPage = () => {
                             <div className="flex items-center justify-start w-full sm:w-auto">
                                 <Link
                                     to="/articles"
-                                    className="w-10 h-10 flex items-center justify-center bg-[#dd2727] text-white rounded-full hover:bg-white hover:text-[#dd2727] transition-all duration-300 shadow-[0_0_15px_rgba(221,39,39,0.3)] hover:scale-110"
+                                    className="w-10 h-10 flex items-center justify-center bg-[#bf0603] text-white rounded-full hover:bg-white hover:text-[#bf0603] transition-all duration-300 shadow-[0_0_15px_rgba(191, 6, 3,0.3)] hover:scale-110"
                                 >
                                     <span className="text-sm md:text-xl font-bold">←</span>
                                 </Link>
@@ -202,7 +202,7 @@ const ArticleDetailsPage = () => {
                             <div className="flex flex-wrap items-center justify-center gap-3 w-full sm:w-auto">
                                 <button
                                     onClick={toggleLanguage}
-                                    className="bg-[#dd2727] text-white px-4 md:px-8 py-2 text-[9px] md:text-[10px] font-black tracking-[0.3em] uppercase rounded-full hover:bg-white hover:text-[#dd2727] transition-all duration-300 shadow-[0_0_20px_rgba(221,39,39,0.3)] hover:scale-105 active:scale-95"
+                                    className="bg-[#bf0603] text-white px-4 md:px-8 py-2 text-[9px] md:text-[10px] font-black tracking-[0.3em] uppercase rounded-full hover:bg-white hover:text-[#bf0603] transition-all duration-300 shadow-[0_0_20px_rgba(191, 6, 3,0.3)] hover:scale-105 active:scale-95"
                                 >
                                     {language === "hindi" ? "In English" : "हिंदी में"}
                                 </button>
@@ -265,7 +265,7 @@ const ArticleDetailsPage = () => {
                             </h1>
 
                             <div className="flex flex-wrap items-center gap-4 mb-8 pb-8 border-b border-white/10">
-                                <span className="text-[#dd2727] font-bold text-base md:text-lg">
+                                <span className="text-[#bf0603] font-bold text-base md:text-lg">
                                     Vahlay Astro
                                 </span>
 
@@ -284,7 +284,7 @@ const ArticleDetailsPage = () => {
 
                             <div className="subtitle-poppins text-white/80 space-y-8 text-base md:text-lg leading-relaxed">
                                 {article.description && (
-                                    <p className="text-lg md:text-brand-redxl font-medium text-white/95 border-l-4 border-[#dd2727] pl-8 py-2 italic mb-8">
+                                    <p className="text-lg md:text-brand-redxl font-medium text-white/95 border-l-4 border-[#bf0603] pl-8 py-2 italic mb-8">
                                         {article.description}
                                     </p>
                                 )}
@@ -301,9 +301,9 @@ const ArticleDetailsPage = () => {
                                             href={article.referenceLink}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-2 text-[#dd2727] hover:text-white transition-colors font-medium tracking-wide"
+                                            className="inline-flex items-center gap-2 text-[#bf0603] hover:text-white transition-colors font-medium tracking-wide"
                                         >
-                                            <span className="bg-[#dd2727]/20 p-2 rounded-full">▶</span>
+                                            <span className="bg-[#bf0603]/20 p-2 rounded-full">▶</span>
                                             Watch Reference Video
                                         </a>
                                     </div>
@@ -325,7 +325,7 @@ const ArticleDetailsPage = () => {
                                         className="flex items-center cursor-pointer rounded-3xl p-2 hover:bg-white/10 transition-all border border-transparent hover:border-white/10 group"
                                         onClick={() => toggleDropdown(item.id)}
                                     >
-                                        <span className="text-[#dd2727] mr-3 group-hover:scale-125 transition-transform">
+                                        <span className="text-[#bf0603] mr-3 group-hover:scale-125 transition-transform">
                                             ✦
                                         </span>
 
@@ -335,14 +335,14 @@ const ArticleDetailsPage = () => {
                                     </div>
 
                                     {expandedArticle === item.id && (
-                                        <div className="bg-black/30 border-l-4 border-[#dd2727] mt-2 p-4 rounded-r-xl shadow-inner ml-2 animate-in slide-in-from-left duration-300">
+                                        <div className="bg-black/30 border-l-4 border-[#bf0603] mt-2 p-4 rounded-r-xl shadow-inner ml-2 animate-in slide-in-from-left duration-300">
                                             <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3">
                                                 {(language === "hindi" && item.dhindi ? item.dhindi : (item.denglish || item.content))?.substring(0, 150) + "..."}
                                             </p>
 
                                             <Link
                                                 to={`/articles/${item.slug || item.id}`}
-                                                className="inline-block text-[#dd2727] text-xs font-black uppercase tracking-[0.2em] hover:text-white transition-all"
+                                                className="inline-block text-[#bf0603] text-xs font-black uppercase tracking-[0.2em] hover:text-white transition-all"
                                             >
                                                 Read More →
                                             </Link>
@@ -365,7 +365,7 @@ const ArticleDetailsPage = () => {
                                         disabled={sidebarPage === 1}
                                         className={`p-2 rounded-lg border border-white/10 transition-all ${sidebarPage === 1
                                             ? 'opacity-20 cursor-not-allowed'
-                                            : 'hover:bg-[#dd2727] hover:border-[#dd2727] text-white shadow-[0_0_15px_rgba(221,39,39,0.3)]'
+                                            : 'hover:bg-[#bf0603] hover:border-[#bf0603] text-white shadow-[0_0_15px_rgba(191, 6, 3,0.3)]'
                                             }`}
                                     >
                                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -378,7 +378,7 @@ const ArticleDetailsPage = () => {
                                         disabled={sidebarPage === totalSidebarPages}
                                         className={`p-2 rounded-lg border border-white/10 transition-all ${sidebarPage === totalSidebarPages
                                             ? 'opacity-20 cursor-not-allowed'
-                                            : 'hover:bg-[#dd2727] hover:border-[#dd2727] text-white shadow-[0_0_15px_rgba(221,39,39,0.3)]'
+                                            : 'hover:bg-[#bf0603] hover:border-[#bf0603] text-white shadow-[0_0_15px_rgba(191, 6, 3,0.3)]'
                                             }`}
                                     >
                                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -419,7 +419,7 @@ const ArticleDetailsPage = () => {
                                                 className="flex items-center cursor-pointer rounded-3xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
                                                 onClick={() => toggleDropdown(item.id)}
                                             >
-                                                <span className="text-[#dd2727] mr-3">✦</span>
+                                                <span className="text-[#bf0603] mr-3">✦</span>
 
                                                 <span className="text-white/90 font-medium tracking-wide text-sm">
                                                     {language === "hindi" && item.hindi ? item.hindi : item.title}
@@ -427,7 +427,7 @@ const ArticleDetailsPage = () => {
                                             </div>
 
                                             {expandedArticle === item.id && (
-                                                <div className="bg-white/5 border-l-4 border-[#dd2727] mt-2 p-4 rounded-r-xl ml-2">
+                                                <div className="bg-white/5 border-l-4 border-[#bf0603] mt-2 p-4 rounded-r-xl ml-2">
                                                     <p className="text-white/70 text-sm leading-relaxed mb-3 line-clamp-3">
                                                         {(language === "hindi" && item.dhindi ? item.dhindi : (item.denglish || item.content))?.substring(0, 150) + "..."}
                                                     </p>
@@ -435,7 +435,7 @@ const ArticleDetailsPage = () => {
                                                     <Link
                                                         to={`/articles/${item.slug || item.id}`}
                                                         onClick={() => setIsSidebarOpen(false)}
-                                                        className="text-[#dd2727] text-sm font-bold uppercase tracking-widest hover:text-white transition-colors"
+                                                        className="text-[#bf0603] text-sm font-bold uppercase tracking-widest hover:text-white transition-colors"
                                                     >
                                                         Read More →
                                                     </Link>
@@ -453,7 +453,7 @@ const ArticleDetailsPage = () => {
                 {/* Related Articles Accordion */}
                 <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 pb-5">
                     <h2 className="title-batangas text-brand-redxl sm:text-3xl md:text-4xl text-white mb-10 text-center uppercase tracking-tight">
-                        <span className="text-[#dd2727]">Related</span> Celestial Knowledge
+                        <span className="text-[#bf0603]">Related</span> Celestial Knowledge
                     </h2>
 
                     <div className="grid grid-cols-1 gap-4 max-w-4xl mx-auto">
@@ -470,7 +470,7 @@ const ArticleDetailsPage = () => {
                                         {language === "hindi" && faq.hindi ? faq.hindi : faq.title}
                                     </span>
 
-                                    <span className={`text-[#dd2727] text-base md:text-xl transition-transform duration-300 ${expandedAccordion === index ? 'rotate-180' : ''}`}>
+                                    <span className={`text-[#bf0603] text-base md:text-xl transition-transform duration-300 ${expandedAccordion === index ? 'rotate-180' : ''}`}>
                                         ▼
                                     </span>
                                 </button>
@@ -489,7 +489,7 @@ const ArticleDetailsPage = () => {
                                             </Link>
 
                                             <Link to="/courses">
-                                                <button className="bg-[#dd2727] hover:bg-white hover:text-[#dd2727] text-white font-bold uppercase tracking-widest text-[10px] py-2.5 px-3.75 md:py-3 md:px-6 rounded-full transition-colors shadow-[0_0_20px_rgba(221,39,39,0.3)]">
+                                                <button className="bg-[#bf0603] hover:bg-white hover:text-[#bf0603] text-white font-bold uppercase tracking-widest text-[10px] py-2.5 px-3.75 md:py-3 md:px-6 rounded-full transition-colors shadow-[0_0_20px_rgba(191, 6, 3,0.3)]">
                                                     Courses
                                                 </button>
                                             </Link>

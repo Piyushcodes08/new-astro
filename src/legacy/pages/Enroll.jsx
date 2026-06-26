@@ -377,12 +377,12 @@ const Enrollment = () => {
     control: (provided, state) => ({
       ...provided,
       backgroundColor: 'rgba(255, 255, 255, 0.05)',
-      borderColor: state.isFocused ? '#dd2727' : 'rgba(255, 255, 255, 0.1)',
+      borderColor: state.isFocused ? '#bf0603' : 'rgba(255, 255, 255, 0.1)',
       borderRadius: '0.75rem',
       padding: '0.25rem',
-      boxShadow: state.isFocused ? '0 0 0 2px rgba(221, 39, 39, 0.3)' : 'none',
+      boxShadow: state.isFocused ? '0 0 0 2px rgba(191, 6, 3, 0.3)' : 'none',
       '&:hover': {
-        borderColor: '#dd2727'
+        borderColor: '#bf0603'
       },
       cursor: 'pointer',
       opacity: 1
@@ -397,11 +397,11 @@ const Enrollment = () => {
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isSelected ? '#dd2727' : state.isFocused ? 'rgba(221, 39, 39, 0.2)' : 'transparent',
+      backgroundColor: state.isSelected ? '#bf0603' : state.isFocused ? 'rgba(191, 6, 3, 0.2)' : 'transparent',
       color: 'white',
       cursor: 'pointer',
       '&:active': {
-        backgroundColor: '#dd2727'
+        backgroundColor: '#bf0603'
       }
     }),
     singleValue: (provided) => ({
@@ -427,7 +427,7 @@ const Enrollment = () => {
       <div id="top-sentinel" className="h-0 w-full pt-[70px]"></div>
 
       <div className="min-h-screen flex flex-col justify-center items-center py-[50px] px-4 relative z-10">
-        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-8 rounded-xl w-full max-w-lg shadow-[0_0_40px_rgba(221,39,39,0.2)]">
+        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-8 rounded-xl w-full max-w-lg shadow-[0_0_40px_rgba(191, 6, 3,0.2)]">
           <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 text-white">Enroll in a <span className="text-brand-red">Course</span></h1>
           <p className="text-center mb-8 text-gray-300">
             Join our course and explore the wonders of astrology.
@@ -532,7 +532,7 @@ const Enrollment = () => {
 
             <button
               type="submit"
-              className="w-full py-4 mt-4 bg-linear-to-r from-brand-red to-[#b0a102] text-white font-bold uppercase tracking-[0.2em] rounded-lg hover:shadow-[0_0_20px_rgba(221,39,39,0.5)] transform hover:scale-[1.02] transition-all duration-300"
+              className="w-full py-4 mt-4 bg-linear-to-r from-brand-red to-[#b0a102] text-white font-bold uppercase tracking-[0.2em] rounded-lg hover:shadow-[0_0_20px_rgba(191, 6, 3,0.5)] transform hover:scale-[1.02] transition-all duration-300"
             >
               Proceed to Payment
             </button>
@@ -683,7 +683,7 @@ const Enrollment = () => {
           )}
         </div>
 
-        <div className="w-full max-w-5xl mt-12 bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-[0_0_40px_rgba(221,39,39,0.2)]">
+        <div className="w-full max-w-5xl mt-12 bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-[0_0_40px_rgba(191, 6, 3,0.2)]">
           <PaymentGuide />
         </div>
       </div>

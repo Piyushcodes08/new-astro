@@ -379,9 +379,9 @@ const UserEmi = () => {
       <div id="top-sentinel" className="absolute top-0 left-0 w-full h-px pointer-events-none z-[-1]" />
       <Header />
       <div className="min-h-screen bg-[#0a0a0a] text-white pt-[120px] pb-20 px-4 relative z-10">
-        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-[2.5rem] w-full max-w-2xl mx-auto shadow-[0_0_50px_rgba(221,39,39,0.15)]">
+        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-[2.5rem] w-full max-w-2xl mx-auto shadow-[0_0_50px_rgba(191, 6, 3,0.15)]">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-2 text-white uppercase tracking-tight">
-            Cosmic <span className="text-[#dd2727]">EMI Verification</span>
+            Cosmic <span className="text-[#bf0603]">EMI Verification</span>
           </h2>
           <p className="text-center text-gray-400 mb-10 text-sm font-medium uppercase tracking-widest">Confirm your details to proceed with the celestial payment plan.</p>
           
@@ -393,7 +393,7 @@ const UserEmi = () => {
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   placeholder="Enter your name"
                   required
                   readOnly
@@ -405,7 +405,7 @@ const UserEmi = () => {
                   type="text"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   placeholder="Enter your email"
                   required
                 />
@@ -439,7 +439,7 @@ const UserEmi = () => {
             {selectedCourse && (
               <div className="mt-10 pt-8 border-t border-white/10">
                 <h3 className="text-sm font-bold text-white uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-[#dd2727] rounded-full animate-pulse"></span>
+                  <span className="w-2 h-2 bg-[#bf0603] rounded-full animate-pulse"></span>
                   Divine Installment Plans
                 </h3>
                 <div className="grid grid-cols-1 gap-4">
@@ -448,7 +448,7 @@ const UserEmi = () => {
                       key={plan.id}
                       className={`relative group p-6 rounded-2xl cursor-pointer transition-all border ${
                         selectedPlan?.id === plan.id
-                          ? "bg-[#dd2727]/10 border-[#dd2727] shadow-[0_0_20px_rgba(221,39,39,0.2)]"
+                          ? "bg-[#bf0603]/10 border-[#bf0603] shadow-[0_0_20px_rgba(191, 6, 3,0.2)]"
                           : "bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/10"
                       }`}
                       onClick={() => setSelectedPlan(plan)}
@@ -463,7 +463,7 @@ const UserEmi = () => {
                         </div>
                       </div>
                       {selectedPlan?.id === plan.id && (
-                        <div className="absolute -top-2 -right-2 bg-[#dd2727] text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg uppercase tracking-widest">Selected</div>
+                        <div className="absolute -top-2 -right-2 bg-[#bf0603] text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg uppercase tracking-widest">Selected</div>
                       )}
                     </div>
                   ))}
@@ -477,7 +477,7 @@ const UserEmi = () => {
                 disabled={!selectedPlan || !formData.name || !formData.phone || isLoading}
                 className={`w-full py-5 rounded-2xl font-bold uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 ${
                   selectedPlan && formData.name && formData.phone && !isLoading
-                    ? "bg-gradient-to-r from-[#dd2727] to-[#b0a102] text-white hover:scale-[1.02] shadow-[0_0_25px_rgba(221,39,39,0.3)]"
+                    ? "bg-gradient-to-r from-[#bf0603] to-[#b0a102] text-white hover:scale-[1.02] shadow-[0_0_25px_rgba(191, 6, 3,0.3)]"
                     : "bg-white/10 text-gray-500 cursor-not-allowed border border-white/5"
                 }`}
               >

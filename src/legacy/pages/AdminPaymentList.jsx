@@ -58,7 +58,7 @@ const PaymentsList = () => {
           <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pt-8">
             <div>
               <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-                Payment <span className="text-[#dd2727]">Transactions</span>
+                Payment <span className="text-[#bf0603]">Transactions</span>
               </h2>
               <p className="text-slate-400 text-sm mt-1 font-medium">Audit and track your cosmic revenue</p>
             </div>
@@ -99,7 +99,7 @@ const PaymentsList = () => {
                     {payments.map((payment) => (
                       <tr key={payment.id} className="hover:bg-slate-50 transition-colors group border-b border-slate-100 last:border-0">
                         <td className="px-6 py-5">
-                          <p className="font-bold text-slate-900 group-hover:text-[#dd2727] transition-colors">{payment.courseId}</p>
+                          <p className="font-bold text-slate-900 group-hover:text-[#bf0603] transition-colors">{payment.courseId}</p>
                           <p className="text-[10px] text-slate-400 font-mono mt-1 uppercase">ID: {payment.paymentId}</p>
                         </td>
                         <td className="px-6 py-5 text-sm text-slate-500">{payment.userId}</td>

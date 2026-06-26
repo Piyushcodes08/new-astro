@@ -45,7 +45,7 @@
   position: absolute;
   inset: -12%;
   background:
-    radial-gradient(circle at 24% 52%, rgba(221, 39, 39, 0.18), transparent 34%),
+    radial-gradient(circle at 24% 52%, rgba(191, 6, 3, 0.18), transparent 34%),
     radial-gradient(circle at 86% 34%, rgba(255, 56, 56, 0.16), transparent 32%),
     radial-gradient(circle at 70% 80%, rgba(95, 8, 8, 0.42), transparent 42%);
   filter: blur(10px);
@@ -65,7 +65,7 @@
   border-radius: 50%;
   background:
     radial-gradient(circle at 30% 28%, rgba(255, 180, 180, 0.75), rgba(142, 13, 13, 0.8) 36%, rgba(22, 0, 3, 1) 72%);
-  box-shadow: inset -16px -20px 38px rgba(0, 0, 0, 0.78), 0 0 40px rgba(221, 39, 39, 0.2);
+  box-shadow: inset -16px -20px 38px rgba(0, 0, 0, 0.78), 0 0 40px rgba(191, 6, 3, 0.2);
   opacity: 0.8;
 }
 
@@ -113,11 +113,11 @@
   width: 20px;
   height: 34px;
   border-radius: 12px;
-  border: 1.5px solid rgba(221, 39, 39, 0.6);
+  border: 1.5px solid rgba(191, 6, 3, 0.6);
   position: relative;
   display: flex;
   justify-content: center;
-  box-shadow: 0 0 15px rgba(221, 39, 39, 0.2);
+  box-shadow: 0 0 15px rgba(191, 6, 3, 0.2);
 }
 
 .wheel-dot {
@@ -196,8 +196,8 @@
   border-radius: 50%;
   border: 1px solid rgba(255, 212, 150, 0.24);
   box-shadow:
-    0 0 30px rgba(221, 39, 39, 0.55),
-    inset 0 0 28px rgba(221, 39, 39, 0.32);
+    0 0 30px rgba(191, 6, 3, 0.55),
+    inset 0 0 28px rgba(191, 6, 3, 0.32);
 }
 
 
@@ -214,7 +214,7 @@
   object-fit: contain;
   filter:
     drop-shadow(0 0 5px rgba(255, 60, 60, 0.85))
-    drop-shadow(0 0 10px rgba(221, 39, 39, 0.58));
+    drop-shadow(0 0 10px rgba(191, 6, 3, 0.58));
 }
 
 .hero-zodiac-name {
@@ -228,7 +228,7 @@
   text-transform: uppercase;
   text-shadow:
     0 0 6px rgba(255, 255, 255, 0.14),
-    0 0 10px rgba(221, 39, 39, 0.3);
+    0 0 10px rgba(191, 6, 3, 0.3);
 }
 
 .title-divider {
@@ -292,12 +292,12 @@
 .trait-badge:hover {
   transform: translateY(-3px);
   border-color: rgba(255, 65, 65, 0.58);
-  box-shadow: 0 18px 34px rgba(221, 39, 39, 0.22);
+  box-shadow: 0 18px 34px rgba(191, 6, 3, 0.22);
 }
 
 .badge-icon {
   color: #ff4a4a;
-  text-shadow: 0 0 14px rgba(221, 39, 39, 0.9);
+  text-shadow: 0 0 14px rgba(191, 6, 3, 0.9);
 }
 
 .explore-btn-large {
@@ -308,10 +308,10 @@
   color: #fff;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent),
-    rgba(221, 39, 39, 0.1);
+    rgba(191, 6, 3, 0.1);
   box-shadow:
     inset 0 0 6px rgba(255, 255, 255, 0.04),
-    0 0 8px rgba(221, 39, 39, 0.22);
+    0 0 8px rgba(191, 6, 3, 0.22);
   font-family: var(--ff-heading, "Poppins", sans-serif);
   font-size: 0.55rem;
   font-weight: 900;
@@ -326,8 +326,8 @@
 
 .explore-btn-large:hover {
   transform: translateX(7px);
-  background: linear-gradient(90deg, #8e1515, #dd2727);
-  box-shadow: 0 0 34px rgba(221, 39, 39, 0.45);
+  background: linear-gradient(90deg, #8e1515, #bf0603);
+  box-shadow: 0 0 34px rgba(191, 6, 3, 0.45);
 }
 
 /* Center Wheel */
@@ -369,7 +369,7 @@
   inset: -12%;
   border-radius: 50%;
   background:
-    radial-gradient(circle, rgba(221, 39, 39, 0.32), transparent 64%);
+    radial-gradient(circle, rgba(191, 6, 3, 0.32), transparent 64%);
   filter: blur(8px);
   pointer-events: none;
 }
@@ -380,7 +380,7 @@
   height: 52%;
   border-radius: 50%;
   background:
-    radial-gradient(circle, rgba(255, 42, 42, 0.38), rgba(221, 39, 39, 0.09) 44%, transparent 72%);
+    radial-gradient(circle, rgba(255, 42, 42, 0.38), rgba(191, 6, 3, 0.09) 44%, transparent 72%);
   filter: blur(3px);
   pointer-events: none;
 }
@@ -405,7 +405,7 @@
   border: 3px solid rgba(255, 29, 29, 0.72);
   box-shadow:
     0 0 22px rgba(255, 36, 36, 0.75),
-    0 0 62px rgba(221, 39, 39, 0.42);
+    0 0 62px rgba(191, 6, 3, 0.42);
   z-index: 2;
   pointer-events: none;
 }
@@ -418,7 +418,7 @@
   transform-origin: 50% 50%;
   filter:
     drop-shadow(0 26px 48px rgba(0, 0, 0, 0.86))
-    drop-shadow(0 0 42px rgba(221, 39, 39, 0.34));
+    drop-shadow(0 0 42px rgba(191, 6, 3, 0.34));
 }
 
 .zodiac-center-display {
@@ -435,7 +435,7 @@
   justify-content: center;
   box-shadow:
     inset 0 0 24px rgba(255, 74, 74, 0.28),
-    0 0 32px rgba(221, 39, 39, 0.52),
+    0 0 32px rgba(191, 6, 3, 0.52),
     0 0 50px rgba(0, 0, 0, 0.7);
 }
 
@@ -455,7 +455,7 @@
   object-fit: contain;
   filter:
     drop-shadow(0 0 8px rgba(255, 70, 70, 0.95))
-    drop-shadow(0 0 18px rgba(221, 39, 39, 0.62));
+    drop-shadow(0 0 18px rgba(191, 6, 3, 0.62));
 }
 
 .zodiac-navigation-indicator {
@@ -527,7 +527,7 @@
   border: 1px solid rgba(255, 180, 80, 0.2);
   box-shadow:
     0 15px 40px rgba(0, 0, 0, 0.9),
-    inset 0 0 30px rgba(221, 39, 39, 0.1);
+    inset 0 0 30px rgba(191, 6, 3, 0.1);
   backdrop-filter: blur(30px);
   overflow: visible;
 }
@@ -585,7 +585,7 @@
   padding: 5px 10px;
   border-radius: 999px;
   color: #fff;
-  background: rgba(221, 39, 39, 0.16);
+  background: rgba(191, 6, 3, 0.16);
   border: 1px solid rgba(255, 95, 95, 0.42);
   font-family: var(--ff-heading, "Poppins", sans-serif);
   font-size: 0.55rem;
@@ -696,7 +696,7 @@
 .premium-banner-btn {
   width: 100%;
   height: 44px;
-  background: linear-gradient(90deg, #8a1111 0%, #dd2727 50%, #8a1111 100%);
+  background: linear-gradient(90deg, #8a1111 0%, #bf0603 50%, #8a1111 100%);
   clip-path: polygon(5% 0, 95% 0, 100% 50%, 95% 100%, 5% 100%, 0 50%);
   border: 1px solid rgba(255, 209, 132, 0.6);
   display: flex;
@@ -710,7 +710,7 @@
 
 .premium-banner-btn:hover {
   filter: brightness(1.15);
-  box-shadow: 0 10px 40px rgba(221, 39, 39, 0.5);
+  box-shadow: 0 10px 40px rgba(191, 6, 3, 0.5);
   transform: scale(1.02);
 }
 
@@ -751,8 +751,8 @@
   transform: translateY(-4px);
   box-shadow:
     inset 0 0 0 4px rgba(255, 255, 255, 0.065),
-    0 20px 44px rgba(221, 39, 39, 0.42),
-    0 0 50px rgba(221, 39, 39, 0.4);
+    0 20px 44px rgba(191, 6, 3, 0.42),
+    0 0 50px rgba(191, 6, 3, 0.4);
 }
 
 .btn-arrow {
@@ -805,13 +805,13 @@
   flex: 0 0 32px;
   border-radius: 50%;
   color: #ff4a4a;
-  background: rgba(221, 39, 39, 0.1);
+  background: rgba(191, 6, 3, 0.1);
   border: 1px solid rgba(255, 86, 86, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.1rem;
-  box-shadow: 0 0 8px rgba(221, 39, 39, 0.18);
+  box-shadow: 0 0 8px rgba(191, 6, 3, 0.18);
 }
 
 .f-text {

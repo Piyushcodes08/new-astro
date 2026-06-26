@@ -76,7 +76,7 @@ const ConsultingPage = () => {
                             <div className="flex flex-wrap gap-6 justify-center items-center">
                                 <Link
                                     to="/appointment"
-                                    className="px-10 py-4 rounded-full font-black uppercase tracking-[0.2em] text-white transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(221,39,39,0.4)] bg-brand-red flex items-center gap-3 text-xs"
+                                    className="px-10 py-4 rounded-full font-black uppercase tracking-[0.2em] text-white transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(191, 6, 3,0.4)] bg-brand-red flex items-center gap-3 text-xs"
                                 >
                                     {hero.buttonText} <LuCalendar className="w-4 h-4" />
                                 </Link>
@@ -153,7 +153,7 @@ const ConsultingPage = () => {
                                         </div>
 
                                         {/* Content */}
-                                        <div className="p-5 flex flex-col flex-1 bg-[#dd2727]">
+                                        <div className="p-5 flex flex-col flex-1 bg-[#bf0603]">
                                             <h3 className="title-batangas text-lg md:text-xl mb-4 text-white leading-[1.3] tracking-tight uppercase font-black">
                                                 {srv.title}
                                             </h3>
@@ -315,7 +315,7 @@ const ConsultingPage = () => {
                                 <div className="flex flex-wrap gap-8 justify-center items-center">
                                     <Link
                                         to="/appointment"
-                                        className="px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] text-white transition-all duration-500 hover:-translate-y-1 bg-brand-red shadow-[0_20px_50px_rgba(221,39,39,0.4)] text-xs"
+                                        className="px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] text-white transition-all duration-500 hover:-translate-y-1 bg-brand-red shadow-[0_20px_50px_rgba(191, 6, 3,0.4)] text-xs"
                                     >
                                         {cta.primaryButtonText}
                                     </Link>

@@ -82,7 +82,7 @@ const Services = () => {
               {/* Red Dot Divider */}
               <div className="flex items-center justify-center gap-4 pt-4">
                   <div className="h-px w-12 bg-linear-to-r from-transparent to-white/10"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-brand-red shadow-[0_0_15px_#dd2727]"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-brand-red shadow-[0_0_15px_#bf0603]"></div>
                   <div className="h-px w-12 bg-linear-to-l from-transparent to-white/10"></div>
               </div>
             </motion.div>
@@ -128,7 +128,7 @@ const Services = () => {
                       <div className="mt-auto">
                         <Link
                           to={service.link}
-                          className="flex items-center justify-center gap-3 w-full py-4 bg-brand-red text-white rounded-lg font-black uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-brand-red transition-all shadow-[0_10px_40px_-10px_rgba(221,39,39,0.5)] active:scale-95 group/btn"
+                          className="flex items-center justify-center gap-3 w-full py-4 bg-brand-red text-white rounded-lg font-black uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-brand-red transition-all shadow-[0_10px_40px_-10px_rgba(191, 6, 3,0.5)] active:scale-95 group/btn"
                         >
                           Continue Path
                           <svg className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>

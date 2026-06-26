@@ -37,7 +37,7 @@ const FAQPage = () => {
                         <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-[15px] md:px-[50px]">
 
                             <h1 className="title-batangas text-5xl md:text-7xl mb-6 text-white leading-tight">
-                                Frequently Asked <br /> <span className="text-[#dd2727]">Questions</span>
+                                Frequently Asked <br /> <span className="text-[#bf0603]">Questions</span>
                             </h1>
                             <p className="subtitle-poppins text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-medium">
                                 Find answers to the most common questions about our sacred astrological 
@@ -51,8 +51,8 @@ const FAQPage = () => {
                     <div className="section-container">
                         <div className="max-w-4xl mx-auto space-y-6">
                             {faqs.map((faq, index) => (
-                                <div key={index} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-8 hover:bg-white/10 hover:border-[#dd2727]/40 shadow-[0_10px_40px_rgba(0,0,0,0.25)] transition-all duration-500 text-center">
-                                    <h3 className="title-batangas text-2xl md:text-3xl mb-4 text-[#dd2727]">{faq.question}</h3>
+                                <div key={index} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-8 hover:bg-white/10 hover:border-[#bf0603]/40 shadow-[0_10px_40px_rgba(0,0,0,0.25)] transition-all duration-500 text-center">
+                                    <h3 className="title-batangas text-2xl md:text-3xl mb-4 text-[#bf0603]">{faq.question}</h3>
                                     <p className="subtitle-poppins text-white/80 leading-relaxed text-lg">{faq.answer}</p>
                                 </div>
                             ))}

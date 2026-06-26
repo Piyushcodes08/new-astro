@@ -122,7 +122,7 @@ const EMIDetails = () => {
 
     return (
       <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-[0_0_40px_rgba(221,39,39,0.2)] p-8 w-full max-w-md relative overflow-hidden">
+        <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-[0_0_40px_rgba(191, 6, 3,0.2)] p-8 w-full max-w-md relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-brand-red to-[#b0a102]"></div>
 
           <h3 className="text-2xl font-bold mb-2 text-white">
@@ -550,7 +550,7 @@ const EMIDetails = () => {
                               <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Payment Progress</span>
                               <div className="flex items-center gap-4 flex-1 max-w-xs">
                                 <div className="h-2 bg-slate-200 rounded-full overflow-hidden flex-1 shadow-inner">
-                                    <div className="h-full bg-brand-red transition-all duration-1000 shadow-[0_0_10px_rgba(221,39,39,0.3)]" style={{ width: `${progress}%` }}></div>
+                                    <div className="h-full bg-brand-red transition-all duration-1000 shadow-[0_0_10px_rgba(191, 6, 3,0.3)]" style={{ width: `${progress}%` }}></div>
                                 </div>
                                 <span className="text-[10px] font-black text-slate-900">{Math.round(progress)}%</span>
                               </div>

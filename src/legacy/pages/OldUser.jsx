@@ -165,9 +165,9 @@ const OldUserAppointment = () => {
       <div id="top-sentinel" className="absolute top-0 left-0 w-full h-px pointer-events-none z-[-1]" />
       <Header />
       <div className="min-h-screen bg-[#0a0a0a] text-white pt-[120px] pb-20 px-4 relative z-10">
-        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-[2.5rem] w-full max-w-4xl mx-auto shadow-[0_0_50px_rgba(221,39,39,0.15)]">
+        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-[2.5rem] w-full max-w-4xl mx-auto shadow-[0_0_50px_rgba(191, 6, 3,0.15)]">
           <h1 className="text-3xl md:text-5xl font-bold text-center mb-2 text-white uppercase tracking-tight">
-            Recurring <span className="text-[#dd2727]">Guidance</span>
+            Recurring <span className="text-[#bf0603]">Guidance</span>
           </h1>
           <p className="text-center text-gray-400 mb-12 text-sm font-medium uppercase tracking-widest">Continue your journey through the celestial realms</p>
 
@@ -175,7 +175,7 @@ const OldUserAppointment = () => {
             {/* Name Fields */}
             <div className="space-y-8">
               <h3 className="text-sm font-bold text-white uppercase tracking-[0.2em] border-b border-white/10 pb-4 flex items-center gap-2">
-                <span className="w-2 h-2 bg-[#dd2727] rounded-full animate-pulse"></span>
+                <span className="w-2 h-2 bg-[#bf0603] rounded-full animate-pulse"></span>
                 Celestial Identity
               </h3>
 
@@ -188,9 +188,9 @@ const OldUserAppointment = () => {
                     value={formData.firstName}
                     onChange={handleChange}
                     placeholder="First Name"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all placeholder-gray-600"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all placeholder-gray-600"
                   />
-                  {errors.firstName && <p className="text-[#dd2727] text-[10px] font-bold uppercase mt-1">{errors.firstName}</p>}
+                  {errors.firstName && <p className="text-[#bf0603] text-[10px] font-bold uppercase mt-1">{errors.firstName}</p>}
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-2">Last Name</label>
@@ -200,9 +200,9 @@ const OldUserAppointment = () => {
                     value={formData.lastName}
                     onChange={handleChange}
                     placeholder="Last Name"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all placeholder-gray-600"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all placeholder-gray-600"
                   />
-                  {errors.lastName && <p className="text-[#dd2727] text-[10px] font-bold uppercase mt-1">{errors.lastName}</p>}
+                  {errors.lastName && <p className="text-[#bf0603] text-[10px] font-bold uppercase mt-1">{errors.lastName}</p>}
                 </div>
               </div>
 
@@ -215,7 +215,7 @@ const OldUserAppointment = () => {
                     value={formData.dobDay}
                     onChange={handleChange}
                     placeholder="DD"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   />
                 </div>
                 <div className="space-y-2">
@@ -226,7 +226,7 @@ const OldUserAppointment = () => {
                     value={formData.dobMonth}
                     onChange={handleChange}
                     placeholder="MM"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   />
                 </div>
                 <div className="space-y-2">
@@ -237,7 +237,7 @@ const OldUserAppointment = () => {
                     value={formData.dobYear}
                     onChange={handleChange}
                     placeholder="YYYY"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   />
                 </div>
               </div>
@@ -251,7 +251,7 @@ const OldUserAppointment = () => {
                     value={formData.birthHour}
                     onChange={handleChange}
                     placeholder="HH"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   />
                 </div>
                 <div className="space-y-2">
@@ -262,7 +262,7 @@ const OldUserAppointment = () => {
                     value={formData.birthMinute}
                     onChange={handleChange}
                     placeholder="MM"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   />
                 </div>
                 <div className="space-y-2">
@@ -271,7 +271,7 @@ const OldUserAppointment = () => {
                     name="birthAMPM"
                     value={formData.birthAMPM}
                     onChange={handleChange}
-                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all appearance-none cursor-pointer"
+                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all appearance-none cursor-pointer"
                   >
                     <option value="AM" className="bg-[#0a0a0a]">AM</option>
                     <option value="PM" className="bg-[#0a0a0a]">PM</option>
@@ -287,7 +287,7 @@ const OldUserAppointment = () => {
                   value={formData.birthPlace}
                   onChange={handleChange}
                   placeholder="Enter Birth Place"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all placeholder-gray-600"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all placeholder-gray-600"
                 />
               </div>
             </div>
@@ -308,9 +308,9 @@ const OldUserAppointment = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="Phone Number"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   />
-                  {errors.phone && <p className="text-[#dd2727] text-[10px] font-bold uppercase mt-1">{errors.phone}</p>}
+                  {errors.phone && <p className="text-[#bf0603] text-[10px] font-bold uppercase mt-1">{errors.phone}</p>}
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-2">Email</label>
@@ -320,14 +320,14 @@ const OldUserAppointment = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Email Address"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all"
                   />
-                  {errors.email && <p className="text-[#dd2727] text-[10px] font-bold uppercase mt-1">{errors.email}</p>}
+                  {errors.email && <p className="text-[#bf0603] text-[10px] font-bold uppercase mt-1">{errors.email}</p>}
                 </div>
               </div>
 
               <div className="bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8 space-y-8">
-                <h4 className="text-xs font-bold text-[#dd2727] uppercase tracking-[0.2em]">Temporal Selection</h4>
+                <h4 className="text-xs font-bold text-[#bf0603] uppercase tracking-[0.2em]">Temporal Selection</h4>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
@@ -336,7 +336,7 @@ const OldUserAppointment = () => {
                       name="availableDate"
                       value={formData.availableDate}
                       onChange={handleChange}
-                      className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all appearance-none cursor-pointer"
+                      className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all appearance-none cursor-pointer"
                       required
                     >
                       <option value="" disabled className="bg-[#0a0a0a]">Select a Date</option>
@@ -353,7 +353,7 @@ const OldUserAppointment = () => {
                         name="slot"
                         value={formData.slot}
                         onChange={handleChange}
-                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all appearance-none cursor-pointer"
+                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all appearance-none cursor-pointer"
                         required
                       >
                         <option value="" disabled className="bg-[#0a0a0a]">Select a Slot</option>
@@ -375,15 +375,15 @@ const OldUserAppointment = () => {
                   value={formData.consultationDetails}
                   onChange={handleChange}
                   placeholder="What cosmic questions do you seek answers to?"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all h-32 placeholder-gray-600"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all h-32 placeholder-gray-600"
                 />
-                {errors.consultationDetails && <p className="text-[#dd2727] text-[10px] font-bold uppercase mt-1">{errors.consultationDetails}</p>}
+                {errors.consultationDetails && <p className="text-[#bf0603] text-[10px] font-bold uppercase mt-1">{errors.consultationDetails}</p>}
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full py-6 bg-gradient-to-r from-[#dd2727] to-[#b0a102] text-white font-bold uppercase tracking-[0.3em] rounded-[1.5rem] hover:scale-[1.02] transition-all shadow-[0_0_30px_rgba(221,39,39,0.4)]"
+              className="w-full py-6 bg-gradient-to-r from-[#bf0603] to-[#b0a102] text-white font-bold uppercase tracking-[0.3em] rounded-[1.5rem] hover:scale-[1.02] transition-all shadow-[0_0_30px_rgba(191, 6, 3,0.4)]"
             >
               Align Destinies
             </button>

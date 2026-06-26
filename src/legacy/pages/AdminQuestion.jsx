@@ -212,7 +212,7 @@ const QandAAdminPanel = () => {
           <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pt-8">
             <div>
               <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-                Q&A <span className="text-[#dd2727]">Management</span>
+                Q&A <span className="text-[#bf0603]">Management</span>
               </h2>
               <p className="text-slate-400 text-sm mt-1 font-medium">Moderate inquiries and organize educational responses</p>
             </div>
@@ -220,7 +220,7 @@ const QandAAdminPanel = () => {
             <select
               value={selectedCourse}
               onChange={(e) => setSelectedCourse(e.target.value)}
-              className="w-full md:w-64 bg-gray-50 border border-slate-200 rounded-xl px-5 py-3 text-sm text-slate-900 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all appearance-none cursor-pointer shadow-sm"
+              className="w-full md:w-64 bg-gray-50 border border-slate-200 rounded-xl px-5 py-3 text-sm text-slate-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all appearance-none cursor-pointer shadow-sm"
             >
               <option value="" className="bg-white">-- Select Course --</option>
               {courses.map((course) => (
@@ -235,8 +235,8 @@ const QandAAdminPanel = () => {
             {/* Q&A Section */}
             <section className="space-y-6">
               <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xl shadow-slate-200/50">
-                <h3 className="text-lg font-bold uppercase tracking-widest text-[#dd2727] mb-6 flex items-center gap-3">
-                  <div className="w-1.5 h-6 bg-[#dd2727] rounded-full"></div>
+                <h3 className="text-lg font-bold uppercase tracking-widest text-[#bf0603] mb-6 flex items-center gap-3">
+                  <div className="w-1.5 h-6 bg-[#bf0603] rounded-full"></div>
                   Interactive Items
                 </h3>
                 
@@ -245,14 +245,14 @@ const QandAAdminPanel = () => {
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 outline-none focus:ring-2 focus:ring-[#dd2727] transition-all placeholder:text-slate-400"
+                    className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 outline-none focus:ring-2 focus:ring-[#bf0603] transition-all placeholder:text-slate-400"
                     placeholder="Inquiry Title"
                   />
                   <input
                     type="text"
                     value={subTitle}
                     onChange={(e) => setSubTitle(e.target.value)}
-                    className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 outline-none focus:ring-2 focus:ring-[#dd2727] transition-all placeholder:text-slate-400"
+                    className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 outline-none focus:ring-2 focus:ring-[#bf0603] transition-all placeholder:text-slate-400"
                     placeholder="Short Context / Subtitle"
                   />
                   <div className="relative">
@@ -266,7 +266,7 @@ const QandAAdminPanel = () => {
                       <p className="text-[10px] text-[#b0a102] font-bold uppercase mt-2">Current video active</p>
                     )}
                   </div>
-                  <button type="submit" className="w-full bg-[#dd2727] text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/30 transition-all">
+                  <button type="submit" className="w-full bg-[#bf0603] text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/30 transition-all">
                     {editingId ? "Update Q&A" : "Create Q&A"}
                   </button>
                 </form>
@@ -277,7 +277,7 @@ const QandAAdminPanel = () => {
                   <div key={item.id} className="bg-white border border-slate-100 rounded-2xl p-5 hover:bg-slate-50 transition-all group shadow-sm">
                     <div className="flex justify-between items-start mb-4">
                       <div>
-                        <h4 className="font-bold text-slate-900 tracking-wide group-hover:text-[#dd2727] transition-colors">{item.title}</h4>
+                        <h4 className="font-bold text-slate-900 tracking-wide group-hover:text-[#bf0603] transition-colors">{item.title}</h4>
                         <p className="text-xs text-slate-400 mt-1 font-medium">{item.subTitle}</p>
                       </div>
                       <div className="flex gap-2">

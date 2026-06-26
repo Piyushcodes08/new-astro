@@ -18,6 +18,7 @@ const AdminCalendar = () => {
   const [calendarEntries, setCalendarEntries] = useState([]);
   const [date, setDate] = useState("");
   const [timeSlot, setTimeSlot] = useState("");
+  const [period, setPeriod] = useState("AM");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -40,13 +41,15 @@ const AdminCalendar = () => {
   };
 
   const handleAddCalendarEntry = async () => {
-    if (!date || !timeSlot) return;
+    if (!date) return;
     try {
-      const newEntry = { date, timeSlot };
+      const formattedSlot = timeSlot ? `${timeSlot} ${period}` : "";
+      const newEntry = { date, timeSlot: formattedSlot };
       await addDoc(collection(db, "Calendar"), newEntry);
       fetchCalendarEntries();
       setDate("");
       setTimeSlot("");
+      setPeriod("AM");
     } catch (error) {
       console.error("Error adding calendar entry:", error);
     }
@@ -75,7 +78,7 @@ const AdminCalendar = () => {
               <div>
                 {/* ORIGINAL TITLE: Manage Calendar */}
                 <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-                  Manage <span className="text-[#dd2727]">Calendar</span>
+                  Manage <span className="text-[#bf0603]">Calendar</span>
                 </h2>
                 <p className="text-slate-400 text-sm mt-1 font-medium">Update celestial availability slots</p>
               </div>
@@ -85,9 +88,9 @@ const AdminCalendar = () => {
               {/* Add Entry Form */}
               <div className="lg:col-span-1">
                 <div className="bg-white border border-slate-200 rounded-2xl p-10 shadow-xl shadow-slate-200/50 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#dd2727]/5 rounded-full blur-3xl"></div>
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#bf0603]/5 rounded-full blur-3xl"></div>
                   <h3 className="text-xl font-bold text-slate-900 mb-8 uppercase tracking-widest flex items-center gap-3">
-                    <div className="w-1.5 h-6 bg-[#dd2727] rounded-full"></div>
+                    <div className="w-1.5 h-6 bg-[#bf0603] rounded-full"></div>
                     New Appointment
                   </h3>
                   
@@ -99,26 +102,37 @@ const AdminCalendar = () => {
                         type="date"
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
-                        className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all"
                       />
                     </div>
                     
-                    <div className="space-y-2">
+                                    <div className="space-y-2">
                       {/* ORIGINAL LABEL: Select Time Slot */}
                       <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Select Time Slot</label>
-                      <input
-                        type="time"
-                        value={timeSlot}
-                        onChange={(e) => setTimeSlot(e.target.value)}
-                        className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all"
-                      />
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="time"
+                          value={timeSlot}
+                          onChange={(e) => setTimeSlot(e.target.value)}
+                          className="flex-1 bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all"
+                        />
+                        <select
+                          value={period}
+                          onChange={(e) => setPeriod(e.target.value)}
+                          className="w-28 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all"
+                        >
+                          <option value="AM">AM</option>
+                          <option value="PM">PM</option>
+                        </select>
+                      </div>
+                      <p className="text-[11px] text-slate-500 mt-2">Time slot is optional; leave blank to add a date-only availability.</p>
                     </div>
 
                     {/* ORIGINAL BUTTON: Add Calendar Entry */}
                     <button
                       onClick={handleAddCalendarEntry}
                       type="button"
-                      className="w-full bg-[#dd2727] text-white py-5 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/30 transition-all transform hover:scale-[1.02] active:scale-95 mt-4"
+                      className="w-full bg-[#bf0603] text-white py-5 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/30 transition-all transform hover:scale-[1.02] active:scale-95 mt-4"
                     >
                       Add Entry
                     </button>
@@ -143,14 +157,14 @@ const AdminCalendar = () => {
                       calendarEntries.map((entry) => (
                         <div
                           key={entry.id}
-                          className="group bg-white border border-slate-200 rounded-2xl p-8 hover:border-[#dd2727]/30 transition-all duration-500 shadow-sm hover:shadow-xl relative overflow-hidden"
+                          className="group bg-white border border-slate-200 rounded-2xl p-8 hover:border-[#bf0603]/30 transition-all duration-500 shadow-sm hover:shadow-xl relative overflow-hidden"
                         >
                           <div className="absolute top-0 right-0 w-24 h-24 bg-[#b0a102]/5 rounded-full blur-2xl group-hover:bg-[#b0a102]/10 transition-all"></div>
                           <div className="flex justify-between items-center relative z-10">
                             <div className="space-y-1">
-                              <p className="text-xl font-bold text-slate-900 group-hover:text-[#dd2727] transition-colors">{entry.date}</p>
+                              <p className="text-xl font-bold text-slate-900 group-hover:text-[#bf0603] transition-colors">{entry.date}</p>
                               <div className="flex items-center gap-2">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#dd2727]"></span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#bf0603]"></span>
                                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{entry.timeSlot}</p>
                               </div>
                             </div>

@@ -13,8 +13,8 @@ const Button = ({
     
     // Variant styles
     const variants = {
-        primary: "!bg-white !text-[#dd2727] hover:!bg-[#dd2727] hover:!text-white mt-5",
-        secondary: "!bg-[#dd2727] !text-white hover:!bg-white hover:!text-[#dd2727] mt-5"
+        primary: "!bg-white !text-[#bf0603] hover:!bg-[#bf0603] hover:!text-white mt-5",
+        secondary: "!bg-[#bf0603] !text-white hover:!bg-white hover:!text-[#bf0603] mt-5"
     };
 
     const combinedClasses = `${baseClasses} ${variants[variant] || ""} ${className}`;

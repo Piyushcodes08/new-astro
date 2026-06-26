@@ -163,11 +163,11 @@ const AddCourse = () => {
           <div className="space-y-8">
             <div className="flex justify-between items-center pt-8">
                <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-                Course <span className="text-[#dd2727]">Management</span>
+                Course <span className="text-[#bf0603]">Management</span>
               </h2>
               <button
                 onClick={() => setIsFormVisible(!isFormVisible)}
-                className="bg-[#dd2727] text-white px-3 text-xs py-2 rounded-2xl uppercase tracking-widest hover:shadow-[0_0_30px_rgba(221,39,39,0.5)] transition-all"
+                className="bg-[#bf0603] text-white px-3 text-xs py-2 rounded-2xl uppercase tracking-widest hover:shadow-[0_0_30px_rgba(191, 6, 3,0.5)] transition-all"
               >
                 {isFormVisible ? "X" : "add new course"}
               </button>
@@ -175,11 +175,11 @@ const AddCourse = () => {
 
             {isFormVisible && (
               <div className="bg-white border border-slate-200 rounded-2xl p-8 md:p-10 shadow-xl shadow-slate-200/50 animate-in zoom-in-95 duration-500 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-40 h-40 bg-[#dd2727]/5 rounded-full blur-[100px]"></div>
+                <div className="absolute top-0 right-0 w-40 h-40 bg-[#bf0603]/5 rounded-full blur-[100px]"></div>
                 
                 {/* ORIGINAL TITLE: Add Course / Edit Course */}
                 <h3 className="text-xl font-bold text-slate-900 mb-12 pb-6 border-b border-slate-100 flex items-center gap-3">
-                  <div className="w-1.5 h-6 bg-[#dd2727] rounded-full"></div>
+                  <div className="w-1.5 h-6 bg-[#bf0603] rounded-full"></div>
                   {editingCourseId ? "Edit Course" : "Add Course"}
                 </h3>
 
@@ -189,7 +189,7 @@ const AddCourse = () => {
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Course Title</label>
                     <input
                       type="text"
-                      className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all placeholder:text-gray-400"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all placeholder:text-gray-400"
                       value={courseTitle}
                       onChange={(e) => setCourseTitle(e.target.value)}
                       placeholder="Enter course title"
@@ -200,7 +200,7 @@ const AddCourse = () => {
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Course Subtitle</label>
                     <input
                       type="text"
-                      className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all placeholder:text-gray-400"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all placeholder:text-gray-400"
                       value={courseSubTitle}
                       onChange={(e) => setCourseSubTitle(e.target.value)}
                       placeholder="Enter course Sub title"
@@ -210,7 +210,7 @@ const AddCourse = () => {
                     {/* ORIGINAL LABEL: Course Type */}
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Course Type</label>
                     <select
-                      className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none appearance-none cursor-pointer"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none appearance-none cursor-pointer"
                       value={courseType}
                       onChange={(e) => setCourseType(e.target.value)}
                     >
@@ -220,15 +220,15 @@ const AddCourse = () => {
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">SEO Title</label>
-                    <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all" value={seoTitle} onChange={(e) => setSeoTitle(e.target.value)} placeholder="Enter SEO Title" />
+                    <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all" value={seoTitle} onChange={(e) => setSeoTitle(e.target.value)} placeholder="Enter SEO Title" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">SEO Description</label>
-                    <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all" value={seoDescription} onChange={(e) => setSeoDescription(e.target.value)} placeholder="Enter SEO Description" />
+                    <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all" value={seoDescription} onChange={(e) => setSeoDescription(e.target.value)} placeholder="Enter SEO Description" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">SEO Keywords (comma separated)</label>
-                    <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all" value={seoKeywords} onChange={(e) => setSeoKeywords(e.target.value)} placeholder="e.g. astrology, horoscope, zodiac" />
+                    <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all" value={seoKeywords} onChange={(e) => setSeoKeywords(e.target.value)} placeholder="e.g. astrology, horoscope, zodiac" />
                   </div>
                   
                   {courseType === "paid" && (
@@ -236,7 +236,7 @@ const AddCourse = () => {
                       <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Price</label>
                       <input
                         type="number"
-                        className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                         placeholder="Enter course price"
@@ -247,7 +247,7 @@ const AddCourse = () => {
                     <div className="space-y-2 animate-in slide-in-from-right-4 duration-300">
                       <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Status</label>
                       <select
-                        className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none appearance-none cursor-pointer"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none appearance-none cursor-pointer"
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
                       >
@@ -261,7 +261,7 @@ const AddCourse = () => {
                 <div className="mt-8 space-y-2">
                   <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Description</label>
                   <textarea
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white h-40 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all resize-none"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white h-40 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all resize-none"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Enter course description"
@@ -270,7 +270,7 @@ const AddCourse = () => {
 
                 <div className="mt-8 space-y-2">
                   <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Course Image</label>
-                  <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 text-center group/upload hover:border-[#dd2727]/50 transition-all cursor-pointer relative">
+                  <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 text-center group/upload hover:border-[#bf0603]/50 transition-all cursor-pointer relative">
                     <input
                       type="file"
                       accept="image/*"
@@ -278,7 +278,7 @@ const AddCourse = () => {
                       onChange={(e) => setImageFile(e.target.files[0])}
                     />
                     <div className="space-y-3">
-                      <svg className="w-10 h-10 text-gray-600 mx-auto group-hover/upload:text-[#dd2727] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                      <svg className="w-10 h-10 text-gray-600 mx-auto group-hover/upload:text-[#bf0603] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                       <p className="text-sm font-medium text-gray-400">{imageFile ? imageFile.name : "Select Celestial Visual"}</p>
                     </div>
                   </div>
@@ -287,7 +287,7 @@ const AddCourse = () => {
                 <div className="mt-12">
                   <button
                     onClick={handleAddOrUpdateCourse}
-                    className={`w-full bg-[#dd2727] text-white py-5 rounded-xl font-bold uppercase tracking-[0.2em] hover:shadow-[0_0_40px_rgba(221,39,39,0.5)] transition-all transform hover:scale-[1.01] active:scale-95 ${isUploading ? "cursor-not-allowed opacity-50" : ""}`}
+                    className={`w-full bg-[#bf0603] text-white py-5 rounded-xl font-bold uppercase tracking-[0.2em] hover:shadow-[0_0_40px_rgba(191, 6, 3,0.5)] transition-all transform hover:scale-[1.01] active:scale-95 ${isUploading ? "cursor-not-allowed opacity-50" : ""}`}
                     disabled={isUploading}
                   >
                     {isUploading ? "Transmitting Data..." : editingCourseId ? "Update Course" : "Add Course"}
@@ -313,11 +313,11 @@ const AddCourse = () => {
                       className="p-8 flex justify-between items-center hover:bg-slate-50 transition-all group"
                     >
                       <div className="flex items-center gap-6">
-                        <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:border-[#dd2727]/30 transition-all">
-                          <span className="text-[10px] font-bold text-slate-400 group-hover:text-[#dd2727] transition-all uppercase tracking-tighter">ID: {course.id.substring(0,4)}</span>
+                        <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:border-[#bf0603]/30 transition-all">
+                          <span className="text-[10px] font-bold text-slate-400 group-hover:text-[#bf0603] transition-all uppercase tracking-tighter">ID: {course.id.substring(0,4)}</span>
                         </div>
                         <div>
-                          <span className="text-lg text-slate-900 font-bold tracking-tight group-hover:text-[#dd2727] transition-all uppercase">
+                          <span className="text-lg text-slate-900 font-bold tracking-tight group-hover:text-[#bf0603] transition-all uppercase">
                             {course.title || course.Title || "Untitled Course"}
                           </span>
                           <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">{course.type} • {course.status || 'Active'}</p>
@@ -332,7 +332,7 @@ const AddCourse = () => {
                         </button>
                         <button
                           onClick={() => handleDeleteCourse(course.id, course.type)}
-                          className="text-[10px] font-bold uppercase tracking-widest text-[#dd2727] hover:bg-red-50 px-4 py-2 rounded-lg transition-all"
+                          className="text-[10px] font-bold uppercase tracking-widest text-[#bf0603] hover:bg-red-50 px-4 py-2 rounded-lg transition-all"
                         >
                           Delete
                         </button>

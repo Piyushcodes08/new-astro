@@ -22,7 +22,7 @@
 }
 .horo-back-btn {
   padding: 10px 28px;
-  background: #dd2727;
+  background: #bf0603;
   color: #fff;
   border-radius: 4px;
   font-weight: 700;
@@ -46,7 +46,7 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(221,39,39,0.22), transparent 55%),
+    radial-gradient(ellipse at 20% 50%, rgba(191, 6, 3,0.22), transparent 55%),
     radial-gradient(ellipse at 80% 30%, rgba(180,10,10,0.18), transparent 50%),
     linear-gradient(180deg, #12010220 0%, #0a0002 100%);
 }
@@ -55,7 +55,7 @@
   position: absolute;
   inset: -15%;
   background:
-    radial-gradient(circle at 30% 60%, rgba(221,39,39,0.14), transparent 38%),
+    radial-gradient(circle at 30% 60%, rgba(191, 6, 3,0.14), transparent 38%),
     radial-gradient(circle at 75% 25%, rgba(255,60,60,0.1), transparent 30%);
   filter: blur(12px);
   pointer-events: none;
@@ -86,7 +86,7 @@
   transition: color 0.2s;
 }
 .horo-breadcrumb a:hover { color: #ffd184; }
-.horo-bc-sep { color: #dd2727; font-size: 0.55rem; }
+.horo-bc-sep { color: #bf0603; font-size: 0.55rem; }
 
 /* hero content row */
 .horo-hero-content {
@@ -123,7 +123,7 @@
   border: 1px solid rgba(255,195,135,0.22);
   box-shadow:
     inset 0 0 30px rgba(255,74,74,0.28),
-    0 0 40px rgba(221,39,39,0.52),
+    0 0 40px rgba(191, 6, 3,0.52),
     0 0 60px rgba(0,0,0,0.7);
 }
 .horo-orb-img {
@@ -134,7 +134,7 @@
   object-fit: contain;
   filter:
     drop-shadow(0 0 10px rgba(255,70,70,0.95))
-    drop-shadow(0 0 22px rgba(221,39,39,0.62));
+    drop-shadow(0 0 22px rgba(191, 6, 3,0.62));
 }
 
 @keyframes horoOrbitSpin {
@@ -162,7 +162,7 @@
   font-weight: 700;
   line-height: 0.9;
   letter-spacing: 0.04em;
-  text-shadow: 0 0 8px rgba(255,255,255,0.12), 0 0 18px rgba(221,39,39,0.3);
+  text-shadow: 0 0 8px rgba(255,255,255,0.12), 0 0 18px rgba(191, 6, 3,0.3);
 }
 
 .horo-title-divider {
@@ -250,7 +250,7 @@
 }
 .horo-badge-icon {
   color: #ff4a4a;
-  text-shadow: 0 0 12px rgba(221,39,39,0.9);
+  text-shadow: 0 0 12px rgba(191, 6, 3,0.9);
 }
 
 /* ══════════════
@@ -275,7 +275,7 @@
   border: 1px solid rgba(255,180,80,0.18);
   border-radius: 2px;
   padding: 28px 24px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.85), inset 0 0 28px rgba(221,39,39,0.08);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.85), inset 0 0 28px rgba(191, 6, 3,0.08);
   margin-bottom: 24px;
   position: relative;
   overflow: hidden;
@@ -409,9 +409,9 @@
   transition: all 0.3s ease;
 }
 .horo-compat-card:hover {
-  border-color: rgba(221,39,39,0.55);
+  border-color: rgba(191, 6, 3,0.55);
   transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(221,39,39,0.2);
+  box-shadow: 0 12px 28px rgba(191, 6, 3,0.2);
 }
 .horo-compat-icon {
   width: 48px;
@@ -446,7 +446,7 @@
   transition: 0.25s ease;
 }
 .horo-lucky-item:hover {
-  border-color: rgba(221,39,39,0.45);
+  border-color: rgba(191, 6, 3,0.45);
   transform: translateY(-2px);
 }
 .horo-lucky-icon { font-size: 1.1rem; }
@@ -526,9 +526,9 @@
 }
 .horo-prev-btn:hover,
 .horo-next-btn:hover {
-  border-color: rgba(221,39,39,0.55);
+  border-color: rgba(191, 6, 3,0.55);
   transform: translateY(-3px);
-  box-shadow: 0 10px 28px rgba(221,39,39,0.2);
+  box-shadow: 0 10px 28px rgba(191, 6, 3,0.2);
 }
 .horo-prev-btn div,
 .horo-next-btn div {
@@ -563,7 +563,7 @@
   align-items: center;
   gap: 8px;
   padding: 14px 24px;
-  background: linear-gradient(90deg, #8a1111, #dd2727, #8a1111);
+  background: linear-gradient(90deg, #8a1111, #bf0603, #8a1111);
   clip-path: polygon(5% 0, 95% 0, 100% 50%, 95% 100%, 5% 100%, 0 50%);
   border: 1px solid rgba(255,209,132,0.5);
   color: #fff;
@@ -576,7 +576,7 @@
 }
 .horo-home-btn:hover {
   filter: brightness(1.15);
-  box-shadow: 0 8px 30px rgba(221,39,39,0.45);
+  box-shadow: 0 8px 30px rgba(191, 6, 3,0.45);
 }
 
 /* ══════════════

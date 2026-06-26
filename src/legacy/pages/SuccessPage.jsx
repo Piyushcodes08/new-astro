@@ -27,9 +27,9 @@ const SubmissionSuccess = () => {
             </svg>
           </div>
 
-          <h4 className="text-[#dd2727] font-black uppercase tracking-[0.3em] text-[10px] mb-4">Cosmic Gateway</h4>
+          <h4 className="text-[#bf0603] font-black uppercase tracking-[0.3em] text-[10px] mb-4">Cosmic Gateway</h4>
           <h1 className="text-4xl md:text-5xl font-black mb-6 text-slate-900 uppercase tracking-tight">
-            Transmission <span className="text-[#dd2727]">Received</span>
+            Transmission <span className="text-[#bf0603]">Received</span>
           </h1>
 
           <div className="text-lg text-slate-600 mb-12 leading-relaxed space-y-4 max-w-lg mx-auto">
@@ -42,14 +42,14 @@ const SubmissionSuccess = () => {
               <p>
                 Greetings, <span className="text-slate-900 font-black">{firstName}</span>.{" "}
                 Your cosmic appointment is aligned for{" "}
-                <span className="text-[#dd2727] font-black">{availableDate}</span>. Our agent will initiate contact then.
+                <span className="text-[#bf0603] font-black">{availableDate}</span>. Our agent will initiate contact then.
               </p>
             )}
           </div>
 
           <button
             onClick={handleExploreMore}
-            className="bg-[#dd2727] text-white px-12 py-4 rounded-2xl font-black uppercase tracking-[0.3em] text-[10px] hover:shadow-xl hover:-translate-y-1 transition-all"
+            className="bg-[#bf0603] text-white px-12 py-4 rounded-2xl font-black uppercase tracking-[0.3em] text-[10px] hover:shadow-xl hover:-translate-y-1 transition-all"
           >
             Explore More
           </button>

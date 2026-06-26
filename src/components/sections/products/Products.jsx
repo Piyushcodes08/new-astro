@@ -117,7 +117,6 @@ const Products = () => {
   const [currentIndex, setCurrentIndex] = useState(3);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [visibleItems, setVisibleItems] = useState(3);
-  const autoPlayRef = useRef(null);
   const touchStartRef = useRef(0);
 
   const clonedData = useMemo(() => {
@@ -182,25 +181,10 @@ const Products = () => {
     }
   }, [currentIndex, isTransitioning, totalRealItems]);
 
-  const startAutoPlay = useCallback(() => {
-    stopAutoPlay();
-    autoPlayRef.current = setInterval(nextSlide, 3800);
-  }, [nextSlide]);
-
-  const stopAutoPlay = useCallback(() => {
-    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
-  }, []);
-
-  useEffect(() => {
-    if (totalRealItems > 0) {
-      startAutoPlay();
-    }
-    return () => stopAutoPlay();
-  }, [startAutoPlay, stopAutoPlay, totalRealItems]);
+  // Autoplay removed: slider will not auto-advance.
 
   const handleTouchStart = (e) => {
     touchStartRef.current = e.touches[0].clientX;
-    stopAutoPlay();
   };
 
   const handleTouchEnd = (e) => {
@@ -210,7 +194,6 @@ const Products = () => {
       if (diff > 0) nextSlide();
       else prevSlide();
     }
-    startAutoPlay();
   };
 
   if (loading) {
@@ -230,11 +213,7 @@ const Products = () => {
   if (totalRealItems === 0) return null;
 
   return (
-    <section
-      className="products-section"
-      onMouseEnter={stopAutoPlay}
-      onMouseLeave={startAutoPlay}
-    >
+    <section className="products-section">
       <div className="section-container">
         <SliderHeader
           title="Our Sacred Products"
@@ -277,7 +256,7 @@ const Products = () => {
         <div className="flex justify-center mt-10">
           <Link
             to="/products"
-            className="inline-flex items-center gap-2 bg-linear-to-br from-[#ff3131] to-[#c30000] text-white px-4 py-4 rounded-full font-black uppercase tracking-[0.12em] transition-all duration-300 hover:shadow-[0_14px_30px_rgba(221,39,39,0.45)] hover:from-[#ff4f4f] hover:to-brand-red shadow-[0_10px_25px_rgba(221,39,39,0.25)] text-sm hover:-translate-y-1"
+            className="inline-flex items-center gap-2 bg-linear-to-br from-[#ff3131] to-[#c30000] text-white px-4 py-4 rounded-full font-black uppercase tracking-[0.12em] transition-all duration-300 hover:shadow-[0_14px_30px_rgba(191, 6, 3,0.45)] hover:from-[#ff4f4f] hover:to-brand-red shadow-[0_10px_25px_rgba(191, 6, 3,0.25)] text-sm hover:-translate-y-1"
           >
             View All Products
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7" /></svg>

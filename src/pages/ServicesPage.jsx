@@ -33,7 +33,7 @@ const ServicesPage = () => {
                             <div className="flex flex-wrap gap-4 justify-center">
                                 <Link
                                     to="/appointment"
-                                    className="inline-block bg-brand-red text-white px-10 py-4 rounded-full font-bold uppercase tracking-wider transition-all duration-500 hover:bg-white hover:text-brand-red hover:-translate-y-1 shadow-[0_10px_30px_rgba(221,39,39,0.3)]"
+                                    className="inline-block bg-brand-red text-white px-10 py-4 rounded-full font-bold uppercase tracking-wider transition-all duration-500 hover:bg-white hover:text-brand-red hover:-translate-y-1 shadow-[0_10px_30px_rgba(191, 6, 3,0.3)]"
                                 >
                                     {hero.primaryButtonText}
                                 </Link>
@@ -140,7 +140,7 @@ const ServicesPage = () => {
                                 </p>
                                 <Link 
                                     to="/appointment" 
-                                    className="inline-block bg-brand-red text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-[0.2em] transition-all duration-500 hover:bg-white hover:text-brand-red hover:-translate-y-2 shadow-[0_15px_50px_rgba(221,39,39,0.4)] text-sm md:text-base"
+                                    className="inline-block bg-brand-red text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-[0.2em] transition-all duration-500 hover:bg-white hover:text-brand-red hover:-translate-y-2 shadow-[0_15px_50px_rgba(191, 6, 3,0.4)] text-sm md:text-base"
                                 >
                                     {cta.buttonText}
                                 </Link>

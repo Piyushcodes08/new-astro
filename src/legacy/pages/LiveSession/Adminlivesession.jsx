@@ -58,15 +58,15 @@ const CreateLiveSession = () => {
           <div className="max-w-4xl mx-auto space-y-10 pt-8">
             <header className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
               <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
-                Live <span className="text-[#dd2727]">Sessions</span>
+                Live <span className="text-[#bf0603]">Sessions</span>
               </h2>
               <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] mt-2">Schedule real-time spiritual transmissions</p>
             </header>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <section className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
-                <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[#dd2727] mb-8 flex items-center gap-2">
-                  <div className="w-1.5 h-5 bg-[#dd2727] rounded-full"></div>
+                <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[#bf0603] mb-8 flex items-center gap-2">
+                  <div className="w-1.5 h-5 bg-[#bf0603] rounded-full"></div>
                   New Transmission
                 </h3>
                 
@@ -75,7 +75,7 @@ const CreateLiveSession = () => {
                     <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Room Orbit</label>
                     <div className="relative">
                       <select
-                        className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:ring-4 focus:ring-[#dd2727]/5 focus:border-[#dd2727] outline-none appearance-none cursor-pointer"
+                        className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:ring-4 focus:ring-[#bf0603]/5 focus:border-[#bf0603] outline-none appearance-none cursor-pointer"
                         name="roomName"
                         value={sessionData.roomName}
                         onChange={handleInputChange}
@@ -96,7 +96,7 @@ const CreateLiveSession = () => {
                       type="text"
                       name="title"
                       placeholder="e.g. Mercury Retrograde Deep Dive"
-                      className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:ring-4 focus:ring-[#dd2727]/5 focus:border-[#dd2727] outline-none placeholder:text-slate-300"
+                      className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:ring-4 focus:ring-[#bf0603]/5 focus:border-[#bf0603] outline-none placeholder:text-slate-300"
                       value={sessionData.title}
                       onChange={handleInputChange}
                     />
@@ -108,7 +108,7 @@ const CreateLiveSession = () => {
                       <input
                         type="date"
                         name="date"
-                        className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:ring-4 focus:ring-[#dd2727]/5 focus:border-[#dd2727] outline-none"
+                        className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:ring-4 focus:ring-[#bf0603]/5 focus:border-[#bf0603] outline-none"
                         value={sessionData.date}
                         onChange={handleInputChange}
                       />
@@ -118,7 +118,7 @@ const CreateLiveSession = () => {
                       <input
                         type="time"
                         name="time"
-                        className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:ring-4 focus:ring-[#dd2727]/5 focus:border-[#dd2727] outline-none"
+                        className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:ring-4 focus:ring-[#bf0603]/5 focus:border-[#bf0603] outline-none"
                         value={sessionData.time}
                         onChange={handleInputChange}
                       />
@@ -127,7 +127,7 @@ const CreateLiveSession = () => {
 
                   <button
                     onClick={createZoomMeeting}
-                    className="w-full bg-[#dd2727] text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/20 transition-all transform hover:scale-[1.01] active:scale-95 mt-4"
+                    className="w-full bg-[#bf0603] text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/20 transition-all transform hover:scale-[1.01] active:scale-95 mt-4"
                   >
                     Schedule Transmission
                   </button>
@@ -149,11 +149,11 @@ const CreateLiveSession = () => {
                   ) : (
                     <div className="space-y-4">
                       {meetings.map((meeting) => (
-                        <div key={meeting.id} className="p-6 bg-slate-50 border border-slate-100 rounded-2xl hover:bg-white hover:border-[#dd2727]/30 transition-all group shadow-sm">
+                        <div key={meeting.id} className="p-6 bg-slate-50 border border-slate-100 rounded-2xl hover:bg-white hover:border-[#bf0603]/30 transition-all group shadow-sm">
                           <div className="flex justify-between items-start mb-3">
                             <div>
                               <span className="text-[10px] font-extrabold text-[#b0a102] uppercase tracking-[0.2em] mb-1 block">{meeting.room} Orbit</span>
-                              <h4 className="font-extrabold text-slate-900 text-lg tracking-tight group-hover:text-[#dd2727] transition-colors">{meeting.topic}</h4>
+                              <h4 className="font-extrabold text-slate-900 text-lg tracking-tight group-hover:text-[#bf0603] transition-colors">{meeting.topic}</h4>
                             </div>
                             <button
                               onClick={() => deleteMeeting(meeting.id)}
@@ -177,7 +177,7 @@ const CreateLiveSession = () => {
                               href={meeting.join_url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="px-6 py-2.5 bg-[#dd2727] text-white text-[10px] font-bold uppercase tracking-widest rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all"
+                              className="px-6 py-2.5 bg-[#bf0603] text-white text-[10px] font-bold uppercase tracking-widest rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all"
                             >
                               Launch
                             </a>

@@ -93,10 +93,10 @@ const Dashboard = () => {
                         <div className="bg-slate-50 p-6 md:p-16 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm relative overflow-hidden text-center flex flex-col items-center">
                             <div className="relative z-10 w-full">
                                 <div className="flex flex-col items-center justify-center mb-6 md:mb-10">
-                                    <h4 className="text-[#dd2727] font-black uppercase tracking-[0.4em] text-[8px] md:text-[10px] mb-3 md:mb-4">Cosmic Journey</h4>
+                                    <h4 className="text-[#bf0603] font-black uppercase tracking-[0.4em] text-[8px] md:text-[10px] mb-3 md:mb-4">Cosmic Journey</h4>
                                     <h2 className="text-3xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight">
                                         Welcome Back, <br className="hidden md:block" />
-                                        <span className="text-[#dd2727]">{user?.displayName?.split(' ')[0] || 'Seeker'}</span>
+                                        <span className="text-[#bf0603]">{user?.displayName?.split(' ')[0] || 'Seeker'}</span>
                                     </h2>
                                     <div className="mt-6 md:mt-8 flex items-center gap-3 px-5 py-2 bg-white rounded-full border border-slate-200 shadow-sm">
                                         <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
@@ -109,7 +109,7 @@ const Dashboard = () => {
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6 px-6">
-                                    <Link to="/enrolledcourse" className="w-full sm:w-auto bg-[#dd2727] text-white px-10 py-4 rounded-xl md:rounded-2xl font-black uppercase tracking-[0.2em] text-[9px] md:text-[10px] hover:shadow-2xl transition-all hover:-translate-y-1 hover:bg-[#b91d1d]">
+                                    <Link to="/enrolledcourse" className="w-full sm:w-auto bg-[#bf0603] text-white px-10 py-4 rounded-xl md:rounded-2xl font-black uppercase tracking-[0.2em] text-[9px] md:text-[10px] hover:shadow-2xl transition-all hover:-translate-y-1 hover:bg-[#b91d1d]">
                                         Resume Learning
                                     </Link>
                                     <Link to="/courses" className="w-full sm:w-auto bg-white text-slate-900 border border-slate-200 px-10 py-4 rounded-xl md:rounded-2xl font-black uppercase tracking-[0.2em] text-[9px] md:text-[10px] hover:shadow-xl transition-all hover:-translate-y-1">
@@ -123,10 +123,10 @@ const Dashboard = () => {
                         <div className="space-y-8">
                             <div className="flex items-center justify-between px-2">
                                 <div>
-                                    <h4 className="text-[#dd2727] font-black uppercase tracking-[0.3em] text-[10px] mb-1">Continue Path</h4>
+                                    <h4 className="text-[#bf0603] font-black uppercase tracking-[0.3em] text-[10px] mb-1">Continue Path</h4>
                                     <h3 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight uppercase">Recent Enrollments</h3>
                                 </div>
-                                <Link to="/enrolledcourse" className="text-[9px] md:text-[10px] font-black text-slate-400 hover:text-[#dd2727] uppercase tracking-widest transition-colors flex items-center gap-2 group">
+                                <Link to="/enrolledcourse" className="text-[9px] md:text-[10px] font-black text-slate-400 hover:text-[#bf0603] uppercase tracking-widest transition-colors flex items-center gap-2 group">
                                     View All <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                                 </Link>
                             </div>
@@ -139,7 +139,7 @@ const Dashboard = () => {
                                         <Link
                                             to={`/course/${encodeURIComponent(course.name)}`}
                                             key={idx}
-                                            className="group bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-500 flex flex-col border-b-4 hover:border-[#dd2727]"
+                                            className="group bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-500 flex flex-col border-b-4 hover:border-[#bf0603]"
                                         >
                                             <div className="aspect-video overflow-hidden relative">
                                                 <img
@@ -153,7 +153,7 @@ const Dashboard = () => {
                                                 </div>
                                             </div>
                                             <div className="p-6 md:p-8 flex items-center justify-center text-center">
-                                                <h4 className="text-xs md:text-sm font-black text-slate-900 uppercase tracking-tight line-clamp-2 group-hover:text-[#dd2727] transition-colors leading-relaxed">
+                                                <h4 className="text-xs md:text-sm font-black text-slate-900 uppercase tracking-tight line-clamp-2 group-hover:text-[#bf0603] transition-colors leading-relaxed">
                                                     {course.name}
                                                 </h4>
                                             </div>
@@ -163,7 +163,7 @@ const Dashboard = () => {
                                     <div className="col-span-full text-center py-16 md:py-24 bg-slate-50 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 border-dashed">
                                         <div className="text-4xl mb-6 opacity-40">🔭</div>
                                         <p className="text-slate-400 font-black uppercase tracking-widest text-[10px]">No sacred paths found yet.</p>
-                                        <Link to="/courses" className="mt-8 inline-block bg-[#dd2727] text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:shadow-xl transition-all">Start Journey</Link>
+                                        <Link to="/courses" className="mt-8 inline-block bg-[#bf0603] text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:shadow-xl transition-all">Start Journey</Link>
                                     </div>
                                 )}
                             </div>

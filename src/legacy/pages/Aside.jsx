@@ -77,7 +77,7 @@ const Aside = () => {
       {!sidebarOpen && (
         <button
           onClick={() => setSidebarOpen(true)}
-          className="lg:hidden fixed top-24 left-6 w-14 h-14 bg-[#dd2727] text-white rounded-xl shadow-[0_10px_30px_rgba(221,39,39,0.3)] z-[100] border border-white/10 flex items-center justify-center transform hover:scale-110 active:scale-95 transition-all duration-300 group"
+          className="lg:hidden fixed top-24 left-6 w-14 h-14 bg-[#bf0603] text-white rounded-xl shadow-[0_10px_30px_rgba(191, 6, 3,0.3)] z-[100] border border-white/10 flex items-center justify-center transform hover:scale-110 active:scale-95 transition-all duration-300 group"
         >
           <div className="flex flex-col gap-1.5 items-center justify-center">
             <span className="w-6 h-0.5 bg-white rounded-full transition-all group-hover:w-4" />
@@ -97,7 +97,7 @@ const Aside = () => {
 
       <aside
         ref={sidebarRef}
-        className={`fixed lg:sticky top-0 lg:top-16 left-0 w-64 bg-[#dd2727] transition-all duration-700 cubic-bezier(0.4, 0, 0.2, 1) transform z-[2100] flex flex-col h-screen lg:h-[calc(100vh-64px)] overflow-hidden self-start border-r border-white/10
+        className={`fixed lg:sticky top-0 lg:top-16 left-0 w-64 bg-[#bf0603] transition-all duration-700 cubic-bezier(0.4, 0, 0.2, 1) transform z-[2100] flex flex-col h-screen lg:h-[calc(100vh-64px)] overflow-hidden self-start border-r border-white/10
         ${sidebarOpen ? "translate-x-0 shadow-[40px_0_100px_rgba(0,0,0,0.6)]" : "-translate-x-full lg:translate-x-0 lg:shadow-none"}`}
       >
         {/* Close Button for Mobile - Elegant Top Bar */}
@@ -147,7 +147,7 @@ const Aside = () => {
                 }}
                 className={`w-full text-left flex items-center gap-3 px-5 py-3 rounded transition-all duration-300 font-semibold uppercase text-[10px] tracking-[0.2em]
                 ${isActive
-                  ? "bg-white text-[#dd2727] shadow-lg"
+                  ? "bg-white text-[#bf0603] shadow-lg"
                   : "bg-white/10 text-white/90 hover:bg-white/15 hover:translate-x-0.5"}`}
               >
                 <span>{item.title}</span>

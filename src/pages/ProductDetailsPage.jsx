@@ -205,7 +205,7 @@ const ProductDetailsPage = () => {
           product_title: product.title,
           quantity: String(quantity),
         },
-        theme: { color: '#dd2727' },
+        theme: { color: '#bf0603' },
         modal: {
           ondismiss: () => setPaymentLoading(false),
         },
@@ -240,7 +240,7 @@ const ProductDetailsPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#050204]">
         <div className="text-center space-y-4">
-          <div className="w-11 h-11 border-brand-red border-[#dd2727] border-t-transparent rounded-full animate-spin mx-auto" />
+          <div className="w-11 h-11 border-brand-red border-[#bf0603] border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-white/50 text-[11px] uppercase tracking-[0.3em] font-bold">
             Loading Product...
           </p>
@@ -263,7 +263,7 @@ const ProductDetailsPage = () => {
             </p>
             <Link
               to="/products"
-              className="inline-flex items-center justify-center bg-[#dd2727] text-white px-6 py-2.5 rounded-full uppercase tracking-wider text-xs font-bold hover:bg-white hover:text-[#dd2727] transition-all"
+              className="inline-flex items-center justify-center bg-[#bf0603] text-white px-6 py-2.5 rounded-full uppercase tracking-wider text-xs font-bold hover:bg-white hover:text-[#bf0603] transition-all"
             >
               Back to Sacred Shop
             </Link>
@@ -284,17 +284,17 @@ const ProductDetailsPage = () => {
 
       <main className="min-h-screen relative z-10 text-white  pt-24 md:pt-[115px] pb-16 overflow-hidden">
         <div className="pointer-events-none fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(221,39,39,0.15),transparent_55%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(191, 6, 3,0.15),transparent_55%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:72px_72px] opacity-15" />
         </div>
 
         <div className="relative z-10 max-w-[1080px] mx-auto px-4 sm:px-3.75 lg:px-6">
           <nav className="flex items-center gap-2 text-[11px] sm:text-xs text-white/45 mb-5 font-medium">
-            <Link to="/" className="hover:text-[#dd2727] transition-colors">
+            <Link to="/" className="hover:text-[#bf0603] transition-colors">
               Home
             </Link>
             <span>/</span>
-            <Link to="/products" className="hover:text-[#dd2727] transition-colors">
+            <Link to="/products" className="hover:text-[#bf0603] transition-colors ">
               Sacred Shop
             </Link>
             <span>/</span>
@@ -316,7 +316,7 @@ const ProductDetailsPage = () => {
                     />
 
                     {discount && (
-                      <div className="absolute top-4 left-4 bg-linear-to-br from-[#ff3b3b] to-[#b30000] text-white text-[11px] font-black uppercase tracking-[0.12em] px-3.5 py-2 rounded-full shadow-[0_10px_25px_rgba(221,39,39,0.35)] z-20">
+                      <div className="absolute top-4 left-4 bg-linear-to-br from-[#ff3b3b] to-[#b30000] text-white text-[11px] font-black uppercase tracking-[0.12em] px-3.5 py-2 rounded-full shadow-[0_10px_25px_rgba(191, 6, 3,0.35)] z-20">
                         {discount}% OFF
                       </div>
                     )}
@@ -329,7 +329,7 @@ const ProductDetailsPage = () => {
                               i > 0 ? i - 1 : imagesList.length - 1
                             )
                           }
-                          className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-14.5 bg-black/55 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-[#dd2727] transition-all opacity-100 lg:opacity-0 group-hover:opacity-100"
+                          className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-14.5 bg-black/55 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-[#bf0603] transition-all opacity-100 lg:opacity-0 group-hover:opacity-100"
                           aria-label="Previous image"
                         >
                           ‹
@@ -341,7 +341,7 @@ const ProductDetailsPage = () => {
                               i < imagesList.length - 1 ? i + 1 : 0
                             )
                           }
-                          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-14.5 bg-black/55 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-[#dd2727] transition-all opacity-100 lg:opacity-0 group-hover:opacity-100"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-14.5 bg-black/55 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-[#bf0603] transition-all opacity-100 lg:opacity-0 group-hover:opacity-100"
                           aria-label="Next image"
                         >
                           ›
@@ -358,8 +358,8 @@ const ProductDetailsPage = () => {
                           onClick={() => setActiveImageIndex(idx)}
                           className={`min-w-[58px] h-[58px] rounded-3xlxll overflow-hidden border transition-all flex items-center justify-center bg-white p-1.5 ${
                             activeImageIndex === idx
-                              ? 'border-[#dd2727] shadow-[0_0_14px_rgba(221,39,39,0.4)] scale-[1.02]'
-                              : 'border-white hover:border-[#dd2727]/50'
+                              ? 'border-[#bf0603] shadow-[0_0_14px_rgba(191, 6, 3,0.4)] scale-[1.02]'
+                              : 'border-white hover:border-[#bf0603]/50'
                           }`}
                         >
                           <img
@@ -382,7 +382,7 @@ const ProductDetailsPage = () => {
                         key={label}
                         className="rounded-3xlxll bg-black/25 border border-white/10 px-2 py-3 text-center"
                       >
-                        <div className="text-[#dd2727] flex justify-center mb-1.5">
+                        <div className="text-[#bf0603] flex justify-center mb-1.5">
                           {icon}
                         </div>
                         <p className="text-white/55 text-[9px] font-bold uppercase tracking-wider">
@@ -396,7 +396,7 @@ const ProductDetailsPage = () => {
 
               <div className="p-4 sm:p-5 lg:p-7 xl:p-8">
                 <div className="flex flex-wrap items-center gap-2 mb-3">
-                  <span className="text-[9px] font-black uppercase tracking-[0.22em] text-[#dd2727] bg-[#dd2727]/10 border border-[#dd2727]/25 px-2.5 py-1 rounded-full">
+                  <span className="text-[9px] font-black uppercase tracking-[0.22em] text-[#bf0603] bg-[#bf0603]/10 border border-[#bf0603]/25 px-2.5 py-1 rounded-full">
                     Sacred Item
                   </span>
                   <span className="text-[9px] font-black uppercase tracking-[0.18em] text-emerald-400 bg-size-[72px_72px]merald-400/10 border border-emerald-400/25 px-2.5 py-1 rounded-full">
@@ -436,7 +436,7 @@ const ProductDetailsPage = () => {
                         onClick={() => setActiveTab(tab)}
                         className={`px-3 sm:px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${
                           activeTab === tab
-                            ? 'bg-linear-to-br from-[#ff3131] to-[#c30000] text-white shadow-[0_10px_25px_rgba(221,39,39,0.25)]'
+                            ? 'bg-linear-to-br from-[#ff3131] to-[#c30000] text-white shadow-[0_10px_25px_rgba(191, 6, 3,0.25)]'
                             : 'text-white/45 hover:text-white hover:bg-white/5'
                         }`}
                       >
@@ -461,7 +461,7 @@ const ProductDetailsPage = () => {
                           'Suitable for daily wear & meditation',
                         ].map((item, index) => (
                           <li key={index} className="flex items-start gap-2 text-xs sm:text-sm text-white/70">
-                            <span className="text-[#dd2727] mt-0.5">✦</span>
+                            <span className="text-[#bf0603] mt-0.5">✦</span>
                             <span>{item}</span>
                           </li>
                         ))}
@@ -530,7 +530,7 @@ const ProductDetailsPage = () => {
                     onClick={handleRazorpay}
                     disabled={paymentLoading}
                     id="razorpay-buy-btn"
-                    className="flex-1 flex items-center justify-center gap-2 py-3 px-3.75 rounded-[14px] font-black uppercase tracking-[0.1em] text-xs transition-all duration-300 bg-linear-to-br from-[#ff3131] to-[#c30000] text-white shadow-[0_10px_25px_rgba(221,39,39,0.25)] hover:shadow-[0_14px_30px_rgba(221,39,39,0.45)] hover:from-[#ff4f4f] hover:to-[#dd2727] hover:-translate-y-[2px] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                    className="flex-1 flex items-center justify-center gap-2 py-3 px-3.75 rounded-[14px] font-black uppercase tracking-[0.1em] text-xs transition-all duration-300 bg-linear-to-br from-[#ff3131] to-[#c30000] text-white shadow-[0_10px_25px_rgba(191, 6, 3,0.25)] hover:shadow-[0_14px_30px_rgba(191, 6, 3,0.45)] hover:from-[#ff4f4f] hover:to-[#bf0603] hover:-translate-y-[2px] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   >
                     {paymentLoading ? (
                       <>
@@ -565,7 +565,7 @@ const ProductDetailsPage = () => {
           {relatedProducts.length > 0 && (
             <section className="mt-16">
               <div className="text-center mb-8">
-                <p className="text-[#dd2727] text-[10px] font-black uppercase tracking-[0.3em] mb-2">
+                <p className="text-[#bf0603] text-[10px] font-black uppercase tracking-[0.3em] mb-2">
                   Explore More
                 </p>
                 <h2 className="title-batangas text-3xl sm:text-4xl text-white uppercase tracking-wide">

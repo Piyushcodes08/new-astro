@@ -51,7 +51,7 @@ const Hero = () => {
                     {/* Red Dot Divider */}
                     <div className="mt-12 max-md:mt-9 flex items-center justify-center gap-4">
                         <div className="h-px w-12 max-md:w-[38px] bg-linear-to-r from-transparent to-white/20" />
-                        <div className="w-2.5 h-2.5 rounded-full bg-brand-red shadow-[0_0_18px_#dd2727]" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-brand-red shadow-[0_0_18px_#bf0603]" />
                         <div className="h-px w-12 max-md:w-[38px] bg-linear-to-l from-transparent to-white/20" />
                     </div>
 

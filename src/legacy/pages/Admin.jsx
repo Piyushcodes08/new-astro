@@ -88,7 +88,7 @@ const AdminSidebar = () => {
       <aside
         ref={sidebarRef}
         className={`bg-linear-to-b from-brand-red to-[#b91c1c] h-screen lg:h-[calc(100vh-64px)] md:w-64 w-[300px] fixed lg:sticky top-0 lg:top-16 left-0 transition-all duration-500 ease-in-out z-2100 overflow-y-auto scrollbar-hide self-start ${
-          isOpen ? "translate-x-0 shadow-[20px_0_60px_rgba(0,0,0,0.5)]" : "-translate-x-full lg:translate-x-0 lg:shadow-[10px_0_40px_rgba(221,39,39,0.15)]"
+          isOpen ? "translate-x-0 shadow-[20px_0_60px_rgba(0,0,0,0.5)]" : "-translate-x-full lg:translate-x-0 lg:shadow-[10px_0_40px_rgba(191, 6, 3,0.15)]"
         }`}
       >
         <div className="pt-8 px-4 space-y-10 pb-12">

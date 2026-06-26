@@ -132,12 +132,12 @@ const EnrollPage = () => {
     control: (provided, state) => ({
       ...provided,
       backgroundColor: 'rgba(255, 255, 255, 0.05)',
-      borderColor: state.isFocused ? '#dd2727' : 'rgba(255, 255, 255, 0.1)',
+      borderColor: state.isFocused ? '#bf0603' : 'rgba(255, 255, 255, 0.1)',
       borderRadius: '0.75rem',
       padding: '0.25rem',
-      boxShadow: state.isFocused ? '0 0 0 2px rgba(221, 39, 39, 0.3)' : 'none',
+      boxShadow: state.isFocused ? '0 0 0 2px rgba(191, 6, 3, 0.3)' : 'none',
       '&:hover': {
-        borderColor: '#dd2727'
+        borderColor: '#bf0603'
       },
       cursor: 'pointer',
       opacity: 1
@@ -152,11 +152,11 @@ const EnrollPage = () => {
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isSelected ? '#dd2727' : state.isFocused ? 'rgba(221, 39, 39, 0.2)' : 'transparent',
+      backgroundColor: state.isSelected ? '#bf0603' : state.isFocused ? 'rgba(191, 6, 3, 0.2)' : 'transparent',
       color: 'white',
       cursor: 'pointer',
       '&:active': {
-        backgroundColor: '#dd2727'
+        backgroundColor: '#bf0603'
       }
     }),
     singleValue: (provided) => ({
@@ -181,7 +181,7 @@ const EnrollPage = () => {
       <Header />
       <div id="top-sentinel" className="h-0 w-full pt-[70px]"></div>
       <div className="min-h-screen flex items-center justify-center py-12 px-4 relative z-10">
-        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-8 rounded-3xl w-full max-w-lg shadow-[0_0_40px_rgba(221,39,39,0.2)]">
+        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-8 rounded-3xl w-full max-w-lg shadow-[0_0_40px_rgba(191, 6, 3,0.2)]">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-white">
             Enroll for <span className="text-brand-red">Free</span>
           </h2>
@@ -260,7 +260,7 @@ const EnrollPage = () => {
 
             <button
               type="submit"
-              className="w-full py-4 mt-4 bg-linear-to-r from-brand-red to-[#b0a102] text-white font-bold uppercase tracking-[0.2em] rounded-xl hover:shadow-[0_0_20px_rgba(221,39,39,0.5)] transform hover:scale-[1.02] transition-all duration-300"
+              className="w-full py-4 mt-4 bg-linear-to-r from-brand-red to-[#b0a102] text-white font-bold uppercase tracking-[0.2em] rounded-xl hover:shadow-[0_0_20px_rgba(191, 6, 3,0.5)] transform hover:scale-[1.02] transition-all duration-300"
             >
               Enroll Now
             </button>

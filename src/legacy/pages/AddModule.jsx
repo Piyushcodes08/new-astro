@@ -328,7 +328,7 @@ const AddModule = () => {
                 <select
                   value={selectedCourse}
                   onChange={(e) => setSelectedCourse(e.target.value)}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none appearance-none cursor-pointer font-bold"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none appearance-none cursor-pointer font-bold"
                 >
                   <option value="">-- Select a Course --</option>
                   {courses.map((course) => (
@@ -349,7 +349,7 @@ const AddModule = () => {
                   {/* Upload Video Section */}
                   <div className="bg-white border border-slate-200 rounded-2xl p-10 shadow-xl shadow-slate-200/50 relative overflow-hidden group">
                     <h2 className="text-xl font-bold text-slate-900 mb-8 uppercase tracking-widest flex items-center gap-3">
-                      <div className="w-1.5 h-6 bg-[#dd2727] rounded-full"></div>
+                      <div className="w-1.5 h-6 bg-[#bf0603] rounded-full"></div>
                       Upload Video Session
                     </h2>
                     <div className="space-y-5">
@@ -361,7 +361,7 @@ const AddModule = () => {
                             placeholder="e.g. Module 1: Introduction"
                             value={newVideoTitle}
                             onChange={(e) => setNewVideoTitle(e.target.value)}
-                            className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all placeholder:text-gray-400"
+                            className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all placeholder:text-gray-400"
                           />
                         </div>
                         <div>
@@ -370,7 +370,7 @@ const AddModule = () => {
                             type="number"
                             value={titleOrder}
                             onChange={(e) => setTitleOrder(e.target.value)}
-                            className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none"
+                            className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none"
                           />
                         </div>
                         <div>
@@ -379,7 +379,7 @@ const AddModule = () => {
                             type="number"
                             value={videoOrder}
                             onChange={(e) => setVideoOrder(e.target.value)}
-                            className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none"
+                            className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none"
                           />
                         </div>
                       </div>
@@ -388,21 +388,21 @@ const AddModule = () => {
                         placeholder="Video Description (displays in player)"
                         value={newVideoDescription}
                         onChange={(e) => setNewVideoDescription(e.target.value)}
-                        className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 h-32 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all resize-none placeholder:text-gray-400"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 h-32 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all resize-none placeholder:text-gray-400"
                       />
                       
                       <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6">
                         <input
                           type="file"
                           onChange={(e) => setNewVideoFile(e.target.files[0])}
-                          className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-[#dd2727] file:text-white hover:file:bg-red-700 cursor-pointer"
+                          className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-[#bf0603] file:text-white hover:file:bg-red-700 cursor-pointer"
                         />
                       </div>
 
                       {videoUploadProgress > 0 && (
                         <div className="space-y-2">
                           <div className="w-full bg-slate-100 rounded-full h-2">
-                            <div className="bg-[#dd2727] h-full rounded-full transition-all" style={{ width: `${videoUploadProgress}%` }}></div>
+                            <div className="bg-[#bf0603] h-full rounded-full transition-all" style={{ width: `${videoUploadProgress}%` }}></div>
                           </div>
                           <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{Math.round(videoUploadProgress)}% Transmitted</p>
                         </div>
@@ -412,7 +412,7 @@ const AddModule = () => {
                         <button
                           onClick={() => handleUpload(newVideoTitle, newVideoDescription, newVideoFile, "videos")}
                           disabled={uploading}
-                          className="flex-1 bg-[#dd2727] text-white py-2 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/30 transition-all disabled:opacity-50"
+                          className="flex-1 bg-[#bf0603] text-white py-2 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/30 transition-all disabled:opacity-50"
                         >
                           {uploading ? "Transmitting..." : "Upload Video"}
                         </button>
@@ -435,7 +435,7 @@ const AddModule = () => {
                         placeholder="Material Title (e.g. Course PDF)"
                         value={newMaterialTitle}
                         onChange={(e) => setNewMaterialTitle(e.target.value)}
-                        className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all placeholder:text-gray-400"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all placeholder:text-gray-400"
                       />
                       <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6">
                         <input
@@ -470,7 +470,7 @@ const AddModule = () => {
                   {/* Video Sessions List */}
                   <div className="space-y-6">
                     <h3 className="text-xl font-bold text-slate-900 flex items-center gap-3">
-                      <span className="w-1.5 h-6 bg-[#dd2727] rounded-full"></span>
+                      <span className="w-1.5 h-6 bg-[#bf0603] rounded-full"></span>
                       Video Sessions
                     </h3>
                     <div className="space-y-6">
@@ -487,7 +487,7 @@ const AddModule = () => {
                                 <div key={module.id} className="bg-gray-50 border border-gray-200 p-6 rounded-2xl relative group/item">
                                   <div className="flex justify-between items-start mb-4">
                                     <div className="space-y-1">
-                                      <h5 className="text-sm font-bold text-slate-900 line-clamp-1 group-hover/item:text-[#dd2727] transition-colors">{module.description || "No Description"}</h5>
+                                      <h5 className="text-sm font-bold text-slate-900 line-clamp-1 group-hover/item:text-[#bf0603] transition-colors">{module.description || "No Description"}</h5>
                                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Seq: {module.order || 0}</p>
                                     </div>
                                     <div className="flex gap-2">
@@ -499,12 +499,12 @@ const AddModule = () => {
                                       </button>
                                     </div>
                                   </div>
-                                  <a href={module.url} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold text-[#dd2727] uppercase tracking-widest hover:underline">View Session →</a>
+                                  <a href={module.url} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold text-[#bf0603] uppercase tracking-widest hover:underline">View Session →</a>
 
                                   {editVideo && editVideo.id === module.id && (
                                     <div className="mt-6 p-6 bg-white border border-slate-200 rounded-2xl space-y-4 shadow-sm relative z-20">
-                                      <input type="text" defaultValue={module.title} onChange={(e) => (module.title = e.target.value)} className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-xs outline-none focus:ring-2 focus:ring-[#dd2727]" />
-                                      <textarea defaultValue={module.description} onChange={(e) => (module.description = e.target.value)} className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-xs outline-none h-24 resize-none focus:ring-2 focus:ring-[#dd2727]" />
+                                      <input type="text" defaultValue={module.title} onChange={(e) => (module.title = e.target.value)} className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-xs outline-none focus:ring-2 focus:ring-[#bf0603]" />
+                                      <textarea defaultValue={module.description} onChange={(e) => (module.description = e.target.value)} className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-xs outline-none h-24 resize-none focus:ring-2 focus:ring-[#bf0603]" />
                                       <input type="file" onChange={(e) => (module.newFile = e.target.files[0])} className="text-[10px] text-slate-400 font-bold uppercase tracking-widest" />
                                       <div className="flex gap-2">
                                         <button onClick={() => handleEdit(module.id, module.title, module.description, module.newFile, "videos")} className="flex-1 bg-green-600 text-white py-3 rounded-xl font-bold uppercase text-[10px] hover:bg-green-700 transition-all shadow-md">Save</button>

@@ -113,9 +113,9 @@ const CourseMeetingPopup = () => {
 
                         {/* Page Header */}
                         <div className="border-b border-slate-200 pb-8">
-                            <h4 className="text-[#dd2727] font-black uppercase tracking-[0.3em] text-[10px] mb-2">Academic Portal</h4>
+                            <h4 className="text-[#bf0603] font-black uppercase tracking-[0.3em] text-[10px] mb-2">Academic Portal</h4>
                             <h1 className="text-4xl font-black text-slate-900 tracking-tight">
-                                Live <span className="text-[#dd2727]">Sessions</span>
+                                Live <span className="text-[#bf0603]">Sessions</span>
                             </h1>
                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">Course: <span className="text-slate-600">{courseName}</span></p>
                         </div>
@@ -129,10 +129,10 @@ const CourseMeetingPopup = () => {
                         ) : (
                             <div className="grid gap-6">
                                 {meetings.map((m) => (
-                                    <div key={m.id} className="admin-card p-8 bg-white flex flex-col md:flex-row justify-between items-start md:items-center gap-6 group hover:border-[#dd2727] transition-all">
+                                    <div key={m.id} className="admin-card p-8 bg-white flex flex-col md:flex-row justify-between items-start md:items-center gap-6 group hover:border-[#bf0603] transition-all">
                                         <div className="flex items-start gap-5">
-                                            <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center flex-shrink-0 group-hover:bg-[#dd2727] transition-colors">
-                                                <span className="w-3 h-3 rounded-full bg-[#dd2727] group-hover:bg-white animate-pulse transition-colors"></span>
+                                            <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center flex-shrink-0 group-hover:bg-[#bf0603] transition-colors">
+                                                <span className="w-3 h-3 rounded-full bg-[#bf0603] group-hover:bg-white animate-pulse transition-colors"></span>
                                             </div>
                                             <div>
                                                 <h3 className="text-lg font-black text-slate-900 tracking-tight mb-1">{m.subject}</h3>
@@ -146,7 +146,7 @@ const CourseMeetingPopup = () => {
                                             {m.ringCentralMeeting?.roomUrl ? (
                                                 <button
                                                     onClick={() => handleOpenPopup(m.ringCentralMeeting.roomUrl)}
-                                                    className="w-full md:w-auto bg-[#dd2727] text-white px-10 py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                                                    className="w-full md:w-auto bg-[#bf0603] text-white px-10 py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] hover:shadow-xl hover:-translate-y-0.5 transition-all"
                                                 >
                                                     Join Now
                                                 </button>

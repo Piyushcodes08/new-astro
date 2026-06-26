@@ -100,7 +100,7 @@ const ArticlesPage = () => {
 
 
                             {/* Bold White Title */}
-                            <h1 className="title-batangas text-4xl sm:text-5xl md:text-brand-redxl text-white font-black mb-8 leading-[1.1] tracking-tight">
+                            <h1 className="title-batangas text-5xl md:text-7xl md:text-brand-redxl text-white font-black mb-8 leading-[1.1] tracking-tight">
                                 Cosmic Insights <br /> & <span className="text-brand-red">Sacred Wisdom</span>
                             </h1>
 
@@ -113,7 +113,7 @@ const ArticlesPage = () => {
                             {/* Red Dot Divider */}
                             <div className="mt-16 flex items-center justify-center gap-6">
                                 <div className="h-1.5 w-16 bg-linear-to-r from-transparent to-white/10"></div>
-                                <div className="w-3 h-3 rounded-full bg-brand-red shadow-[0_0_20px_#dd2727,0_0_40px_#dd2727]"></div>
+                                <div className="w-3 h-3 rounded-full bg-brand-red shadow-[0_0_20px_#bf0603,0_0_40px_#bf0603]"></div>
                                 <div className="h-1.5 w-16 bg-linear-to-l from-transparent to-white/10"></div>
                             </div>
                         </div>
@@ -196,7 +196,7 @@ const ArticlesPage = () => {
                                                         <button
                                                             key={i + 1}
                                                             onClick={() => paginate(i + 1)}
-                                                            className={`w-12 h-12 rounded-full font-bold transition-all ${currentPage === i + 1 ? 'bg-brand-red text-white shadow-[0_0_20px_rgba(221,39,39,0.5)]' : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'}`}
+                                                            className={`w-12 h-12 rounded-full font-bold transition-all ${currentPage === i + 1 ? 'bg-brand-red text-white shadow-[0_0_20px_rgba(191, 6, 3,0.5)]' : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'}`}
                                                         >
                                                             {i + 1}
                                                         </button>
@@ -291,7 +291,7 @@ const ArticlesPage = () => {
                                 </div>
 
                                 {/* Premium CTA Sidebar Banner */}
-                                <div className="relative rounded-lg overflow-hidden group shadow-[0_25px_60px_rgba(221,39,39,0.4)] transition-all duration-700 hover:-translate-y-0.5">
+                                <div className="relative rounded-lg overflow-hidden group shadow-[0_25px_60px_rgba(191, 6, 3,0.4)] transition-all duration-700 hover:-translate-y-0.5">
                                     <div className="absolute inset-0 bg-linear-to-br from-brand-red via-brand-red to-[#801313] opacity-100"></div>
                                     <div className="relative z-10 py-12 px-4 md:px-8 text-center">
                                         <h4 className="title-batangas text-4xl mb-6 text-white! leading-tight drop-shadow-2xl">

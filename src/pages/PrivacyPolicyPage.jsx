@@ -18,7 +18,7 @@ const PrivacyPolicyPage = () => {
                         <div className="relative z-10 max-w-4xl mx-auto text-center">
 
                             <h1 className="title-batangas text-5xl md:text-7xl mb-6 text-white leading-tight">
-                                Privacy <span className="text-[#dd2727]">Policy</span>
+                                Privacy <span className="text-[#bf0603]">Policy</span>
                             </h1>
                             <p className="subtitle-poppins text-lg text-white/60 max-w-xl mx-auto">
                                 Your sacred data is handled with the utmost respect and cosmic integrity.
@@ -50,7 +50,7 @@ const PrivacyPolicyPage = () => {
 
                                 <div>
                                     <h2 className="title-batangas text-2xl md:text-3xl text-white mb-4">4. Contact Us</h2>
-                                    <p className="leading-relaxed">If you have any questions about this Privacy Policy, please contact us at <strong className="text-[#dd2727]">contact@vahlayastro.com</strong>.</p>
+                                    <p className="leading-relaxed">If you have any questions about this Privacy Policy, please contact us at <strong className="text-[#bf0603]">contact@vahlayastro.com</strong>.</p>
                                 </div>
                             </div>
                         </div>

@@ -69,7 +69,7 @@ const AdminInquiries = () => {
             <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pt-8">
               <div>
                 <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-                  Service <span className="text-[#dd2727]">Inquiries</span>
+                  Service <span className="text-[#bf0603]">Inquiries</span>
                 </h2>
                 <p className="text-slate-400 text-sm mt-1 font-medium">Manage and respond to potential client requests</p>
               </div>
@@ -78,11 +78,11 @@ const AdminInquiries = () => {
                 <input
                   type="text"
                   placeholder="Search inquiries..."
-                  className="w-full md:w-64 bg-white border border-slate-200 rounded-xl px-5 py-2.5 text-sm text-slate-900 focus:ring-4 focus:ring-[#dd2727]/5 focus:border-[#dd2727] outline-none transition-all pr-10 placeholder:text-slate-400 shadow-sm"
+                  className="w-full md:w-64 bg-white border border-slate-200 rounded-xl px-5 py-2.5 text-sm text-slate-900 focus:ring-4 focus:ring-[#bf0603]/5 focus:border-[#bf0603] outline-none transition-all pr-10 placeholder:text-slate-400 shadow-sm"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <svg className="w-4 h-4 text-slate-300 absolute right-4 top-1/2 -translate-y-1/2 group-focus-within:text-[#dd2727] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <svg className="w-4 h-4 text-slate-300 absolute right-4 top-1/2 -translate-y-1/2 group-focus-within:text-[#bf0603] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
               </div>
             </header>
 
@@ -97,15 +97,15 @@ const AdminInquiries = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {filteredInquiries.map((inquiry) => (
-                  <div key={inquiry.id} className="group bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-[#dd2727]/30 transition-all duration-300 shadow-sm hover:shadow-xl">
+                  <div key={inquiry.id} className="group bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-[#bf0603]/30 transition-all duration-300 shadow-sm hover:shadow-xl">
                     <div className="p-8 flex flex-col h-full">
                       <div className="flex justify-between items-start mb-6">
                         <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-[#dd2727] to-[#b0a102] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-md">
+                          <div className="w-12 h-12 bg-gradient-to-br from-[#bf0603] to-[#b0a102] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-md">
                             {inquiry.name?.charAt(0).toUpperCase()}
                           </div>
                           <div>
-                            <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#dd2727] transition-colors">{inquiry.name}</h3>
+                            <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#bf0603] transition-colors">{inquiry.name}</h3>
                             <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest">{inquiry.createdAt?.toDate().toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) || inquiry.timestamp?.toDate().toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
                           </div>
                         </div>

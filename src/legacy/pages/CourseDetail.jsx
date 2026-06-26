@@ -338,7 +338,7 @@ const CourseDetail = () => {
               transition={{ duration: 1 }}
               className="relative lg:w-[35%] w-full max-w-[420px] flex flex-col gap-8"
             >
-              <div className="relative rounded-xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(221,39,39,0.2)] group transition-all duration-700 hover:shadow-[0_0_80px_rgba(221,39,39,0.4)] hover:border-white/20">
+              <div className="relative rounded-xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(191, 6, 3,0.2)] group transition-all duration-700 hover:shadow-[0_0_80px_rgba(191, 6, 3,0.4)] hover:border-white/20">
                 <img
                   src={courseData.imageUrl || "/src/assets/images/common/team/hansal sir.webp"}
                   alt={courseData.title}
@@ -372,7 +372,7 @@ const CourseDetail = () => {
               { icon: <FaCertificate />, label: "Certification", val: "Verified ID" }
             ].map((stat, i) => (
               <div key={i} className="flex items-center gap-4 p-4 rounded-lg hover:bg-white/3 transition-colors group relative z-10">
-                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-brand-red text-xl group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(221,39,39,0.2)]">
+                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-brand-red text-xl group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(191, 6, 3,0.2)]">
                   {stat.icon}
                 </div>
                 <div>
@@ -623,7 +623,7 @@ const CourseDetail = () => {
             </ul>
           </div>
           <div className="flex-1 relative z-10 w-full max-w-[450px]">
-            <div className="relative transform rotate-2 hover:rotate-0 transition-transform duration-700 rounded-xl overflow-hidden shadow-[0_0_60px_rgba(221,39,39,0.15)] border border-white/10 group">
+            <div className="relative transform rotate-2 hover:rotate-0 transition-transform duration-700 rounded-xl overflow-hidden shadow-[0_0_60px_rgba(191, 6, 3,0.15)] border border-white/10 group">
               <img
                 src={certificateImg}
                 alt="Vahlay Astro Certificate of Completion"
@@ -728,7 +728,7 @@ const CourseDetail = () => {
       {/* Community Section */}
       <section className="py-[50px]">
         <div className="premium-container">
-          <div className="bg-brand-red/50 rounded-xl p-10 md:p-16 text-center relative overflow-hidden shadow-[0_20px_60px_rgba(221,39,39,0.2)]">
+          <div className="bg-brand-red/50 rounded-xl p-10 md:p-16 text-center relative overflow-hidden shadow-[0_20px_60px_rgba(191, 6, 3,0.2)]">
             <div className="absolute top-0 left-0 w-full h-full bg-linear-to-br from-white/5 to-transparent opacity-10 mix-blend-overlay"></div>
             <div className="relative z-10 space-y-10">
               <h2 className="title-batangas text-3xl md:text-5xl text-white">Join the <br /> Sacred Community</h2>

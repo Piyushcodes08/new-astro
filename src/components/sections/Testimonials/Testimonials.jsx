@@ -169,8 +169,7 @@ const Testimonials = () => {
   }, [currentIndex, moveToIndex]);
 
   const getTranslateX = () => {
-    if (clonedData.length === 0) return "translateX(0)";
-    const percentage = (100 / clonedData.length) * currentIndex;
+    const percentage = (100 / visibleItems) * currentIndex;
     return `translateX(-${percentage}%)`;
   };
 
@@ -183,21 +182,21 @@ const Testimonials = () => {
       const timer = setTimeout(() => {
         setIsTransitioning(false);
         setCurrentIndex(visibleItems);
-      }, 700);
+      }, 450);
       return () => clearTimeout(timer);
     }
     if (currentIndex <= minIndex) {
       const timer = setTimeout(() => {
         setIsTransitioning(false);
         setCurrentIndex(totalRealItems + minIndex);
-      }, 700);
+      }, 450);
       return () => clearTimeout(timer);
     }
   }, [currentIndex, isTransitioning, totalRealItems, visibleItems]);
 
   const startAutoPlay = useCallback(() => {
     stopAutoPlay();
-    autoPlayRef.current = setInterval(nextSlide, 5000);
+    autoPlayRef.current = setInterval(nextSlide, 3500);
   }, [nextSlide]);
 
   const stopAutoPlay = useCallback(() => {
@@ -265,7 +264,7 @@ const Testimonials = () => {
             style={{
               transform: getTranslateX(),
               transition: isTransitioning
-                ? "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)"
+                ? "transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
                 : "none",
             }}
           >
@@ -273,7 +272,7 @@ const Testimonials = () => {
               <div
                 className="testimonial-slide"
                 key={`${item.id}-${index}`}
-                style={{ flex: `0 0 ${100 / visibleItems}%` }}
+                style={{ flex: `0 0 ${100 / visibleItems}%`, maxWidth: `${100 / visibleItems}%` }}
               >
                 <div className="testimonial-card">
                   <p className="testimonial-text">"{item.quote || item.text || item.comment}"</p>

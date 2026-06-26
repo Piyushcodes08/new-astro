@@ -81,9 +81,9 @@ background: linear-gradient(
   margin-bottom: 12px;
   padding: 8px 18px;
   border-radius: 999px;
-  background: rgba(221, 39, 39, 0.1);
-  border: 1px solid rgba(221, 39, 39, 0.25);
-  color: #dd2727;
+  background: rgba(191, 6, 3, 0.1);
+  border: 1px solid rgba(191, 6, 3, 0.25);
+  color: #bf0603;
   font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;

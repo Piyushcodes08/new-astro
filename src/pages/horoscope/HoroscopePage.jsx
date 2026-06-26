@@ -7,7 +7,7 @@ import "./HoroscopePage.css";
 
 const elementEmoji = { Fire: "🔥", Earth: "🌍", Air: "💨", Water: "💧" };
 const elementColor = {
-  Fire: "rgba(221,39,39,0.85)",
+  Fire: "rgba(191, 6, 3,0.85)",
   Earth: "rgba(120,80,20,0.85)",
   Air: "rgba(60,120,200,0.85)",
   Water: "rgba(20,90,160,0.85)",

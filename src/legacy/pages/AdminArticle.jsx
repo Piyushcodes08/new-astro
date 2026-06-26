@@ -208,7 +208,7 @@ const AdminArticles = () => {
               </h2>
               <button
                 onClick={() => { resetForm(); setFormVisible(true); }}
-                className="bg-brand-red text-white px-3 text-xs py-2 rounded-2xl uppercase  tracking-widest hover:shadow-[0_0_30px_rgba(221,39,39,0.5)] transition-all"
+                className="bg-brand-red text-white px-3 text-xs py-2 rounded-2xl uppercase  tracking-widest hover:shadow-[0_0_30px_rgba(191, 6, 3,0.5)] transition-all"
               >
                 {formVisible ? "X" : "add new"}
               </button>

@@ -53,7 +53,7 @@ const PremiumCourseLayout = ({
       <main className="relative">
         {/* Premium Background */}
         <div className="fixed inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(221,39,39,0.16),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(176,161,2,0.12),transparent_35%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(191, 6, 3,0.16),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(176,161,2,0.12),transparent_35%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-size-[70px_70px]" />
         </div>
 
@@ -76,7 +76,7 @@ const PremiumCourseLayout = ({
               transition={{ duration: 0.75 }}
               className="text-center lg:text-left"
             >
-              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/10 bg-white/6 backdrop-blur-xl shadow-[0_0_40px_rgba(221,39,39,0.12)]">
+              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/10 bg-white/6 backdrop-blur-xl shadow-[0_0_40px_rgba(191, 6, 3,0.12)]">
                 <span className="flex text-brand-red gap-1">
                   {[...Array(5)].map((_, i) => (
                     <FaStar key={i} size={11} />
@@ -101,7 +101,7 @@ const PremiumCourseLayout = ({
                   <motion.button
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.96 }}
-                    className="group px-8 md:px-10 py-4 md:py-5 rounded-full bg-brand-red text-white font-black uppercase tracking-[0.22em] text-xs md:text-sm shadow-[0_18px_45px_rgba(221,39,39,0.35)] hover:bg-white hover:text-brand-red transition-all duration-500 flex items-center gap-3"
+                    className="group px-8 md:px-10 py-4 md:py-5 rounded-full bg-brand-red text-white font-black uppercase tracking-[0.22em] text-xs md:text-sm shadow-[0_18px_45px_rgba(191, 6, 3,0.35)] hover:bg-white hover:text-brand-red transition-all duration-500 flex items-center gap-3"
                   >
                     {isFree ? "Start Learning Free" : "Secure Your Seat"}
                     <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
@@ -250,7 +250,7 @@ const PremiumCourseLayout = ({
                       key={i}
                       className="flex items-center gap-4 text-xs font-black text-white/78 uppercase tracking-[0.18em]"
                     >
-                      <span className="w-2 h-2 rounded-full bg-brand-red shadow-[0_0_18px_rgba(221,39,39,0.8)]" />
+                      <span className="w-2 h-2 rounded-full bg-brand-red shadow-[0_0_18px_rgba(191, 6, 3,0.8)]" />
                       {feat}
                     </li>
                   ))}
@@ -492,7 +492,7 @@ const PremiumCourseLayout = ({
 
         {/* CTA */}
         <section className="relative py-28 md:py-40 text-center overflow-hidden px-6">
-          <div className="absolute top-1/2 left-1/2 w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle,rgba(221,39,39,0.18),transparent_60%)] blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle,rgba(191, 6, 3,0.18),transparent_60%)] blur-3xl" />
 
           <div className="max-w-4xl mx-auto relative z-10">
             <p className="text-brand-red text-xs font-black uppercase tracking-[0.35em] mb-6">
@@ -512,7 +512,7 @@ const PremiumCourseLayout = ({
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="mt-11 px-10 md:px-16 py-5 md:py-6 rounded-full bg-brand-red text-white font-black uppercase tracking-[0.3em] text-xs md:text-sm shadow-[0_22px_55px_rgba(221,39,39,0.45)] hover:bg-white hover:text-brand-red transition-all duration-700"
+                className="mt-11 px-10 md:px-16 py-5 md:py-6 rounded-full bg-brand-red text-white font-black uppercase tracking-[0.3em] text-xs md:text-sm shadow-[0_22px_55px_rgba(191, 6, 3,0.45)] hover:bg-white hover:text-brand-red transition-all duration-700"
               >
                 Enroll Now
               </motion.button>

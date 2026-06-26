@@ -111,9 +111,9 @@ const AdminPortal = () => {
 
                         {/* Page Header */}
                         <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
-                            <h4 className="text-[#dd2727] font-black uppercase tracking-[0.4em] text-[10px] mb-2">Admin Panel</h4>
+                            <h4 className="text-[#bf0603] font-black uppercase tracking-[0.4em] text-[10px] mb-2">Admin Panel</h4>
                             <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-                                Content <span className="text-[#dd2727]">Upload</span>
+                                Content <span className="text-[#bf0603]">Upload</span>
                             </h2>
                             <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] mt-2">Upload videos and study materials to courses</p>
                         </div>
@@ -125,7 +125,7 @@ const AdminPortal = () => {
                                 <select
                                     value={selectedCourse}
                                     onChange={(e) => setSelectedCourse(e.target.value)}
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none appearance-none cursor-pointer font-bold"
+                                    className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none appearance-none cursor-pointer font-bold"
                                 >
                                     <option value="">-- Select Course Orbit --</option>
                                     {courses.map((course) => (
@@ -144,7 +144,7 @@ const AdminPortal = () => {
                             {/* Upload Video Card */}
                             <div className="bg-white border border-slate-200 rounded-2xl p-10 shadow-xl shadow-slate-200/50 relative overflow-hidden group">
                                 <h2 className="text-xl font-bold text-slate-900 mb-8 uppercase tracking-widest flex items-center gap-3">
-                                    <div className="w-1.5 h-6 bg-[#dd2727] rounded-full"></div>
+                                    <div className="w-1.5 h-6 bg-[#bf0603] rounded-full"></div>
                                     Upload Video Session
                                 </h2>
                                 <div className="space-y-5">
@@ -155,7 +155,7 @@ const AdminPortal = () => {
                                             placeholder="e.g. Introduction to Kundalini"
                                             value={videoTitle}
                                             onChange={(e) => setVideoTitle(e.target.value)}
-                                            className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all placeholder:text-gray-400"
+                                            className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all placeholder:text-gray-400"
                                         />
                                     </div>
                                     <div>
@@ -165,7 +165,7 @@ const AdminPortal = () => {
                                                 type="file"
                                                 accept="video/*"
                                                 onChange={(e) => setSelectedVideo(e.target.files[0])}
-                                                className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-[#dd2727] file:text-white hover:file:bg-red-700 cursor-pointer"
+                                                className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-[#bf0603] file:text-white hover:file:bg-red-700 cursor-pointer"
                                             />
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@ const AdminPortal = () => {
                                     {videoUploadProgress > 0 && (
                                         <div className="space-y-2">
                                             <div className="w-full bg-slate-100 rounded-full h-2">
-                                                <div className="bg-[#dd2727] h-full rounded-full transition-all" style={{ width: `${videoUploadProgress}%` }}></div>
+                                                <div className="bg-[#bf0603] h-full rounded-full transition-all" style={{ width: `${videoUploadProgress}%` }}></div>
                                             </div>
                                             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{Math.round(videoUploadProgress)}% Transmitted</p>
                                         </div>
@@ -182,7 +182,7 @@ const AdminPortal = () => {
                                     <button
                                         onClick={handleVideoUpload}
                                         disabled={videoUploadProgress > 0 && videoUploadProgress < 100}
-                                        className="flex-1 w-full bg-[#dd2727] text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/30 transition-all disabled:opacity-50"
+                                        className="flex-1 w-full bg-[#bf0603] text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/30 transition-all disabled:opacity-50"
                                     >
                                         {videoUploadProgress > 0 && videoUploadProgress < 100 ? (
                                             <div className="flex items-center justify-center gap-3">
@@ -208,7 +208,7 @@ const AdminPortal = () => {
                                             placeholder="e.g. Planet Positions PDF"
                                             value={materialTitle}
                                             onChange={(e) => setMaterialTitle(e.target.value)}
-                                            className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#dd2727] outline-none transition-all placeholder:text-gray-400"
+                                            className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all placeholder:text-gray-400"
                                         />
                                     </div>
                                     <div>

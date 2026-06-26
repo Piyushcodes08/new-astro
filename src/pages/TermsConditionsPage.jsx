@@ -18,7 +18,7 @@ const TermsConditionsPage = () => {
                         <div className="relative z-10 max-w-4xl mx-auto text-center">
 
                             <h1 className="title-batangas text-5xl md:text-7xl mb-6 text-white leading-tight">
-                                Terms & <span className="text-[#dd2727]">Conditions</span>
+                                Terms & <span className="text-[#bf0603]">Conditions</span>
                             </h1>
                             <p className="subtitle-poppins text-lg text-white/60 max-w-xl mx-auto">
                                 Please review the sacred agreements that govern our astrological journey together.

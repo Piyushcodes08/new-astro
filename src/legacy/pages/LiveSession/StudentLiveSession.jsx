@@ -66,16 +66,16 @@ const StudentLiveSession = () => {
         <Aside />
         <main className="flex-1 p-4 md:p-8 py-10">
           <div className="max-w-4xl mx-auto space-y-8 pt-8">
-            <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl p-8 shadow-[0_0_30px_rgba(221,39,39,0.1)]">
+            <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl p-8 shadow-[0_0_30px_rgba(191, 6, 3,0.1)]">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 uppercase tracking-tight">
-                Cosmic <span className="text-[#dd2727]">Live Sessions</span>
+                Cosmic <span className="text-[#bf0603]">Live Sessions</span>
               </h2>
 
               <div className="relative group">
                 <select
                   value={selectedCourse}
                   onChange={handleCourseChange}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#dd2727] transition-all cursor-pointer"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#bf0603] transition-all cursor-pointer"
                 >
                   <option value="" className="bg-[#0a0a0a]">-- Select a Cosmic Course --</option>
                   {courses.map((course) => (
@@ -101,7 +101,7 @@ const StudentLiveSession = () => {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                        <h3 className="text-xl font-bold text-white group-hover:text-[#dd2727] transition-colors">{session.title}</h3>
+                        <h3 className="text-xl font-bold text-white group-hover:text-[#bf0603] transition-colors">{session.title}</h3>
                       </div>
                       <div className="flex flex-wrap gap-4 text-sm text-gray-400 font-medium">
                         <span className="flex items-center gap-2">
@@ -119,7 +119,7 @@ const StudentLiveSession = () => {
                     </div>
                     <button
                       onClick={() => setActiveSession(session)}
-                      className="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-[#dd2727] to-[#b0a102] text-white rounded-xl font-bold uppercase tracking-widest hover:scale-105 transition-all shadow-[0_0_20px_rgba(221,39,39,0.3)]"
+                      className="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-[#bf0603] to-[#b0a102] text-white rounded-xl font-bold uppercase tracking-widest hover:scale-105 transition-all shadow-[0_0_20px_rgba(191, 6, 3,0.3)]"
                     >
                       Join Now
                     </button>
@@ -139,7 +139,7 @@ const StudentLiveSession = () => {
             {/* Active Session */}
             {activeSession && (
               <div className="fixed inset-0 z-[10000] bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-4">
-                <div className="w-full max-w-6xl flex flex-col h-full max-h-[90vh] bg-black border border-white/10 rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(221,39,39,0.4)]">
+                <div className="w-full max-w-6xl flex flex-col h-full max-h-[90vh] bg-black border border-white/10 rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(191, 6, 3,0.4)]">
                   <div className="flex justify-between items-center p-4 bg-white/5 border-b border-white/10">
                     <div className="flex items-center gap-3">
                       <div className="w-2 h-2 rounded-full bg-red-500 animate-ping"></div>
