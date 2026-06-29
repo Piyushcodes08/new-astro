@@ -5,6 +5,9 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { headerData } from '../../../data/layout/header';
+import { createLogger } from '../../../utils/logger';
+
+const logger = createLogger('Header');
 
 const Header = () => {
     const { navLinks } = headerData;
@@ -54,6 +57,7 @@ const Header = () => {
     }, [isOpen]);
 
     // Reset mobile submenu state when main menu closes
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     useEffect(() => {
         if (!isOpen) {
             setActiveMobileSubmenu(null);
@@ -75,7 +79,7 @@ const Header = () => {
                     });
                     setIsAdmin(adminStatus);
                 } catch (error) {
-                    console.error("Error checking admin status:", error);
+                    logger.error("Error checking admin status:", error);
                 }
             } else {
                 setIsAdmin(false);
@@ -89,7 +93,7 @@ const Header = () => {
             await signOut(auth);
             navigate("/");
         } catch (error) {
-            console.error("Logout failed", error);
+            logger.error("Logout failed", error);
         }
     };
 
@@ -97,28 +101,28 @@ const Header = () => {
         <>
             <header
                 className={`fixed top-0 left-0 right-0 z-2000 w-full h-auto text-white transition-all duration-700 ${showBg && !isOpen
-                    ? "border-b border-white/5 backdrop-blur-[15px]"
-                    : "bg-transparent"
+                ? "border-b border-white/5 backdrop-blur-[15px]"
+                : "bg-transparent"
+                }`}
+        >
+            {/* Premium Custom Glowing Background */}
+            <div
+                className={`absolute inset-0 pointer-events-none z-0 transition-opacity duration-1000 overflow-hidden ${showBg && !isOpen ? "opacity-[0.75]" : "opacity-0"
                     }`}
             >
-                {/* Premium Custom Glowing Background */}
                 <div
-                    className={`absolute inset-0 pointer-events-none z-0 transition-opacity duration-1000 overflow-hidden ${showBg && !isOpen ? "opacity-[0.75]" : "opacity-0"
-                        }`}
-                >
-                    <div
-                        className="absolute inset-0"
-                        style={{
-                            background: "linear-gradient(145deg, #bf0603 30%, #b0a102 70%)",
-                            filter: "blur(100px)",
-                            transform: "scale(1.2)",
-                        }}
-                    />
-                </div>
+                    className="absolute inset-0"
+                    style={{
+                        background: "linear-gradient(145deg, #bf0603 30%, #b0a102 70%)",
+                        filter: "blur(100px)",
+                        transform: "scale(1.2)",
+                    }}
+                />
+            </div>
 
-                <nav className="mx-auto grid items-center transition-all duration-500 max-w-container-max-width px-3.75 md:px-12.5 py-0 h-full w-full"
-                    style={{ gridTemplateColumns: 'auto 1fr auto' }}
-                >
+            <nav className="mx-auto grid items-center transition-all duration-500 max-w-container-max-width px-3.75 md:px-12.5 py-0 h-full w-full"
+                style={{ gridTemplateColumns: 'auto 1fr auto' }}
+            >
                     {/* Col 1 — Logo (Left) */}
                     <div className={`flex items-center h-full transition-all duration-500 py-2 ${isOpen ? 'opacity-0 invisible' : 'opacity-100 visible'}`}>
                         <Link to="/" className="flex items-center" aria-label="Vahlay Astro Home">

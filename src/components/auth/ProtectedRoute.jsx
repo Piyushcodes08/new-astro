@@ -3,6 +3,9 @@ import { Navigate, useLocation } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
+import { createLogger } from "../../utils/logger";
+
+const logger = createLogger('ProtectedRoute');
 
 const ProtectedRoute = ({ children, adminOnly = false }) => {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -46,7 +49,7 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
             setIsAuthorized(false);
           }
         } catch (error) {
-          console.error("Error verifying admin status:", error);
+          logger.error("Error verifying admin status:", error);
           setIsAuthorized(false);
         }
       } else {

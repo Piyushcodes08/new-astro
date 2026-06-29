@@ -3,6 +3,9 @@ import { useParams, Link } from 'react-router-dom';
 import Header from '../components/sections/Header/Header';
 import Footer from '../components/sections/Footer/Footer';
 import { useArticles } from '../context/ArticlesContext';
+import { createLogger } from '../utils/logger';
+
+const logger = createLogger('ArticleDetailsPage');
 import { RiShareForwardFill, RiFacebookFill, RiTwitterFill, RiLinkedinFill, RiWhatsappFill } from "react-icons/ri";
 import { Helmet } from 'react-helmet-async';
 
@@ -91,7 +94,7 @@ const ArticleDetailsPage = () => {
             await navigator.clipboard.writeText(window.location.href);
             alert('Link copied to clipboard!');
         } catch (err) {
-            console.error('Failed to copy:', err);
+            logger.error('Failed to copy:', err);
         }
     };
 

@@ -30,7 +30,6 @@ const AdminSidebar = () => {
       group: "Content Management",
       items: [
         { title: "ADD ARTICLES",    path: "/admin/adminarticle",           icon: <IoIosPaper size={20} /> },
-        { title: "CALENDAR",        path: "/admin/admincalendar",           icon: <IoIosCalendar size={20} /> },
         { title: "ADD COURSE",      path: "/admin/addcourse",               icon: <IoIosAddCircle size={20} /> },
         { title: "ADD PRODUCT",     path: "/admin/addproduct",              icon: <IoIosCart size={20} /> },
         { title: "ADD MODULE",      path: "/admin/addmodule",               icon: <IoIosListBox size={20} /> },
@@ -51,6 +50,7 @@ const AdminSidebar = () => {
       items: [
         { title: "COURSE INQUIRY",  path: "/admin/admininquiry",            icon: <IoIosHelpCircle size={20} /> },
         { title: "CONTACTUS INQUIRY",path: "/admin/admincontact",           icon: <IoIosContact size={20} /> },
+        { title: "APPOINTMENTS",     path: "/admin/appointments",            icon: <IoIosCalendar size={20} /> },
         { title: "QUESTION & ANS",  path: "/admin/question-ans",            icon: <IoIosChatbubbles size={20} /> },
       ]
     },

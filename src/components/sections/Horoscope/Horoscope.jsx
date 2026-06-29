@@ -107,6 +107,7 @@ export default function Horoscope({ onGetDetails }) {
     "SEVENTH", "EIGHTH", "NINTH", "TENTH", "ELEVENTH", "TWELFTH",
   ], []);
 
+  // eslint-disable-next-line no-unused-vars
   const featureItems = useMemo(() => [
     { icon: "🎯", title: "PIONEER MINDSET", desc: "Always first. Always ahead." },
     { icon: "⚡", title: "FEARLESS SPIRIT", desc: "No fear. Only determination." },

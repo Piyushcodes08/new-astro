@@ -1,6 +1,9 @@
 ﻿import React, { createContext, useContext, useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { createLogger } from "../utils/logger";
+
+const logger = createLogger('CoursesContext');
 
 const CoursesContext = createContext();
 let cachedSlugMap = null;
@@ -52,7 +55,7 @@ export const CoursesProvider = ({ children }) => {
         if (active) setSlugMap(map);
       })
       .catch((error) => {
-        console.error("Error loading courses:", error);
+        logger.error("Error loading courses:", error);
       })
       .finally(() => {
         if (active) setLoading(false);

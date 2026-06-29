@@ -2,6 +2,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { createLogger } from "../utils/logger";
+
+const logger = createLogger('ArticlesContext');
 
 // Util to convert title to URL slug
 const slugify = (text) =>
@@ -26,7 +29,7 @@ export const ArticlesProvider = ({ children }) => {
 
         setSlugMap(map);
       } catch (error) {
-        console.error("Error loading articles:", error);
+        logger.error("Error loading articles:", error);
       } finally {
         setLoading(false);
       }

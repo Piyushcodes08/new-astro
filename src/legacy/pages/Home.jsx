@@ -208,8 +208,6 @@ const Home = () => {
       alert("An error occurred. Please try again later.");
     }
   };
-  console.log(courses);
-
   useEffect(() => {
     fetchData();
   }, []);

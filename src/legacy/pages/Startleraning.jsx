@@ -259,7 +259,6 @@ const PersonalCourse = () => {
     localStorage.removeItem('liveMeeting');
   };
 
-  console.log(meetings)
   /**
    * -----------------------
    *  FETCH EMI DETAILS
@@ -394,7 +393,6 @@ const PersonalCourse = () => {
     const unsubscribe = onSnapshot(userSubscriptionRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
         const subscriptionData = docSnapshot.data();
-        console.log(subscriptionData)
         const courseDetails = subscriptionData.DETAILS.find(
 
           (detail) => Object.keys(detail)[0] === resolvedCourseId
@@ -540,7 +538,7 @@ const PersonalCourse = () => {
       fetchMeetings();
     }
   }, [resolvedCourseId]);
-  console.log(meetings)
+
   /**
    * -----------------------
    *  JOIN LIVE SESSION
@@ -577,18 +575,7 @@ const PersonalCourse = () => {
     );
   }
 
-  /**
-   * -----------------------
-   *  NO DATA
-   * -----------------------
-   */
-  if (!videos.length && !studyMaterials.length) {
-    return (
-      <div className="text-center mt-10 text-slate-500">
-        No data found for <strong>{courseName}</strong>.
-      </div>
-    );
-  }
+
 
   /**
    * -----------------------
@@ -674,88 +661,113 @@ const PersonalCourse = () => {
                 <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Course Videos</h2>
                 <div className="flex-1 h-px bg-slate-200"></div>
               </div>
-              {Object.keys(groupedVideos).reverse().map((title, index) => {
-                // Initialize navigation refs
-                if (!swiperNavRefs.current[index]) {
-                  swiperNavRefs.current[index] = {
-                    prev: React.createRef(),
-                    next: React.createRef(),
-                  };
-                }
+              {videos.length > 0 ? (
+                Object.keys(groupedVideos).reverse().map((title, index) => {
+                  // Initialize navigation refs
+                  if (!swiperNavRefs.current[index]) {
+                    swiperNavRefs.current[index] = {
+                      prev: React.createRef(),
+                      next: React.createRef(),
+                    };
+                  }
 
-                const { prev, next } = swiperNavRefs.current[index];
+                  const { prev, next } = swiperNavRefs.current[index];
 
-                return (
-                  <div key={index} className="mb-10 bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-slate-50 border-b border-slate-200 px-6 py-5">
-                      <div className="flex items-center gap-3">
-                        <span className="w-1.5 h-10 bg-slate-900 rounded-full"></span>
-                        <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">{title}</h3>
+                  return (
+                    <div key={index} className="mb-10 bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+                      <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-slate-50 border-b border-slate-200 px-6 py-5">
+                        <div className="flex items-center gap-3">
+                          <span className="w-1.5 h-10 bg-slate-900 rounded-full"></span>
+                          <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">{title}</h3>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <button ref={prev} className="text-slate-900 w-11 h-11 bg-white border border-slate-200 rounded-full hover:bg-slate-100 transition-all shadow-sm">
+                            <FaChevronLeft className="w-5 h-5" />
+                          </button>
+                          <button ref={next} className="text-slate-900 w-11 h-11 bg-white border border-slate-200 rounded-full hover:bg-slate-100 transition-all shadow-sm">
+                            <FaChevronRight className="w-5 h-5" />
+                          </button>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <button ref={prev} className="text-slate-900 w-11 h-11 bg-white border border-slate-200 rounded-full hover:bg-slate-100 transition-all shadow-sm">
-                          <FaChevronLeft className="w-5 h-5" />
-                        </button>
-                        <button ref={next} className="text-slate-900 w-11 h-11 bg-white border border-slate-200 rounded-full hover:bg-slate-100 transition-all shadow-sm">
-                          <FaChevronRight className="w-5 h-5" />
-                        </button>
+
+                      <div className="px-4 py-6">
+                        <Swiper
+                          modules={[Navigation, Pagination]}
+                          navigation={{
+                            prevEl: prev.current,
+                            nextEl: next.current,
+                          }}
+                          onBeforeInit={(swiper) => {
+                            swiper.params.navigation.prevEl = prev.current;
+                            swiper.params.navigation.nextEl = next.current;
+                          }}
+                          pagination={{ clickable: true, dynamicBullets: true }}
+                          spaceBetween={20}
+                          slidesPerView={1}
+                          breakpoints={{
+                            640: { slidesPerView: 2 },
+                            1024: { slidesPerView: 3 },
+                            1280: { slidesPerView: 4 },
+                          }}
+                          className="w-full"
+                        >
+                          {groupedVideos[title].map((video) => (
+                            <SwiperSlide key={video.id} className="h-auto">
+                              <div className="bg-slate-50 border border-slate-200 rounded overflow-hidden transition-all duration-300  h-full flex flex-col">
+                                <Link to={`/course/${courseName}/video/${video.id}`} className="flex flex-col h-full">
+                                  <div className="relative w-full aspect-video bg-black overflow-hidden">
+                                    <video
+                                      src={video.url}
+                                      className="w-full h-full object-cover"
+                                      controlsList="nodownload"
+                                      onEnded={() => handleMarkAsWatched(video.id)}
+                                      muted
+                                    />
+                                  </div>
+                                  <div className="p-4 flex-1 flex flex-col">
+                                    <p className="text-slate-900 font-bold text-sm line-clamp-2">
+                                      {video.description}
+                                    </p>
+                                    {watchedVideos.includes(video.id) && (
+                                      <span className="mt-auto pt-3 inline-flex items-center text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                                        Watched
+                                      </span>
+                                    )}
+                                  </div>
+                                </Link>
+                              </div>
+                            </SwiperSlide>
+                          ))}
+                        </Swiper>
                       </div>
                     </div>
-
-                    <div className="px-4 py-6">
-                      <Swiper
-                        modules={[Navigation, Pagination]}
-                        navigation={{
-                          prevEl: prev.current,
-                          nextEl: next.current,
-                        }}
-                        onBeforeInit={(swiper) => {
-                          swiper.params.navigation.prevEl = prev.current;
-                          swiper.params.navigation.nextEl = next.current;
-                        }}
-                        pagination={{ clickable: true, dynamicBullets: true }}
-                        spaceBetween={20}
-                        slidesPerView={1}
-                        breakpoints={{
-                          640: { slidesPerView: 2 },
-                          1024: { slidesPerView: 3 },
-                          1280: { slidesPerView: 4 },
-                        }}
-                        className="w-full"
-                      >
-                        {groupedVideos[title].map((video) => (
-                          <SwiperSlide key={video.id} className="h-auto">
-                            <div className="bg-slate-50 border border-slate-200 rounded overflow-hidden transition-all duration-300  h-full flex flex-col">
-                              <Link to={`/course/${courseName}/video/${video.id}`} className="flex flex-col h-full">
-                                <div className="relative w-full aspect-video bg-black overflow-hidden">
-                                  <video
-                                    src={video.url}
-                                    className="w-full h-full object-cover"
-                                    controlsList="nodownload"
-                                    onEnded={() => handleMarkAsWatched(video.id)}
-                                    muted
-                                  />
-                                </div>
-                                <div className="p-4 flex-1 flex flex-col">
-                                  <p className="text-slate-900 font-bold text-sm line-clamp-2">
-                                    {video.description}
-                                  </p>
-                                  {watchedVideos.includes(video.id) && (
-                                    <span className="mt-auto pt-3 inline-flex items-center text-xs font-bold text-slate-700 uppercase tracking-wider">
-                                      <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                      Watched
-                                    </span>
-                                  )}
-                                </div>
-                              </Link>
-                            </div>
-                          </SwiperSlide>
-                        ))}
-                      </Swiper>
-                    </div>
+                  );
+                })
+              ) : (
+                <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-12 text-center max-w-2xl mx-auto shadow-sm my-10 space-y-6">
+                  <div className="mx-auto w-20 h-20 rounded-full bg-red-50 flex items-center justify-center text-[#bf0603] animate-pulse">
+                    <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
                   </div>
-                );
-              })}
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Wisdom Teachings Preparing</h3>
+                    <p className="text-slate-500 text-sm md:text-base leading-relaxed">
+                      We are currently preparing and curating the high-quality lessons and materials for <strong className="text-slate-900">{courseName}</strong>. 
+                      They will be uploaded by our spiritual guides very soon.
+                    </p>
+                  </div>
+                  <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
+                    <Link to="/dashboard" className="bg-slate-900 text-white px-6 py-3 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-800 transition-all shadow-sm">
+                      Back to Dashboard
+                    </Link>
+                    <Link to="/enrolledcourse" className="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-6 py-3 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all shadow-sm">
+                      My Courses
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
 
 

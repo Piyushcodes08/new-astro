@@ -39,6 +39,7 @@ const ForgetPassword = lazy(() => import('../components/auth/ForgetPassword'));
 const AdminArticle            = lazy(() => import('../legacy/pages/AdminArticle'));
 const AdminCourseOrder        = lazy(() => import('../legacy/pages/AdminCourseOrder'));
 const AdminContact            = lazy(() => import('../legacy/pages/AdminContact'));
+const AdminAppointments       = lazy(() => import('../legacy/pages/AdminAppointments'));
 const AdminQuestion           = lazy(() => import('../legacy/pages/AdminQuestion'));
 const AdminCalendar           = lazy(() => import('../legacy/pages/AdminCalendar'));
 const AdminSubscribeCourseList= lazy(() => import('../legacy/pages/AdminSubscribeCourseList'));
@@ -158,9 +159,10 @@ const AppRoutes = () => {
                 <Route path="/admin/adminarticle"     element={<ProtectedRoute adminOnly={true}><AdminArticle /></ProtectedRoute>} />
                 <Route path="/admin/admincourseorder" element={<ProtectedRoute adminOnly={true}><AdminCourseOrder /></ProtectedRoute>} />
                 <Route path="/admin/admincontact"     element={<ProtectedRoute adminOnly={true}><AdminContact /></ProtectedRoute>} />
+                <Route path="/admin/appointments"     element={<ProtectedRoute adminOnly={true}><AdminAppointments /></ProtectedRoute>} />
                 <Route path="/admin/question-ans"     element={<ProtectedRoute adminOnly={true}><AdminQuestion /></ProtectedRoute>} />
                 <Route path="/admin/question-answer"  element={<ProtectedRoute adminOnly={true}><QuestionAndAns /></ProtectedRoute>} />
-                <Route path="/admin/admincalendar"    element={<ProtectedRoute adminOnly={true}><AdminCalendar /></ProtectedRoute>} />
+
                 <Route path="/admin/adminsubscribecourselist" element={<ProtectedRoute adminOnly={true}><AdminSubscribeCourseList /></ProtectedRoute>} />
                 <Route path="/admin/admininquiry"     element={<ProtectedRoute adminOnly={true}><AdminInquiries /></ProtectedRoute>} />
                 <Route path="/admin/payment"          element={<ProtectedRoute adminOnly={true}><AdminPaymentList /></ProtectedRoute>} />

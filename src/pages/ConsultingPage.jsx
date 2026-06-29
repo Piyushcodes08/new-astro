@@ -5,6 +5,9 @@ import { LuArrowRight, LuCalendar, LuStar, LuClock, LuUserPlus, LuRocket } from 
 import Header from '../components/sections/Header/Header';
 import Footer from '../components/sections/Footer/Footer';
 import { db } from '../firebaseConfig';
+import { createLogger } from '../utils/logger';
+
+const logger = createLogger('ConsultingPage');
 import { collection, getDocs, limit, query } from 'firebase/firestore';
 import { consultingData } from '../data/pages/consulting';
 
@@ -21,7 +24,7 @@ const ConsultingPage = () => {
                 const data = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
                 setTestimonials(data);
             } catch (err) {
-                console.error('Testimonials fetch error:', err);
+                logger.error('Testimonials fetch error:', err);
             }
         };
         fetchTestimonials();

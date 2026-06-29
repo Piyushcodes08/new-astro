@@ -2,10 +2,13 @@ import React, { useState, useRef } from "react";
 import { IoLocationOutline, IoCallOutline, IoTimeOutline } from "react-icons/io5";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
+import { createLogger } from "../../../utils/logger";
 import ReCAPTCHA from "react-google-recaptcha";
 import { homeData } from "../../../data/pages/home";
 import { footerData } from "../../../data/layout/footer";
 import "./Contact.css";
+
+const logger = createLogger('Contact');
 
 const { contact: contactContent } = homeData;
 const { contact: contactInfo } = footerData;
@@ -16,13 +19,15 @@ const Contact = () => {
   const [captchaToken, setCaptchaToken] = useState(null);
   const recaptchaRef = useRef(null);
 
-  const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"; // Fallback to testing key if not set
+  // eslint-disable-next-line no-unused-vars
+  const _recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"; // Fallback to testing key if not set
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const onCaptchaChange = (token) => {
+  // eslint-disable-next-line no-unused-vars
+  const _onCaptchaChange = (token) => {
     setCaptchaToken(token);
   };
 
@@ -46,7 +51,7 @@ const Contact = () => {
       setCaptchaToken(null);
       if (recaptchaRef.current) recaptchaRef.current.reset();
     } catch (err) {
-      console.error("Contact form error:", err);
+      logger.error("Contact form error:", err);
       setStatus("error");
     }
   };

@@ -93,7 +93,7 @@ const Testimonials = () => {
           setTestimonialsData(reviews);
         }
         // If empty, fallback data remains (already set in useState)
-      } catch (err) {
+      } catch {
         // Collection may not exist yet — try Comments_Vahaly_Astro as backup
         try {
           const commentsRef = collection(db, "Comments_Vahaly_Astro");
@@ -116,7 +116,7 @@ const Testimonials = () => {
               setTestimonialsData(reviews);
             }
           }
-        } catch (err2) {
+        } catch {
           console.log("Using fallback testimonials.");
         }
       } finally {
@@ -141,8 +141,11 @@ const Testimonials = () => {
 
   // Reset index when data or visible item count changes
   useEffect(() => {
-    setCurrentIndex(visibleItems);
-  }, [totalRealItems, visibleItems]);
+    if (currentIndex !== visibleItems) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setCurrentIndex(visibleItems);
+    }
+  }, [totalRealItems, visibleItems, currentIndex]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -194,14 +197,14 @@ const Testimonials = () => {
     }
   }, [currentIndex, isTransitioning, totalRealItems, visibleItems]);
 
-  const startAutoPlay = useCallback(() => {
-    stopAutoPlay();
-    autoPlayRef.current = setInterval(nextSlide, 3500);
-  }, [nextSlide]);
-
   const stopAutoPlay = useCallback(() => {
     if (autoPlayRef.current) clearInterval(autoPlayRef.current);
   }, []);
+
+  const startAutoPlay = useCallback(() => {
+    stopAutoPlay();
+    autoPlayRef.current = setInterval(nextSlide, 3500);
+  }, [nextSlide, stopAutoPlay]);
 
   useEffect(() => {
     startAutoPlay();

@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
+import { createLogger } from '../utils/logger';
+
+const logger = createLogger('useProducts');
 
 export const useProducts = () => {
     const [products, setProducts] = useState([]);
@@ -19,7 +22,7 @@ export const useProducts = () => {
             setProducts(fetchedProducts);
             setError(null);
         } catch (err) {
-            console.error("Error fetching products:", err);
+            logger.error("Error fetching products:", err);
             setError(err.message);
         } finally {
             setLoading(false);

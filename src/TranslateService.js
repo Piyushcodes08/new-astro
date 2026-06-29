@@ -1,4 +1,7 @@
 import axios from "axios";
+import { createLogger } from "./utils/logger";
+
+const logger = createLogger('TranslateService');
 
 const API_URL = "https://libretranslate.com/translate"; // Public LibreTranslate API
 
@@ -19,7 +22,7 @@ const translateText = async (text, targetLang) => {
 
         return response.data.translatedText;
     } catch (error) {
-        console.error("Translation Error:", error);
+        logger.error("Translation Error:", error);
         return text; // Return original text if translation fails
     }
 };

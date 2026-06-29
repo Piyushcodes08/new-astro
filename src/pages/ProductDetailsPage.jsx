@@ -3,8 +3,11 @@ import { useParams, Link } from 'react-router-dom';
 import { doc, getDoc, collection, getDocs, addDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import { getAuth } from 'firebase/auth';
+import { createLogger } from '../utils/logger';
 import Header from '../components/sections/Header/Header';
 import Footer from '../components/sections/Footer/Footer';
+
+const logger = createLogger('ProductDetailsPage');
 import { LuMinus, LuPlus, LuShoppingCart, LuPackage, LuShield, LuTruck } from 'react-icons/lu';
 import { RiWhatsappFill } from 'react-icons/ri';
 import { fallbackProducts } from '../components/sections/products/Products';
@@ -92,7 +95,7 @@ const ProductDetailsPage = () => {
 
         setRelatedProducts(filtered);
       } catch (err) {
-        console.error('Error fetching product details:', err);
+        logger.error('Error fetching product details:', err);
       } finally {
         setLoading(false);
       }
@@ -118,21 +121,43 @@ const ProductDetailsPage = () => {
         return;
       }
 
-      // Step 1: Check Razorpay SDK is loaded
+      // Step 1: Ensure Razorpay SDK is loaded (dynamically load if missing)
+      const loadScript = (src) =>
+        new Promise((resolve, reject) => {
+          const existing = document.querySelector(`script[src="${src}"]`);
+          if (existing) {
+            existing.addEventListener('load', () => resolve(true));
+            existing.addEventListener('error', () => reject(false));
+            if (existing.readyState === 'complete') resolve(true);
+            return;
+          }
+          const script = document.createElement('script');
+          script.src = src;
+          script.async = true;
+          script.onload = () => resolve(true);
+          script.onerror = () => reject(false);
+          document.body.appendChild(script);
+        });
+
       if (!window.Razorpay) {
-        alert('Payment gateway is loading. Please refresh and try again.');
-        setPaymentLoading(false);
-        return;
+        try {
+          await loadScript('https://checkout.razorpay.com/v1/checkout.js');
+        } catch (e) {
+          logger.warn('Failed to load Razorpay SDK:', e);
+          alert('Payment gateway failed to load. Please try again later or use WhatsApp to order.');
+          setPaymentLoading(false);
+          return;
+        }
       }
 
       const totalAmount = priceNum * quantity;
-      const amountInPaise = totalAmount * 100;
+      const amountInPaise = Math.round(totalAmount * 100);
 
-      // Step 2: Create Razorpay order on backend
+      // Step 2: Create Razorpay order on backend (send paise)
       const orderResponse = await fetch('https://backend-7e8f.onrender.com/api/payment/razorpay/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: totalAmount }),
+        body: JSON.stringify({ amount: amountInPaise }),
       });
 
       if (!orderResponse.ok) throw new Error('Failed to create Razorpay order.');
@@ -141,7 +166,7 @@ const ProductDetailsPage = () => {
 
       // Step 3: Configure Razorpay options
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY,
+        key: import.meta.env.VITE_RAZORPAY_KEY || '',
         amount: amountInPaise,
         currency: 'INR',
         name: 'Vahlaya Astro',
@@ -161,7 +186,7 @@ const ProductDetailsPage = () => {
                 productId: product.id,
                 productTitle: product.title,
                 quantity,
-                amount: totalAmount,
+                amount: amountInPaise,
               }),
             });
 
@@ -182,14 +207,14 @@ const ProductDetailsPage = () => {
                 timestamp: new Date(),
               });
             } catch (firebaseErr) {
-              console.warn('Firestore log failed (non-critical):', firebaseErr);
+              logger.warn('Firestore log failed (non-critical):', firebaseErr);
             }
 
             alert(
               `✅ Payment Successful!\n\nOrder placed for:\n${product.title} × ${quantity}\nAmount: ₹${totalAmount.toLocaleString('en-IN')}\n\nYou will be contacted within 24 hours for delivery details.`
             );
           } catch (err) {
-            console.error('Payment handler error:', err);
+            logger.error('Payment handler error:', err);
             alert('Payment received! We will contact you shortly to confirm your order.');
           } finally {
             setPaymentLoading(false);
@@ -215,14 +240,14 @@ const ProductDetailsPage = () => {
       const rzp = new window.Razorpay(options);
 
       rzp.on('payment.failed', (response) => {
-        console.error('Payment failed:', response.error);
+        logger.error('Payment failed:', response.error);
         alert('Payment failed. Please try again or use WhatsApp to place your order.');
         setPaymentLoading(false);
       });
 
       rzp.open();
     } catch (err) {
-      console.error('Razorpay error:', err);
+      logger.error('Razorpay error:', err);
       alert('Unable to initiate payment. Please try WhatsApp ordering below.');
       setPaymentLoading(false);
     }

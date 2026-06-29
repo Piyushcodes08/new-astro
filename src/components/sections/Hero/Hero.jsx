@@ -7,7 +7,7 @@ const Hero = () => {
     const navigate = useNavigate();
 
     const { hero } = homeData;
-    const { title, intro, description, buttonText } = hero;
+    const { title, description, buttonText } = hero;
 
     return (
         <section className="relative min-h-screen min-h-svh w-full overflow-hidden bg-transparent text-white flex items-center justify-center text-center px-4 ">

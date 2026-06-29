@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
+import { createLogger } from "../../../utils/logger";
 import Button from '../../ui/Button/Button';
 import ReCAPTCHA from "react-google-recaptcha";
 import './AppointmentModal.css';
+
+const logger = createLogger('AppointmentModal');
 
 const AppointmentModal = ({ isOpen, onClose }) => {
     const [view, setView] = useState('BOOKING'); // BOOKING
     const [isLoading, setIsLoading] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
-    const [availableData, setAvailableData] = useState([]);
     const [captchaToken, setCaptchaToken] = useState(null);
     const recaptchaRef = useRef(null);
 
@@ -39,7 +41,6 @@ const AppointmentModal = ({ isOpen, onClose }) => {
             setView('BOOKING');
             setIsMounted(true);
             document.body.style.overflow = 'hidden';
-            fetchAvailableData();
         } else {
             const timer = setTimeout(() => setIsMounted(false), 300);
             document.body.style.overflow = 'unset';
@@ -47,24 +48,7 @@ const AppointmentModal = ({ isOpen, onClose }) => {
         }
     }, [isOpen]);
 
-    const fetchAvailableData = async () => {
-        try {
-            const calendarSnapshot = await getDocs(collection(db, "Calendar"));
-            const groupedData = calendarSnapshot.docs.reduce((acc, doc) => {
-                const data = doc.data();
-                acc[data.date] = acc[data.date] || [];
-                acc[data.date].push(data.timeSlot);
-                return acc;
-            }, {});
-            const availableDataList = Object.entries(groupedData).map(([date, timeSlots]) => ({
-                date,
-                timeSlot: timeSlots,
-            }));
-            setAvailableData(availableDataList);
-        } catch (error) {
-            console.error("Error fetching calendar data:", error);
-        }
-    };
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -72,7 +56,9 @@ const AppointmentModal = ({ isOpen, onClose }) => {
     };
 
     const handleKeyDown = useCallback((e) => {
-        if (e.key === 'Escape') onClose();
+        if (e.key === 'Escape') {
+            if (typeof onClose === 'function') onClose();
+        }
     }, [onClose]);
 
     useEffect(() => {
@@ -114,15 +100,35 @@ const AppointmentModal = ({ isOpen, onClose }) => {
             });
 
             if (response.ok) {
+                try {
+                    const appointmentRef = collection(db, "appointments");
+                    await addDoc(appointmentRef, {
+                        firstName: formData.firstName,
+                        lastName: formData.lastName,
+                        gender: formData.gender,
+                        dob: `${formData.day}-${formData.month}-${formData.year}`,
+                        birthTime: `${formData.hour}:${formData.minute} ${formData.period}`,
+                        birthPlace: formData.birthPlace,
+                        phone: formData.phone,
+                        email: formData.email,
+                        details: formData.details,
+                        createdAt: new Date()
+                    });
+                } catch (dbErr) {
+                    logger.error("Failed to save appointment to Firestore:", dbErr);
+                }
+
                 alert("Appointment scheduled successfully! Our astrologer will contact you soon.");
                 setCaptchaToken(null);
-                if (recaptchaRef.current) recaptchaRef.current.reset();
-                onClose();
+                if (recaptchaRef.current && typeof recaptchaRef.current.reset === 'function') {
+                    try { recaptchaRef.current.reset(); } catch (e) { /* ignore */ }
+                }
+                if (typeof onClose === 'function') onClose();
             } else {
                 throw new Error("Failed to submit the form.");
             }
         } catch (error) {
-            console.error("Error submitting appointment:", error);
+            logger.error("Error submitting appointment:", error);
             alert("Failed to book appointment. Please try again later.");
         } finally {
             setIsLoading(false);
@@ -260,29 +266,6 @@ const AppointmentModal = ({ isOpen, onClose }) => {
                                     </div>
                                 </div>
 
-                                <div className="available-date-box mt-20">
-                                    <label>Available Date</label>
-                                    <select name="availableDate" value={formData.availableDate} onChange={handleInputChange} required>
-                                        <option value="" disabled>Select a date</option>
-                                        {availableData.map((item) => (
-                                            <option key={item.date} value={item.date}>{item.date}</option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                {formData.availableDate && (
-                                    <div className="available-date-box mt-20">
-                                        <label>Available Slots</label>
-                                        <select name="slot" value={formData.slot} onChange={handleInputChange} required>
-                                            <option value="" disabled>Select a time slot</option>
-                                            {availableData
-                                                .find((item) => item.date === formData.availableDate)
-                                                ?.timeSlot.map((slot) => (
-                                                    <option key={slot} value={slot}>{slot}</option>
-                                                ))}
-                                        </select>
-                                    </div>
-                                )}
 
                                 <div className="input-group mt-15">
                                     <label>Email</label>

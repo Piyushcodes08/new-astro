@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
-  motion,
   useTransform,
   useScroll,
   useMotionValueEvent,
+  motion, 
 } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useCourses } from "../../../context/CoursesContext";
@@ -236,6 +236,7 @@ const HorizontalScrollCarousel = ({ items }) => {
 
   // Stable listener wrapper ref
   const dragHandlersRef = useRef({});
+  // eslint-disable-next-line react-hooks/refs
   dragHandlersRef.current = {
     handleMouseMove,
     handleMouseUp,
