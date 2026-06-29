@@ -25,11 +25,13 @@ const getDiscount = (price, oldPrice) => {
 };
 
 const CATEGORIES = [
-  { name: 'All', value: 'all' },
-  { name: 'Puja Samagri', value: 'bracelets' },
-  { name: 'Astro Jwellery', value: 'rings' },
-  { name: 'Photo & Statue', value: 'malas' },
-  { name: 'Others', value: 'others' },
+  { name: 'All Sacred Products', value: 'all' },
+  { name: 'Puja Samagri', value: 'puja-samagri' },
+  { name: 'Astro Jewellery', value: 'astro-jewellery' },
+  { name: 'Divine Photos & Statues', value: 'photos-statues' },
+  { name: 'Attar, Oils & Perfumes', value: 'attar-oils-perfumes' },
+  { name: 'Malas & Spiritual Accessories', value: 'malas-accessories' },
+  { name: 'Other Remedies', value: 'other-remedies' },
 ];
 
 const SORT_OPTIONS = [
@@ -172,19 +174,18 @@ const ProductsPage = () => {
         </section>
 
         {/* ── Filters + Search bar ── */}
-        <section className="sticky top-[64px] z-30 bg-black/70 backdrop-blur-xl border-b border-white/10 py-3">
-          <div className="premium-container flex flex-col sm:flex-row items-center gap-3">
-
-            {/* Category tabs */}
-            <div className="flex flex-wrap items-center gap-2 flex-1">
+        <section className="sticky  top-[64px] z-30 bg-black/70 backdrop-blur-xl border-b border-white/10 py-3">
+          <div className="premium-container flex items-center gap-6">
+            {/* Category tabs — scrollable, takes remaining space */}
+            <div className="flex flex-wrap items-start gap-2 overflow-x-auto no-scrollbar flex-1 min-w-0">
               {CATEGORIES.map((tab) => (
                 <button
                   key={tab.value}
                   onClick={() => setSearchParams({ category: tab.value })}
-                  className={`px-4 py-2 rounded text-[10px] font-black uppercase tracking-wider transition-all duration-250 cursor-pointer ${
+                  className={`shrink-0 px-4 py-2 rounded text-[10px] font-black uppercase tracking-wider whitespace-nowrap transition-all duration-250 cursor-pointer  ${
                     categoryQuery === tab.value
                       ? 'bg-[#bf0603] text-white shadow-[0_0_14px_rgba(191,6,3,0.5)]'
-                      : 'bg-white/5 border border-white/10 text-white/50 hover:text-white hover:bg-white/10'
+                      : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
                   }`}
                 >
                   {tab.name}
@@ -192,25 +193,25 @@ const ProductsPage = () => {
               ))}
             </div>
 
-            {/* Search */}
-            <div className="relative w-full sm:w-56">
+            {/* Search — fixed right, never scrolls */}
+            <div className="relative shrink-0 w-40 hidden sm:block">
               <input
                 type="text"
-                placeholder="Search products..."
+                placeholder="Search..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded px-4 py-2 pr-9 text-xs text-white placeholder-white/30 focus:outline-none focus:border-[#bf0603] transition-colors"
+                className="w-full bg-white/5 border border-white/10 rounded px-3 py-2 pr-8 text-xs text-white placeholder-white/30 focus:outline-none focus:border-[#bf0603] transition-colors"
               />
-              <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3 h-3 text-white/30 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-5-5m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
 
-            {/* Sort */}
+            {/* Sort — fixed right, never scrolls */}
             <select
               value={sort}
               onChange={e => setSort(e.target.value)}
-              className="bg-white/5 border border-white/10 rounded px-4 py-2 text-[10px] font-bold uppercase tracking-wider text-white/60 focus:outline-none focus:border-[#bf0603] cursor-pointer transition-colors appearance-none"
+              className="shrink-0 bg-white/5 border border-white/10 rounded px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-white/60 focus:outline-none focus:border-[#bf0603] cursor-pointer transition-colors appearance-none hidden sm:block"
             >
               {SORT_OPTIONS.map(o => (
                 <option key={o.value} value={o.value} className="bg-black text-white">{o.label}</option>
@@ -310,7 +311,7 @@ const ProductsPage = () => {
           display: flex;
           flex-direction: column;
           background: #bf0603;
-          border-radius: 20px;
+          border-radius: 6px;
           overflow: hidden;
           text-decoration: none;
           color: white;
@@ -340,7 +341,7 @@ const ProductsPage = () => {
           background: linear-gradient(145deg, #fff 0%, #f5f5f5 100%);
           overflow: hidden;
           margin: 10px 10px 0 10px;
-          border-radius: 12px;
+          border-radius: 6px;
           border: 1px solid rgba(255,255,255,0.08);
           z-index: 1;
         }
@@ -392,7 +393,7 @@ const ProductsPage = () => {
           padding-bottom: 14px;
           opacity: 0;
           transition: opacity 0.3s ease;
-          border-radius: 12px;
+          border-radius: 6px;
         }
         .shop-card:hover .shop-card-overlay { opacity: 1; }
         .shop-card-view-btn {
@@ -527,6 +528,8 @@ const ProductsPage = () => {
           0%, 100% { opacity: 1; }
           50%       { opacity: 0.35; }
         }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
     </>
   );

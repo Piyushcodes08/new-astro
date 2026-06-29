@@ -19,6 +19,7 @@ const AddProduct = () => {
   const [price, setPrice] = useState("");
   const [oldPrice, setOldPrice] = useState("");
   const [theme, setTheme] = useState("gold");
+  const [category, setCategory] = useState("bracelets");
   // Multiple image files
   const [imageFiles, setImageFiles] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -115,6 +116,7 @@ const AddProduct = () => {
         price,
         oldPrice,
         theme,
+        category,
         image: finalImages[0],       // Primary image (backward compat)
         images: finalImages,          // Full images array for gallery
       };
@@ -156,6 +158,7 @@ const AddProduct = () => {
     setPrice(product.price);
     setOldPrice(product.oldPrice || "");
     setTheme(product.theme || "gold");
+    setCategory(product.category || "bracelets");
     setEditingProductId(product.id);
     // Load existing images (support both single image and array)
     const existingImgs = product.images && product.images.length > 0
@@ -174,6 +177,7 @@ const AddProduct = () => {
     setPrice("");
     setOldPrice("");
     setTheme("gold");
+    setCategory("bracelets");
     setImageFiles([]);
     setImagePreviews([]);
     setEditingExistingImages([]);
@@ -259,6 +263,21 @@ const AddProduct = () => {
                       <option value="green">Green</option>
                       <option value="orange">Orange</option>
                       <option value="pink">Pink</option>
+                    </select>
+                  </div>
+
+                  {/* Category */}
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Category *</label>
+                    <select
+                      className="w-full bg-gray-50 border border-gray-200 rounded-3xlxl px-6 py-4 text-gray-900 focus:ring-[#bf0603] outline-none appearance-none cursor-pointer"
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                    >
+                      <option value="bracelets">Bracelets</option>
+                      <option value="rings">Rings</option>
+                      <option value="malas">Malas</option>
+                      <option value="others">Others</option>
                     </select>
                   </div>
                 </div>
@@ -412,7 +431,7 @@ const AddProduct = () => {
                               {product.title}
                             </span>
                             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">
-                              Theme: {product.theme} • {product.price}
+                              Theme: {product.theme} • {product.price} • Category: {product.category || 'N/A'}
                               {imgCount > 1 && (
                                 <span className="ml-2 text-[#bf0603]">• {imgCount} images</span>
                               )}
