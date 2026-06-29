@@ -18,8 +18,8 @@ const AddProduct = () => {
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState("");
   const [oldPrice, setOldPrice] = useState("");
-  const [theme, setTheme] = useState("gold");
-  const [category, setCategory] = useState("bracelets");
+  const [category, setCategory] = useState("puja-samagri");
+  const [benefits, setBenefits] = useState(['']);
   // Multiple image files
   const [imageFiles, setImageFiles] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -115,10 +115,10 @@ const AddProduct = () => {
         desc,
         price,
         oldPrice,
-        theme,
         category,
-        image: finalImages[0],       // Primary image (backward compat)
-        images: finalImages,          // Full images array for gallery
+        benefits: benefits.filter(b => b.trim() !== ''),
+        image: finalImages[0],
+        images: finalImages,
       };
 
       if (!editingProductId) {
@@ -157,8 +157,8 @@ const AddProduct = () => {
     setDesc(product.desc);
     setPrice(product.price);
     setOldPrice(product.oldPrice || "");
-    setTheme(product.theme || "gold");
-    setCategory(product.category || "bracelets");
+    setCategory(product.category || "puja-samagri");
+    setBenefits(product.benefits && product.benefits.length > 0 ? product.benefits : ['']);
     setEditingProductId(product.id);
     // Load existing images (support both single image and array)
     const existingImgs = product.images && product.images.length > 0
@@ -176,8 +176,8 @@ const AddProduct = () => {
     setDesc("");
     setPrice("");
     setOldPrice("");
-    setTheme("gold");
-    setCategory("bracelets");
+    setCategory("puja-samagri");
+    setBenefits(['']);
     setImageFiles([]);
     setImagePreviews([]);
     setEditingExistingImages([]);
@@ -249,23 +249,6 @@ const AddProduct = () => {
                     />
                   </div>
 
-                  {/* Theme */}
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Card Theme</label>
-                    <select
-                      className="w-full bg-gray-50 border border-gray-200 rounded-3xlxl px-6 py-4 text-gray-900 focus:ring-brand-red focus:ring-[#bf0603] outline-none appearance-none cursor-pointer"
-                      value={theme}
-                      onChange={(e) => setTheme(e.target.value)}
-                    >
-                      <option value="gold">Gold</option>
-                      <option value="purple">Purple</option>
-                      <option value="cyan">Cyan</option>
-                      <option value="green">Green</option>
-                      <option value="orange">Orange</option>
-                      <option value="pink">Pink</option>
-                    </select>
-                  </div>
-
                   {/* Category */}
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Category *</label>
@@ -274,10 +257,12 @@ const AddProduct = () => {
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
                     >
-                      <option value="bracelets">Bracelets</option>
-                      <option value="rings">Rings</option>
-                      <option value="malas">Malas</option>
-                      <option value="others">Others</option>
+                      <option value="puja-samagri">Puja Samagri</option>
+                      <option value="astro-jewellery">Astro Jewellery</option>
+                      <option value="photos-statues">Divine Photos &amp; Statues</option>
+                      <option value="attar-oils-perfumes">Attar, Oils &amp; Perfumes</option>
+                      <option value="malas-accessories">Malas &amp; Spiritual Accessories</option>
+                      <option value="other-remedies">Other Remedies</option>
                     </select>
                   </div>
                 </div>
@@ -291,6 +276,51 @@ const AddProduct = () => {
                     onChange={(e) => setDesc(e.target.value)}
                     placeholder="Enter product description..."
                   ></textarea>
+                </div>
+
+                {/* Benefits */}
+                <div className="mt-8 space-y-3">
+                  <div className="flex items-center justify-between ml-1">
+                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                      Benefits <span className="text-gray-400 normal-case font-normal">(shown on product page)</span>
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setBenefits([...benefits, ''])}
+                      className="text-[10px] font-black uppercase tracking-widest text-[#bf0603] hover:text-[#bf0603]/70 transition-all border border-[#bf0603]/30 px-3 py-1 rounded-lg hover:bg-[#bf0603]/5"
+                    >
+                      + Add Point
+                    </button>
+                  </div>
+                  <div className="space-y-2">
+                    {benefits.map((benefit, idx) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        <span className="text-[#bf0603] font-black text-lg shrink-0">✦</span>
+                        <input
+                          type="text"
+                          value={benefit}
+                          onChange={(e) => {
+                            const updated = [...benefits];
+                            updated[idx] = e.target.value;
+                            setBenefits(updated);
+                          }}
+                          placeholder={`e.g. Natural, handpicked & energetically cleansed`}
+                          className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 text-sm focus:ring-[#bf0603] outline-none transition-all placeholder:text-gray-400"
+                        />
+                        {benefits.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => setBenefits(benefits.filter((_, i) => i !== idx))}
+                            className="shrink-0 w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500 transition-all"
+                            aria-label="Remove"
+                          >
+                            ✕
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[10px] text-gray-400 ml-1">Each line becomes a bullet point in the Benefits tab.</p>
                 </div>
 
                 {/* Multiple Images Upload */}
@@ -431,7 +461,7 @@ const AddProduct = () => {
                               {product.title}
                             </span>
                             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">
-                              Theme: {product.theme} • {product.price} • Category: {product.category || 'N/A'}
+                              {product.price} • Category: {product.category || 'N/A'}
                               {imgCount > 1 && (
                                 <span className="ml-2 text-[#bf0603]">• {imgCount} images</span>
                               )}

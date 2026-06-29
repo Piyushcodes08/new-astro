@@ -8,11 +8,14 @@ import { useProducts } from '../hooks/useProducts';
 
 const getProductCategory = (p) => {
   if (p.category) return p.category.toLowerCase();
+  // legacy fallback for products without category field
   const title = (p.title || '').toLowerCase();
-  if (title.includes('bracelet')) return 'bracelets';
-  if (title.includes('ring')) return 'rings';
-  if (title.includes('mala')) return 'malas';
-  return 'others';
+  if (title.includes('bracelet') || title.includes('ring') || title.includes('jewel')) return 'astro-jewellery';
+  if (title.includes('mala')) return 'malas-accessories';
+  if (title.includes('puja') || title.includes('samagri')) return 'puja-samagri';
+  if (title.includes('photo') || title.includes('statue') || title.includes('idol')) return 'photos-statues';
+  if (title.includes('attar') || title.includes('oil') || title.includes('perfume')) return 'attar-oils-perfumes';
+  return 'other-remedies';
 };
 
 const parsePrice = (str) => parseFloat(String(str || '').replace(/[^\d.]/g, '')) || 0;
