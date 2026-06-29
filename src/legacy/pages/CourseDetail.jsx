@@ -263,11 +263,7 @@ const CourseDetail = () => {
 
       {/* Premium Hero Section */}
       <section className="relative flex items-center pt-20 pb-8 overflow-hidden hero-section">
-        {/* Background Glows */}
-        <div className="bg-glow-container">
-          <div className="absolute top-[20%] right-[10%] w-[600px] h-[600px] bg-glow-red opacity-40"></div>
-          <div className="absolute bottom-[10%] left-[5%] w-[400px] h-[400px] bg-glow-gold opacity-10"></div>
-        </div>
+     
 
         <div className="relative z-10 section-container pt-0! pb-0!">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-12 lg:gap-20">
@@ -314,8 +310,8 @@ const CourseDetail = () => {
 
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-8">
                 <Link to={enrollUrl} className="group/btn relative">
-                  <div className="absolute -inset-1 bg-linear-to-r from-brand-red to-orange-500 rounded-full blur opacity-40 group-hover/btn:opacity-100 transition duration-1000 group-hover/btn:duration-200"></div>
-                  <button className="relative px-8 py-3.5 bg-white text-black rounded-full font-black uppercase tracking-[0.2em] text-[11px] hover:bg-black hover:text-white transition-all duration-500">
+                  <div className="absolute -inset-1 bg-linear-to-r from-brand-red to-orange-500 rounded blur opacity-40 group-hover/btn:opacity-100 transition duration-1000 group-hover/btn:duration-200"></div>
+                  <button className="relative px-8 py-3.5 bg-white text-black rounded font-black uppercase tracking-[0.2em] text-[11px] hover:bg-black hover:text-white transition-all duration-500">
                     {isEnrolled ? 'Open Course' : 'Join the Journey'}
                   </button>
                 </Link>
@@ -338,7 +334,7 @@ const CourseDetail = () => {
               transition={{ duration: 1 }}
               className="relative lg:w-[35%] w-full max-w-[420px] flex flex-col gap-8"
             >
-              <div className="relative rounded-xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(191, 6, 3,0.2)] group transition-all duration-700 hover:shadow-[0_0_80px_rgba(191, 6, 3,0.4)] hover:border-white/20">
+              <div className="relative rounded overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(191, 6, 3,0.2)] group transition-all duration-700 hover:shadow-[0_0_80px_rgba(191, 6, 3,0.4)] hover:border-white/20">
                 <img
                   src={courseData.imageUrl || "/src/assets/images/common/team/hansal sir.webp"}
                   alt={courseData.title}
@@ -349,7 +345,7 @@ const CourseDetail = () => {
 
               <div className="w-full group">
                 <Link to={enrollUrl}>
-                  <button className="w-full py-3.5 rounded-lg bg-brand-red text-white font-black uppercase tracking-[0.3em] text-[11px] shadow-2xl hover:bg-white hover:text-brand-red transition-all duration-500 transform hover:-translate-y-1 relative overflow-hidden">
+                  <button className="w-full py-3.5 rounded bg-brand-red text-white font-black uppercase tracking-[0.3em] text-[11px] shadow-2xl hover:bg-white hover:text-brand-red transition-all duration-500 transform hover:-translate-y-1 relative overflow-hidden">
                     <span className="relative z-10">{enrollText}</span>
                     <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                   </button>
@@ -363,7 +359,7 @@ const CourseDetail = () => {
       {/* Stats Grid */}
       <section className="relative z-20 -mt-16">
         <div className="premium-container">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-xl p-8 shadow-2xl relative overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-black/40 backdrop-blur-2xl border border-white/10 rounded p-8 shadow-2xl relative overflow-hidden">
             <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent pointer-events-none"></div>
             {[
               { icon: <FaClock />, label: "Duration", val: courseData.duration || "24 Sessions" },
@@ -371,8 +367,8 @@ const CourseDetail = () => {
               { icon: <FaBookOpen />, label: "Format", val: "Online Portal" },
               { icon: <FaCertificate />, label: "Certification", val: "Verified ID" }
             ].map((stat, i) => (
-              <div key={i} className="flex items-center gap-4 p-4 rounded-lg hover:bg-white/3 transition-colors group relative z-10">
-                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-brand-red text-xl group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(191, 6, 3,0.2)]">
+              <div key={i} className="flex items-center gap-4 p-4 rounded hover:bg-white/3 transition-colors group relative z-10">
+                <div className="w-12 h-12 rounded bg-white/5 flex items-center justify-center text-brand-red text-xl group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(191, 6, 3,0.2)]">
                   {stat.icon}
                 </div>
                 <div>
@@ -407,7 +403,7 @@ const CourseDetail = () => {
             {/* ── Course Overview ── */}
             <div className="space-y-5">
               <div className="flex items-center gap-3">
-                <div className="w-1 h-8 bg-brand-red rounded-full"></div>
+                <div className="w-1 h-8 bg-brand-red rounded"></div>
                 <h2 className="title-batangas text-3xl md:text-4xl leading-tight">About This <span className="text-brand-red">Course</span></h2>
               </div>
               <p className="text-white/70 leading-relaxed text-base md:text-lg border-l-2 border-brand-red/20 pl-5">
@@ -418,7 +414,7 @@ const CourseDetail = () => {
             {/* ── What You Will Learn ── */}
             <div className="space-y-6">
               <div className="flex items-center gap-3">
-                <div className="w-1 h-8 bg-brand-red rounded-full"></div>
+                <div className="w-1 h-8 bg-brand-red rounded"></div>
                 <h2 className="title-batangas text-3xl md:text-4xl leading-tight">What You Will <span className="text-brand-red">Learn</span></h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -429,7 +425,7 @@ const CourseDetail = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.3, delay: idx * 0.05 }}
-                    className="flex items-start gap-3 p-4 rounded-lg bg-white/3 border border-white/5 hover:border-brand-red/20 hover:bg-white/[0.05] transition-all group"
+                    className="flex items-start gap-3 p-4 rounded bg-white/3 border border-white/5 hover:border-brand-red/20 hover:bg-white/[0.05] transition-all group"
                   >
                     <FaCheckCircle className="text-brand-red mt-0.5 shrink-0 text-sm" />
                     <p className="text-white/75 text-sm leading-relaxed font-medium">{item}</p>
@@ -442,7 +438,7 @@ const CourseDetail = () => {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-1 h-8 bg-brand-red rounded-full"></div>
+                  <div className="w-1 h-8 bg-brand-red rounded"></div>
                   <h2 className="title-batangas text-3xl md:text-4xl leading-tight">Sacred <span className="text-brand-red">Syllabus</span></h2>
                 </div>
                 <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] hidden md:block">{courseStatic.curriculum.length} Modules</span>
@@ -451,7 +447,7 @@ const CourseDetail = () => {
                 {courseStatic.curriculum.map((mod, idx) => (
                   <div
                     key={idx}
-                    className={`rounded-xl border transition-all duration-300 overflow-hidden ${syllabusOpen === idx
+                    className={`rounded border transition-all duration-300 overflow-hidden ${syllabusOpen === idx
                       ? 'bg-white/6 border-brand-red/30'
                       : 'bg-white/3 border-white/8 hover:border-white/15'
                       }`}
@@ -460,7 +456,7 @@ const CourseDetail = () => {
                       onClick={() => setSyllabusOpen(syllabusOpen === idx ? null : idx)}
                       className="w-full flex items-center gap-4 p-5 text-left"
                     >
-                      <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 transition-all ${syllabusOpen === idx ? 'bg-brand-red text-white' : 'bg-white/5 text-brand-red'
+                      <div className={`w-9 h-9 rounded flex items-center justify-center shrink-0 transition-all ${syllabusOpen === idx ? 'bg-brand-red text-white' : 'bg-white/5 text-brand-red'
                         }`}>
                         {syllabusOpen === idx ? <FaUnlock className="text-xs" /> : <FaLock className="text-xs" />}
                       </div>
@@ -495,7 +491,7 @@ const CourseDetail = () => {
 
           <aside className="lg:w-[360px] xl:w-[400px] shrink-0">
             <div className="sticky top-32 space-y-8">
-              <div className="p-10 rounded-xl bg-black/40 border border-white/10 backdrop-blur-2xl relative overflow-hidden shadow-2xl group">
+              <div className="p-10 rounded bg-black/40 border border-white/10 backdrop-blur-2xl relative overflow-hidden shadow-2xl group">
                 <div className="absolute inset-0 bg-linear-to-br from-brand-red/5 to-transparent pointer-events-none"></div>
                 <h3 className="title-batangas text-2xl mb-8">What's Included</h3>
                 <ul className="space-y-6">
@@ -507,19 +503,19 @@ const CourseDetail = () => {
                     "Expert Q&A Support"
                   ].map((f, i) => (
                     <li key={i} className="flex items-center gap-4 text-xs font-bold text-white/70 uppercase tracking-widest">
-                      <div className="w-1.5 h-1.5 rounded-full bg-brand-red"></div>
+                      <div className="w-1.5 h-1.5 rounded bg-brand-red"></div>
                       {f}
                     </li>
                   ))}
                 </ul>
                 <Link to={enrollUrl}>
-                  <button className="w-full mt-12 py-5 rounded-lg bg-white text-black font-black uppercase tracking-[0.2em] text-xs hover:bg-brand-red hover:text-white transition-all duration-500">
+                  <button className="w-full mt-12 py-5 rounded bg-white text-black font-black uppercase tracking-[0.2em] text-xs hover:bg-brand-red hover:text-white transition-all duration-500">
                     Join the Batch
                   </button>
                 </Link>
               </div>
 
-              <div className="relative rounded-xl overflow-hidden border border-white/10 group h-[340px] shadow-2xl">
+              <div className="relative rounded overflow-hidden border border-white/10 group h-[340px] shadow-2xl">
                 <img src={hansalImg} alt="Acharya Hansal" loading="lazy" className="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-1000" />
                 <div className="absolute inset-0 bg-linear-to-t from-black via-black/30 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 right-6 z-10">
@@ -551,9 +547,9 @@ const CourseDetail = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.45, delay: i * 0.08 }}
-                className="p-4 rounded-lg bg-white/3 backdrop-blur-xl border border-white/10 flex flex-col justify-between group hover:bg-white/[0.07] transition-all duration-400 hover:-translate-y-1 relative overflow-hidden"
+                className="p-4 rounded bg-white/3 backdrop-blur-xl border border-white/10 flex flex-col justify-between group hover:bg-white/[0.07] transition-all duration-400 hover:-translate-y-1 relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 w-16 h-16 bg-linear-to-br from-brand-red/10 to-transparent rounded-full blur-lg -mr-4 -mt-4 group-hover:scale-150 transition-transform"></div>
+                <div className="absolute top-0 right-0 w-16 h-16 bg-linear-to-br from-brand-red/10 to-transparent rounded blur-lg -mr-4 -mt-4 group-hover:scale-150 transition-transform"></div>
                 <div className="relative z-10">
                   <div className="text-xl mb-3">{mod.i}</div>
                   <h4 className="font-bold text-sm leading-snug mb-1.5">{mod.t}</h4>
@@ -562,7 +558,7 @@ const CourseDetail = () => {
                 <div className="flex items-center gap-2 relative z-10">
                   <span className="text-[9px] font-black text-brand-red uppercase tracking-widest">Module 0{i + 1}</span>
                   <div className="h-px flex-1 bg-white/5"></div>
-                  <div className="w-5 h-5 rounded-full border border-white/10 flex items-center justify-center text-[9px] opacity-0 group-hover:opacity-100 transition-all">→</div>
+                  <div className="w-5 h-5 rounded border border-white/10 flex items-center justify-center text-[9px] opacity-0 group-hover:opacity-100 transition-all">→</div>
                 </div>
               </motion.div>
             ))}
@@ -572,7 +568,7 @@ const CourseDetail = () => {
 
       {/* Who this is for? */}
       <section className="py-8 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-red/5 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-red/5 rounded blur-[120px] pointer-events-none"></div>
         <div className="premium-container relative z-10">
           <div className="text-center mb-10">
             <h2 className="title-batangas text-3xl md:text-5xl mb-4">Is This <span className="text-brand-red">For You?</span></h2>
@@ -587,10 +583,10 @@ const CourseDetail = () => {
               <motion.div
                 key={i}
                 whileHover={{ y: -12 }}
-                className="p-8 rounded-xl bg-black/40 backdrop-blur-2xl border border-white/10 text-center hover:bg-white/5 hover:border-brand-red/30 transition-all duration-500 group shadow-2xl relative overflow-hidden"
+                className="p-8 rounded bg-black/40 backdrop-blur-2xl border border-white/10 text-center hover:bg-white/5 hover:border-brand-red/30 transition-all duration-500 group shadow-2xl relative overflow-hidden"
               >
                 <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-brand-red/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="w-16 h-16 rounded-lg bg-white/3 border border-white/5 flex items-center justify-center text-brand-red text-3xl mx-auto mb-6 group-hover:scale-110 group-hover:bg-brand-red/10 transition-all duration-500 shadow-inner">
+                <div className="w-16 h-16 rounded bg-white/3 border border-white/5 flex items-center justify-center text-brand-red text-3xl mx-auto mb-6 group-hover:scale-110 group-hover:bg-brand-red/10 transition-all duration-500 shadow-inner">
                   {item.i}
                 </div>
                 <h4 className="title-batangas text-2xl mb-4 group-hover:text-brand-red transition-colors">{item.t}</h4>
@@ -603,11 +599,11 @@ const CourseDetail = () => {
 
       {/* Certification Section */}
       <section className="py-8">
-        <div className="premium-container flex flex-col md:flex-row items-center gap-10 bg-black/40 backdrop-blur-2xl rounded-2xl border border-white/10 p-8 md:p-12 overflow-hidden relative shadow-2xl">
+        <div className="premium-container flex flex-col md:flex-row items-center gap-10 bg-black/40 backdrop-blur-2xl rounded border border-white/10 p-8 md:p-12 overflow-hidden relative shadow-2xl">
           <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent pointer-events-none"></div>
           <div className="absolute -top-20 -right-20 w-80 h-80 bg-brand-red/10 rounded-full blur-[100px]"></div>
           <div className="flex-1 space-y-4 relative z-10 text-center md:text-left">
-            <div className="inline-block px-3 py-1 rounded-full border border-brand-red/30 bg-brand-red/5">
+            <div className="inline-block px-3 py-1 rounded border border-brand-red/30 bg-brand-red/5">
               <span className="text-brand-red text-[9px] font-black uppercase tracking-widest">Official Credentials</span>
             </div>
             <h2 className="title-batangas text-3xl md:text-5xl text-white">Verified <br /><span className="text-brand-red">Certification</span></h2>
@@ -623,7 +619,7 @@ const CourseDetail = () => {
             </ul>
           </div>
           <div className="flex-1 relative z-10 w-full max-w-[450px]">
-            <div className="relative transform rotate-2 hover:rotate-0 transition-transform duration-700 rounded-xl overflow-hidden shadow-[0_0_60px_rgba(191, 6, 3,0.15)] border border-white/10 group">
+            <div className="relative transform rotate-2 hover:rotate-0 transition-transform duration-700 rounded overflow-hidden shadow-[0_0_60px_rgba(191, 6, 3,0.15)] border border-white/10 group">
               <img
                 src={certificateImg}
                 alt="Vahlay Astro Certificate of Completion"
@@ -638,7 +634,7 @@ const CourseDetail = () => {
 
       {/* FAQ Section */}
       <section className="py-8 bg-transparent relative overflow-hidden">
-        <div className="absolute top-1/2 left-0 w-64 h-64 bg-brand-red/5 rounded-full blur-[100px] pointer-events-none"></div>
+       
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <div className="text-center mb-10">
             <h2 className="title-batangas text-3xl md:text-5xl text-white">Essential <span className="text-brand-red">Inquiries</span></h2>
@@ -648,7 +644,7 @@ const CourseDetail = () => {
             {defaultFaqs.map((faq, i) => (
               <div
                 key={i}
-                className={`rounded-lg transition-all duration-500 border ${activeFaq === i
+                className={`rounded transition-all duration-500 border ${activeFaq === i
                   ? 'bg-white/8 border-brand-red/30 shadow-[0_20px_50px_rgba(0,0,0,0.3)]'
                   : 'bg-black/40 border-white/10 hover:border-white/20'
                   } backdrop-blur-2xl overflow-hidden`}
@@ -686,7 +682,7 @@ const CourseDetail = () => {
 
       {/* Testimonials */}
       <section className="py-[50px] bg-transparent relative overflow-hidden">
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-brand-red/5 rounded-full blur-[120px] pointer-events-none"></div>
+      
         <div className="premium-container relative z-10">
           <div className="text-center mb-20">
             <h2 className="title-batangas text-4xl md:text-7xl">Student <span className="text-brand-red">Insights</span></h2>
@@ -701,7 +697,7 @@ const CourseDetail = () => {
               <motion.div
                 key={i}
                 whileHover={{ y: -10 }}
-                className="p-10 rounded-xl bg-black/40 backdrop-blur-2xl border border-white/10 hover:border-brand-red/30 transition-all duration-500 group relative flex flex-col justify-between shadow-2xl"
+                className="p-10 rounded bg-black/40 backdrop-blur-2xl border border-white/10 hover:border-brand-red/30 transition-all duration-500 group relative flex flex-col justify-between shadow-2xl"
               >
                 <div className="absolute top-10 right-10 text-6xl text-brand-red/10 group-hover:text-brand-red/20 transition-colors pointer-events-none font-serif">“</div>
 
@@ -728,7 +724,7 @@ const CourseDetail = () => {
       {/* Community Section */}
       <section className="py-[50px]">
         <div className="premium-container">
-          <div className="bg-brand-red/50 rounded-xl p-10 md:p-16 text-center relative overflow-hidden shadow-[0_20px_60px_rgba(191, 6, 3,0.2)]">
+          <div className="bg-brand-red/50 rounded p-10 md:p-16 text-center relative overflow-hidden shadow-[0_20px_60px_rgba(191, 6, 3,0.2)]">
             <div className="absolute top-0 left-0 w-full h-full bg-linear-to-br from-white/5 to-transparent opacity-10 mix-blend-overlay"></div>
             <div className="relative z-10 space-y-10">
               <h2 className="title-batangas text-3xl md:text-5xl text-white">Join the <br /> Sacred Community</h2>
@@ -749,7 +745,7 @@ const CourseDetail = () => {
               </div>
               <div className="pt-12">
                 <Link to={enrollUrl}>
-                  <button className="px-16 py-6 rounded-full bg-white text-brand-red font-black uppercase tracking-[0.3em] text-xs hover:bg-black hover:text-white transition-all duration-500 shadow-2xl scale-110">
+                  <button className="px-16 py-6 rounded bg-white text-brand-red font-black uppercase tracking-[0.3em] text-xs hover:bg-black hover:text-white transition-all duration-500 shadow-2xl scale-110">
                     Enroll in Course
                   </button>
                 </Link>

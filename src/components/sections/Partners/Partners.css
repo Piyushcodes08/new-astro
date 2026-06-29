@@ -111,7 +111,7 @@ background: linear-gradient(
   max-width: 520px;
   margin: 0 auto;
   padding: 48px 32px;
-  border-radius: 34px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.14);
   border: 1px solid rgba(255, 255, 255, 0.26);
   backdrop-filter: blur(18px);
@@ -207,7 +207,7 @@ background: linear-gradient(
     width: 100%;
     max-width: 100%;
     padding: 30px 15px !important;
-    border-radius: 20px;
+    border-radius: 8px;
   }
 
   .partner-logo-ring {

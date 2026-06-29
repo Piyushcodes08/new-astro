@@ -62,9 +62,9 @@ const Enrollment = () => {
     let inputPhone = e.target.value;
     const phoneNumber = parsePhoneNumberFromString(inputPhone, selectedCountry);
     if (phoneNumber && phoneNumber.isValid()) {
-      setFormData({ ...formData, phone: phoneNumber.number });
+      setFormData({ ...formData, phone: phoneNumber.number, countryCode: selectedCountry });
     } else {
-      setFormData({ ...formData, phone: inputPhone }); // Allow partial entry
+      setFormData({ ...formData, phone: inputPhone, countryCode: selectedCountry });
     }
   };
 
@@ -446,7 +446,12 @@ const Enrollment = () => {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {successMessage && <InquiryHandler formData={formData} />}
+            {successMessage && (
+              <InquiryHandler
+                formData={formData}
+                courseTitle={courses.find(c => c.id === formData.course)?.title || formData.course}
+              />
+            )}
 
             <div className="flex flex-col">
               <label className="text-sm font-medium text-gray-300 mb-2 uppercase tracking-wider">Name</label>
@@ -475,7 +480,13 @@ const Enrollment = () => {
             <div className="flex flex-col">
               <label className="text-sm font-medium text-gray-300 mb-2 uppercase tracking-wider">Country Code</label>
               <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 mb-4">
-                <PhoneInput selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry} />
+                <PhoneInput
+                  selectedCountry={selectedCountry}
+                  setSelectedCountry={(val) => {
+                    setSelectedCountry(val);
+                    setFormData(prev => ({ ...prev, countryCode: val }));
+                  }}
+                />
               </div>
               <label className="text-sm font-medium text-gray-300 mb-2 uppercase tracking-wider">Phone Number</label>
               <input

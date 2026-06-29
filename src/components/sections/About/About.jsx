@@ -35,7 +35,7 @@ const About = () => {
 
               <div className="about-btn-wrapper">
                 <Link to="/about">
-                  <Button variant="secondary">{buttonText}</Button>
+                  <Button variant="primary" size="md">{buttonText}</Button>
                 </Link>
               </div>
             </div>

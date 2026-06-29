@@ -2,31 +2,43 @@ import { useEffect, useState } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 
-const InquiryHandler = ({ formData }) => {
-  const [submitted, setSubmitted] = useState(false); // ✅ Track submission status
+const InquiryHandler = ({ formData, courseTitle }) => {
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (formData.name && formData.email && formData.phone && formData.course && !submitted) {
       handleSubmitInquiry();
-      setSubmitted(true); // ✅ Set flag to prevent duplicate submission
+      setSubmitted(true);
     }
-  }, [formData, submitted]); // ✅ Depend only on formData
+  }, [formData, submitted]);
 
   const handleSubmitInquiry = async () => {
+    // Build full phone with country code
+    const fullPhone = formData.countryCode
+      ? `${formData.countryCode} ${formData.phone}`
+      : formData.phone;
+
+    // Message shows which course the user is interested in
+    const resolvedCourseTitle = courseTitle || formData.course;
+    const message = `Interested in course: ${resolvedCourseTitle}`;
+
     try {
-      // ✅ Add inquiry to Firestore (Only once)
+      // Save all details to Firestore
       const inquiryRef = collection(db, "Astroinquiries");
       await addDoc(inquiryRef, {
         name: formData.name,
         email: formData.email,
-        phone: `${formData.countryCode} ${formData.phone}`,
-        course: formData.course,
+        phone: fullPhone,
+        courseId: formData.course,
+        courseName: resolvedCourseTitle,
+        message: message,
+        createdAt: serverTimestamp(),
         timestamp: serverTimestamp(),
       });
 
       console.log("✅ Inquiry successfully stored in Firestore!");
 
-      // ✅ Send inquiry email using Web3Forms (Only once)
+      // Send email notification via Web3Forms
       const web3FormsURL = "https://api.web3forms.com/submit";
       const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 
@@ -43,8 +55,8 @@ const InquiryHandler = ({ formData }) => {
 
             👤 Name: ${formData.name}
             📧 Email: ${formData.email}
-            📞 Phone: ${formData.countryCode} ${formData.phone}
-            📌 Course ID: ${formData.course}
+            📞 Phone: ${fullPhone}
+            📌 Course: ${resolvedCourseTitle} (ID: ${formData.course})
 
             Please review this inquiry and take necessary action.
 
@@ -64,7 +76,7 @@ const InquiryHandler = ({ formData }) => {
     }
   };
 
-  return null; // This component runs in the background
+  return null;
 };
 
 export default InquiryHandler;

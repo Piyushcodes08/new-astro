@@ -1,6 +1,93 @@
-/* Base styles for the reusable Button component */
+/* ============================================================
+   Common Button — Vahlay Astro Design System
+   All variants: red bg, white text — consistent across site
+   ============================================================ */
 
-.button-common {
-    display: inline-block;
-    text-align: center;
+.btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 4px;
+  border: 2px solid #bf0603;
+  background-color: #bf0603;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 8px 22px rgba(191, 6, 3, 0.28);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.25s ease,
+    opacity 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-base:hover:not(.btn-disabled) {
+  background-color: #ffffff;
+  color: #bf0603;
+  border-color: #bf0603;
+  box-shadow: 0 14px 32px rgba(191, 6, 3, 0.45);
+  transform: translateY(-2px);
+}
+
+.btn-base:active:not(.btn-disabled) {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px rgba(191, 6, 3, 0.3);
+}
+
+.btn-base:focus-visible {
+  outline: 3px solid rgba(191, 6, 3, 0.5);
+  outline-offset: 3px;
+}
+
+/* ── Sizes ── */
+.btn-sm {
+  font-size: 0.75rem;
+  padding: 0.45rem 1.1rem;
+}
+
+.btn-md {
+  font-size: 0.85rem;
+  padding: 0.75rem 2rem;
+}
+
+.btn-lg {
+  font-size: 0.95rem;
+  padding: 1rem 2.6rem;
+}
+
+/* ── Full width ── */
+.btn-full {
+  width: 100%;
+}
+
+/* ── Disabled ── */
+.btn-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Arrow icon ── */
+.btn-arrow {
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.btn-base:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* variant classes exist for API compatibility but all look the same */
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.btn-ghost {
+  /* inherits all styles from .btn-base */
 }

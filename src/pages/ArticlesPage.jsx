@@ -300,7 +300,7 @@ const ArticlesPage = () => {
                                         <p className="subtitle-poppins text-base text-white/95 mb-10 leading-relaxed font-medium">
                                             Get a personalized cosmic consultation today and align with your true purpose.
                                         </p>
-                                        <Link to="/consulting" className="inline-block w-full py-5 rounded-full bg-white text-brand-red font-bold uppercase tracking-[0.2em] text-sm hover:bg-black hover:text-white transition-all shadow-2xl hover:scale-105 active:scale-95 duration-500">
+                                        <Link to="/consulting" className="inline-block w-full py-5 rounded bg-white text-brand-red font-bold uppercase tracking-[0.2em] text-sm hover:bg-black hover:text-white transition-all shadow-2xl hover:scale-105 active:scale-95 duration-500">
                                             Book Now
                                         </Link>
                                     </div>
@@ -336,9 +336,9 @@ const ArticlesPage = () => {
                                     <input
                                         type="email"
                                         placeholder="Enter your email address"
-                                        className="flex-1 bg-white/5 border border-white/10 rounded-full px-8 py-4 text-white placeholder-white/30 focus:outline-none focus:border-brand-red/50 subtitle-poppins text-sm transition-all"
+                                        className="flex-1 bg-white/5 border border-white/10 rounded px-8 py-4 text-white placeholder-white/30 focus:outline-none focus:border-brand-red/50 subtitle-poppins text-sm transition-all"
                                     />
-                                    <button className="bg-white text-black px-6 py-4 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-brand-red hover:text-white transition-all duration-500 shadow-2xl">
+                                    <button className="bg-white text-black px-6 py-4 rounded font-black uppercase tracking-[0.2em] text-[10px] hover:bg-brand-red hover:text-white transition-all duration-500 shadow-2xl">
                                         Subscribe
                                     </button>
                                 </div>

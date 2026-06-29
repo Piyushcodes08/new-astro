@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import { Link } from 'react-router-dom';
 import SliderHeader from '../../ui/Slider/SliderHeader';
 import SliderControls from '../../ui/Slider/SliderControls';
+import Button from '../../ui/Button/Button';
 import { useProducts } from '../../../hooks/useProducts';
 import "./products.css";
 
@@ -254,13 +255,9 @@ const Products = () => {
         />
 
         <div className="flex justify-center mt-10">
-          <Link
-            to="/products"
-            className="inline-flex items-center gap-2 bg-linear-to-br from-[#ff3131] to-[#c30000] text-white px-4 py-4 rounded-full font-black uppercase tracking-[0.12em] transition-all duration-300 hover:shadow-[0_14px_30px_rgba(191, 6, 3,0.45)] hover:from-[#ff4f4f] hover:to-brand-red shadow-[0_10px_25px_rgba(191, 6, 3,0.25)] text-sm hover:-translate-y-1"
-          >
+          <Button to="/products" variant="primary" size="md" arrow>
             View All Products
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-          </Link>
+          </Button>
         </div>
       </div>
     </section>

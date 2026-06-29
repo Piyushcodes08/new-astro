@@ -221,13 +221,13 @@ const Header = () => {
                                 <>
                                     <Link
                                         to={isAdmin ? "/admin" : "/dashboard"}
-                                        className="px-4 py-1.5 rounded-full font-bold text-[13px] hover:text-brand-red uppercase tracking-[0.15em] transition-all duration-500 text-white whitespace-nowrap"
+                                        className="px-4 py-1.5 rounded font-bold text-[13px] hover:text-brand-red uppercase tracking-[0.15em] transition-all duration-500 text-white whitespace-nowrap"
                                     >
                                         {isAdmin ? "Admin" : "Dashboard"}
                                     </Link>
                                     <button
                                         onClick={handleLogout}
-                                        className="px-4 py-1.5 rounded-full font-bold text-[13px] uppercase tracking-[0.15em] transition-all duration-500 border border-white text-white hover:bg-white hover:text-black whitespace-nowrap"
+                                        className="px-4 py-1.5 rounded font-bold text-[13px] uppercase tracking-[0.15em] transition-all duration-500 border border-white text-white hover:bg-white hover:text-black whitespace-nowrap"
                                     >
                                         Logout
                                     </button>
@@ -235,14 +235,14 @@ const Header = () => {
                             ) : (
                                 <Link
                                     to="/login"
-                                    className="px-5 py-1.5 rounded-full font-bold text-[13px] uppercase tracking-[0.15em] transition-all duration-500 border border-white text-white hover:bg-white hover:text-black whitespace-nowrap"
+                                    className="px-5 py-1.5 rounded font-bold text-[13px] uppercase tracking-[0.15em] transition-all duration-500 border border-white text-white hover:bg-white hover:text-black whitespace-nowrap"
                                 >
                                     Login
                                 </Link>
                             )}
                             <Link
                                 to="/contact"
-                                className="px-4 xl:px-6 py-2 rounded-full font-bold text-[13px] uppercase tracking-[0.15em] transition-all duration-500 bg-brand-red text-white hover:bg-white hover:text-brand-red whitespace-nowrap shadow-[0_0_20px_rgba(191, 6, 3,0.3)]"
+                                className="px-4 xl:px-6 py-2 rounded font-bold text-[13px] uppercase tracking-[0.15em] transition-all duration-500 bg-brand-red text-white hover:bg-white hover:text-brand-red whitespace-nowrap shadow-[0_0_20px_rgba(191, 6, 3,0.3)]"
                             >
                                 Contact Us
                             </Link>
@@ -326,13 +326,13 @@ const Header = () => {
                                 <Link
                                     to={isAdmin ? "/admin" : "/dashboard"}
                                     onClick={() => setIsOpen(false)}
-                                    className="w-full text-center py-3.5 rounded-full font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black"
+                                    className="w-full text-center py-3.5 rounded font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black"
                                 >
                                     {isAdmin ? "Admin" : "Dashboard"}
                                 </Link>
                                 <button
                                     onClick={() => { setIsOpen(false); handleLogout(); }}
-                                    className="w-full text-center py-3.5 rounded-full font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black"
+                                    className="w-full text-center py-3.5 rounded font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black"
                                 >
                                     Logout
                                 </button>
@@ -341,7 +341,7 @@ const Header = () => {
                             <Link
                                   to="/login"
                                   onClick={() => setIsOpen(false)}
-                                  className="w-full text-center py-3.5 rounded-full font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black"
+                                  className="w-full text-center py-3.5 rounded font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black"
                               >
                                   Login
                             </Link>
@@ -349,7 +349,7 @@ const Header = () => {
                         <Link
                             to="/contact"
                             onClick={() => setIsOpen(false)}
-                            className="w-full text-center py-4 rounded-full font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 bg-brand-red text-white hover:bg-white hover:text-brand-red shadow-[0_10px_30px_rgba(191, 6, 3,0.3)]"
+                            className="w-full text-center py-4 rounded font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 bg-brand-red text-white hover:bg-white hover:text-brand-red shadow-[0_10px_30px_rgba(191, 6, 3,0.3)]"
                         >
                             Contact us
                         </Link>

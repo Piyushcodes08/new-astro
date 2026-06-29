@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import {
   collection,
   getDocs,
@@ -8,8 +8,6 @@ import {
   updateDoc,
   onSnapshot,
   query,
-  orderBy,
-  limit,
   where,
 } from "firebase/firestore";
 import { PieChart } from "react-minimal-pie-chart";
@@ -30,36 +28,17 @@ import Footer from "../../components/sections/Footer/Footer";
 
 const PersonalCourse = () => {
   const { courseName } = useParams();
-  const navigate = useNavigate();
 
   const [videos, setVideos] = useState([]);
-  const [studyMaterials, setStudyMaterials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [watchedVideos, setWatchedVideos] = useState([]);
   const [validityPercentage, setValidityPercentage] = useState("0");
-  const [totalVideos, setTotalVideos] = useState(0);
   const [userEmail, setUserEmail] = useState(null);
-  const [activeVideo, setActiveVideo] = useState(null);
-  const [meetingUrl, setMeetingUrl] = useState("");
   const [meetings, setMeetings] = useState([]);
-  const [iframeUrl, setIframeUrl] = useState('');
-  const [showIframe, setShowIframe] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [courses, setCourses] = useState([]);
-  const [selectedCourse, setSelectedCourse] = useState('');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [user, setUser] = useState(null);
   const [courseType, setCourseType] = useState(null);
   const [groupedVideos, setGroupedVideos] = useState({});
   const [resolvedCourseId, setResolvedCourseId] = useState(courseName || "");
   const [upcomingEMIs, setUpcomingEMIs] = useState([]);
-  const swiperNavRefs = useRef([]);
-
-
-  const [formData, setFormData] = useState({
-    profilePic: "",
-    email: "NA",
-  });
 
   const auth = getAuth();
 
@@ -72,7 +51,6 @@ const PersonalCourse = () => {
     const fetchCourseData = async () => {
       setLoading(true);
       setVideos([]);
-      setStudyMaterials([]);
 
       try {
         // Resolve real database ID first!
@@ -84,7 +62,7 @@ const PersonalCourse = () => {
         const freeSnap = await getDocs(freeCoursesRef);
         const normalizedSearch = courseName.toLowerCase().replace(/[^a-z0-9]/g, "");
 
-        let foundFree = freeSnap.docs.find(doc => 
+        let foundFree = freeSnap.docs.find(doc =>
           doc.id.toLowerCase().replace(/[^a-z0-9]/g, "") === normalizedSearch ||
           (doc.data().title || doc.data().Title || "").toLowerCase().replace(/[^a-z0-9]/g, "") === normalizedSearch
         );
@@ -96,11 +74,11 @@ const PersonalCourse = () => {
           // Try to match in paidCourses
           const paidCoursesRef = collection(db, "paidCourses");
           const paidSnap = await getDocs(paidCoursesRef);
-          let foundPaid = paidSnap.docs.find(doc => 
+          let foundPaid = paidSnap.docs.find(doc =>
             doc.id.toLowerCase().replace(/[^a-z0-9]/g, "") === normalizedSearch ||
             (doc.data().title || doc.data().Title || "").toLowerCase().replace(/[^a-z0-9]/g, "") === normalizedSearch ||
             ((normalizedSearch.includes("bhagwad") || normalizedSearch.includes("bhadvad") || normalizedSearch.includes("bhagavad")) &&
-             (doc.id.toLowerCase().includes("geeta") || doc.id.toLowerCase().includes("gita")))
+              (doc.id.toLowerCase().includes("geeta") || doc.id.toLowerCase().includes("gita")))
           );
 
           if (foundPaid) {
@@ -120,7 +98,6 @@ const PersonalCourse = () => {
           ...doc.data(),
         }));
         setVideos(fetchedVideos);
-        setTotalVideos(fetchedVideos.length);
 
         // Group videos by `title` and sort them by `title-order` and `order`
         const grouped = {};
@@ -145,14 +122,6 @@ const PersonalCourse = () => {
           }, {});
         setGroupedVideos(sortedGroups);
 
-        // Fetch Study Materials using dbCourseId
-        const materialsRef = collection(db, `materials_${dbCourseId}`);
-        const materialsSnapshot = await getDocs(materialsRef);
-        const fetchedMaterials = materialsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setStudyMaterials(fetchedMaterials);
 
         // Check subscription details if user is logged in
         if (userEmail) {
@@ -221,43 +190,6 @@ const PersonalCourse = () => {
     fetchCourseData();
   }, [courseName, userEmail]);
 
-
-  useEffect(() => {
-    const fetchMeetings = async () => {
-      if (!resolvedCourseId) return;
-      try {
-        const snap = await getDocs(collection(db, 'meetings'));
-        const allMeetings = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-
-        // Filter meeting by resolvedCourseId
-        const courseMeeting = allMeetings.find(
-          (m) => m.courseId === resolvedCourseId || m.courseId === courseName
-        );
-
-        if (courseMeeting && courseMeeting.viewerRoomUrl) {
-          setMeetingUrl(courseMeeting.viewerRoomUrl);
-        }
-      } catch (err) {
-        console.error('Error fetching meetings:', err);
-      }
-    };
-
-    fetchMeetings();
-  }, [resolvedCourseId, courseName]);
-
-  const handleOpenPopup = (url) => {
-    setIframeUrl(url);
-    setShowIframe(true);
-    setIsFullscreen(false);
-    localStorage.setItem('liveMeeting', JSON.stringify({ url, isFullscreen: false }));
-  };
-
-  const handleClosePopup = () => {
-    setShowIframe(false);
-    setIframeUrl('');
-    setIsFullscreen(false);
-    localStorage.removeItem('liveMeeting');
-  };
 
   /**
    * -----------------------
@@ -409,49 +341,6 @@ const PersonalCourse = () => {
 
   /**
    * -----------------------
-   *  MODULES COVERED
-   * -----------------------
-   */
-  const calculateModulesCovered = () => {
-    if (courseType === "free") return 0;
-    if (!groupedVideos || !watchedVideos) return 0;
-
-    let modulesCovered = 0;
-    const moduleTitles = Object.keys(groupedVideos);
-
-    moduleTitles.forEach((title) => {
-      const videosInModule = groupedVideos[title];
-      const totalVideosInModule = videosInModule.length;
-      const watchedVideosInModule = videosInModule.filter((video) =>
-        watchedVideos.includes(video.id)
-      ).length;
-      if (watchedVideosInModule === totalVideosInModule) {
-        modulesCovered++;
-      }
-    });
-
-    return modulesCovered;
-  };
-
-  const modulesCovered = calculateModulesCovered();
-  const totalModules = Object.keys(groupedVideos).length;
-  const modulesCoveredPercentage =
-    totalModules > 0 ? Math.round((modulesCovered / totalModules) * 100) : 0;
-
-  /**
-   * -----------------------
-   *  COURSE PROGRESS (VIDEOS)
-   * -----------------------
-   */
-  const calculateWatchedPercentage = () => {
-    if (courseType === "free") return 0;
-    if (totalVideos === 0) return 0;
-    return Math.round((watchedVideos.length / totalVideos) * 100);
-  };
-  const watchedPercentage = calculateWatchedPercentage();
-
-  /**
-   * -----------------------
    *  MARK VIDEO AS WATCHED
    * -----------------------
    */
@@ -503,7 +392,6 @@ const PersonalCourse = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        setUser(currentUser);
         setUserEmail(currentUser.email);
       }
     });
@@ -538,29 +426,6 @@ const PersonalCourse = () => {
       fetchMeetings();
     }
   }, [resolvedCourseId]);
-
-  /**
-   * -----------------------
-   *  JOIN LIVE SESSION
-   * -----------------------
-   */
-  const handleRedirect = () => {
-    if (meetings.length > 0) {
-      const latestMeeting = meetings[meetings.length - 1];
-      const url = latestMeeting.viewerRoomUrl || latestMeeting.ringCentralMeeting?.viewerRoomUrl;
-      if (url && url.startsWith("http")) {
-        setIframeUrl(url);
-        setShowIframe(true);
-      } else {
-        alert("Valid meeting URL not found.");
-      }
-    } else {
-      alert("No meeting found for this course.");
-    }
-  };
-
-
-
 
   /**
    * -----------------------
@@ -663,16 +528,6 @@ const PersonalCourse = () => {
               </div>
               {videos.length > 0 ? (
                 Object.keys(groupedVideos).reverse().map((title, index) => {
-                  // Initialize navigation refs
-                  if (!swiperNavRefs.current[index]) {
-                    swiperNavRefs.current[index] = {
-                      prev: React.createRef(),
-                      next: React.createRef(),
-                    };
-                  }
-
-                  const { prev, next } = swiperNavRefs.current[index];
-
                   return (
                     <div key={index} className="mb-10 bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
                       <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-slate-50 border-b border-slate-200 px-6 py-5">
@@ -681,10 +536,10 @@ const PersonalCourse = () => {
                           <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">{title}</h3>
                         </div>
                         <div className="flex items-center gap-3">
-                          <button ref={prev} className="text-slate-900 w-11 h-11 bg-white border border-slate-200 rounded-full hover:bg-slate-100 transition-all shadow-sm">
+                          <button className={`text-slate-900 w-11 h-11 bg-white border border-slate-200 rounded-full hover:bg-slate-100 transition-all shadow-sm swiper-prev-${index}`}>
                             <FaChevronLeft className="w-5 h-5" />
                           </button>
-                          <button ref={next} className="text-slate-900 w-11 h-11 bg-white border border-slate-200 rounded-full hover:bg-slate-100 transition-all shadow-sm">
+                          <button className={`text-slate-900 w-11 h-11 bg-white border border-slate-200 rounded-full hover:bg-slate-100 transition-all shadow-sm swiper-next-${index}`}>
                             <FaChevronRight className="w-5 h-5" />
                           </button>
                         </div>
@@ -694,12 +549,8 @@ const PersonalCourse = () => {
                         <Swiper
                           modules={[Navigation, Pagination]}
                           navigation={{
-                            prevEl: prev.current,
-                            nextEl: next.current,
-                          }}
-                          onBeforeInit={(swiper) => {
-                            swiper.params.navigation.prevEl = prev.current;
-                            swiper.params.navigation.nextEl = next.current;
+                            prevEl: `.swiper-prev-${index}`,
+                            nextEl: `.swiper-next-${index}`,
                           }}
                           pagination={{ clickable: true, dynamicBullets: true }}
                           spaceBetween={20}
@@ -754,7 +605,7 @@ const PersonalCourse = () => {
                   <div className="space-y-2">
                     <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Wisdom Teachings Preparing</h3>
                     <p className="text-slate-500 text-sm md:text-base leading-relaxed">
-                      We are currently preparing and curating the high-quality lessons and materials for <strong className="text-slate-900">{courseName}</strong>. 
+                      We are currently preparing and curating the high-quality lessons and materials for <strong className="text-slate-900">{courseName}</strong>.
                       They will be uploaded by our spiritual guides very soon.
                     </p>
                   </div>

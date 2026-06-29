@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/sections/Header/Header';
 import Footer from '../components/sections/Footer/Footer';
+import Button from '../components/ui/Button/Button';
 import { servicesData } from '../data/pages/services';
 
 const { hero, offerings, portals, cta } = servicesData;
@@ -31,18 +32,12 @@ const ServicesPage = () => {
                             </p>
 
                             <div className="flex flex-wrap gap-4 justify-center">
-                                <Link
-                                    to="/appointment"
-                                    className="inline-block bg-brand-red text-white px-10 py-4 rounded-full font-bold uppercase tracking-wider transition-all duration-500 hover:bg-white hover:text-brand-red hover:-translate-y-1 shadow-[0_10px_30px_rgba(191, 6, 3,0.3)]"
-                                >
+                                <Button to="/appointment" variant="primary" size="lg">
                                     {hero.primaryButtonText}
-                                </Link>
-                                <a
-                                    href="#all-services"
-                                    className="inline-block bg-white/5 backdrop-blur-md border border-white/15 text-white px-10 py-4 rounded-full font-bold uppercase tracking-wider transition-all duration-500 hover:bg-white hover:text-black hover:-translate-y-1"
-                                >
+                                </Button>
+                                <Button href="#all-services" variant="primary" size="lg">
                                     {hero.secondaryButtonText}
-                                </a>
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -138,12 +133,9 @@ const ServicesPage = () => {
                                 <p className="subtitle-poppins text-white/90 text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
                                     {cta.subtitle}
                                 </p>
-                                <Link 
-                                    to="/appointment" 
-                                    className="inline-block bg-brand-red text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-[0.2em] transition-all duration-500 hover:bg-white hover:text-brand-red hover:-translate-y-2 shadow-[0_15px_50px_rgba(191, 6, 3,0.4)] text-sm md:text-base"
-                                >
+                                <Button to="/appointment" variant="primary" size="lg">
                                     {cta.buttonText}
-                                </Link>
+                                </Button>
                             </div>
                         </div>
                     </div>

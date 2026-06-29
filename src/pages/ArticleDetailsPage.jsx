@@ -187,7 +187,7 @@ const ArticleDetailsPage = () => {
                 <section className="no-full-height max-w-7xl mx-auto px-4 sm:px-6 pb-12 grid grid-cols-1 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] gap-6 lg:gap-8 items-start">
 
                     {/* Left Column: Article Content - 70% */}
-                    <article className="w-full min-w-0 bg-white/5 backdrop-blur-xl p-0 sm:p-4 md:p-6 rounded-none sm:rounded-3xl border-x-0 sm:border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.5)] overflow-hidden">
+                    <article className="w-full min-w-0 bg-white/5 backdrop-blur-xl p-0 sm:p-4 md:p-6 rounded-none sm:rounded border-x-0 sm:border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.5)] overflow-hidden">
 
                         {/* Article Header Actions */}
                         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-4 sm:px-0 sm:py-6 border-b border-white/10">
@@ -205,7 +205,7 @@ const ArticleDetailsPage = () => {
                             <div className="flex flex-wrap items-center justify-center gap-3 w-full sm:w-auto">
                                 <button
                                     onClick={toggleLanguage}
-                                    className="bg-[#bf0603] text-white px-4 md:px-8 py-2 text-[9px] md:text-[10px] font-black tracking-[0.3em] uppercase rounded-full hover:bg-white hover:text-[#bf0603] transition-all duration-300 shadow-[0_0_20px_rgba(191, 6, 3,0.3)] hover:scale-105 active:scale-95"
+                                    className="bg-[#bf0603] text-white px-4 md:px-8 py-2 text-[9px] md:text-[10px] font-black tracking-[0.3em] uppercase rounded hover:bg-white hover:text-[#bf0603] transition-all duration-300 shadow-[0_0_20px_rgba(191, 6, 3,0.3)] hover:scale-105 active:scale-95"
                                 >
                                     {language === "hindi" ? "In English" : "हिंदी में"}
                                 </button>
@@ -229,7 +229,7 @@ const ArticleDetailsPage = () => {
                                 </button>
 
                                 {showShareOptions && (
-                                    <div className="absolute right-0 mt-4 w-52 bg-black/95 backdrop-blur-2xl rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] border border-white/20 z-50 overflow-hidden animate-in fade-in zoom-in duration-300">
+                                    <div className="absolute right-0 mt-4 w-52 bg-black/95 backdrop-blur-2xl rounded shadow-[0_20px_60px_rgba(0,0,0,0.8)] border border-white/20 z-50 overflow-hidden animate-in fade-in zoom-in duration-300">
                                         {[
                                             { icon: RiFacebookFill, color: "text-blue-500", action: shareOnFacebook, text: "Facebook" },
                                             { icon: RiTwitterFill, color: "text-blue-400", action: shareOnTwitter, text: "Twitter" },
@@ -254,7 +254,7 @@ const ArticleDetailsPage = () => {
                         </div>
 
                         {/* Image: 16:9 Aspect Ratio */}
-<div className="w-full px-[15px] sm:px-0 aspect-video overflow-hidden sm:rounded-3xl border-y sm:border border-white/10 bg-white/5 flex items-center justify-center">
+<div className="w-full px-[15px] sm:px-0 aspect-video overflow-hidden sm:rounded border-y sm:border border-white/10 bg-white/5 flex items-center justify-center">
                             <img
                                 src={article.imageUrl || article.img}
                                 alt={article.title}
@@ -316,7 +316,7 @@ const ArticleDetailsPage = () => {
                     </article>
 
                     {/* Right Column: Sidebar Desktop - 30% */}
-                    <aside className="hidden lg:block w-full min-w-0 bg-white/5 backdrop-blur-md p-5 rounded-3xl border border-white/10 shadow-lg h-fit sticky top-10">
+                    <aside className="hidden lg:block w-full min-w-0 bg-white/5 backdrop-blur-md p-5 rounded border border-white/10 shadow-lg h-fit sticky top-10">
                         <h3 className="text-brand-redxl title-batangas text-white mb-6 border-b border-white/10 pb-4 tracking-wide uppercase">
                             Other Articles
                         </h3>
@@ -325,7 +325,7 @@ const ArticleDetailsPage = () => {
                             {paginatedOtherArticles.map((item) => (
                                 <li key={item.id} className="flex flex-col">
                                     <div
-                                        className="flex items-center cursor-pointer rounded-3xl p-2 hover:bg-white/10 transition-all border border-transparent hover:border-white/10 group"
+                                        className="flex items-center cursor-pointer rounded p-2 hover:bg-white/10 transition-all border border-transparent hover:border-white/10 group"
                                         onClick={() => toggleDropdown(item.id)}
                                     >
                                         <span className="text-[#bf0603] mr-3 group-hover:scale-125 transition-transform">
@@ -338,7 +338,7 @@ const ArticleDetailsPage = () => {
                                     </div>
 
                                     {expandedArticle === item.id && (
-                                        <div className="bg-black/30 border-l-4 border-[#bf0603] mt-2 p-4 rounded-r-xl shadow-inner ml-2 animate-in slide-in-from-left duration-300">
+                                        <div className="bg-black/30 border-l-4 border-[#bf0603] mt-2 p-4 rounded shadow-inner ml-2 animate-in slide-in-from-left duration-300">
                                             <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3">
                                                 {(language === "hindi" && item.dhindi ? item.dhindi : (item.denglish || item.content))?.substring(0, 150) + "..."}
                                             </p>
@@ -366,7 +366,7 @@ const ArticleDetailsPage = () => {
                                     <button
                                         onClick={() => setSidebarPage(prev => Math.max(prev - 1, 1))}
                                         disabled={sidebarPage === 1}
-                                        className={`p-2 rounded-lg border border-white/10 transition-all ${sidebarPage === 1
+                                        className={`p-2 rounded border border-white/10 transition-all ${sidebarPage === 1
                                             ? 'opacity-20 cursor-not-allowed'
                                             : 'hover:bg-[#bf0603] hover:border-[#bf0603] text-white shadow-[0_0_15px_rgba(191, 6, 3,0.3)]'
                                             }`}
@@ -379,7 +379,7 @@ const ArticleDetailsPage = () => {
                                     <button
                                         onClick={() => setSidebarPage(prev => Math.min(prev + 1, totalSidebarPages))}
                                         disabled={sidebarPage === totalSidebarPages}
-                                        className={`p-2 rounded-lg border border-white/10 transition-all ${sidebarPage === totalSidebarPages
+                                        className={`p-2 rounded border border-white/10 transition-all ${sidebarPage === totalSidebarPages
                                             ? 'opacity-20 cursor-not-allowed'
                                             : 'hover:bg-[#bf0603] hover:border-[#bf0603] text-white shadow-[0_0_15px_rgba(191, 6, 3,0.3)]'
                                             }`}
@@ -419,7 +419,7 @@ const ArticleDetailsPage = () => {
                                     {otherArticles.map((item) => (
                                         <li key={item.id} className="flex flex-col">
                                             <div
-                                                className="flex items-center cursor-pointer rounded-3xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
+                                                className="flex items-center cursor-pointer rounded hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
                                                 onClick={() => toggleDropdown(item.id)}
                                             >
                                                 <span className="text-[#bf0603] mr-3">✦</span>
@@ -430,7 +430,7 @@ const ArticleDetailsPage = () => {
                                             </div>
 
                                             {expandedArticle === item.id && (
-                                                <div className="bg-white/5 border-l-4 border-[#bf0603] mt-2 p-4 rounded-r-xl ml-2">
+                                                <div className="bg-white/5 border-l-4 border-[#bf0603] mt-2 p-4 rounded ml-2">
                                                     <p className="text-white/70 text-sm leading-relaxed mb-3 line-clamp-3">
                                                         {(language === "hindi" && item.dhindi ? item.dhindi : (item.denglish || item.content))?.substring(0, 150) + "..."}
                                                     </p>
@@ -463,7 +463,7 @@ const ArticleDetailsPage = () => {
                         {otherArticles.slice(0, 5).map((faq, index) => (
                             <div
                                 key={faq.id}
-                                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl overflow-hidden transition-all duration-300"
+                                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded overflow-hidden transition-all duration-300"
                             >
                                 <button
                                     onClick={() => toggleAccordion(index)}
@@ -486,13 +486,13 @@ const ArticleDetailsPage = () => {
 
                                         <div className="flex gap-4">
                                             <Link to={`/articles/${faq.slug || faq.id}`}>
-                                                <button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold uppercase tracking-widest text-[10px] py-2.5 px-3.75 md:py-3 md:px-6 rounded-full transition-colors">
+                                                <button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold uppercase tracking-widest text-[10px] py-2.5 px-3.75 md:py-3 md:px-6 rounded transition-colors">
                                                     Read Full
                                                 </button>
                                             </Link>
 
                                             <Link to="/courses">
-                                                <button className="bg-[#bf0603] hover:bg-white hover:text-[#bf0603] text-white font-bold uppercase tracking-widest text-[10px] py-2.5 px-3.75 md:py-3 md:px-6 rounded-full transition-colors shadow-[0_0_20px_rgba(191, 6, 3,0.3)]">
+                                                <button className="bg-[#bf0603] hover:bg-white hover:text-[#bf0603] text-white font-bold uppercase tracking-widest text-[10px] py-2.5 px-3.75 md:py-3 md:px-6 rounded transition-colors shadow-[0_0_20px_rgba(191, 6, 3,0.3)]">
                                                     Courses
                                                 </button>
                                             </Link>

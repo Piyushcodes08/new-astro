@@ -125,6 +125,15 @@ const AdminInquiries = () => {
                         </div>
                       </div>
 
+                      {(inquiry.courseName || inquiry.courseId || inquiry.course) && (
+                        <div className="bg-brand-red/5 border border-brand-red/20 rounded-xl p-3 mb-4">
+                          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Course Interested In</p>
+                          <p className="text-[13px] text-slate-700 font-semibold">
+                            {inquiry.courseName || inquiry.courseId || inquiry.course}
+                          </p>
+                        </div>
+                      )}
+
                       <div className="bg-slate-50 rounded-xl p-5 border border-slate-100 relative mt-auto">
                         <svg className="w-8 h-8 text-slate-200 absolute top-2 right-4" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 17.2091 20.2261 19 18.017 19H14.017V21ZM5.017 21L5.017 18C5.017 16.8954 5.91243 16 7.017 16H10.017C10.5693 16 11.017 15.5523 11.017 15V9C11.017 8.44772 10.5693 8 10.017 8H6.017C5.46472 8 5.017 8.44772 5.017 9V11C5.017 11.5523 4.56929 12 4.017 12H3.017V5H13.017V15C13.017 17.2091 11.2261 19 9.017 19H5.017V21Z"/></svg>
                         <p className="text-slate-500 text-sm leading-relaxed italic">{inquiry.message}</p>

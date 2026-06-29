@@ -19,24 +19,12 @@
   min-height: 100%;
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 8px;
   background:#bf0603;
   border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
 }
-
-/* .pc-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(140deg,
-      rgba(255, 255, 255, 0.06),
-      transparent 35%);
-  pointer-events: none;
-  z-index: 1;
-} */
 
 .pc-card:hover {
 
@@ -86,7 +74,7 @@
   margin: 12px 12px 0 12px;
   position: relative;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.05);
 
   /* FIXED ASPECT RATIO FOR UNIFORM CARDS */
@@ -273,7 +261,7 @@
 
   padding: 12px 22px;
 
-  border-radius: 14px;
+  border-radius: 5px;
 
   background:
     linear-gradient(135deg,
@@ -387,7 +375,7 @@
 @media (max-width: 480px) {
 
   .pc-card {
-    border-radius: 20px;
+    border-radius: 12px;
   }
 
   .pc-image {

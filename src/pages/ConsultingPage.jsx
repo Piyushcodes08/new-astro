@@ -79,13 +79,13 @@ const ConsultingPage = () => {
                             <div className="flex flex-wrap gap-6 justify-center items-center">
                                 <Link
                                     to="/appointment"
-                                    className="px-10 py-4 rounded-full font-black uppercase tracking-[0.2em] text-white transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(191, 6, 3,0.4)] bg-brand-red flex items-center gap-3 text-xs"
+                                    className="px-10 py-4 rounded font-black uppercase tracking-[0.2em] text-white transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(191, 6, 3,0.4)] bg-brand-red flex items-center gap-3 text-xs"
                                 >
                                     {hero.buttonText} <LuCalendar className="w-4 h-4" />
                                 </Link>
                                 <a
                                     href="#offerings"
-                                    className="px-10 py-4 rounded-full font-black uppercase tracking-[0.2em] transition-all duration-500 hover:-translate-y-1 bg-white/5 border border-white/10 text-white hover:bg-white hover:text-black text-xs"
+                                    className="px-10 py-4 rounded font-black uppercase tracking-[0.2em] transition-all duration-500 hover:-translate-y-1 bg-white/5 border border-white/10 text-white hover:bg-white hover:text-black text-xs"
                                 >
                                     {hero.secondaryButtonText}
                                 </a>
@@ -295,7 +295,7 @@ const ConsultingPage = () => {
                                 </p>
                                 <Link
                                     to="/appointment"
-                                    className="px-12 py-4 rounded-full font-black uppercase tracking-[0.3em] transition-all duration-500 hover:-translate-y-1 bg-brand-red text-white shadow-3xl text-xs inline-block"
+                                    className="px-12 py-4 rounded font-black uppercase tracking-[0.3em] transition-all duration-500 hover:-translate-y-1 bg-brand-red text-white shadow-3xl text-xs inline-block"
                                 >
                                     {highlights.buttonText}
                                 </Link>
@@ -318,13 +318,13 @@ const ConsultingPage = () => {
                                 <div className="flex flex-wrap gap-8 justify-center items-center">
                                     <Link
                                         to="/appointment"
-                                        className="px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] text-white transition-all duration-500 hover:-translate-y-1 bg-brand-red shadow-[0_20px_50px_rgba(191, 6, 3,0.4)] text-xs"
+                                        className="px-12 py-5 rounded font-black uppercase tracking-[0.2em] text-white transition-all duration-500 hover:-translate-y-1 bg-brand-red shadow-[0_20px_50px_rgba(191, 6, 3,0.4)] text-xs"
                                     >
                                         {cta.primaryButtonText}
                                     </Link>
                                     <Link
                                         to="/contact"
-                                        className="px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] transition-all duration-500 hover:-translate-y-1 bg-white/5 border border-white/10 text-white hover:bg-white hover:text-black text-xs"
+                                        className="px-12 py-5 rounded font-black uppercase tracking-[0.2em] transition-all duration-500 hover:-translate-y-1 bg-white/5 border border-white/10 text-white hover:bg-white hover:text-black text-xs"
                                     >
                                         {cta.secondaryButtonText}
                                     </Link>

@@ -14,7 +14,7 @@ const SliderControls = ({ onNext, onPrev, isPrevDisabled, isNextDisabled }) => {
           height: '40px',
           borderRadius: '50%',
           border: '1px solid rgba(255,255,255,0.2)',
-          background: 'rgba(255,255,255,0.05)',
+          background: '#bf0603',
           color: 'white',
           backdropFilter: 'blur(10px)',
           cursor: 'pointer'
@@ -32,7 +32,7 @@ const SliderControls = ({ onNext, onPrev, isPrevDisabled, isNextDisabled }) => {
           height: '40px',
           borderRadius: '50%',
           border: '1px solid rgba(255,255,255,0.2)',
-          background: 'rgba(255,255,255,0.05)',
+           background: '#bf0603',
           color: 'white',
           backdropFilter: 'blur(10px)',
           cursor: 'pointer'

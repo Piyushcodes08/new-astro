@@ -13,13 +13,7 @@ export const headerData = {
         },
         {
             name: 'Products',
-            path: '#',
-            subLinks: [
-                { name: 'Bracelets', path: '/products?category=bracelets', desc: 'Consecrated Pyrite, Chakra, Jade, and Quartz bracelets.' },
-                { name: 'Rings', path: '/products?category=rings', desc: 'Healing rings for protection, success, and prosperity.' },
-                { name: 'Malas', path: '/products?category=malas', desc: 'Sacred Rudraksha and crystal malas for meditation.' },
-                { name: 'All Products', path: '/products', desc: 'Browse our complete catalog of spiritual and sacred items.' }
-            ]
+            path: '/products',
         },
         { name: 'Contact', path: '/contact' }
     ],

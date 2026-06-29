@@ -34,7 +34,7 @@
 .gallery-item {
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  border-radius: 1rem;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
   box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
@@ -85,7 +85,7 @@
   max-height: 600px;
   background: #2f0707ed;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 1.25rem;
+  border-radius: 8px;
   overflow: hidden;
   position: relative;
   box-shadow:

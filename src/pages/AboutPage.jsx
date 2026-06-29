@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { LuShieldCheck, LuHeart, LuLightbulb, LuTrophy, LuArrowRight } from "react-icons/lu";
 import Header from '../components/sections/Header/Header';
 import Footer from '../components/sections/Footer/Footer';
+import Button from '../components/ui/Button/Button';
 import { aboutData } from '../data/pages/about';
 
 const { hero, whoWeAre, services, ambition, values, cta } = aboutData;
@@ -25,12 +26,7 @@ const AboutPage = () => {
             <main className="min-h-screen relative z-10 text-white overflow-hidden bg-transparent">
                 {/* Refined Minimalist Premium Banner */}
                 <section className="hero-section">
-                    {/* Background Glows */}
-                    <div className="bg-glow-container">
-                        <div className="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-glow-red opacity-60"></div>
-                        <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-glow-gold opacity-30"></div>
-                    </div>
-
+            
                     <div className="section-container">
                         <div className="relative z-10 max-w-4xl w-full mx-auto text-center">
 
@@ -187,12 +183,9 @@ const AboutPage = () => {
                                     {cta.subtitle}
                                 </p>
 
-                                <Link
-                                    to="/services"
-                                    className="inline-block bg-brand-red text-white px-8 py-3.5 rounded-full font-bold uppercase tracking-[0.2em] transition-all duration-500 hover:bg-white hover:text-brand-red hover:-translate-y-2 shadow-[0_10px_40px_rgba(191, 6, 3,0.4)] text-sm md:text-base"
-                                >
+                                <Button to="/services" variant="primary" size="lg">
                                     {cta.buttonText}
-                                </Link>
+                                </Button>
                             </div>
                         </div>
                     </div>
