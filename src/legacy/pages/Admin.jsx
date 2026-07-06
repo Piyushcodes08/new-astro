@@ -16,7 +16,8 @@ import {
   IoIosChatbubbles,
   IoIosCart,
   IoIosPlay,
-  IoIosList
+  IoIosList,
+  IoIosTrash
 } from "react-icons/io";
 
 const AdminSidebar = () => {
@@ -31,6 +32,7 @@ const AdminSidebar = () => {
       items: [
         { title: "ADD ARTICLES",    path: "/admin/adminarticle",           icon: <IoIosPaper size={20} /> },
         { title: "ADD COURSE",      path: "/admin/addcourse",               icon: <IoIosAddCircle size={20} /> },
+        { title: "COURSE TRASH",    path: "/admin/trash-courses",           icon: <IoIosTrash size={20} /> },
         { title: "ADD PRODUCT",     path: "/admin/addproduct",              icon: <IoIosCart size={20} /> },
         { title: "ADD MODULE",      path: "/admin/addmodule",               icon: <IoIosListBox size={20} /> },
         { title: "ADD LIVE SESSION",path: "/admin/addmeeting",              icon: <IoIosVideocam size={20} /> },

@@ -25,8 +25,13 @@ const AddMeeting = () => {
 
   const fetchCourses = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, "courses"));
-      const courseList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      // Courses are stored in `freeCourses` and `paidCourses` collections
+      const freeSnap = await getDocs(collection(db, "freeCourses"));
+      const paidSnap = await getDocs(collection(db, "paidCourses"));
+      const courseList = [
+        ...freeSnap.docs.map(d => ({ id: d.id, ...d.data() })),
+        ...paidSnap.docs.map(d => ({ id: d.id, ...d.data() })),
+      ];
       setCourses(courseList);
     } catch (error) {
       console.error("Error fetching courses:", error);
@@ -127,7 +132,12 @@ const AddMeeting = () => {
                   >
                     <option value="">Select a course</option>
                     {courses.map(course => (
-                      <option key={course.id} value={course.courseName}>{course.courseName}</option>
+                      <option
+                        key={course.id}
+                        value={course.title || course.courseName || course.id}
+                      >
+                        {course.title || course.courseName || course.id}
+                      </option>
                     ))}
                   </select>
                 </div>

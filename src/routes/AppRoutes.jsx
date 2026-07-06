@@ -43,6 +43,7 @@ const AdminAppointments       = lazy(() => import('../legacy/pages/AdminAppointm
 const AdminQuestion           = lazy(() => import('../legacy/pages/AdminQuestion'));
 const AdminCalendar           = lazy(() => import('../legacy/pages/AdminCalendar'));
 const AdminSubscribeCourseList= lazy(() => import('../legacy/pages/AdminSubscribeCourseList'));
+const AdminTrashCourses       = lazy(() => import('../legacy/pages/AdminTrashCourses'));
 const AdminInquiries          = lazy(() => import('../legacy/pages/AdminInquiry'));
 const AdminPaymentList        = lazy(() => import('../legacy/pages/AdminPaymentList'));
 const AdminVedioOrder         = lazy(() => import('../legacy/pages/AdminVedioOrder'));
@@ -169,6 +170,7 @@ const AppRoutes = () => {
                 <Route path="/admin/vedio-order"      element={<ProtectedRoute adminOnly={true}><AdminVedioOrder /></ProtectedRoute>} />
                 <Route path="/admin/title-order"      element={<ProtectedRoute adminOnly={true}><AdminTitleArrange /></ProtectedRoute>} />
                 <Route path="/admin/addcourse"        element={<ProtectedRoute adminOnly={true}><AddCourse /></ProtectedRoute>} />
+                <Route path="/admin/trash-courses"    element={<ProtectedRoute adminOnly={true}><AdminTrashCourses /></ProtectedRoute>} />
                 <Route path="/admin/addproduct"       element={<ProtectedRoute adminOnly={true}><AddProduct /></ProtectedRoute>} />
                 <Route path="/admin/addmodule"        element={<ProtectedRoute adminOnly={true}><AddModule /></ProtectedRoute>} />
                 <Route path="/admin/upload"           element={<ProtectedRoute adminOnly={true}><Upload /></ProtectedRoute>} />

@@ -7,10 +7,10 @@ import {
   setDoc,
   getDocs,
   deleteDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../../firebaseConfig";
-import { serverTimestamp } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import Header from "../../components/sections/Header/Header";
 import Footer from "../../components/sections/Footer/Footer";
@@ -110,14 +110,28 @@ const AddCourse = () => {
   };
 
   const handleDeleteCourse = async (id, type) => {
-    if (!window.confirm("Are you sure you want to delete this course?")) return;
+    if (!window.confirm("Move this course to Trash? You can restore it later.")) return;
     try {
       const collectionName = type === "free" ? "freeCourses" : "paidCourses";
+      // Get the course data first
+      const courseSnap = await getDocs(collection(db, collectionName));
+      const courseDoc = courseSnap.docs.find(d => d.id === id);
+      if (!courseDoc) { alert("Course not found."); return; }
+
+      // Save to trash collection with metadata
+      await setDoc(doc(db, "trash_courses", id), {
+        ...courseDoc.data(),
+        _originalCollection: collectionName,
+        _originalId: id,
+        _deletedAt: serverTimestamp(),
+      });
+
+      // Remove from original collection
       await deleteDoc(doc(db, collectionName, id));
-      alert("Course deleted successfully");
+      alert("Course moved to Trash. You can restore it from the Trash page.");
       fetchCourses();
     } catch (error) {
-      console.error("Error deleting course:", error);
+      console.error("Error moving course to trash:", error);
       alert("Failed to delete course. Please try again.");
     }
   };

@@ -19,31 +19,25 @@ const Contact = () => {
   const [captchaToken, setCaptchaToken] = useState(null);
   const recaptchaRef = useRef(null);
 
-  // eslint-disable-next-line no-unused-vars
-  const _recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"; // Fallback to testing key if not set
+  const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const _onCaptchaChange = (token) => {
+  const onCaptchaChange = (token) => {
     setCaptchaToken(token);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
-    if (!captchaToken) {
-      alert("Please verify that you are not a robot.");
-      return;
-    }
 
     setStatus("loading");
     try {
       await addDoc(collection(db, "Astro_Contact"), {
         ...formData,
-        captchaVerified: true,
+        captchaVerified: !!captchaToken,
         createdAt: serverTimestamp(),
       });
       setStatus("success");
@@ -175,10 +169,21 @@ const Contact = () => {
                 </p>
               )}
 
+              {recaptchaSiteKey && (
+                <div className="flex justify-center my-2">
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={recaptchaSiteKey}
+                    onChange={onCaptchaChange}
+                    theme="dark"
+                  />
+                </div>
+              )}
+
               <button
                 type="submit"
                 className="contact-submit-btn"
-                disabled={status === "loading" || !captchaToken}
+                disabled={status === "loading" || (recaptchaSiteKey && !captchaToken)}
               >
                 {status === "loading" ? "Sending..." : "Send Message"}
               </button>
