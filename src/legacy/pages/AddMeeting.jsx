@@ -17,6 +17,7 @@ const AddMeeting = () => {
   const [meetings, setMeetings] = useState([]);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(true);
 
   useEffect(() => {
     fetchCourses();
@@ -105,60 +106,73 @@ const AddMeeting = () => {
   };
 
   return (
-    <div className="admin-layout bg-gray-50">
+    <div className="admin-layout">
+      <div id="top-sentinel" className="absolute top-0 left-0 w-full h-px pointer-events-none z-[-1]" />
       <Header />
-      <div className="flex flex-col md:flex-row min-h-screen pt-16 relative z-10 gap-0">
+      <div className="flex flex-col md:flex-row min-h-screen pt-16 relative z-10 admin-fluid-container gap-0 pb-0">
         <SideBar />
 
-        <main className="flex-1 min-w-0 py-10 px-[15px] md:px-[50px] bg-white admin-fluid-container">
+        <main className="flex-1 min-w-0 py-10 px-[15px] md:px-[50px] bg-white">
           <div className="space-y-8">
+            <div className="flex justify-between items-center pt-8">
+              <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+                Live Session <span className="text-[#bf0603]">Management</span>
+              </h2>
+              <button
+                onClick={() => setIsFormVisible(!isFormVisible)}
+                className="bg-[#bf0603] text-white px-3 text-xs py-2 rounded-2xl uppercase tracking-widest hover:shadow-[0_0_30px_rgba(191, 6, 3,0.5)] transition-all"
+              >
+                {isFormVisible ? "X" : "schedule meeting"}
+              </button>
+            </div>
 
-            {/* Scheduler Form */}
-            <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8 pt-8 relative overflow-hidden mt-8">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#bf0603]/5 rounded-full blur-3xl"></div>
-              <div className="flex items-center justify-center gap-3 mb-8">
-                <span className="text-3xl">📅</span>
-                <h2 className="text-2xl font-bold text-[#bf0603]">Schedule RingCentral Meeting</h2>
-              </div>
+            {isFormVisible && (
+              <div className="bg-white border border-slate-200 rounded-2xl p-8 md:p-10 shadow-xl shadow-slate-200/50 animate-in zoom-in-95 duration-500 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-[#bf0603]/5 rounded-full blur-[100px]"></div>
+                
+                <h3 className="text-xl font-bold text-slate-900 mb-12 pb-6 border-b border-slate-100 flex items-center gap-3">
+                  <div className="w-1.5 h-6 bg-[#bf0603] rounded-full"></div>
+                  Schedule Live Session
+                </h3>
 
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Course</label>
-                  <select
-                    className="w-full border border-gray-300 rounded px-4 py-2 text-gray-700 focus:outline-none focus:border-[#bf0603]"
-                    name="courseId"
-                    value={sessionData.courseId}
-                    onChange={handleInputChange}
-                  >
-                    <option value="">Select a course</option>
-                    {courses.map(course => (
-                      <option
-                        key={course.id}
-                        value={course.title || course.courseName || course.id}
-                      >
-                        {course.title || course.courseName || course.id}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Course</label>
+                    <select
+                      className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none appearance-none cursor-pointer"
+                      name="courseId"
+                      value={sessionData.courseId}
+                      onChange={handleInputChange}
+                    >
+                      <option value="">Select a course</option>
+                      {courses.map(course => (
+                        <option
+                          key={course.id}
+                          value={course.title || course.courseName || course.id}
+                        >
+                          {course.title || course.courseName || course.id}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Title</label>
-                  <input
-                    type="text"
-                    name="title"
-                    className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-[#bf0603]"
-                    value={sessionData.title}
-                    onChange={handleInputChange}
-                  />
-                </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Title</label>
+                    <input
+                      type="text"
+                      name="title"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all placeholder:text-gray-400"
+                      value={sessionData.title}
+                      onChange={handleInputChange}
+                      placeholder="Enter meeting title"
+                    />
+                  </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">Date</label>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Date & Time</label>
                     <input
                       type="datetime-local"
-                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-[#bf0603]"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all"
                       onChange={(e) => {
                         const val = e.target.value; // YYYY-MM-DDTHH:mm
                         if (val) {
@@ -168,77 +182,95 @@ const AddMeeting = () => {
                       }}
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">Duration (mins)</label>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Duration (minutes)</label>
                     <input
                       type="number"
                       name="duration"
-                      className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-[#bf0603]"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all placeholder:text-gray-400"
                       value={sessionData.duration}
                       onChange={handleInputChange}
+                      placeholder="30"
                     />
                   </div>
                 </div>
 
-                <button
-                  onClick={scheduleMeeting}
-                  disabled={loading}
-                  className="w-full bg-[#bf0603] text-white py-3 rounded font-bold text-lg hover:bg-[#c41e1e] transition-colors"
-                >
-                  {loading ? "Scheduling..." : "Schedule Meeting"}
-                </button>
+                <div className="mt-12">
+                  <button
+                    onClick={scheduleMeeting}
+                    disabled={loading}
+                    className={`w-full bg-[#bf0603] text-white py-5 rounded-xl font-bold uppercase tracking-[0.2em] hover:shadow-[0_0_40px_rgba(191, 6, 3,0.5)] transition-all transform hover:scale-[1.01] active:scale-95 ${loading ? "cursor-not-allowed opacity-50" : ""}`}
+                  >
+                    {loading ? "Scheduling..." : "Schedule Meeting"}
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Scheduled Meetings List */}
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold text-gray-800">Scheduled Meetings</h3>
+            <div className="space-y-8">
+              <h3 className="text-xl font-bold text-slate-900 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="w-1.5 h-6 bg-[#b0a102] rounded-full"></span>
+                  Scheduled Meetings ({meetings.length})
+                </div>
+              </h3>
 
-              {meetings.length === 0 ? (
-                <p className="text-gray-500 italic">No meetings scheduled.</p>
-              ) : (
-                <div className="space-y-4">
+              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                <ul className="divide-y divide-slate-100">
                   {meetings.map((meeting) => (
-                    <div key={meeting.id} className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm relative">
-                      <div className="flex justify-between items-start">
-                        <div className="space-y-1">
-                          <h4 className="text-lg font-bold text-[#bf0603]">{meeting.subject}</h4>
-                          <p className="text-gray-700 font-semibold">{meeting.courseId}</p>
-                          <p className="text-gray-500 text-sm flex items-center gap-2">
-                            <span className="text-lg">🕒</span>
-                            {new Date(meeting.startDate).toLocaleString()}
-                          </p>
-                          <div className="flex gap-3 text-sm mt-3">
-                            <a
-                              href={meeting.ringCentralMeeting?.roomUrl || "#"}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-600 hover:underline"
-                            >
-                              Join
-                            </a>
-                            <button
-                              onClick={() => copyToClipboard(meeting.ringCentralMeeting?.roomUrl || "")}
-                              className="text-blue-600 hover:underline"
-                            >
-                              Copy URL
-                            </button>
-                            <button
-                              onClick={() => deleteMeeting(meeting.id)}
-                              className="text-[#bf0603] hover:underline"
-                            >
-                              Delete
-                            </button>
-                          </div>
+                    <li
+                      key={meeting.id}
+                      className="p-8 flex flex-col md:flex-row justify-between items-start md:items-center hover:bg-slate-50 transition-all group gap-6"
+                    >
+                      <div className="flex items-center gap-6">
+                        <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:border-[#bf0603]/30 transition-all">
+                          <span className="text-[10px] font-bold text-slate-400 group-hover:text-[#bf0603] transition-all uppercase tracking-tighter">ID: {meeting.id.substring(0,4)}</span>
                         </div>
-                        <div className="bg-red-50 text-[#bf0603] px-3 py-1 rounded text-xs font-bold border border-red-100">
-                          {meeting.duration} mins
+                        <div>
+                          <span className="text-lg text-slate-900 font-bold tracking-tight group-hover:text-[#bf0603] transition-all uppercase">
+                            {meeting.subject || "Untitled Session"}
+                          </span>
+                          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">
+                            Course: <span className="text-slate-700">{meeting.courseId}</span> • Duration: <span className="text-slate-700">{meeting.duration} mins</span>
+                          </p>
+                          <p className="text-xs text-gray-500 mt-1 flex items-center gap-1.5">
+                            <span>📅</span> {new Date(meeting.startDate).toLocaleString()}
+                          </p>
                         </div>
                       </div>
-                    </div>
+                      <div className="flex flex-wrap items-center gap-6 mt-4 md:mt-0">
+                        <a
+                          href={meeting.ringCentralMeeting?.roomUrl || "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[10px] font-bold uppercase tracking-widest text-[#b0a102] hover:text-white transition-all border-b border-transparent hover:border-[#b0a102]"
+                        >
+                          Join Room
+                        </a>
+                        <button
+                          onClick={() => copyToClipboard(meeting.ringCentralMeeting?.roomUrl || "")}
+                          className="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-800 transition-all"
+                        >
+                          Copy URL
+                        </button>
+                        <button
+                          onClick={() => deleteMeeting(meeting.id)}
+                          className="text-[10px] font-bold uppercase tracking-widest text-[#bf0603] hover:bg-red-50 px-4 py-2 rounded-lg transition-all"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </li>
                   ))}
-                </div>
-              )}
+                </ul>
+                {meetings.length === 0 && (
+                  <div className="py-20 text-center opacity-25">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.4em]">No meetings scheduled</p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </main>
