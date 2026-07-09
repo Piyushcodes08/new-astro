@@ -135,16 +135,13 @@ const Gallery = () => {
     return result.slice(0, needed);
   })();
 
-  // ── Lightbox open/close ──
   const openLightbox = useCallback((item) => {
     setLightbox(item);
     setShowLightbox(true);
-    document.body.style.overflow = "hidden";
   }, []);
 
   const closeLightbox = useCallback(() => {
     setShowLightbox(false);
-    document.body.style.overflow = "";
     setTimeout(() => setLightbox(null), 320);
   }, []);
 
