@@ -140,7 +140,7 @@ h6 {
 @media (max-width: 640px) {
   .section-container {
     padding: var(--section-padding-vertical-xs) calc(var(--container-gap) * 0.75);
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
   }
 }
 

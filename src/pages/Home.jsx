@@ -8,6 +8,7 @@ import CourseSection from '../components/sections/Courses/CourseSection';
 const ArticleSection = lazy(() => import('../components/sections/Article/ArticleSection'));
 const About          = lazy(() => import('../components/sections/About/About'));
 const Products       = lazy(() => import('../components/sections/products/Products'));
+const NewLaunches    = lazy(() => import('../components/sections/NewLaunches/NewLaunches'));
 const Horoscope      = lazy(() => import('../components/sections/Horoscope/Horoscope'));
 const Numerology     = lazy(() => import('../components/sections/Numerology/Numerology'));
 const Testimonials   = lazy(() => import('../components/sections/Testimonials/Testimonials'));
@@ -45,6 +46,9 @@ const Home = () => {
                 </Suspense>
                 <Suspense fallback={<SectionPlaceholder />}>
                     <Products />
+                </Suspense>
+                <Suspense fallback={<SectionPlaceholder />}>
+                    <NewLaunches />
                 </Suspense>
                   <Suspense fallback={<SectionPlaceholder />}>
                     <Numerology />

@@ -101,7 +101,7 @@ const Header = () => {
         <>
             <header
                 className={`fixed top-0 left-0 right-0 z-2000 w-full h-auto text-white transition-all duration-700 ${showBg && !isOpen
-                ? "border-b border-white/5 backdrop-blur-[15px]"
+                ? "border-b border-white/5 backdrop-blur-[15px] bg-[#0f0404]/90"
                 : "bg-transparent"
                 }`}
         >

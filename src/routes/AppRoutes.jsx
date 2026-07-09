@@ -58,6 +58,7 @@ const AddEmi                  = lazy(() => import('../legacy/Emi/AddEmi'));
 const EmiUserList             = lazy(() => import('../legacy/Emi/EmiUserList'));
 const EmiDetails              = lazy(() => import('../legacy/Emi/EmiDetails'));
 const QuestionAndAns          = lazy(() => import('../legacy/pages/QuestionAndAns'));
+const AdminGallery            = lazy(() => import('../legacy/pages/AdminGallery'));
 
 // ── Legacy Pages (User) — lazy loaded ──
 const Dashboard         = lazy(() => import('../legacy/pages/Dashboard'));
@@ -179,6 +180,7 @@ const AppRoutes = () => {
                 <Route path="/admin/addemi"           element={<ProtectedRoute adminOnly={true}><AddEmi /></ProtectedRoute>} />
                 <Route path="/admin/emailuserlist"    element={<ProtectedRoute adminOnly={true}><EmiUserList /></ProtectedRoute>} />
                 <Route path="/admin/emailuserlist/:email" element={<ProtectedRoute adminOnly={true}><EmiDetails /></ProtectedRoute>} />
+                <Route path="/admin/gallery"          element={<ProtectedRoute adminOnly={true}><AdminGallery /></ProtectedRoute>} />
 
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>

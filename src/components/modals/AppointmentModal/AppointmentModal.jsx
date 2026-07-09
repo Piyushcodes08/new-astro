@@ -52,6 +52,50 @@ const AppointmentModal = ({ isOpen, onClose }) => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        
+        // Custom validations for numeric date/time fields
+        if (['day', 'month', 'year', 'hour', 'minute'].includes(name)) {
+            // Remove any non-digits
+            const digits = value.replace(/\D/g, '');
+            
+            if (digits === '') {
+                setFormData(prev => ({ ...prev, [name]: '' }));
+                return;
+            }
+            
+            const num = parseInt(digits, 10);
+            
+            if (name === 'day') {
+                if (digits.length > 2) return;
+                if (num > 31) return;
+                setFormData(prev => ({ ...prev, day: digits }));
+                return;
+            }
+            if (name === 'month') {
+                if (digits.length > 2) return;
+                if (num > 12) return;
+                setFormData(prev => ({ ...prev, month: digits }));
+                return;
+            }
+            if (name === 'year') {
+                if (digits.length > 4) return;
+                setFormData(prev => ({ ...prev, year: digits }));
+                return;
+            }
+            if (name === 'hour') {
+                if (digits.length > 2) return;
+                if (num > 12) return;
+                setFormData(prev => ({ ...prev, hour: digits }));
+                return;
+            }
+            if (name === 'minute') {
+                if (digits.length > 2) return;
+                if (num > 59) return;
+                setFormData(prev => ({ ...prev, minute: digits }));
+                return;
+            }
+        }
+        
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
@@ -74,6 +118,42 @@ const AppointmentModal = ({ isOpen, onClose }) => {
 
     const handleSubmit = async (e) => {
         if (e) e.preventDefault();
+
+        // Validate numeric date/time values
+        const d = parseInt(formData.day, 10);
+        const m = parseInt(formData.month, 10);
+        const y = parseInt(formData.year, 10);
+        const h = parseInt(formData.hour, 10);
+        const min = parseInt(formData.minute, 10);
+
+        if (isNaN(d) || d < 1 || d > 31) {
+            alert("Please enter a valid Day (1-31).");
+            return;
+        }
+        if (isNaN(m) || m < 1 || m > 12) {
+            alert("Please enter a valid Month (1-12).");
+            return;
+        }
+        if (isNaN(y) || y < 1900 || y > 2100) {
+            alert("Please enter a valid Year (1900-2100).");
+            return;
+        }
+        if (isNaN(h) || h < 1 || h > 12) {
+            alert("Please enter a valid Hour (1-12).");
+            return;
+        }
+        if (isNaN(min) || min < 0 || min > 59) {
+            alert("Please enter a valid Minute (0-59).");
+            return;
+        }
+
+        // Validate actual calendar date correctness (e.g. Feb 30th is invalid)
+        const dateObj = new Date(y, m - 1, d);
+        if (dateObj.getFullYear() !== y || dateObj.getMonth() !== m - 1 || dateObj.getDate() !== d) {
+            alert("Please enter a valid calendar date.");
+            return;
+        }
+
         if (!captchaToken) {
             alert("Please verify that you are not a robot.");
             return;
@@ -201,45 +281,54 @@ const AppointmentModal = ({ isOpen, onClose }) => {
 
                                 <div className="input-group mt-15">
                                     <label>Gender</label>
-                                    <div className="radio-group">
-                                        <label className="radio-label">
-                                            <input type="radio" name="gender" value="male" checked={formData.gender === 'male'} onChange={handleInputChange} />
-                                            <span>Male</span>
-                                        </label>
-                                        <label className="radio-label">
-                                            <input type="radio" name="gender" value="female" checked={formData.gender === 'female'} onChange={handleInputChange} />
-                                            <span>Female</span>
-                                        </label>
-                                        <label className="radio-label">
-                                            <input type="radio" name="gender" value="other" checked={formData.gender === 'other'} onChange={handleInputChange} />
-                                            <span>Other</span>
-                                        </label>
+                                    <div className="gender-tabs">
+                                        <button 
+                                            type="button" 
+                                            className={`gender-tab ${formData.gender === 'male' ? 'active' : ''}`}
+                                            onClick={() => setFormData(prev => ({ ...prev, gender: 'male' }))}
+                                        >
+                                            Male
+                                        </button>
+                                        <button 
+                                            type="button" 
+                                            className={`gender-tab ${formData.gender === 'female' ? 'active' : ''}`}
+                                            onClick={() => setFormData(prev => ({ ...prev, gender: 'female' }))}
+                                        >
+                                            Female
+                                        </button>
+                                        <button 
+                                            type="button" 
+                                            className={`gender-tab ${formData.gender === 'other' ? 'active' : ''}`}
+                                            onClick={() => setFormData(prev => ({ ...prev, gender: 'other' }))}
+                                        >
+                                            Other
+                                        </button>
                                     </div>
                                 </div>
 
                                 <div className="form-grid-three mt-15">
                                     <div className="input-group">
                                         <label>Day</label>
-                                        <input type="number" name="day" value={formData.day} onChange={handleInputChange} placeholder="DD" required />
+                                        <input type="text" inputMode="numeric" pattern="[0-9]*" name="day" value={formData.day} onChange={handleInputChange} placeholder="DD" required />
                                     </div>
                                     <div className="input-group">
                                         <label>Month</label>
-                                        <input type="number" name="month" value={formData.month} onChange={handleInputChange} placeholder="MM" required />
+                                        <input type="text" inputMode="numeric" pattern="[0-9]*" name="month" value={formData.month} onChange={handleInputChange} placeholder="MM" required />
                                     </div>
                                     <div className="input-group">
                                         <label>Year</label>
-                                        <input type="number" name="year" value={formData.year} onChange={handleInputChange} placeholder="YYYY" required />
+                                        <input type="text" inputMode="numeric" pattern="[0-9]*" name="year" value={formData.year} onChange={handleInputChange} placeholder="YYYY" required />
                                     </div>
                                 </div>
 
                                 <div className="form-grid-three mt-15">
                                     <div className="input-group">
                                         <label>Hour</label>
-                                        <input type="number" name="hour" value={formData.hour} onChange={handleInputChange} placeholder="HH" required />
+                                        <input type="text" inputMode="numeric" pattern="[0-9]*" name="hour" value={formData.hour} onChange={handleInputChange} placeholder="HH" required />
                                     </div>
                                     <div className="input-group">
                                         <label>Minute</label>
-                                        <input type="number" name="minute" value={formData.minute} onChange={handleInputChange} placeholder="MM" required />
+                                        <input type="text" inputMode="numeric" pattern="[0-9]*" name="minute" value={formData.minute} onChange={handleInputChange} placeholder="MM" required />
                                     </div>
                                     <div className="input-group">
                                         <label>AM/PM</label>

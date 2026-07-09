@@ -17,7 +17,8 @@ import {
   IoIosCart,
   IoIosPlay,
   IoIosList,
-  IoIosTrash
+  IoIosTrash,
+  IoIosImages
 } from "react-icons/io";
 
 const AdminSidebar = () => {
@@ -36,6 +37,7 @@ const AdminSidebar = () => {
         { title: "ADD PRODUCT",     path: "/admin/addproduct",              icon: <IoIosCart size={20} /> },
         { title: "ADD MODULE",      path: "/admin/addmodule",               icon: <IoIosListBox size={20} /> },
         { title: "ADD LIVE SESSION",path: "/admin/addmeeting",              icon: <IoIosVideocam size={20} /> },
+        { title: "GALLERY",         path: "/admin/gallery",                 icon: <IoIosImages size={20} /> },
       ]
     },
     {
