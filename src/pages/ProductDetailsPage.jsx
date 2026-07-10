@@ -531,7 +531,7 @@ const ProductDetailsPage = () => {
             </span>
           </nav>
 
-          <section className="grid gap-7 lg:gap-10 xl:gap-12" style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gridAutoRows: 'max-content'}}>
+          <section className="grid gap-4 sm:gap-6 lg:gap-10 xl:gap-12" style={{display: 'grid', gridTemplateColumns: '1fr 1.2fr', gridAutoRows: 'max-content'}}>
             {/* LEFT SIDE - Image Gallery */}
             <div className="min-w-0">
               <div className="rounded-2xl border border-[#966027]/60 bg-gradient-to-br from-[#1a0a07]/95 to-[#080504]/95 p-2 shadow-[0_24px_60px_rgba(0,0,0,0.48),inset_0_1px_0_rgba(255,216,158,0.05),0_0_0_1px_rgba(91,31,16,0.2)]">
