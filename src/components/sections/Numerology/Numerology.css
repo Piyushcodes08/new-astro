@@ -354,3 +354,52 @@ background: linear-gradient(
     font-size: 1rem;
   }
 }
+
+/* ── Premium Cosmic Numerology Section ── */
+.numerology-cosmic-card {
+  background: linear-gradient(135deg, #3d0a0a 0%, #6b1a0a 50%, #3d0a0a 100%);
+  border-radius: 24px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 160, 50, 0.15);
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.numerology-cosmic-card select {
+  background: #ffffff;
+  color: #333333;
+  font-weight: 700;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.numerology-cosmic-card select:focus {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
+}
+
+.numerology-cosmic-card input {
+  transition: all 0.3s ease;
+}
+
+.numerology-cosmic-card input:focus {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

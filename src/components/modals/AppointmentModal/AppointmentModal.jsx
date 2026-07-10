@@ -16,7 +16,7 @@ const AppointmentModal = ({ isOpen, onClose }) => {
     const recaptchaRef = useRef(null);
 
     const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
-    
+
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -52,19 +52,19 @@ const AppointmentModal = ({ isOpen, onClose }) => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        
+
         // Custom validations for numeric date/time fields
         if (['day', 'month', 'year', 'hour', 'minute'].includes(name)) {
             // Remove any non-digits
             const digits = value.replace(/\D/g, '');
-            
+
             if (digits === '') {
                 setFormData(prev => ({ ...prev, [name]: '' }));
                 return;
             }
-            
+
             const num = parseInt(digits, 10);
-            
+
             if (name === 'day') {
                 if (digits.length > 2) return;
                 if (num > 31) return;
@@ -95,7 +95,7 @@ const AppointmentModal = ({ isOpen, onClose }) => {
                 return;
             }
         }
-        
+
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
@@ -223,8 +223,8 @@ const AppointmentModal = ({ isOpen, onClose }) => {
 
     return (
         <div className={`modal-overlay ${isOpen ? 'show' : ''}`} onClick={onClose}>
-            <div 
-                className={`modal-container ${isOpen ? 'show' : ''} view-${view}`} 
+            <div
+                className={`modal-container ${isOpen ? 'show' : ''} view-${view}`}
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="modal-accent-line"></div>
@@ -265,7 +265,7 @@ const AppointmentModal = ({ isOpen, onClose }) => {
                             <button className="close-btn" onClick={onClose}>&times;</button>
                         </div>
                         <form className="appointment-form" onSubmit={handleSubmit}>
-                            
+
                             <div className="form-section">
                                 <h4 className="section-title">Personal Details</h4>
                                 <div className="form-grid">
@@ -282,22 +282,22 @@ const AppointmentModal = ({ isOpen, onClose }) => {
                                 <div className="input-group mt-15">
                                     <label>Gender</label>
                                     <div className="gender-tabs">
-                                        <button 
-                                            type="button" 
+                                        <button
+                                            type="button"
                                             className={`gender-tab ${formData.gender === 'male' ? 'active' : ''}`}
                                             onClick={() => setFormData(prev => ({ ...prev, gender: 'male' }))}
                                         >
                                             Male
                                         </button>
-                                        <button 
-                                            type="button" 
+                                        <button
+                                            type="button"
                                             className={`gender-tab ${formData.gender === 'female' ? 'active' : ''}`}
                                             onClick={() => setFormData(prev => ({ ...prev, gender: 'female' }))}
                                         >
                                             Female
                                         </button>
-                                        <button 
-                                            type="button" 
+                                        <button
+                                            type="button"
                                             className={`gender-tab ${formData.gender === 'other' ? 'active' : ''}`}
                                             onClick={() => setFormData(prev => ({ ...prev, gender: 'other' }))}
                                         >

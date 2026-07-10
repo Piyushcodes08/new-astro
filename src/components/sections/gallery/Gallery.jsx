@@ -7,49 +7,7 @@ import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ── Site's own fallback images ──
-const FALLBACK_IMAGES = [
-  {
-    image: "https://i.ibb.co/sm8mdMP/pic16.jpg",
-    title: "Sacred Ritual Ceremony",
-    description: "A powerful spiritual gathering where ancient Vedic rituals are performed to invoke divine blessings and positive cosmic energy.",
-  },
-  {
-    image: "https://i.ibb.co/Gnq2gJb/pic2.jpg",
-    title: "Astrological Consultation",
-    description: "Personal guidance sessions where our experts interpret planetary alignments to help navigate life's most important decisions.",
-  },
-  {
-    image: "https://i.ibb.co/vDpCDSY/pic13.jpg",
-    title: "Meditation & Healing",
-    description: "Tranquil moments of deep meditation and energy healing, restoring balance between mind, body, and spirit.",
-  },
-  {
-    image: "https://i.ibb.co/f0Yt9bM/pic4.jpg",
-    title: "Spiritual Workshop",
-    description: "Interactive workshops where seekers learn the foundations of astrology, numerology, and spiritual self-discovery.",
-  },
-  {
-    image: "https://i.ibb.co/g4hxBfz/pic5.jpg",
-    title: "Temple Blessings",
-    description: "Sacred visits to revered temples, connecting with centuries of spiritual tradition and divine grace.",
-  },
-  {
-    image: "https://i.ibb.co/FgdgX20/pic10.jpg",
-    title: "Community Gathering",
-    description: "Warm community events where like-minded souls come together to share wisdom, faith, and spiritual growth.",
-  },
-  {
-    image: "https://i.ibb.co/kDjJwhB/pic7.jpg",
-    title: "Yantra & Mantra Session",
-    description: "Focused sessions on sacred yantras and mantras, harnessing vibrational energy for protection and prosperity.",
-  },
-  {
-    image: "https://i.ibb.co/9n7mHQt/pic8.jpg",
-    title: "Festive Celebrations",
-    description: "Joyful celebrations of auspicious festivals, honoring the cosmic cycles that shape our spiritual journey.",
-  },
-];
+
 
 // ── Scroll-driven text slides ──
 const TEXT_SLIDES = [
@@ -107,7 +65,7 @@ const Gallery = () => {
   useEffect(() => {
     (async () => {
       try {
-        const q    = query(collection(db, "gallery"), orderBy("createdAt", "desc"), limit(8));
+        const q    = query(collection(db, "gallery"), orderBy("createdAt", "desc"), limit(20));
         const snap = await getDocs(q);
         const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         setPhotos(data.length > 0 ? data : FALLBACK_IMAGES);
@@ -164,7 +122,7 @@ const Gallery = () => {
       gsap.set(sphere, { rotateX: -15, rotateY: 0 });
 
       gsap.to(sphere, {
-        rotateY: 720,
+        rotateY: 360 ,
         rotateX: 40,
         ease: "none",
         scrollTrigger: {

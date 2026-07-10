@@ -366,7 +366,7 @@ const NewUser = () => {
 
               <div className="bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8 space-y-8">
                 <h4 className="text-xs font-bold text-[#bf0603] uppercase tracking-[0.2em]">Temporal Selection</h4>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-2">Celestial Date</label>

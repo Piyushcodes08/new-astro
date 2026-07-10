@@ -187,12 +187,11 @@ const AdminGallery = () => {
             </div>
           )}
 
-          {/* Upload Form Modal */}
           {formVisible && (
             <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-[3000] flex items-center justify-center p-4">
-              <div className="bg-[#0e0a1a] border border-white/10 rounded-2xl w-full max-w-lg shadow-2xl">
+              <div className="bg-[#0e0a1a] border border-white/10 rounded-2xl w-full max-w-lg shadow-2xl max-h-[90vh] flex flex-col">
                 {/* Form Header */}
-                <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 flex-shrink-0">
                   <h2 className="text-white font-black text-lg tracking-tight">
                     Add Gallery Image
                   </h2>
@@ -204,7 +203,7 @@ const AdminGallery = () => {
                   </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-6 space-y-5">
+                <form onSubmit={handleSubmit} className="p-6 space-y-5 overflow-y-auto flex-1">
                   {/* Image Upload Area */}
                   <div>
                     <label className="block text-white/60 text-xs font-bold uppercase tracking-widest mb-2">

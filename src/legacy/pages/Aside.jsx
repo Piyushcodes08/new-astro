@@ -45,7 +45,12 @@ const Aside = () => {
                     const userData = userDoc.data();
                     setFormData({
                         profilePic: userData.profilePic || "",
-                        fullName: userData.fullName || "Student",
+                        fullName: userData.fullName || currentUser.displayName || "Student",
+                    });
+                } else {
+                    setFormData({
+                        profilePic: "",
+                        fullName: currentUser.displayName || "Student",
                     });
                 }
             } else {

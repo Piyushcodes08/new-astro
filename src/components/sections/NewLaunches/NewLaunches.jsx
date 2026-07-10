@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Link } from 'react-router-dom';
 import { useProducts } from '../../../hooks/useProducts';
 import { fallbackProducts } from '../products/Products';
 import Button from '../../ui/Button/Button';
+import SliderControls from '../../ui/Slider/SliderControls';
 import "./newLaunches.css";
 
 // Helper to compute discount %
@@ -65,12 +66,94 @@ const LaunchCard = ({ p }) => {
 
 const NewLaunches = () => {
   const { products, loading } = useProducts();
-  
-  // Use products from Firestore if available, otherwise fallback.
-  // We take the first 3 items (since they are ordered by createdAt desc, representing the latest additions).
-  const latestProducts = products.length > 0 
-    ? products.slice(0, 3) 
-    : fallbackProducts.slice(0, 3);
+
+  // Use up to 6 products from Firestore if available, otherwise fallback.
+  const displayProducts = useMemo(() => {
+    return products.length > 0 
+      ? products.slice(0, 6) 
+      : fallbackProducts.slice(0, 6);
+  }, [products]);
+
+  const [currentIndex, setCurrentIndex] = useState(3);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [visibleItems, setVisibleItems] = useState(3);
+  const touchStartRef = useRef(0);
+
+  // Clone data for infinite loop carousel (similar to Products.jsx)
+  const clonedData = useMemo(() => {
+    if (displayProducts.length === 0) return [];
+    return [
+      ...displayProducts.slice(-3),
+      ...displayProducts,
+      ...displayProducts.slice(0, 3)
+    ];
+  }, [displayProducts]);
+
+  const totalRealItems = displayProducts.length;
+
+  useEffect(() => {
+    setCurrentIndex(3);
+  }, [totalRealItems]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) setVisibleItems(1);
+      else if (window.innerWidth < 1024) setVisibleItems(2);
+      else setVisibleItems(3);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const moveToIndex = useCallback((index, smooth = true) => {
+    setIsTransitioning(smooth);
+    setCurrentIndex(index);
+  }, []);
+
+  const nextSlide = useCallback(() => {
+    moveToIndex(currentIndex + 1);
+  }, [currentIndex, moveToIndex]);
+
+  const prevSlide = useCallback(() => {
+    moveToIndex(currentIndex - 1);
+  }, [currentIndex, moveToIndex]);
+
+  const getTranslateX = () => {
+    const percentage = (100 / visibleItems) * currentIndex;
+    return `translateX(-${percentage}%)`;
+  };
+
+  useEffect(() => {
+    if (!isTransitioning) return;
+    if (currentIndex >= totalRealItems + 3) {
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentIndex(3);
+      }, 700);
+      return () => clearTimeout(timer);
+    }
+    if (currentIndex <= 2) {
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentIndex(totalRealItems + 2);
+      }, 700);
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex, isTransitioning, totalRealItems]);
+
+  const handleTouchStart = (e) => {
+    touchStartRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    const touchEnd = e.changedTouches[0].clientX;
+    const diff = touchStartRef.current - touchEnd;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) nextSlide();
+      else prevSlide();
+    }
+  };
 
   if (loading) {
     return (
@@ -87,7 +170,7 @@ const NewLaunches = () => {
     );
   }
 
-  if (latestProducts.length === 0) return null;
+  if (totalRealItems === 0) return null;
 
   return (
     <section className="new-launches-section">
@@ -113,12 +196,40 @@ const NewLaunches = () => {
           </div>
         </div>
 
-        {/* Products Grid */}
-        <div className="nl-grid">
-          {latestProducts.map((p, index) => (
-            <LaunchCard p={p} key={`${p.id || p.title}-${index}`} />
-          ))}
+        {/* Carousel Slider */}
+        <div
+          className="nl-slider-container"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div
+            className="nl-track"
+            style={{
+              transform: getTranslateX(),
+              transition: isTransitioning
+                ? 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
+                : 'none'
+            }}
+          >
+            {clonedData.map((p, index) => (
+              <div
+                className="nl-slide"
+                key={`${p.id || p.title}-${index}`}
+                style={{ flex: `0 0 ${100 / visibleItems}%` }}
+              >
+                <LaunchCard p={p} />
+              </div>
+            ))}
+          </div>
         </div>
+
+        {/* Slider Controls */}
+        <SliderControls
+          onNext={nextSlide}
+          onPrev={prevSlide}
+          isPrevDisabled={false}
+          isNextDisabled={false}
+        />
 
         {/* View All Button */}
         <div className="nl-action-container">
@@ -132,3 +243,8 @@ const NewLaunches = () => {
 };
 
 export default NewLaunches;
+
+
+
+
+

@@ -16,14 +16,17 @@ const Profile = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [formData, setFormData] = useState({
     profilePic: "",
-    fullName: "NA",
-    fathersName: "NA",
-    mothersName: "NA",
-    dob: "NA",
-    email: "NA",
+    fullName: "",
+    fathersName: "",
+    mothersName: "",
+    dob: "",
+    email: "",
+    phone: "",
+    birthPlace: "",
   });
-  const [imageFile, setImageFile] = useState(null); // State for uploaded image
-  const [loading, setLoading] = useState(true); // Loading state to prevent flickering
+  const [imageFile, setImageFile] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const db = getFirestore(app);
 
   useEffect(() => {
@@ -42,21 +45,25 @@ const Profile = () => {
           const userData = userDoc.data();
           setFormData({
             profilePic: userData.profilePic || "",
-            fullName: userData.fullName || "NA",
-            fathersName: userData.fathersName || "NA",
-            mothersName: userData.mothersName || "NA",
-            dob: userData.dob || "NA",
-            email: currentUser.email || "NA",
+            fullName: userData.fullName || currentUser.displayName || "",
+            fathersName: userData.fathersName || "",
+            mothersName: userData.mothersName || "",
+            dob: userData.dob || "",
+            email: currentUser.email || "",
+            phone: userData.phone || "",
+            birthPlace: userData.birthPlace || "",
           });
         } else {
           // If user profile doesn't exist, set default values
           setFormData({
             profilePic: "",
-            fullName: "NA",
-            fathersName: "NA",
-            mothersName: "NA",
-            dob: "NA",
-            email: currentUser.email || "NA",
+            fullName: currentUser.displayName || "",
+            fathersName: "",
+            mothersName: "",
+            dob: "",
+            email: currentUser.email || "",
+            phone: "",
+            birthPlace: "",
           });
         }
 
@@ -81,6 +88,8 @@ const Profile = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+
 
 
 
@@ -119,6 +128,23 @@ const Profile = () => {
     }
   };
 
+  const handleRemovePic = async () => {
+    if (!window.confirm("Remove your profile picture?")) return;
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      try {
+        const userDocRef = doc(db, "students", currentUser.uid);
+        await setDoc(userDocRef, { ...formData, profilePic: "" }, { merge: true });
+        setFormData((prev) => ({ ...prev, profilePic: "" }));
+        setImageFile(null);
+        alert("Profile picture removed.");
+      } catch (error) {
+        console.error("Error removing profile picture:", error);
+        alert("Failed to remove profile picture.");
+      }
+    }
+  };
 
   if (loading) {
     return (
@@ -167,22 +193,34 @@ const Profile = () => {
                     {/* Profile Picture Upload */}
                     <div className="flex flex-col items-center pb-8 border-b border-slate-50">
                       <div className="relative group mb-4">
-                        <div className="absolute -inset-1 bg-slate-200 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
-                        <img
-                          src={imageFile ? URL.createObjectURL(imageFile) : (formData.profilePic || '/src/assets/images/common/logos/vahlay_astro.png')}
-                          alt="Profile Preview"
-                          className="relative w-28 h-28 md:w-32 md:h-32 rounded-full object-cover border-4 border-white shadow-xl bg-slate-50"
-                        />
+                        <div className="w-36 h-36 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl bg-slate-50" style={{borderRadius:'50%'}}>
+                          <img
+                            src={imageFile ? URL.createObjectURL(imageFile) : (formData.profilePic || 'src/assets/images/common/logos/vahlay_astro logo.webp')}
+                            alt="Profile Preview"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
                         <label className="absolute bottom-0 right-0 bg-brand-red text-white p-2.5 rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform border-2 border-white">
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                           <input
                             type="file"
+                            accept="image/*"
                             onChange={(e) => setImageFile(e.target.files[0])}
                             className="hidden"
                           />
                         </label>
                       </div>
-                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Update Photo</p>
+                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Update Photo</p>
+                      {(formData.profilePic || imageFile) && (
+                        <button
+                          type="button"
+                          onClick={handleRemovePic}
+                          className="flex items-center gap-1.5 text-[9px] font-black text-red-500 uppercase tracking-widest border border-red-200 px-4 py-1.5 rounded-lg hover:bg-red-50 transition-all"
+                        >
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                          Remove Photo
+                        </button>
+                      )}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
@@ -225,8 +263,32 @@ const Profile = () => {
                         <input
                           type="date"
                           name="dob"
-                          value={formData.dob !== "NA" ? formData.dob : ""}
+                          value={formData.dob}
                           onChange={handleChange}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 text-slate-900 font-medium focus:ring-4 focus:ring-brand-red/5 focus:border-brand-red outline-none transition-all"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Phone Number</label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          placeholder="e.g. +91 98765 43210"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 text-slate-900 font-medium focus:ring-4 focus:ring-brand-red/5 focus:border-brand-red outline-none transition-all"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Birth Place</label>
+                        <input
+                          type="text"
+                          name="birthPlace"
+                          value={formData.birthPlace}
+                          onChange={handleChange}
+                          placeholder="City, State, Country"
                           className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 text-slate-900 font-medium focus:ring-4 focus:ring-brand-red/5 focus:border-brand-red outline-none transition-all"
                         />
                       </div>
@@ -254,23 +316,29 @@ const Profile = () => {
                     <div className="flex flex-col items-center mb-10">
                       <div className="relative group mb-6">
                         <div className="absolute -inset-2 bg-linear-to-r from-brand-red to-[#f43f5e] rounded-full blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-                        <img
-                          src={formData.profilePic || '/src/assets/images/common/logos/vahlay_astro.png'}
-                          alt="Profile"
-                          className="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-white shadow-2xl bg-slate-50"
-                          onError={(e) => { e.target.onerror = null; e.target.src = "/src/assets/images/common/logos/vahlay_astro.png"; }}
-                        />
+                        <div className="relative w-36 h-36 md:w-40 md:h-40 overflow-hidden border-4 border-white shadow-2xl bg-slate-50" style={{borderRadius:'50%'}}>
+                          <img
+                            src={formData.profilePic || 'src/assets/images/common/logos/vahlay_astro logo.webp'}
+                            alt="Profile"
+                            className="w-full h-full object-cover"
+                            onError={(e) => { e.target.onerror = null; e.target.src = "/src/assets/images/common/logos/vahlay_astro.png"; }}
+                          />
+                        </div>
                       </div>
-                      <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-1 uppercase tracking-tight">{formData.fullName}</h3>
+                      <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-1 uppercase tracking-tight">
+                        {formData.fullName || user.displayName || "Sacred Seeker"}
+                      </h3>
                       <p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">{formData.email}</p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-slate-50 pt-10">
                       {[
-                        { label: "Full Name", value: formData.fullName },
-                        { label: "Father's Name", value: formData.fathersName },
-                        { label: "Mother's Name", value: formData.mothersName },
-                        { label: "Date of Birth", value: formData.dob }
+                        { label: "Full Name", value: formData.fullName || user.displayName || "Not Provided" },
+                        { label: "Father's Name", value: formData.fathersName || "Not Provided" },
+                        { label: "Mother's Name", value: formData.mothersName || "Not Provided" },
+                        { label: "Date of Birth", value: formData.dob || "Not Provided" },
+                        { label: "Phone Number", value: formData.phone || "Not Provided" },
+                        { label: "Birth Place", value: formData.birthPlace || "Not Provided" },
                       ].map((info, idx) => (
                         <div key={idx} className="space-y-1.5 p-5 bg-slate-50 rounded-2xl border border-slate-100">
                           <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">{info.label}</span>
@@ -279,7 +347,7 @@ const Profile = () => {
                       ))}
                       <div className="space-y-1.5 p-5 bg-slate-50 rounded-2xl border border-slate-100 sm:col-span-2">
                         <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Email Address</span>
-                        <p className="text-slate-800 font-bold tracking-tight break-all text-sm md:text-base">{formData.email}</p>
+                        <p className="text-slate-800 font-bold tracking-tight break-all text-sm md:text-base">{formData.email || user.email}</p>
                       </div>
                     </div>
                   </div>

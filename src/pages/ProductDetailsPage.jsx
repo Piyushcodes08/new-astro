@@ -1,27 +1,42 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { doc, getDoc, collection, getDocs, addDoc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { addDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import {
+  LuCheck,
+  LuMinus,
+  LuPackage,
+  LuPlus,
+  LuShield,
+  LuShoppingCart,
+  LuStar,
+  LuTruck,
+} from 'react-icons/lu';
+import { RiWhatsappFill } from 'react-icons/ri';
+
+import { db } from '../firebaseConfig';
 import { createLogger } from '../utils/logger';
 import Header from '../components/sections/Header/Header';
 import Footer from '../components/sections/Footer/Footer';
 import Button from '../components/ui/Button/Button';
-import { LuMinus, LuPlus, LuShoppingCart, LuPackage, LuShield, LuTruck, LuStar, LuCheck } from 'react-icons/lu';
-import { RiWhatsappFill } from 'react-icons/ri';
 import { fallbackProducts } from '../components/sections/products/Products';
 
 const logger = createLogger('ProductDetailsPage');
 
-const parsePrice = (str) => parseFloat(String(str || '').replace(/[^\d.]/g, '')) || 0;
+const parsePrice = (value) =>
+  parseFloat(String(value || '').replace(/[^\d.]/g, '')) || 0;
+
 const getDiscount = (price, oldPrice) => {
-  const p = parsePrice(price), op = parsePrice(oldPrice);
-  if (!p || !op || op <= p) return null;
-  return Math.round(((op - p) / op) * 100);
+  const current = parsePrice(price);
+  const original = parsePrice(oldPrice);
+
+  if (!current || !original || original <= current) return null;
+  return Math.round(((original - current) / original) * 100);
 };
 
 const ProductDetailsPage = () => {
   const { id } = useParams();
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -30,10 +45,12 @@ const ProductDetailsPage = () => {
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('description');
   const [pinned, setPinned] = useState(false);
+  const [wishlisted, setWishlisted] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setPinned(window.scrollY > 300);
-    window.addEventListener('scroll', onScroll);
+    const onScroll = () => setPinned(window.scrollY > 420);
+
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
@@ -41,132 +58,366 @@ const ProductDetailsPage = () => {
     const fetchProductData = async () => {
       try {
         setLoading(true);
+        setActiveImageIndex(0);
+        setQuantity(1);
+
         const fallbackMatch = fallbackProducts.find(
-          (p) => String(p.id) === String(id) || p.title.replace(/\s+/g, '-').toLowerCase() === String(id)
+          (item) =>
+            String(item.id) === String(id) ||
+            item.title.replace(/\s+/g, '-').toLowerCase() === String(id)
         );
+
         if (fallbackMatch) {
-          setProduct({ id: fallbackMatch.id || fallbackMatch.title.replace(/\s+/g, '-').toLowerCase(), ...fallbackMatch, images: fallbackMatch.images || [fallbackMatch.image] });
+          setProduct({
+            id:
+              fallbackMatch.id ||
+              fallbackMatch.title.replace(/\s+/g, '-').toLowerCase(),
+            ...fallbackMatch,
+            images: fallbackMatch.images || [fallbackMatch.image],
+          });
         } else {
           const docRef = doc(db, 'products', id);
           const docSnap = await getDoc(docRef);
+
           if (docSnap.exists()) {
             const data = docSnap.data();
-            setProduct({ id: docSnap.id, ...data, images: data.images || (data.image ? [data.image] : []) });
+
+            setProduct({
+              id: docSnap.id,
+              ...data,
+              images: data.images || (data.image ? [data.image] : []),
+            });
           } else {
-            const fallbackTitleMatch = fallbackProducts.find((p) => p.title.replace(/\s+/g, '-').toLowerCase() === String(id));
-            if (fallbackTitleMatch) setProduct({ id: fallbackTitleMatch.title.replace(/\s+/g, '-').toLowerCase(), ...fallbackTitleMatch, images: fallbackTitleMatch.images || [fallbackTitleMatch.image] });
+            const fallbackTitleMatch = fallbackProducts.find(
+              (item) =>
+                item.title.replace(/\s+/g, '-').toLowerCase() === String(id)
+            );
+
+            if (fallbackTitleMatch) {
+              setProduct({
+                id: fallbackTitleMatch.title
+                  .replace(/\s+/g, '-')
+                  .toLowerCase(),
+                ...fallbackTitleMatch,
+                images:
+                  fallbackTitleMatch.images || [fallbackTitleMatch.image],
+              });
+            }
           }
         }
-        const qs = await getDocs(collection(db, 'products'));
-        const dbProducts = qs.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        const allProds = dbProducts.length > 0 ? dbProducts : fallbackProducts;
-        setRelatedProducts(allProds.filter((p) => { const pid = p.id || p.title.replace(/\s+/g, '-').toLowerCase(); return String(pid) !== String(id); }).slice(0, 4));
-      } catch (err) { logger.error('Error fetching product details:', err); }
-      finally { setLoading(false); }
+
+        const snapshot = await getDocs(collection(db, 'products'));
+        const dbProducts = snapshot.docs.map((item) => ({
+          id: item.id,
+          ...item.data(),
+        }));
+
+        const allProducts =
+          dbProducts.length > 0 ? dbProducts : fallbackProducts;
+
+        setRelatedProducts(
+          allProducts
+            .filter((item) => {
+              const productId =
+                item.id || item.title.replace(/\s+/g, '-').toLowerCase();
+
+              return String(productId) !== String(id);
+            })
+            .slice(0, 4)
+        );
+      } catch (error) {
+        logger.error('Error fetching product details:', error);
+      } finally {
+        setLoading(false);
+      }
     };
+
     fetchProductData();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [id]);
 
-  const increase = () => setQuantity((prev) => prev + 1);
-  const decrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+  const increase = () => setQuantity((current) => current + 1);
+
+  const decrease = () =>
+    setQuantity((current) => Math.max(1, current - 1));
 
   const handleRazorpay = async () => {
     if (!product) return;
+
     setPaymentLoading(true);
+
     try {
-      const priceNum = parsePrice(product.price);
-      if (!priceNum) { alert('Product price is not available. Please contact us via WhatsApp.'); setPaymentLoading(false); return; }
-      const loadScript = (src) => new Promise((resolve, reject) => {
-        const existing = document.querySelector(`script[src="${src}"]`);
-        if (existing) { existing.addEventListener('load', () => resolve(true)); existing.addEventListener('error', () => reject(false)); if (existing.readyState === 'complete') resolve(true); return; }
-        const script = document.createElement('script');
-        script.src = src; script.async = true;
-        script.onload = () => resolve(true); script.onerror = () => reject(false);
-        document.body.appendChild(script);
-      });
-      if (!window.Razorpay) {
-        try { await loadScript('https://checkout.razorpay.com/v1/checkout.js'); }
-        catch (e) { alert('Payment gateway failed to load. Please try WhatsApp ordering.'); setPaymentLoading(false); return; }
+      const priceNumber = parsePrice(product.price);
+
+      if (!priceNumber) {
+        alert(
+          'Product price is not available. Please contact us via WhatsApp.'
+        );
+        setPaymentLoading(false);
+        return;
       }
-      const totalAmount = priceNum * quantity;
+
+      const loadScript = (src) =>
+        new Promise((resolve, reject) => {
+          const existing = document.querySelector(`script[src="${src}"]`);
+
+          if (existing) {
+            if (window.Razorpay) {
+              resolve(true);
+              return;
+            }
+
+            existing.addEventListener('load', () => resolve(true), {
+              once: true,
+            });
+
+            existing.addEventListener(
+              'error',
+              () => reject(new Error('Script load failed')),
+              { once: true }
+            );
+
+            return;
+          }
+
+          const script = document.createElement('script');
+          script.src = src;
+          script.async = true;
+          script.onload = () => resolve(true);
+          script.onerror = () =>
+            reject(new Error('Script load failed'));
+
+          document.body.appendChild(script);
+        });
+
+      if (!window.Razorpay) {
+        try {
+          await loadScript(
+            'https://checkout.razorpay.com/v1/checkout.js'
+          );
+        } catch {
+          alert(
+            'Payment gateway failed to load. Please try WhatsApp ordering.'
+          );
+          setPaymentLoading(false);
+          return;
+        }
+      }
+
+      const totalAmount = priceNumber * quantity;
       const amountInPaise = Math.round(totalAmount * 100);
-      const orderResponse = await fetch('https://backend-7e8f.onrender.com/api/payment/razorpay/order', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ amount: amountInPaise }) });
-      if (!orderResponse.ok) throw new Error('Failed to create Razorpay order.');
+
+      const orderResponse = await fetch(
+        'https://backend-7e8f.onrender.com/api/payment/razorpay/order',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: amountInPaise }),
+        }
+      );
+
+      if (!orderResponse.ok) {
+        throw new Error('Failed to create Razorpay order.');
+      }
+
       const { orderId } = await orderResponse.json();
+
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY || '', amount: amountInPaise, currency: 'INR',
-        name: 'Vahlaya Astro', description: `${product.title} × ${quantity}`, image: product.image, order_id: orderId,
+        key: import.meta.env.VITE_RAZORPAY_KEY || '',
+        amount: amountInPaise,
+        currency: 'INR',
+        name: 'Vahlaya Astro',
+        description: `${product.title} × ${quantity}`,
+        image: product.image,
+        order_id: orderId,
+
         handler: async (response) => {
           try {
-            const backendResponse = await fetch('https://backend-7e8f.onrender.com/api/payment/razorpay/success', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ paymentId: response.razorpay_payment_id, orderId: response.razorpay_order_id, signature: response.razorpay_signature, productId: product.id, productTitle: product.title, quantity, amount: amountInPaise }) });
-            if (!backendResponse.ok) throw new Error('Payment verification failed.');
-            try { const auth = getAuth(); const currentUser = auth.currentUser; await addDoc(collection(db, 'product_orders'), { userId: currentUser?.email || 'guest', productId: product.id, productTitle: product.title, quantity, amount: totalAmount, transactionId: response.razorpay_payment_id, status: 'paid', timestamp: new Date() }); } catch (e) { logger.warn('Firestore log failed:', e); }
-            alert(`✅ Payment Successful!\n\n${product.title} × ${quantity}\nAmount: ₹${totalAmount.toLocaleString('en-IN')}\n\nWe will contact you within 24 hours for delivery.`);
-          } catch (err) { logger.error('Payment handler error:', err); alert('Payment received! We will contact you shortly.'); }
-          finally { setPaymentLoading(false); }
+            const backendResponse = await fetch(
+              'https://backend-7e8f.onrender.com/api/payment/razorpay/success',
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  paymentId: response.razorpay_payment_id,
+                  orderId: response.razorpay_order_id,
+                  signature: response.razorpay_signature,
+                  productId: product.id,
+                  productTitle: product.title,
+                  quantity,
+                  amount: amountInPaise,
+                }),
+              }
+            );
+
+            if (!backendResponse.ok) {
+              throw new Error('Payment verification failed.');
+            }
+
+            try {
+              const auth = getAuth();
+              const currentUser = auth.currentUser;
+
+              await addDoc(collection(db, 'product_orders'), {
+                userId: currentUser?.email || 'guest',
+                productId: product.id,
+                productTitle: product.title,
+                quantity,
+                amount: totalAmount,
+                transactionId: response.razorpay_payment_id,
+                status: 'paid',
+                timestamp: new Date(),
+              });
+            } catch (firestoreError) {
+              logger.warn(
+                'Firestore log failed:',
+                firestoreError
+              );
+            }
+
+            alert(
+              `✅ Payment Successful!\n\n${product.title} × ${quantity}\nAmount: ₹${totalAmount.toLocaleString(
+                'en-IN'
+              )}\n\nWe will contact you within 24 hours for delivery.`
+            );
+          } catch (error) {
+            logger.error('Payment handler error:', error);
+            alert(
+              'Payment received! We will contact you shortly.'
+            );
+          } finally {
+            setPaymentLoading(false);
+          }
         },
-        prefill: { name: '', email: '', contact: '' },
-        theme: { color: '#bf0603' },
-        modal: { ondismiss: () => setPaymentLoading(false) },
+
+        prefill: {
+          name: '',
+          email: '',
+          contact: '',
+        },
+
+        theme: {
+          color: '#a91d0d',
+        },
+
+        modal: {
+          ondismiss: () => setPaymentLoading(false),
+        },
       };
-      const rzp = new window.Razorpay(options);
-      rzp.on('payment.failed', () => { alert('Payment failed. Please try again or use WhatsApp.'); setPaymentLoading(false); });
-      rzp.open();
-    } catch (err) { logger.error('Razorpay error:', err); alert('Unable to initiate payment. Please try WhatsApp ordering.'); setPaymentLoading(false); }
+
+      const razorpay = new window.Razorpay(options);
+
+      razorpay.on('payment.failed', () => {
+        alert(
+          'Payment failed. Please try again or use WhatsApp.'
+        );
+        setPaymentLoading(false);
+      });
+
+      razorpay.open();
+    } catch (error) {
+      logger.error('Razorpay error:', error);
+      alert(
+        'Unable to initiate payment. Please try WhatsApp ordering.'
+      );
+      setPaymentLoading(false);
+    }
   };
 
   const handleWhatsApp = () => {
     if (!product) return;
-    const msg = `🙏 Hare Krishna!\n\nI would like to order:\n*${product.title}*\nQuantity: ${quantity}\nPrice: ₹${parsePrice(product.price) * quantity}\n\nPlease guide me on payment and delivery. 🕉️`;
-    window.open(`https://wa.me/919904229944?text=${encodeURIComponent(msg)}`, '_blank');
+
+    const message = `🙏 Hare Krishna!\n\nI would like to order:\n*${product.title}*\nQuantity: ${quantity}\nPrice: ₹${
+      parsePrice(product.price) * quantity
+    }\n\nPlease guide me on payment and delivery. 🕉️`;
+
+    window.open(
+      `https://wa.me/919904229944?text=${encodeURIComponent(message)}`,
+      '_blank',
+      'noopener,noreferrer'
+    );
   };
 
-  // ── Loading state ──
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center space-y-4">
-        <div className="w-10 h-10 border-2 border-[#bf0603] border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="text-white/40 text-[11px] uppercase tracking-[0.3em] font-bold">Loading Product...</p>
-      </div>
-    </div>
-  );
-
-  // ── Not found state ──
-  if (!product) return (
-    <>
-      <Header />
-      <main className="min-h-screen flex items-center justify-center text-white px-4">
-        <div className="text-center space-y-5 max-w-md">
-          <div className="text-6xl">🔍</div>
-          <h1 className="title-batangas text-4xl uppercase">Product Not Found</h1>
-          <p className="text-white/50 text-sm">The sacred item you seek could not be found.</p>
-          <Button to="/products" variant="primary" size="md">Back to Sacred Shop</Button>
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-transparent">
+        <div className="space-y-4 text-center">
+          <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-[#b99242] border-t-transparent" />
+          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-white/40">
+            Loading Product...
+          </p>
         </div>
-      </main>
-      <Footer />
-    </>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <>
+        <Header />
+
+        <main className="flex min-h-screen items-center justify-center bg-[#050303] px-4 text-white">
+          <div className="max-w-md space-y-5 text-center">
+            <div className="text-6xl">🔍</div>
+
+            <h1 className="font-serif text-4xl uppercase">
+              Product Not Found
+            </h1>
+
+            <p className="text-sm text-white/50">
+              The sacred item you seek could not be found.
+            </p>
+
+            <Button
+              to="/products"
+              variant="primary"
+              size="md"
+            >
+              Back to Sacred Shop
+            </Button>
+          </div>
+        </main>
+
+        <Footer />
+      </>
+    );
+  }
+
+  const imagesList =
+    product.images?.filter(Boolean).length > 0
+      ? product.images.filter(Boolean)
+      : [product.image].filter(Boolean);
+
+  const discount = getDiscount(
+    product.price,
+    product.oldPrice
   );
 
-  const imagesList = product.images?.length > 0 ? product.images : [product.image];
-  const discount = getDiscount(product.price, product.oldPrice);
-  const priceNum = parsePrice(product.price);
-  const totalPrice = priceNum * quantity;
+  const priceNumber = parsePrice(product.price);
+  const totalPrice = priceNumber * quantity;
 
-  const TABS = [
+  const savingsPerUnit = Math.max(
+    0,
+    parsePrice(product.oldPrice) -
+      parsePrice(product.price)
+  );
+
+  const totalSavings = savingsPerUnit * quantity;
+
+  const tabs = [
     { id: 'description', label: 'Description' },
     { id: 'benefits', label: 'Benefits' },
-    { id: 'shipping', label: 'Shipping' },
+    { id: 'shipping', label: 'Shipping & Delivery' },
   ];
 
-  const BENEFITS = [
-    'Natural, handpicked & energetically cleansed',
+  const benefits = [
+    'Natural, handpicked and energetically cleansed',
     'Charged with Vedic mantras for maximum effect',
-    'Authentic spiritual grade quality',
-    'Suitable for daily wear & meditation',
+    'Authentic spiritual-grade quality',
+    'Suitable for daily use, rituals and meditation',
   ];
 
-  const SHIPPING = [
+  const shipping = [
     'Delivery within 5–7 business days across India',
     'Carefully packed to prevent damage in transit',
     'Cash on delivery available in select areas',
@@ -177,254 +428,655 @@ const ProductDetailsPage = () => {
     <>
       <Header />
 
-      {/* ── Sticky bottom buy bar ── */}
-      <div className={`fixed bottom-0 left-0 right-0 z-50 transition-all duration-400 ${pinned ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}>
-        <div className="bg-[#0a0202]/95 backdrop-blur-2xl border-t border-[#bf0603]/20 px-4 py-3 shadow-[0_-8px_40px_rgba(191,6,3,0.15)]">
-          <div className="max-w-[1080px] mx-auto flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="w-11 h-11 bg-white rounded-xl p-1.5 shrink-0 shadow-md">
-                <img src={imagesList[0]} alt={product.title} className="w-full h-full object-contain" />
+      {/* Sticky buy bar */}
+      <div
+        className={`fixed bottom-0 left-0 right-0 z-50 transition-all duration-500 ${
+          pinned
+            ? 'translate-y-0 opacity-100'
+            : 'pointer-events-none translate-y-full opacity-0'
+        }`}
+      >
+        <div className="border-t border-[#8f5b22]/30 bg-[#090403]/95 px-4 py-3 shadow-[0_-12px_50px_rgba(0,0,0,0.55)] backdrop-blur-2xl">
+          <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4">
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-[#f7efe4] p-1">
+                <img
+                  src={imagesList[0]}
+                  alt={product.title}
+                  className="h-full w-full object-contain"
+                />
               </div>
+
               <div className="min-w-0">
-                <p className="text-white font-bold text-sm truncate">{product.title}</p>
-                <p className="text-[#bf0603] font-black text-base">₹{totalPrice.toLocaleString('en-IN')}</p>
+                <p className="truncate text-sm font-semibold text-white">
+                  {product.title}
+                </p>
+
+                <p className="text-base font-bold text-[#e6c56a]">
+                  ₹{totalPrice.toLocaleString('en-IN')}
+                </p>
               </div>
             </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <button onClick={handleWhatsApp} className="flex items-center gap-1.5 text-[#25D366] text-[10px] font-black uppercase tracking-wider px-3 py-2.5 rounded-xl transition-all cursor-pointer" style={{background:'rgba(37,211,102,0.1)',border:'1px solid rgba(37,211,102,0.4)'}}>
-                <RiWhatsappFill size={15} /> Order
+
+            <div className="flex shrink-0 items-center gap-2">
+              <button
+                type="button"
+                onClick={handleWhatsApp}
+                className="hidden items-center gap-2 rounded-lg border border-[#25D366]/45 px-4 py-3 text-[10px] font-black uppercase tracking-[0.14em] text-[#41d68a] transition-all hover:bg-[#25D366]/15 sm:flex"
+              >
+                <RiWhatsappFill size={16} />
+                Order
               </button>
-              <button onClick={handleRazorpay} disabled={paymentLoading} className="flex items-center gap-2 text-white text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-xl border-2 border-[#bf0603] hover:bg-white hover:text-[#bf0603] transition-all disabled:opacity-50 cursor-pointer" style={{background:'#bf0603'}}>
-                <LuShoppingCart size={14} /> {paymentLoading ? 'Processing...' : 'Buy Now'}
-              </button>
+
+              <button
+                type="button"
+                onClick={handleRazorpay}
+                disabled={paymentLoading}
+                className="flex items-center gap-2 rounded-lg border border-[#ee7743]/55 bg-gradient-to-br from-[#c52f18] to-[#8f1a0c] px-5 py-3 text-[10px] font-black uppercase tracking-[0.14em] text-white shadow-[0_8px_28px_rgba(154,30,13,0.3)] transition-all hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <LuShoppingCart size={15} />
+                {paymentLoading
+                  ? 'Processing...'
+                  : 'Buy Now'}
+              </button>  
             </div>
           </div>
         </div>
       </div>
 
-      <main className="min-h-screen relative z-10 text-white pt-28 pb-28 overflow-hidden">
-        {/* Ambient glows */}
-        <div className="pointer-events-none fixed inset-0 z-0">
-          <div className="absolute top-[-10%] left-[20%] w-[700px] h-[500px] rounded-full bg-[#bf0603] opacity-[0.07] blur-[160px]" />
-          <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] rounded-full bg-amber-800 opacity-[0.04] blur-[120px]" />
-        </div>
+      <main className="relative min-h-screen overflow-hidden bg-transparent pb-28 pt-24 text-white md:pt-28">
+        {/* Cosmic particles */}
+        <div className="pointer-events-none absolute inset-0 opacity-45 bg-[radial-gradient(circle_at_12%_20%,rgba(255,120,68,0.34)_0_1px,transparent_1.7px),radial-gradient(circle_at_87%_22%,rgba(255,181,73,0.28)_0_1px,transparent_1.6px),radial-gradient(circle_at_94%_44%,rgba(255,94,48,0.28)_0_1px,transparent_1.7px),radial-gradient(circle_at_8%_72%,rgba(255,107,52,0.22)_0_1px,transparent_1.8px)] [background-size:190px_190px,230px_230px,280px_280px,320px_320px]" />
 
-        <div className="relative z-10 max-w-[1100px] mx-auto px-4 lg:px-8">
+        <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
-          <nav aria-label="breadcrumb" className="flex items-center gap-2 text-[11px] text-white/30 mb-10 font-semibold uppercase tracking-wider">
-            <Link to="/" className="hover:text-[#bf0603] transition-colors">Home</Link>
-            <span className="text-white/15">/</span>
-            <Link to="/products" className="hover:text-[#bf0603] transition-colors">Sacred Shop</Link>
-            <span className="text-white/15">/</span>
-            <span className="text-white/55 truncate max-w-[200px]">{product.title}</span>
+          <nav
+            aria-label="breadcrumb"
+            className="mb-5 flex items-center gap-3 text-[10px] text-white/40 md:mb-6"
+          >
+            <Link
+              to="/"
+              className="text-white/45 transition-colors hover:text-[#d5ad52]"
+              aria-label="Home"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-3 w-3"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 10.5 12 3l9 7.5" />
+                <path d="M5.5 9.5V21h13V9.5" />
+                <path d="M9.5 21v-6h5v6" />
+              </svg>
+            </Link>
+
+            <span className="text-white/20">/</span>
+
+            <Link
+              to="/products"
+              className="transition-colors hover:text-[#d5ad52]"
+            >
+              Products
+            </Link>
+
+            <span className="text-white/20">/</span>
+
+            <span className="max-w-[220px] truncate text-white/60">
+              {product.title}
+            </span>
           </nav>
 
-         <div
-  className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-16 p-5 md:p-7 rounded-[2rem] text-white relative overflow-hidden"
-  style={{
-    background:
-      "radial-gradient(circle at top left, rgba(191,6,3,0.28), transparent 34%), linear-gradient(145deg, #120303 0%, #070101 45%, #000000 100%)",
-    border: "1px solid rgba(191,6,3,0.22)",
-    boxShadow:
-      "0 30px 90px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06)",
-  }}
->
+          <section className="grid gap-7 lg:gap-10 xl:gap-12" style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gridAutoRows: 'max-content'}}>
+            {/* LEFT SIDE - Image Gallery */}
+            <div className="min-w-0">
+              <div className="rounded-2xl border border-[#966027]/60 bg-gradient-to-br from-[#1a0a07]/95 to-[#080504]/95 p-2 shadow-[0_24px_60px_rgba(0,0,0,0.48),inset_0_1px_0_rgba(255,216,158,0.05),0_0_0_1px_rgba(91,31,16,0.2)]">
+                {/* Main image */}
+                <div className="group relative">
+                  <div className="relative aspect-square overflow-hidden rounded-xl bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.95),transparent_54%),linear-gradient(145deg,#f3eadf,#fff9f1_58%,#eadfd3)] p-3 shadow-[inset_0_0_30px_rgba(125,83,48,0.09)] sm:aspect-[1.15/1] sm:p-4 lg:aspect-[1.23/1]">
+                    {imagesList[activeImageIndex] && (
+                      <img
+                        src={imagesList[activeImageIndex]}
+                        alt={`${product.title} view ${
+                          activeImageIndex + 1
+                        }`}
+                        className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.025]"
+                      />
+                    )}
 
-            {/* ════ LEFT — Image gallery ════ */}
-            <div className="lg:sticky lg:top-[96px] h-fit space-y-4">
-              {/* Main image frame */}
-              <div className="relative rounded-3xl overflow-hidden group" style={{background:'linear-gradient(145deg,#1a0808,#0d0303)',border:'1px solid rgba(191,6,3,0.22)',boxShadow:'0 24px 80px rgba(0,0,0,0.6),inset 0 1px 0 rgba(255,255,255,0.06)'}}>
-                <div className="relative aspect-square bg-gradient-to-br from-white to-gray-50 m-4 rounded-2xl overflow-hidden">
-                  <img src={imagesList[activeImageIndex]} alt={product.title}
-                    className="w-full h-full object-contain p-8 transition-transform duration-700 group-hover:scale-[1.06]" />
-                  {discount && (
-                    <div className="absolute top-3 left-3 z-10">
-                      <span className="text-white text-[9px] font-black uppercase tracking-[0.15em] px-3 py-1.5 rounded-full shadow-[0_6px_20px_rgba(191,6,3,0.5)]" style={{background:'linear-gradient(135deg,#ff3b3b,#8b0000)'}}>
+                    {discount && (
+                      <span className="absolute left-2.5 top-2.5 rounded-md border border-[#ff9770]/20 bg-gradient-to-br from-[#bd3423] to-[#8f160d] px-2.5 py-1.5 text-[9px] font-black leading-none tracking-[0.04em] text-white shadow-[0_5px_14px_rgba(99,10,5,0.32)]">
                         {discount}% OFF
                       </span>
-                    </div>
-                  )}
-                  {imagesList.length > 1 && (<>
-                    <button onClick={() => setActiveImageIndex(i => i > 0 ? i - 1 : imagesList.length - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-xl hover:bg-[#bf0603] transition-all opacity-0 group-hover:opacity-100 cursor-pointer" aria-label="Prev">‹</button>
-                    <button onClick={() => setActiveImageIndex(i => i < imagesList.length - 1 ? i + 1 : 0)} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-xl hover:bg-[#bf0603] transition-all opacity-0 group-hover:opacity-100 cursor-pointer" aria-label="Next">›</button>
-                  </>)}
+                    )}
+                  </div>
                 </div>
-                {imagesList.length > 1 && (
-                  <div className="flex justify-center gap-1.5 pb-4">
-                    {imagesList.map((_, idx) => (
-                      <button key={idx} onClick={() => setActiveImageIndex(idx)} className={`rounded-full transition-all cursor-pointer ${activeImageIndex === idx ? 'w-5 h-1.5 bg-[#bf0603]' : 'w-1.5 h-1.5 bg-white/20 hover:bg-white/40'}`} aria-label={`Image ${idx+1}`} />
+
+                {/* Thumbnails */}
+                <div className="flex items-center gap-2 pt-2">
+                  {imagesList.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setActiveImageIndex((current) =>
+                          current > 0
+                            ? current - 1
+                            : imagesList.length - 1
+                        )
+                      }
+                      className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full border border-[#a56727]/50 bg-[#0d0806]/85 text-[#e8b758]/80 transition-all hover:border-[#d5a448]/85 hover:bg-[#6d2510]/45 hover:text-[#fff5d7]"
+                      aria-label="Previous image"
+                    >
+                      <span className="text-lg leading-none">‹</span>
+                    </button>
+                  )}
+
+                  <div className="flex min-w-0 flex-1 justify-center gap-2.5 overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    {imagesList.map((image, index) => (
+                      <button
+                        type="button"
+                        key={`${image}-${index}`}
+                        onClick={() =>
+                          setActiveImageIndex(index)
+                        }
+                        className={`h-12 w-[54px] shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-[#eee5d9] to-[#fffaf4] p-[3px] transition-all sm:h-[52px] sm:w-[58px] ${
+                          activeImageIndex === index
+                            ? '-translate-y-px border border-[#dca644]/90 opacity-100 shadow-[0_0_0_1px_rgba(220,166,68,0.22),0_5px_18px_rgba(84,36,14,0.42)]'
+                            : 'border border-[#70461f]/40 opacity-70 hover:-translate-y-px hover:opacity-100'
+                        }`}
+                        aria-label={`Show image ${index + 1}`}
+                      >
+                        <img
+                          src={image}
+                          alt={`${product.title} thumbnail ${
+                            index + 1
+                          }`}
+                          className="h-full w-full object-contain"
+                        />
+                      </button>
                     ))}
                   </div>
-                )}
-              </div>
-              {/* Thumbnails */}
-              {imagesList.length > 1 && (
-                <div className="flex gap-2.5 overflow-x-auto pb-1">
-                  {imagesList.map((img, idx) => (
-                    <button key={idx} onClick={() => setActiveImageIndex(idx)} className="shrink-0 w-[72px] h-[72px] rounded-2xl overflow-hidden p-1.5 transition-all cursor-pointer" style={{background:'white',border:activeImageIndex===idx?'2px solid #bf0603':'2px solid transparent',opacity:activeImageIndex===idx?1:0.5,boxShadow:activeImageIndex===idx?'0 0 20px rgba(191,6,3,0.4)':'none'}}>
-                      <img src={img} alt={`View ${idx+1}`} className="w-full h-full object-contain" />
+
+                  {imagesList.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setActiveImageIndex((current) =>
+                          current <
+                          imagesList.length - 1
+                            ? current + 1
+                            : 0
+                        )
+                      }
+                      className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full border border-[#a56727]/50 bg-[#0d0806]/85 text-[#e8b758]/80 transition-all hover:border-[#d5a448]/85 hover:bg-[#6d2510]/45 hover:text-[#fff5d7]"
+                      aria-label="Next image"
+                    >
+                      <span className="text-lg leading-none">›</span>
                     </button>
-                  ))}
+                  )}
                 </div>
-              )}
-              {/* Trust badges */}
-              <div className="grid grid-cols-3 gap-2.5">
-                {[{icon:<LuShield size={18}/>,label:'Authentic',sub:'100% genuine'},{icon:<LuTruck size={18}/>,label:'Fast Delivery',sub:'5–7 days'},{icon:<LuPackage size={18}/>,label:'Safe Pack',sub:'Damage-free'}].map(({icon,label,sub})=>(
-                  <div key={label} className="flex flex-col items-center gap-1.5 rounded-2xl py-4 px-2 text-center" style={{background:'linear-gradient(145deg,rgba(191,6,3,0.08),rgba(0,0,0,0.3))',border:'1px solid rgba(191,6,3,0.15)'}}>
-                    <span className="text-[#bf0603]">{icon}</span>
-                    <p className="text-white text-[10px] font-black uppercase tracking-wider leading-none">{label}</p>
-                    <p className="text-white/35 text-[9px]">{sub}</p>
+              </div>
+
+              {/* Trust cards */}
+              <div className="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {[
+                  {
+                    icon: <LuShield size={18} />,
+                    label: 'Authentic',
+                    sub: '100% Genuine',
+                  },
+                  {
+                    icon: <LuTruck size={18} />,
+                    label: 'Fast Delivery',
+                    sub: '5–7 Days',
+                  },
+                  {
+                    icon: <LuPackage size={18} />,
+                    label: 'Safe Pack',
+                    sub: 'Damage-Free',
+                  },
+                  {
+                    icon: <LuCheck size={18} />,
+                    label: 'Easy Returns',
+                    sub: 'Hassle-Free',
+                  },
+                ].map(({ icon, label, sub }) => (
+                  <div
+                    key={label}
+                    className="flex min-h-[66px] flex-col items-center justify-center gap-[5px] rounded-xl border border-[#74461f]/40 bg-gradient-to-br from-[#1c0c08]/85 to-[#080605]/95 px-1.5 py-2.5 text-center shadow-[inset_0_1px_0_rgba(255,224,168,0.025)]"
+                  >
+                    <span className="text-[#d9ad4b]">
+                      {icon}
+                    </span>
+
+                    <p className="text-[10px] font-black uppercase leading-none tracking-[0.08em] text-white/85">
+                      {label}
+                    </p>
+
+                    <p className="text-[8px] uppercase tracking-[0.04em] text-white/35">
+                      {sub}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* ════ RIGHT — Product info ════ */}
-            <div className="flex flex-col gap-7">
-              {/* Tags */}
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#bf0603] px-3 py-1.5 rounded-full" style={{background:'rgba(191,6,3,0.12)',border:'1px solid rgba(191,6,3,0.3)'}}>🕉️ Sacred Item</span>
-                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-emerald-400 flex items-center gap-1 px-3 py-1.5 rounded-full" style={{background:'rgba(52,211,153,0.1)',border:'1px solid rgba(52,211,153,0.25)'}}><LuCheck size={9}/> In Stock</span>
-              </div>
+            {/* RIGHT SIDE - Product Details */}
+            <div className="min-w-0 lg:pt-0.5">
               {/* Title */}
-              <h1 className="title-batangas text-4xl md:text-5xl xl:text-6xl font-black text-white leading-[1.08]" style={{textShadow:'0 2px 30px rgba(191,6,3,0.25)'}}>
-                {product.title}
-              </h1>
-              {/* Stars */}
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-0.5">
-                  {Array.from({length:5}).map((_,i)=><LuStar key={i} size={14} className="text-amber-400" style={{fill:'#fbbf24'}}/>)}
-                </div>
-                <span className="text-white/35 text-[11px] font-bold">4.9 · 120+ verified reviews</span>
-              </div>
-              {/* Price block */}
-              <div className="rounded-2xl px-6 py-5 flex flex-wrap items-center gap-4" style={{background:'linear-gradient(135deg,rgba(191,6,3,0.1),rgba(0,0,0,0.4))',border:'1px solid rgba(191,6,3,0.2)'}}>
+              <div className="flex items-start justify-between gap-5">
                 <div>
-                  <p className="text-white/35 text-[9px] uppercase tracking-widest font-bold mb-1">Price</p>
-                  <span className="title-batangas text-5xl font-black text-white leading-none">₹{product.price?.toString().replace(/[^\d.]/g,'')||product.price}</span>
+                  <p className="mb-1.5 text-[9px] font-black uppercase tracking-[0.22em] text-[#d7ab4e]">
+                    ✦ Premium Wellness
+                  </p>
+
+                  <h1 className="font-serif text-[2.2rem] leading-[0.98] text-[#f6efe6] sm:text-[2.65rem] lg:text-[2.75rem]">
+                    {product.title}
+                  </h1>
                 </div>
-                {product.oldPrice && (
-                  <div>
-                    <p className="text-white/25 text-[9px] uppercase tracking-widest font-bold mb-1">MRP</p>
-                    <span className="text-xl text-white/30 line-through font-semibold">₹{product.oldPrice?.toString().replace(/[^\d.]/g,'')||product.oldPrice}</span>
-                  </div>
-                )}
-                {discount && <span className="text-[10px] font-black text-emerald-400 px-3 py-1.5 rounded-full self-center" style={{background:'rgba(52,211,153,0.1)',border:'1px solid rgba(52,211,153,0.25)'}}>Save {discount}%</span>}
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setWishlisted((current) => !current)
+                  }
+                  className={`inline-flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full border transition-all ${
+                    wishlisted
+                      ? 'border-[#e1aa4b]/90 bg-[#632511]/40 text-[#ffd782] shadow-[0_0_22px_rgba(197,98,35,0.22)]'
+                      : 'border-[#a36427]/60 bg-[#0d0907]/85 text-[#f4dfb0]/90 shadow-[0_0_16px_rgba(153,73,26,0.14)] hover:border-[#e1aa4b]/90 hover:bg-[#632511]/40 hover:text-[#ffd782]'
+                  }`}
+                  aria-label={
+                    wishlisted
+                      ? 'Remove from wishlist'
+                      : 'Add to wishlist'
+                  }
+                >
+                  <span className="text-lg leading-none">
+                    {wishlisted ? '♥' : '♡'}
+                  </span>
+                </button>
               </div>
+
+              {/* Rating */}
+              <div className="mb-4 mt-2.5 flex flex-wrap items-center gap-2">
+                <div className="flex items-center gap-0.5">
+                  {Array.from({ length: 5 }).map(
+                    (_, index) => (
+                      <LuStar
+                        key={index}
+                        size={13}
+                        className="fill-current text-[#f2bd36]"
+                      />
+                    )
+                  )}
+                </div>
+
+                <span className="text-[10px] text-white/65">
+                  4.9
+                </span>
+
+                <span className="text-white/20">|</span>
+
+                <span className="text-[10px] text-white/40">
+                  120+ verified reviews
+                </span>
+              </div>
+
+              {/* Price */}
+              <div className="rounded-xl border border-[#6e3d1f]/40 bg-gradient-to-br from-[#130b09]/80 to-[#080605]/95 px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,217,163,0.025)] sm:px-[18px]">
+                <div className="flex flex-wrap items-end gap-x-10 gap-y-3">
+                  <div>
+                    <p className="mb-1 text-[8px] font-extrabold uppercase leading-none tracking-[0.08em] text-white/25">
+                      Price
+                    </p>
+
+                    <p className="text-[2.35rem] font-semibold leading-none tracking-[-0.04em] text-[#f4f1ed]">
+                      ₹
+                      {priceNumber.toLocaleString(
+                        'en-IN'
+                      )}
+                    </p>
+                  </div>
+
+                  {product.oldPrice && (
+                    <div>
+                      <p className="mb-1 text-[8px] font-extrabold uppercase leading-none tracking-[0.08em] text-white/25">
+                        MRP
+                      </p>
+
+                      <p className="text-lg text-white/30 line-through">
+                        ₹
+                        {parsePrice(
+                          product.oldPrice
+                        ).toLocaleString('en-IN')}
+                      </p>
+                    </div>
+                  )}
+
+                  {discount && (
+                    <span className="self-center rounded-full border border-[#f87952]/20 bg-gradient-to-br from-[#c12f1d] to-[#8c160c] px-[13px] py-[7px] text-[9px] font-extrabold text-[#fff1e7] shadow-[0_8px_20px_rgba(121,23,10,0.2)]">
+                      Save {discount}%
+                    </span>
+                  )}
+                </div>
+
+                {totalSavings > 0 && (
+                  <p className="mt-3 flex items-center gap-2 text-[10px] text-white/40">
+                    <span className="text-[#d8ae4f]">
+                      ◇
+                    </span>
+                    You save ₹
+                    {totalSavings.toLocaleString(
+                      'en-IN'
+                    )}{' '}
+                    on this order
+                  </p>
+                )}
+              </div>
+
               {/* Tabs */}
-              <div>
-                <div className="flex gap-1 p-1 rounded-2xl w-fit" style={{background:'rgba(0,0,0,0.4)',border:'1px solid rgba(255,255,255,0.08)'}}>
-                  {TABS.map(tab=>(
-                    <button key={tab.id} onClick={()=>setActiveTab(tab.id)}
-                      className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.15em] transition-all cursor-pointer ${activeTab===tab.id?'text-white shadow-[0_6px_20px_rgba(191,6,3,0.35)]':'text-white/35 hover:text-white/70 hover:bg-white/5'}`}
-                      style={activeTab===tab.id?{background:'linear-gradient(135deg,#ff3131,#bf0603)'}:{}}>
+              <div className="mt-3 overflow-hidden rounded-xl border border-[#6e3d1f]/40 bg-gradient-to-br from-[#130b09]/80 to-[#080605]/95 shadow-[inset_0_1px_0_rgba(255,217,163,0.025)]">
+                <div className="grid grid-cols-3 border-b border-[#643e1f]/40">
+                  {tabs.map((tab) => (
+                    <button
+                      type="button"
+                      key={tab.id}
+                      onClick={() =>
+                        setActiveTab(tab.id)
+                      }
+                      className={`relative px-2 py-2.5 text-[8px] font-extrabold uppercase leading-[1.15] tracking-[0.075em] transition-colors after:absolute after:bottom-[-1px] after:left-[13%] after:right-[13%] after:h-px after:transition-all ${
+                        activeTab === tab.id
+                          ? 'text-[#d8ad55] after:bg-[#d2a34a] after:shadow-[0_0_10px_rgba(218,169,78,0.45)]'
+                          : 'text-white/35 after:bg-transparent hover:text-[#d8ad55]'
+                      }`}
+                    >
                       {tab.label}
                     </button>
                   ))}
                 </div>
-                <div className="mt-3 rounded-2xl p-6 min-h-[110px]" style={{background:'linear-gradient(145deg,rgba(28,8,8,0.6),rgba(10,3,3,0.8))',border:'1px solid rgba(255,255,255,0.06)'}}>
-                  {activeTab==='description'&&<p className="text-white/60 text-sm leading-[1.9]">{product.desc||'No description available.'}</p>}
-                  {activeTab==='benefits'&&<ul className="space-y-3">{BENEFITS.map((item,i)=><li key={i} className="flex items-start gap-3 text-sm text-white/60"><span className="text-[#bf0603] text-base leading-none mt-0.5">✦</span><span>{item}</span></li>)}</ul>}
-                  {activeTab==='shipping'&&<ul className="space-y-3">{SHIPPING.map((item,i)=><li key={i} className="flex items-start gap-3 text-sm text-white/60"><LuCheck size={14} className="text-emerald-400 shrink-0 mt-0.5"/><span>{item}</span></li>)}</ul>}
+
+                <div className="min-h-[136px] px-4 py-3.5 sm:px-5">
+                  {activeTab === 'description' && (
+                    <p className="mb-2.5 text-[11px] leading-[1.55] text-white/50">
+                      {product.desc ||
+                        'Crafted with carefully selected ingredients to support your daily wellness ritual and spiritual balance.'}
+                    </p>
+                  )}
+
+                  {(activeTab === 'description' ||
+                    activeTab === 'benefits') && (
+                    <ul className="space-y-1.5">
+                      {benefits.map((item) => (
+                        <li
+                          key={item}
+                          className="flex items-start gap-2 text-[10px] leading-[1.45] text-white/55"
+                        >
+                          <span className="mt-px text-[#d8ae4f]">
+                            ✦
+                          </span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {activeTab === 'shipping' && (
+                    <ul className="space-y-1.5">
+                      {shipping.map((item) => (
+                        <li
+                          key={item}
+                          className="flex items-start gap-2 text-[10px] leading-[1.45] text-white/55"
+                        >
+                          <LuCheck
+                            size={12}
+                            className="mt-px shrink-0 text-[#d8ae4f]"
+                          />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </div>
-              {/* Divider */}
-              <div className="h-px bg-gradient-to-r from-[#bf0603]/20 via-white/10 to-transparent" />
-              {/* Quantity */}
-              <div className="flex flex-wrap items-center gap-5">
-                <span className="text-[11px] font-black text-white/35 uppercase tracking-[0.2em]">Qty</span>
-                <div className="flex items-center gap-1 p-1 rounded-2xl" style={{background:'rgba(0,0,0,0.5)',border:'1px solid rgba(255,255,255,0.1)'}}>
-                  <button onClick={decrease} className="w-10 h-10 flex items-center justify-center rounded-xl text-white hover:bg-[#bf0603] hover:shadow-[0_0_14px_rgba(191,6,3,0.4)] transition-all cursor-pointer" aria-label="Decrease"><LuMinus size={13}/></button>
-                  <span className="w-12 text-center text-base font-black text-white tabular-nums">{quantity}</span>
-                  <button onClick={increase} className="w-10 h-10 flex items-center justify-center rounded-xl text-white hover:bg-[#bf0603] hover:shadow-[0_0_14px_rgba(191,6,3,0.4)] transition-all cursor-pointer" aria-label="Increase"><LuPlus size={13}/></button>
+
+              {/* Quantity + CTA */}
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="flex shrink-0 items-center gap-2.5">
+                  <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">
+                    Qty
+                  </span>
+
+                  <div className="grid h-[38px] min-w-[104px] grid-cols-[32px_40px_32px] items-center overflow-hidden rounded-lg border border-[#69472d]/50 bg-[#080706]/90 text-white/85">
+                    <button
+                      type="button"
+                      onClick={decrease}
+                      aria-label="Decrease quantity"
+                      className="inline-flex h-full items-center justify-center text-white/70 transition-all hover:bg-[#6d3215]/20 hover:text-[#f4cc77]"
+                    >
+                      <LuMinus size={12} />
+                    </button>
+
+                    <span className="text-center text-xs font-extrabold">
+                      {quantity}
+                    </span>
+
+                    <button
+                      type="button"
+                      onClick={increase}
+                      aria-label="Increase quantity"
+                      className="inline-flex h-full items-center justify-center text-white/70 transition-all hover:bg-[#6d3215]/20 hover:text-[#f4cc77]"
+                    >
+                      <LuPlus size={12} />
+                    </button>
+                  </div>
                 </div>
-                {quantity>1&&<div className="flex flex-col"><span className="text-white/30 text-[9px] uppercase tracking-widest font-bold">Total</span><span className="text-white font-black text-lg leading-tight">₹{totalPrice.toLocaleString('en-IN')}</span></div>}
-              </div>
-              {/* CTA buttons */}
-              <div className="flex flex-col sm:flex-row gap-3">
-                <button onClick={handleRazorpay} disabled={paymentLoading}
-                  className="flex-1 flex items-center justify-center gap-2.5 py-4 px-6 rounded-2xl font-black uppercase tracking-[0.12em] text-[11px] text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer hover:-translate-y-0.5 hover:bg-white hover:text-[#bf0603]"
-                  style={{background:'linear-gradient(135deg,#ff3131,#bf0603)',border:'2px solid rgba(191,6,3,0.6)',boxShadow:'0 10px 30px rgba(191,6,3,0.35)'}}>
-                  {paymentLoading?(<><div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"/>Processing...</>):(<><LuShoppingCart size={16}/>Buy Now · ₹{totalPrice.toLocaleString('en-IN')}</>)}
+
+                <button
+                  type="button"
+                  onClick={handleRazorpay}
+                  disabled={paymentLoading}
+                  className="inline-flex min-h-[42px] flex-1 items-center justify-center gap-2 rounded-lg border border-[#f5764c]/60 bg-gradient-to-br from-[#c63620] to-[#9a1b0d] px-4 text-[9px] font-black uppercase tracking-[0.09em] text-white shadow-[inset_0_1px_0_rgba(255,222,192,0.11),0_10px_25px_rgba(127,28,11,0.2)] transition-all hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgba(255,222,192,0.14),0_13px_30px_rgba(154,37,15,0.3)] disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {paymentLoading ? (
+                    <>
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      <LuShoppingCart size={16} />
+                      Buy Now · ₹
+                      {totalPrice.toLocaleString(
+                        'en-IN'
+                      )}
+                    </>
+                  )}
                 </button>
-                <button onClick={handleWhatsApp}
-                  className="flex-1 flex items-center justify-center gap-2.5 py-4 px-6 rounded-2xl font-black uppercase tracking-[0.12em] text-[11px] text-[#25D366] transition-all hover:-translate-y-0.5 hover:bg-[#25D366]/15 cursor-pointer"
-                  style={{background:'rgba(37,211,102,0.08)',border:'2px solid rgba(37,211,102,0.3)'}}>
-                  <RiWhatsappFill size={18}/>WhatsApp Order
+
+                <button
+                  type="button"
+                  onClick={handleWhatsApp}
+                  className="inline-flex min-h-[42px] flex-1 items-center justify-center gap-2 rounded-lg border border-[#26bb6f]/50 bg-[#0f291e]/20 px-4 text-[9px] font-black uppercase tracking-[0.09em] text-[#44d68d] transition-all hover:-translate-y-px hover:bg-[#1a6e48]/20 hover:shadow-[0_12px_25px_rgba(10,86,53,0.13)]"
+                >
+                  <RiWhatsappFill size={16} />
+                  WhatsApp Order
                 </button>
               </div>
-              <p className="text-[10px] text-white/20 text-center tracking-wide">🔒 Secured by Razorpay · UPI · Cards · Net Banking · COD available</p>
-              {/* Delivery mini-grid */}
-              <div className="grid grid-cols-2 gap-2">
-                {[{emoji:'🚚',title:'5–7 Day Delivery',sub:'Pan India shipping'},{emoji:'↩️',title:'Easy Returns',sub:'Hassle-free policy'},{emoji:'🔒',title:'Secure Checkout',sub:'256-bit encryption'},{emoji:'🕉️',title:'Vedic Charged',sub:'Mantra energized'}].map(({emoji,title,sub})=>(
-                  <div key={title} className="flex items-center gap-3 rounded-2xl px-4 py-3" style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.06)'}}>
-                    <span className="text-xl shrink-0">{emoji}</span>
+
+              {/* Payment security */}
+              <p className="mt-2.5 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[8px] text-white/30">
+                <span className="flex items-center gap-1 text-[#d0a541]">
+                  <span aria-hidden="true">🔒</span>
+                  Secured by Razorpay
+                </span>
+                <span>•</span>
+                <span>UPI</span>
+                <span>•</span>
+                <span>Cards</span>
+                <span>•</span>
+                <span>Net Banking</span>
+                <span>•</span>
+                <span>COD available</span>
+              </p>
+
+              {/* Shipping summary */}
+              <div className="mt-4 grid overflow-hidden rounded-xl border border-[#6e3d1f]/40 bg-gradient-to-br from-[#130b09]/80 to-[#080605]/95 shadow-[inset_0_1px_0_rgba(255,217,163,0.025)] sm:grid-cols-[minmax(0,1.28fr)_minmax(215px,0.92fr)]">
+                <div className="flex min-h-[82px] items-center gap-3 border-l border-[#b52d19]/75 px-4 py-[13px] shadow-[inset_5px_0_20px_rgba(121,19,10,0.07)]">
+                  <span className="inline-flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle,rgba(190,38,24,0.9),rgba(107,14,8,0.9))] text-[#fff1e9] shadow-[0_0_22px_rgba(184,35,20,0.28)]">
+                    <LuTruck size={18} />
+                  </span>
+
+                  <div>
+                    <p className="text-[12px] font-semibold text-white/85">
+                      Shipping & Delivery
+                    </p>
+
+                    <p className="mt-1 text-[9px] leading-[1.5] text-white/35">
+                      We deliver across India with safe and reliable shipping partners you can trust.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col justify-center gap-2.5 border-t border-[#583923]/40 px-3.5 py-3 sm:border-l sm:border-t-0">
+                  <div className="flex items-center gap-2.5 text-[#d6aa4d]">
+                    <span className="text-base leading-none">
+                      ◫
+                    </span>
+
                     <div>
-                      <p className="text-white/70 text-[11px] font-bold leading-tight">{title}</p>
-                      <p className="text-white/30 text-[10px] leading-tight">{sub}</p>
+                      <p className="text-[9px] font-bold leading-[1.1] text-white/70">
+                        Estimated Delivery
+                      </p>
+
+                      <span className="mt-0.5 block text-[8px] leading-[1.1] text-white/30">
+                        5 – 7 Business Days
+                      </span>
                     </div>
                   </div>
-                ))}
+
+                  <div className="flex items-center gap-2.5 text-[#d6aa4d]">
+                    <span className="text-base leading-none">
+                      ◇
+                    </span>
+
+                    <div>
+                      <p className="text-[9px] font-bold leading-[1.1] text-white/70">
+                        Free Shipping
+                      </p>
+
+                      <span className="mt-0.5 block text-[8px] leading-[1.1] text-white/30">
+                        On orders above ₹1,500
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          </section>
 
-          {/* ── Related Products ── */}
+          {/* Related products */}
           {relatedProducts.length > 0 && (
-            <section className="mt-24">
-              <div className="flex items-center gap-5 mb-8">
+            <section className="mt-20 md:mt-24">
+              <div className="mb-6 flex items-end gap-5">
                 <div>
-                  <p className="text-[#bf0603] text-[10px] font-black uppercase tracking-[0.3em] mb-1">Explore More</p>
-                  <h2 className="title-batangas text-3xl md:text-4xl text-white uppercase">You May Also Like</h2>
+                  <p className="mb-1 text-[9px] font-black uppercase tracking-[0.3em] text-[#c99a3d]">
+                    Explore More
+                  </p>
+
+                  <h2 className="font-serif text-2xl uppercase text-white md:text-3xl">
+                    You May Also Like
+                  </h2>
                 </div>
-                <div className="flex-1 h-px bg-gradient-to-r from-[#bf0603]/30 to-transparent" />
-                <Button to="/products" variant="primary" size="sm" arrow>View All</Button>
+
+                <div className="h-px flex-1 bg-gradient-to-r from-[#8f5b22]/45 to-transparent" />
+
+                <Button
+                  to="/products"
+                  variant="primary"
+                  size="sm"
+                  arrow
+                >
+                  View All
+                </Button>
               </div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                {relatedProducts.map((p, index) => {
-                  const prodId = p.id || p.title.replace(/\s+/g, '-').toLowerCase();
-                  const disc = getDiscount(p.price, p.oldPrice);
-                  return (
-                    <Link key={index} to={`/products/${prodId}`} className="related-card group">
-                      <div className="related-img-wrap">
-                        <img src={p.image} alt={p.title} className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-[1.07]" />
-                        {disc && <span className="rel-badge">{disc}% OFF</span>}
-                      </div>
-                      <div className="related-body">
-                        <h3 className="related-title">{p.title}</h3>
-                        <div className="flex items-baseline gap-2 mt-auto pt-2.5" style={{borderTop:'1px solid rgba(255,255,255,0.07)'}}>
-                          <span className="title-batangas text-lg font-black text-white">₹{p.price?.toString().replace(/[^\d.]/g,'')||p.price}</span>
-                          {p.oldPrice&&<span className="text-xs text-white/25 line-through">₹{p.oldPrice?.toString().replace(/[^\d.]/g,'')||p.oldPrice}</span>}
+
+              <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+                {relatedProducts.map(
+                  (item, index) => {
+                    const productId =
+                      item.id ||
+                      item.title
+                        .replace(/\s+/g, '-')
+                        .toLowerCase();
+
+                    const itemDiscount =
+                      getDiscount(
+                        item.price,
+                        item.oldPrice
+                      );
+
+                    return (
+                      <Link
+                        key={`${productId}-${index}`}
+                        to={`/products/${productId}`}
+                        className="group flex flex-col overflow-hidden rounded-2xl border border-[#714521]/30 bg-gradient-to-br from-[#180b08]/90 to-[#090605]/95 text-white shadow-[0_5px_24px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1.5 hover:border-[#bb7c34]/50 hover:shadow-[0_18px_45px_rgba(0,0,0,0.44)]"
+                      >
+                        <div className="relative m-[7px] mb-0 aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-[#eee5d8] to-[#fffaf4]">
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-[1.06]"
+                          />
+
+                          {itemDiscount && (
+                            <span className="absolute left-2 top-2 rounded-md bg-gradient-to-br from-[#be3522] to-[#8d160c] px-2 py-1 text-[8px] font-black text-white">
+                              {itemDiscount}% OFF
+                            </span>
+                          )}
                         </div>
-                      </div>
-                    </Link>
-                  );
-                })}
+
+                        <div className="flex flex-1 flex-col gap-1.5 p-3.5">
+                          <h3 className="max-h-[2.6em] overflow-hidden font-serif text-base font-bold leading-[1.3] text-white/90">
+                            {item.title}
+                          </h3>
+
+                          <div className="mt-auto flex items-baseline gap-2 border-t border-white/[0.07] pt-2.5">
+                            <span className="font-serif text-lg font-black text-white">
+                              ₹
+                              {parsePrice(
+                                item.price
+                              ).toLocaleString(
+                                'en-IN'
+                              )}
+                            </span>
+
+                            {item.oldPrice && (
+                              <span className="text-xs text-white/25 line-through">
+                                ₹
+                                {parsePrice(
+                                  item.oldPrice
+                                ).toLocaleString(
+                                  'en-IN'
+                                )}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  }
+                )}
               </div>
             </section>
           )}
-
         </div>
       </main>
 
       <Footer />
-
-      <style>{`
-        .related-card {
-          display:flex;flex-direction:column;
-          background:linear-gradient(145deg,rgba(28,8,8,0.9),rgba(12,3,3,0.95));
-          border:1px solid rgba(191,6,3,0.15);border-radius:18px;overflow:hidden;
-          text-decoration:none;color:white;
-          box-shadow:0 4px 20px rgba(0,0,0,0.4);
-          transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),border-color 0.3s,box-shadow 0.3s;
-        }
-        .related-card:hover{transform:translateY(-6px) scale(1.01);border-color:rgba(191,6,3,0.5);box-shadow:0 20px 50px rgba(191,6,3,0.18),0 6px 24px rgba(0,0,0,0.5);}
-        .related-img-wrap{aspect-ratio:1;background:linear-gradient(145deg,#fff,#f5f5f5);position:relative;overflow:hidden;margin:8px 8px 0 8px;border-radius:12px;}
-        .rel-badge{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,#ff3b3b,#8b0000);color:white;font-size:8px;font-weight:900;letter-spacing:0.12em;text-transform:uppercase;padding:3px 9px;border-radius:999px;box-shadow:0 4px 12px rgba(191,6,3,0.4);}
-        .related-body{padding:12px 14px 14px;display:flex;flex-direction:column;flex:1;gap:5px;}
-        .related-title{font-family:'Batangas',sans-serif;font-size:1rem;font-weight:700;color:white;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;transition:color 0.2s;}
-        .related-card:hover .related-title{color:#ff6b6b;}
-      `}</style>
     </>
   );
 };
