@@ -1,4 +1,4 @@
-﻿import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import "./Testimonials.css";
 
 const testimonialsData = [
@@ -193,6 +193,21 @@ const Testimonials = () => {
     >
       <div className="testimonials-background" aria-hidden="true" />
       <div className="testimonials-overlay" aria-hidden="true" />
+
+      {/* ── Section Header ── */}
+      <div className="testimonials-header">
+        <div className="testimonials-eyebrow-row">
+          <span className="testimonials-eyebrow-line" />
+          <span className="testimonials-eyebrow-text">What They Say</span>
+          <span className="testimonials-eyebrow-line" />
+        </div>
+        <h2 className="title-batangas testimonials-title">
+          Client Testimonials
+        </h2>
+        <p className="subtitle-poppins testimonials-subtitle">
+          Hear from those whose lives have been touched by the wisdom of Vahlay Astro.
+        </p>
+      </div>
 
       <div className="testimonials-wrapper">
         <div className="testimonials-quote-row">

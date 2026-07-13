@@ -3,20 +3,96 @@
   box-sizing: border-box;
 }
 
-.testimonials-section {
+/* ── Section Header ── */
+.testimonials-header {
   position: relative;
-  width: 100%;
-  min-height: 760px;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  isolation: isolate;
-  color: #ffffff;
-  background: transparent;
-  padding: 100px 0px;
+  z-index: 10;
+  text-align: center;
+  padding: 60px 20px 0;
+  pointer-events: none;
 }
 
+.testimonials-eyebrow-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
 
+.testimonials-eyebrow-line {
+  display: block;
+  width: 36px;
+  height: 2px;
+  background: #bf0603;
+  border-radius: 2px;
+}
+
+.testimonials-eyebrow-text {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #bf0603;
+}
+
+.testimonials-title {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  color: #fff;
+  margin: 0 0 14px;
+  filter: drop-shadow(0 2px 12px rgba(191, 6, 3, 0.2));
+}
+
+.testimonials-subtitle {
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.62);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .testimonials-header {
+    padding: 40px 16px 0;
+  }
+
+  .testimonials-title {
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+  }
+}
+
+.testimonials-section {
+  width: 100%;
+  --gap: 1.25rem;
+  --speed: 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --closed: 5.5rem;
+  --open: 36rem;
+  --accent: #bf0603;
+  background: transparent;
+  position: relative;
+}
+
+/* Premium soft background glow */
+.testimonials-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+  145deg,
+  #8B0000 0%,
+  #FF3D00 45%,
+  #FFD700 100%
+);
+  filter: blur(80px);
+  opacity: 0.7;
+  transform: scale(1.1);
+  z-index: -1;
+}
 .testimonials-wrapper {
   position: relative;
   width: 100%;
