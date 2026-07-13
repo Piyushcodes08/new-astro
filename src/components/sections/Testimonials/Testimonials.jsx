@@ -1,303 +1,378 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+} from "firebase/firestore";
+import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { db } from "../../../firebaseConfig";
-import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
-import SliderHeader from "../../ui/Slider/SliderHeader";
-import SliderControls from "../../ui/Slider/SliderControls";
 import "./Testimonials.css";
 
-// Fallback data — shown while loading or if no reviews are in Firebase
 const fallbackTestimonials = [
   {
     id: "f1",
     rating: 5,
-    quote: "The Essentials of Self-Discovery (Panchang and Basic Astrology) truly changed how I view astrology. Valay Sir's explanations were so relatable—it felt less like a class and more like a personal exploration.",
+    quote:
+      "The Essentials of Self-Discovery truly changed how I view astrology. Vahlay Sir's explanations were relatable and easy to understand.",
     name: "Nirav Deshmukh",
     title: "The Essentials of Self-Discovery",
   },
   {
     id: "f2",
     rating: 4,
-    quote: "I joined mainly out of curiosity, but I ended up connecting with myself on a whole new level. The course gave me a beautiful foundation in astrology without ever feeling overwhelming.",
+    quote:
+      "I joined mainly out of curiosity, but I ended up connecting with myself on a whole new level. The course gave me a beautiful foundation in astrology.",
     name: "Malvi Vashi",
     title: "The Essentials of Self-Discovery",
   },
   {
     id: "f3",
     rating: 5,
-    quote: "Taking this course was like being handed a mirror. It helped me understand cycles and energies that I had felt before but never really understood. Valay Sir's calm approach made it easy to grasp.",
+    quote:
+      "Taking this course was like being handed a mirror. It helped me understand cycles and energies that I had felt before but never understood.",
     name: "Vishal Patel",
     title: "The Essentials of Self-Discovery",
   },
   {
     id: "f4",
     rating: 4,
-    quote: "Valay Sir doesn't just teach—he guides. The knowledge shared was practical and meaningful. I now feel more aware of my days, my choices, and even my natural strengths.",
+    quote:
+      "Vahlay Sir doesn't just teach—he guides. The knowledge shared was practical and meaningful. I now feel more aware of my natural strengths.",
     name: "Viren Tailor",
     title: "Foundation of Vedic Astrology",
   },
   {
     id: "f5",
     rating: 5,
-    quote: "Before this course I only knew astrology at a surface level. This helped me understand the deeper structure—the logic behind the planets, signs, and houses. Highly recommended!",
+    quote:
+      "Before this course, I only knew astrology at a surface level. This helped me understand the deeper logic behind planets, signs, and houses.",
     name: "Nishant Tailor",
     title: "Foundation of Vedic Astrology",
   },
   {
     id: "f6",
     rating: 5,
-    quote: "This course gave me the confidence to actually read and understand a birth chart. I've even started helping friends interpret their charts. Feels great to have that kind of knowledge!",
+    quote:
+      "This course gave me the confidence to read and understand a birth chart. I have even started helping friends interpret their charts.",
     name: "Jay Kantharia",
     title: "Foundation of Vedic Astrology",
   },
 ];
 
-// Render fractional stars
-const StarRating = ({ rating }) => {
-  const stars = [];
-  for (let i = 1; i <= 5; i++) {
-    if (i <= Math.floor(rating)) {
-      stars.push(<FaStar key={i} className="text-yellow-400" />);
-    } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
-      stars.push(<FaStarHalfAlt key={i} className="text-yellow-400" />);
-    } else {
-      stars.push(<FaRegStar key={i} className="text-yellow-400/40" />);
-    }
-  }
-  return <div className="review-stars flex gap-1 justify-center mt-4">{stars}</div>;
+const normalizeReview = (document) => {
+  const data = document.data();
+
+  const ratingValue = Number(data.rating);
+  const normalizedRating = Number.isFinite(ratingValue)
+    ? Math.min(5, Math.max(0, ratingValue))
+    : 5;
+
+  return {
+    id: document.id,
+    name:
+      data.name ||
+      data.userName ||
+      data.fullName ||
+      data.displayName ||
+      "Vahlay Astro Student",
+
+    quote:
+      data.quote ||
+      data.comment ||
+      data.text ||
+      data.message ||
+      data.review ||
+      "",
+
+    title:
+      data.courseName ||
+      data.course ||
+      data.title ||
+      data.designation ||
+      "Vahlay Astro",
+
+    rating: normalizedRating,
+
+    image:
+      data.image ||
+      data.photoURL ||
+      data.avatar ||
+      data.profileImage ||
+      "",
+  };
+};
+
+const getInitials = (name = "") => {
+  const words = name.trim().split(/\s+/).filter(Boolean);
+
+  if (!words.length) return "VA";
+
+  return words
+    .slice(0, 2)
+    .map((word) => word.charAt(0).toUpperCase())
+    .join("");
+};
+
+const StarRating = ({ rating = 5 }) => {
+  const numericRating = Number(rating);
+  const safeRating = Number.isFinite(numericRating)
+    ? Math.min(5, Math.max(0, numericRating))
+    : 5;
+
+  return (
+    <div
+      className="testimonial-stars"
+      aria-label={`${safeRating} out of 5 stars`}
+    >
+      {Array.from({ length: 5 }, (_, index) => {
+        const starPosition = index + 1;
+
+        if (safeRating >= starPosition) {
+          return <FaStar key={starPosition} aria-hidden="true" />;
+        }
+
+        if (safeRating >= starPosition - 0.5) {
+          return <FaStarHalfAlt key={starPosition} aria-hidden="true" />;
+        }
+
+        return <FaRegStar key={starPosition} aria-hidden="true" />;
+      })}
+    </div>
+  );
 };
 
 const Testimonials = () => {
-  const [testimonialsData, setTestimonialsData] = useState(fallbackTestimonials);
-  const [loading, setLoading] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(3);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [visibleItems, setVisibleItems] = useState(3);
-  const autoPlayRef = useRef(null);
-  const touchStartRef = useRef(0);
+  const [testimonialsData, setTestimonialsData] =
+    useState(fallbackTestimonials);
 
-  // Fetch real reviews from Firebase
+  const [maximumItems, setMaximumItems] = useState(10);
+
   useEffect(() => {
+    const handleResize = () => {
+      setMaximumItems(window.innerWidth < 640 ? 8 : 10);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    let componentMounted = true;
+
     const fetchReviews = async () => {
-      try {
-        // Try to fetch from a dedicated "Reviews" collection first
-        const reviewsRef = collection(db, "Reviews");
-        const q = query(reviewsRef, orderBy("createdAt", "desc"), limit(20));
-        const snapshot = await getDocs(q);
+      const reviewSources = [
+        async () => {
+          const reviewsQuery = query(
+            collection(db, "Reviews"),
+            orderBy("createdAt", "desc"),
+            limit(12)
+          );
 
-        if (!snapshot.empty) {
-          const reviews = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setTestimonialsData(reviews);
-        }
-        // If empty, fallback data remains (already set in useState)
-      } catch {
-        // Collection may not exist yet — try Comments_Vahaly_Astro as backup
+          return getDocs(reviewsQuery);
+        },
+
+        async () => {
+          const commentsQuery = query(
+            collection(db, "Comments_Vahaly_Astro"),
+            limit(12)
+          );
+
+          return getDocs(commentsQuery);
+        },
+      ];
+
+      for (const getReviewSnapshot of reviewSources) {
         try {
-          const commentsRef = collection(db, "Comments_Vahaly_Astro");
-          const q2 = query(commentsRef, limit(15));
-          const snapshot2 = await getDocs(q2);
+          const snapshot = await getReviewSnapshot();
 
-          if (!snapshot2.empty) {
-            const reviews = snapshot2.docs.map((doc) => {
-              const d = doc.data();
-              return {
-                id: doc.id,
-                name: d.name || d.userName || "Anonymous",
-                quote: d.comment || d.text || d.quote || "",
-                title: d.courseName || d.title || "Vahlay Astro",
-                rating: d.rating || 5,
-              };
-            });
-            // Only use if comments have actual text
-            if (reviews.some((r) => r.quote)) {
+          const reviews = snapshot.docs
+            .map(normalizeReview)
+            .filter((review) => review.quote.trim().length > 0);
+
+          if (reviews.length > 0) {
+            if (componentMounted) {
               setTestimonialsData(reviews);
             }
+
+            return;
           }
-        } catch {
-          console.log("Using fallback testimonials.");
+        } catch (error) {
+          console.warn("Unable to load testimonial source:", error);
         }
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchReviews();
-  }, []);
 
-  const clonedData = React.useMemo(() => {
-    if (testimonialsData.length === 0) return [];
-    const cloneCount = visibleItems;
-    return [
-      ...testimonialsData.slice(-cloneCount),
-      ...testimonialsData,
-      ...testimonialsData.slice(0, cloneCount),
-    ];
-  }, [testimonialsData, visibleItems]);
-
-  const totalRealItems = testimonialsData.length;
-
-  // Reset index when data or visible item count changes
-  useEffect(() => {
-    if (currentIndex !== visibleItems) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setCurrentIndex(visibleItems);
-    }
-  }, [totalRealItems, visibleItems, currentIndex]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) setVisibleItems(1);
-      else if (window.innerWidth < 1200) setVisibleItems(2);
-      else setVisibleItems(3);
+    return () => {
+      componentMounted = false;
     };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const moveToIndex = useCallback((index, smooth = true) => {
-    setIsTransitioning(smooth);
-    setCurrentIndex(index);
-  }, []);
+  const wheelTestimonials = useMemo(() => {
+    return testimonialsData
+      .filter((testimonial) => {
+        return (
+          testimonial &&
+          (testimonial.quote ||
+            testimonial.text ||
+            testimonial.comment)
+        );
+      })
+      .slice(0, maximumItems);
+  }, [testimonialsData, maximumItems]);
 
-  const nextSlide = useCallback(() => {
-    moveToIndex(currentIndex + 1);
-  }, [currentIndex, moveToIndex]);
+  const totalItems = wheelTestimonials.length;
 
-  const prevSlide = useCallback(() => {
-    moveToIndex(currentIndex - 1);
-  }, [currentIndex, moveToIndex]);
+  const spokeCount = Math.max(4, Math.ceil(totalItems / 2));
 
-  const getTranslateX = () => {
-    const percentage = (100 / visibleItems) * currentIndex;
-    return `translateX(-${percentage}%)`;
-  };
+  const rotationDuration = Math.max(48, totalItems * 6);
 
-  // Infinite loop boundary jump
-  useEffect(() => {
-    if (!isTransitioning) return;
-    const maxIndex = totalRealItems + visibleItems;
-    const minIndex = visibleItems - 1;
-    if (currentIndex >= maxIndex) {
-      const timer = setTimeout(() => {
-        setIsTransitioning(false);
-        setCurrentIndex(visibleItems);
-      }, 450);
-      return () => clearTimeout(timer);
-    }
-    if (currentIndex <= minIndex) {
-      const timer = setTimeout(() => {
-        setIsTransitioning(false);
-        setCurrentIndex(totalRealItems + minIndex);
-      }, 450);
-      return () => clearTimeout(timer);
-    }
-  }, [currentIndex, isTransitioning, totalRealItems, visibleItems]);
+  const desktopCardSize =
+    totalItems >= 10
+      ? "112px"
+      : totalItems >= 8
+      ? "126px"
+      : "148px";
 
-  const stopAutoPlay = useCallback(() => {
-    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
-  }, []);
-
-  const startAutoPlay = useCallback(() => {
-    stopAutoPlay();
-    autoPlayRef.current = setInterval(nextSlide, 3500);
-  }, [nextSlide, stopAutoPlay]);
-
-  useEffect(() => {
-    startAutoPlay();
-    return () => stopAutoPlay();
-  }, [startAutoPlay, stopAutoPlay]);
-
-  const handleTouchStart = (e) => {
-    touchStartRef.current = e.touches[0].clientX;
-    stopAutoPlay();
-  };
-
-  const handleTouchEnd = (e) => {
-    const touchEnd = e.changedTouches[0].clientX;
-    const diff = touchStartRef.current - touchEnd;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) nextSlide();
-      else prevSlide();
-    }
-    startAutoPlay();
-  };
-
-  if (loading) {
-    return (
-      <section className="testimonial-section" id="testimonials">
-        <div className="section-container">
-          <div className="py-20 flex items-center justify-center">
-            <div className="text-brand-red text-xl font-bold animate-pulse uppercase tracking-[0.3em]">
-              Loading Reviews...
-            </div>
-          </div>
-        </div>
-      </section>
-    );
+  if (!totalItems) {
+    return null;
   }
 
   return (
-    <section
-      className="testimonial-section"
-      id="testimonials"
-      onMouseEnter={stopAutoPlay}
-      onMouseLeave={startAutoPlay}
-    >
-      <div className="section-container">
-        <SliderHeader
-          title="Celestial Experiences"
-          subTitle="Voices of those whose lives have been transformed by sacred cosmic insights."
-          onNext={nextSlide}
-          onPrev={prevSlide}
-          isPrevDisabled={false}
-          isNextDisabled={false}
-        />
-
+    <section className="testimonial-section" id="testimonials">
+      <div className="section-container testimonial-section-container">
         <div
-          className="testimonial-slider-container"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
+          className="testimonial-wheel-stage"
+          style={{
+            "--total-items": totalItems,
+            "--rotation-duration": `${rotationDuration}s`,
+            "--desktop-card-size": desktopCardSize,
+          }}
         >
-          <div
-            className="testimonial-track"
-            style={{
-              transform: getTranslateX(),
-              transition: isTransitioning
-                ? "transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
-                : "none",
-            }}
-          >
-            {clonedData.map((item, index) => (
-              <div
-                className="testimonial-slide"
-                key={`${item.id}-${index}`}
-                style={{ flex: `0 0 ${100 / visibleItems}%`, maxWidth: `${100 / visibleItems}%` }}
-              >
-                <div className="testimonial-card">
-                  <p className="testimonial-text">"{item.quote || item.text || item.comment}"</p>
-                  <h3 className="testimonial-title">{item.name}</h3>
-                  {item.title && (
-                    <p className="text-white/50 text-xs uppercase tracking-widest mt-1 subtitle-poppins text-center">
-                      {item.title}
-                    </p>
-                  )}
-                  <StarRating rating={item.rating || 5} />
-                </div>
-              </div>
-            ))}
+          <div className="testimonial-wheel-rotor">
+            <div className="testimonial-outer-ring" />
+            <div className="testimonial-middle-ring" />
+
+            <div className="testimonial-spokes" aria-hidden="true">
+              {Array.from({ length: spokeCount }, (_, index) => {
+                const angle = (180 / spokeCount) * index;
+
+                return (
+                  <span
+                    key={`spoke-${index}`}
+                    className="testimonial-spoke"
+                    style={{
+                      "--spoke-angle": `${angle}deg`,
+                    }}
+                  />
+                );
+              })}
+            </div>
+
+            {wheelTestimonials.map((item, index) => {
+              const itemAngle = (360 / totalItems) * index;
+
+              const quote =
+                item.quote ||
+                item.text ||
+                item.comment ||
+                "A wonderful learning experience.";
+
+              return (
+                <article
+                  className="testimonial-orbit-item"
+                  key={item.id || `${item.name}-${index}`}
+                  style={{
+                    "--item-angle": `${itemAngle}deg`,
+                    "--item-negative-angle": `${-itemAngle}deg`,
+                  }}
+                >
+                  <div className="testimonial-item-upright">
+                    <div className="testimonial-item-counter">
+                      <button
+                        type="button"
+                        className="testimonial-orbit-card"
+                        aria-label={`Read testimonial from ${item.name}`}
+                      >
+                        <span className="testimonial-card-face testimonial-card-front">
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="testimonial-avatar-image"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <span className="testimonial-avatar-initials">
+                              {getInitials(item.name)}
+                            </span>
+                          )}
+
+                          <strong className="testimonial-person-name">
+                            {item.name}
+                          </strong>
+
+                          {item.title && (
+                            <span className="testimonial-course-name">
+                              {item.title}
+                            </span>
+                          )}
+
+                          <span className="testimonial-tap-label">
+                            View story
+                          </span>
+                        </span>
+
+                        <span className="testimonial-card-face testimonial-card-back">
+                          <span className="testimonial-quote-mark">
+                            “
+                          </span>
+
+                          <StarRating rating={item.rating || 5} />
+
+                          <span className="testimonial-review-text">
+                            {quote}
+                          </span>
+
+                          <strong className="testimonial-review-author">
+                            {item.name}
+                          </strong>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          <div className="testimonial-wheel-center">
+            <span className="testimonial-center-eyebrow">
+              Real Stories
+            </span>
+
+            <h2 className="title-batangas">
+              Celestial
+              <span>Experiences</span>
+            </h2>
+
+            <div className="testimonial-center-divider">
+              <span />
+              <i>✦</i>
+              <span />
+            </div>
+
+            <p>Hover or tap a circle to explore their journey.</p>
           </div>
         </div>
-
-        <SliderControls
-          onNext={nextSlide}
-          onPrev={prevSlide}
-          isPrevDisabled={false}
-          isNextDisabled={false}
-        />
       </div>
     </section>
   );
