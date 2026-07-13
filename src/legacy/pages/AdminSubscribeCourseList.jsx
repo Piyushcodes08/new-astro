@@ -7,6 +7,7 @@ import {
   doc,
   deleteDoc,
   getDoc,
+  updateDoc,
 } from "firebase/firestore";
 import SideBar from "./Admin";
 import Header from "../../components/sections/Header/Header";

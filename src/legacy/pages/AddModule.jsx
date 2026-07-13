@@ -23,6 +23,9 @@ const AddModule = () => {
   const [studyMaterials, setStudyMaterials] = useState([]);
   const [newVideoTitle, setNewVideoTitle] = useState("");
   const [newVideoFile, setNewVideoFile] = useState(null);
+  const [newThumbnailFile, setNewThumbnailFile] = useState(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState(null);
+  const [thumbnailUploadProgress, setThumbnailUploadProgress] = useState(0);
   const [newMaterialTitle, setNewMaterialTitle] = useState("");
   const [newMaterialFile, setNewMaterialFile] = useState(null);
   const [videoUploadProgress, setVideoUploadProgress] = useState(0);
@@ -90,7 +93,34 @@ const AddModule = () => {
     }
   }, [selectedCourse]);
 
-  // ORIGINAL LOGIC: handleUpload with improved ID handling and ordering
+  // Handle thumbnail file selection with live preview
+  const handleThumbnailChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setNewThumbnailFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => setThumbnailPreview(reader.result);
+      reader.readAsDataURL(file);
+    } else {
+      setNewThumbnailFile(null);
+      setThumbnailPreview(null);
+    }
+  };
+
+  // Helper: upload a single file and return its download URL
+  const uploadFileToStorage = (storagePath, file, onProgress) =>
+    new Promise((resolve, reject) => {
+      const storageRef = ref(storage, storagePath);
+      const task = uploadBytesResumable(storageRef, file);
+      task.on(
+        "state_changed",
+        (snap) => onProgress && onProgress((snap.bytesTransferred / snap.totalBytes) * 100),
+        reject,
+        async () => resolve(await getDownloadURL(task.snapshot.ref))
+      );
+    });
+
+  // ORIGINAL LOGIC: handleUpload with improved ID handling, ordering, and thumbnail support
   const handleUpload = async (title, description, file, type) => {
     try {
       if (!selectedCourse) {
@@ -103,7 +133,8 @@ const AddModule = () => {
       }
 
       setUploading(true);
-      const storageRef = ref(storage, `${type}/${selectedCourse}/${Date.now()}_${file.name}`);
+      const ts = Date.now();
+      const storageRef = ref(storage, `${type}/${selectedCourse}/${ts}_${file.name}`);
       const uploadTaskInstance = uploadBytesResumable(storageRef, file);
       setUploadTask(uploadTaskInstance);
 
@@ -133,6 +164,20 @@ const AddModule = () => {
             docData.description = description;
             docData.order = parseInt(videoOrder) || 0;
             docData["title-order"] = parseInt(titleOrder) || 0;
+
+            // Upload thumbnail if provided
+            if (newThumbnailFile) {
+              try {
+                const thumbUrl = await uploadFileToStorage(
+                  `thumbnails/${selectedCourse}/${ts}_${newThumbnailFile.name}`,
+                  newThumbnailFile,
+                  setThumbnailUploadProgress
+                );
+                docData.thumbnailUrl = thumbUrl;
+              } catch (thumbErr) {
+                console.warn("Thumbnail upload failed, continuing without it:", thumbErr);
+              }
+            }
           }
 
           const docRef = await addDoc(collectionRef, docData);
@@ -141,8 +186,11 @@ const AddModule = () => {
           if (type === "videos") {
             setVideoModules([...videoModules, { id: docRef.id, ...docData }]);
             setVideoUploadProgress(0);
+            setThumbnailUploadProgress(0);
             setNewVideoTitle("");
             setNewVideoDescription("");
+            setNewThumbnailFile(null);
+            setThumbnailPreview(null);
           } else {
             setStudyMaterials([...studyMaterials, { id: docRef.id, ...docData }]);
             setMaterialUploadProgress(0);
@@ -164,6 +212,9 @@ const AddModule = () => {
       setUploading(false);
       setVideoUploadProgress(0);
       setMaterialUploadProgress(0);
+      setThumbnailUploadProgress(0);
+      setNewThumbnailFile(null);
+      setThumbnailPreview(null);
       alert("Upload canceled.");
     }
   };
@@ -195,6 +246,16 @@ const AddModule = () => {
         }
       }
 
+      // Delete thumbnail from storage if exists
+      if (item.thumbnailUrl) {
+        try {
+          const thumbRef = ref(storage, item.thumbnailUrl);
+          await deleteObject(thumbRef);
+        } catch (storageError) {
+          console.warn("Thumbnail storage deletion skipped:", storageError.code);
+        }
+      }
+
       // 2. Delete Firestore document
       await deleteDoc(doc(db, collectionPath, item.id));
 
@@ -214,67 +275,68 @@ const AddModule = () => {
     }
   };
 
-  const handleEdit = async (id, updatedTitle, updatedDescription, file, type) => {
+  const handleEdit = async (id, updatedTitle, updatedDescription, file, thumbnailFile, type) => {
     try {
-      let fileUrl = null;
+      setUploading(true);
+      const updatedData = { title: updatedTitle };
+      if (type === "videos") updatedData.description = updatedDescription;
+
+      const ts = Date.now();
 
       if (file) {
-        setUploading(true);
-        const storageRef = ref(storage, `${type}/${selectedCourse}/${Date.now()}_${file.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, file);
-
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            if (type === "videos") setVideoUploadProgress(progress);
-            else setMaterialUploadProgress(progress);
-          },
-          (error) => {
-            console.error("File upload failed:", error);
-            setUploading(false);
-          },
-          async () => {
-            fileUrl = await getDownloadURL(uploadTask.snapshot.ref);
-            const updatedData = { title: updatedTitle };
-            if (type === "videos") updatedData.description = updatedDescription;
-            if (fileUrl) updatedData.url = fileUrl;
-
-            await updateDoc(doc(db, `${type}_${selectedCourse}`, id), updatedData);
-            
-            // Update local state
-            if (type === "videos") {
-              setVideoModules(videoModules.map(v => v.id === id ? { ...v, ...updatedData } : v));
-            } else {
-              setStudyMaterials(studyMaterials.map(m => m.id === id ? { ...m, ...updatedData } : m));
+        try {
+          const fileUrl = await uploadFileToStorage(
+            `${type}/${selectedCourse}/${ts}_${file.name}`,
+            file,
+            (progress) => {
+              if (type === "videos") setVideoUploadProgress(progress);
+              else setMaterialUploadProgress(progress);
             }
-
-            alert("Updated successfully");
-            setUploading(false);
-            setEditVideo(null);
-            setEditMaterial(null);
-            setVideoUploadProgress(0);
-            setMaterialUploadProgress(0);
-          }
-        );
-      } else {
-        const updatedData = { title: updatedTitle };
-        if (type === "videos") updatedData.description = updatedDescription;
-        
-        await updateDoc(doc(db, `${type}_${selectedCourse}`, id), updatedData);
-        
-        if (type === "videos") {
-          setVideoModules(videoModules.map(v => v.id === id ? { ...v, ...updatedData } : v));
-        } else {
-          setStudyMaterials(studyMaterials.map(m => m.id === id ? { ...m, ...updatedData } : m));
+          );
+          updatedData.url = fileUrl;
+        } catch (error) {
+          console.error("File upload failed:", error);
+          alert("File upload failed. Please try again.");
+          setUploading(false);
+          return;
         }
-
-        alert("Updated successfully");
-        setEditVideo(null);
-        setEditMaterial(null);
       }
+
+      if (type === "videos" && thumbnailFile) {
+        try {
+          const thumbUrl = await uploadFileToStorage(
+            `thumbnails/${selectedCourse}/${ts}_${thumbnailFile.name}`,
+            thumbnailFile,
+            setThumbnailUploadProgress
+          );
+          updatedData.thumbnailUrl = thumbUrl;
+        } catch (error) {
+          console.error("Thumbnail upload failed:", error);
+          alert("Thumbnail upload failed. Please try again.");
+          setUploading(false);
+          return;
+        }
+      }
+
+      await updateDoc(doc(db, `${type}_${selectedCourse}`, id), updatedData);
+      
+      if (type === "videos") {
+        setVideoModules(videoModules.map(v => v.id === id ? { ...v, ...updatedData } : v));
+      } else {
+        setStudyMaterials(studyMaterials.map(m => m.id === id ? { ...m, ...updatedData } : m));
+      }
+
+      alert("Updated successfully");
+      setUploading(false);
+      setEditVideo(null);
+      setEditMaterial(null);
+      setVideoUploadProgress(0);
+      setMaterialUploadProgress(0);
+      setThumbnailUploadProgress(0);
     } catch (error) {
       console.error("Error updating:", error);
+      alert("Update failed: " + error.message);
+      setUploading(false);
     }
   };
 
@@ -391,12 +453,37 @@ const AddModule = () => {
                         className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 text-gray-900 h-32 focus:ring-2 focus:ring-[#bf0603] outline-none transition-all resize-none placeholder:text-gray-400"
                       />
                       
+                      {/* Video File Upload */}
                       <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">Video File</label>
                         <input
                           type="file"
+                          accept="video/*"
                           onChange={(e) => setNewVideoFile(e.target.files[0])}
                           className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-[#bf0603] file:text-white hover:file:bg-red-700 cursor-pointer"
                         />
+                      </div>
+
+                      {/* Thumbnail Upload */}
+                      <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 space-y-3">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase block ml-1">Video Thumbnail (optional)</label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleThumbnailChange}
+                          className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-slate-700 file:text-white hover:file:bg-slate-900 cursor-pointer"
+                        />
+                        {thumbnailPreview && (
+                          <div className="relative mt-2 rounded-xl overflow-hidden border border-slate-200 shadow-sm" style={{ maxWidth: 220 }}>
+                            <img src={thumbnailPreview} alt="Thumbnail preview" className="w-full object-cover" style={{ maxHeight: 130 }} />
+                            <button
+                              type="button"
+                              onClick={() => { setNewThumbnailFile(null); setThumbnailPreview(null); }}
+                              className="absolute top-2 right-2 w-6 h-6 bg-black/60 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-all text-xs font-bold"
+                              title="Remove thumbnail"
+                            >✕</button>
+                          </div>
+                        )}
                       </div>
 
                       {videoUploadProgress > 0 && (
@@ -404,7 +491,16 @@ const AddModule = () => {
                           <div className="w-full bg-slate-100 rounded-full h-2">
                             <div className="bg-[#bf0603] h-full rounded-full transition-all" style={{ width: `${videoUploadProgress}%` }}></div>
                           </div>
-                          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{Math.round(videoUploadProgress)}% Transmitted</p>
+                          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Video: {Math.round(videoUploadProgress)}% Transmitted</p>
+                        </div>
+                      )}
+
+                      {thumbnailUploadProgress > 0 && thumbnailUploadProgress < 100 && (
+                        <div className="space-y-2">
+                          <div className="w-full bg-slate-100 rounded-full h-2">
+                            <div className="bg-slate-700 h-full rounded-full transition-all" style={{ width: `${thumbnailUploadProgress}%` }}></div>
+                          </div>
+                          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Thumbnail: {Math.round(thumbnailUploadProgress)}% Transmitted</p>
                         </div>
                       )}
 
@@ -484,30 +580,58 @@ const AddModule = () => {
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               {modules.map((module) => (
-                                <div key={module.id} className="bg-gray-50 border border-gray-200 p-6 rounded-2xl relative group/item">
-                                  <div className="flex justify-between items-start mb-4">
-                                    <div className="space-y-1">
-                                      <h5 className="text-sm font-bold text-slate-900 line-clamp-1 group-hover/item:text-[#bf0603] transition-colors">{module.description || "No Description"}</h5>
-                                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Seq: {module.order || 0}</p>
+                                <div key={module.id} className="bg-gray-50 border border-gray-200 rounded-2xl relative group/item overflow-hidden">
+                                  {/* Thumbnail */}
+                                  {module.thumbnailUrl ? (
+                                    <div className="relative w-full" style={{ aspectRatio: "16/9" }}>
+                                      <img
+                                        src={module.thumbnailUrl}
+                                        alt={module.description || "Thumbnail"}
+                                        className="w-full h-full object-cover"
+                                      />
+                                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                                      <div className="absolute bottom-2 left-2">
+                                        <span className="text-[9px] font-bold text-white/80 uppercase tracking-widest bg-black/40 px-2 py-0.5 rounded-full">Seq: {module.order || 0}</span>
+                                      </div>
                                     </div>
-                                    <div className="flex gap-2">
-                                      <button onClick={() => setEditVideo(module)} className="p-2 bg-white border border-slate-200 hover:bg-yellow-500 hover:text-white text-yellow-600 rounded-xl transition-all shadow-sm">
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                                      </button>
-                                      <button onClick={(e) => handleDelete(e, module, "videos")} className="p-2 bg-white border border-slate-200 hover:bg-red-600 hover:text-white text-red-600 rounded-xl transition-all shadow-sm relative z-30">
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                                      </button>
+                                  ) : (
+                                    <div className="w-full bg-slate-200 flex items-center justify-center" style={{ aspectRatio: "16/9" }}>
+                                      <svg className="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.723v6.554a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                                     </div>
+                                  )}
+
+                                  <div className="p-5">
+                                    <div className="flex justify-between items-start mb-3">
+                                      <div className="space-y-1 flex-1 min-w-0 pr-2">
+                                        <h5 className="text-sm font-bold text-slate-900 line-clamp-1 group-hover/item:text-[#bf0603] transition-colors">{module.description || "No Description"}</h5>
+                                        {!module.thumbnailUrl && <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Seq: {module.order || 0}</p>}
+                                      </div>
+                                      <div className="flex gap-2 flex-shrink-0">
+                                        <button onClick={() => setEditVideo(module)} className="p-2 bg-white border border-slate-200 hover:bg-yellow-500 hover:text-white text-yellow-600 rounded-xl transition-all shadow-sm">
+                                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                        </button>
+                                        <button onClick={(e) => handleDelete(e, module, "videos")} className="p-2 bg-white border border-slate-200 hover:bg-red-600 hover:text-white text-red-600 rounded-xl transition-all shadow-sm relative z-30">
+                                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <a href={module.url} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold text-[#bf0603] uppercase tracking-widest hover:underline">View Session →</a>
                                   </div>
-                                  <a href={module.url} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold text-[#bf0603] uppercase tracking-widest hover:underline">View Session →</a>
 
                                   {editVideo && editVideo.id === module.id && (
-                                    <div className="mt-6 p-6 bg-white border border-slate-200 rounded-2xl space-y-4 shadow-sm relative z-20">
+                                    <div className="m-4 p-6 bg-white border border-slate-200 rounded-2xl space-y-4 shadow-sm relative z-20">
                                       <input type="text" defaultValue={module.title} onChange={(e) => (module.title = e.target.value)} className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-xs outline-none focus:ring-2 focus:ring-[#bf0603]" />
                                       <textarea defaultValue={module.description} onChange={(e) => (module.description = e.target.value)} className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-xs outline-none h-24 resize-none focus:ring-2 focus:ring-[#bf0603]" />
-                                      <input type="file" onChange={(e) => (module.newFile = e.target.files[0])} className="text-[10px] text-slate-400 font-bold uppercase tracking-widest" />
+                                      <div className="space-y-1">
+                                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Replace Video File</label>
+                                        <input type="file" accept="video/*" onChange={(e) => (module.newFile = e.target.files[0])} className="text-[10px] text-slate-400 font-bold uppercase tracking-widest" />
+                                      </div>
+                                      <div className="space-y-1">
+                                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Replace Thumbnail</label>
+                                        <input type="file" accept="image/*" onChange={(e) => (module.newThumbnail = e.target.files[0])} className="text-[10px] text-slate-400 font-bold uppercase tracking-widest" />
+                                      </div>
                                       <div className="flex gap-2">
-                                        <button onClick={() => handleEdit(module.id, module.title, module.description, module.newFile, "videos")} className="flex-1 bg-green-600 text-white py-3 rounded-xl font-bold uppercase text-[10px] hover:bg-green-700 transition-all shadow-md">Save</button>
+                                        <button onClick={() => handleEdit(module.id, module.title, module.description, module.newFile, module.newThumbnail, "videos")} className="flex-1 bg-green-600 text-white py-3 rounded-xl font-bold uppercase text-[10px] hover:bg-green-700 transition-all shadow-md">Save</button>
                                         <button onClick={() => setEditVideo(null)} className="flex-1 bg-slate-100 text-slate-600 py-3 rounded-xl font-bold uppercase text-[10px] hover:bg-slate-200 transition-all">Cancel</button>
                                       </div>
                                     </div>
@@ -552,7 +676,7 @@ const AddModule = () => {
                               <input type="text" defaultValue={material.title} onChange={(e) => (material.title = e.target.value)} className="w-full bg-gray-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-xs outline-none focus:ring-2 focus:ring-[#b0a102]" />
                               <input type="file" onChange={(e) => (material.newFile = e.target.files[0])} className="text-[10px] text-slate-400 font-bold uppercase tracking-widest" />
                               <div className="flex gap-2">
-                                <button onClick={() => handleEdit(material.id, material.title, "", material.newFile, "materials")} className="flex-1 bg-green-600 text-white py-3 rounded-xl font-bold uppercase text-[10px] hover:bg-green-700 transition-all shadow-md">Save</button>
+                                <button onClick={() => handleEdit(material.id, material.title, "", material.newFile, null, "materials")} className="flex-1 bg-green-600 text-white py-3 rounded-xl font-bold uppercase text-[10px] hover:bg-green-700 transition-all shadow-md">Save</button>
                                 <button onClick={() => setEditMaterial(null)} className="flex-1 bg-slate-100 text-slate-600 py-3 rounded-xl font-bold uppercase text-[10px] hover:bg-slate-200 transition-all">Cancel</button>
                               </div>
                             </div>

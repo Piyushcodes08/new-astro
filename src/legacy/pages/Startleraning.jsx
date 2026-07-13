@@ -567,13 +567,21 @@ const PersonalCourse = () => {
                               <div className="bg-slate-50 border border-slate-200 rounded overflow-hidden transition-all duration-300  h-full flex flex-col">
                                 <Link to={`/course/${courseName}/video/${video.id}`} className="flex flex-col h-full">
                                   <div className="relative w-full aspect-video bg-black overflow-hidden">
-                                    <video
-                                      src={video.url}
-                                      className="w-full h-full object-cover"
-                                      controlsList="nodownload"
-                                      onEnded={() => handleMarkAsWatched(video.id)}
-                                      muted
-                                    />
+                                    {video.thumbnailUrl ? (
+                                      <img
+                                        src={video.thumbnailUrl}
+                                        alt={video.description || "Video thumbnail"}
+                                        className="w-full h-full object-cover"
+                                      />
+                                    ) : (
+                                      <video
+                                        src={video.url}
+                                        className="w-full h-full object-cover"
+                                        controlsList="nodownload"
+                                        onEnded={() => handleMarkAsWatched(video.id)}
+                                        muted
+                                      />
+                                    )}
                                   </div>
                                   <div className="p-4 flex-1 flex flex-col">
                                     <p className="text-slate-900 font-bold text-sm line-clamp-2">
