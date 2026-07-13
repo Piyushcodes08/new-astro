@@ -1,376 +1,319 @@
-import React, { useEffect, useMemo, useState } from "react";
-import {
-  collection,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-} from "firebase/firestore";
-import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
-import { db } from "../../../firebaseConfig";
+﻿import React, { useMemo, useState } from "react";
 import "./Testimonials.css";
 
-const fallbackTestimonials = [
+const testimonialsData = [
   {
-    id: "f1",
-    rating: 5,
+    id: 1,
+    name: "Tom Hawck",
+ 
+    image:
+      "https://images.unsplash.com/photo-1514222709107-a180c68d72b4?auto=format&fit=crop&w=500&q=80",
     quote:
-      "The Essentials of Self-Discovery truly changed how I view astrology. Vahlay Sir's explanations were relatable and easy to understand.",
-    name: "Nirav Deshmukh",
-    title: "The Essentials of Self-Discovery",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
   },
   {
-    id: "f2",
-    rating: 4,
+    id: 2,
+    name: "Harry John",
+   
+    image:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=687&q=80",
     quote:
-      "I joined mainly out of curiosity, but I ended up connecting with myself on a whole new level. The course gave me a beautiful foundation in astrology.",
-    name: "Malvi Vashi",
-    title: "The Essentials of Self-Discovery",
+      "The team understood our requirements perfectly and delivered a highly professional solution with excellent attention to detail.",
   },
   {
-    id: "f3",
-    rating: 5,
+    id: 3,
+    name: "Larry Will",
+
+    image:
+      "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=687&q=80",
     quote:
-      "Taking this course was like being handed a mirror. It helped me understand cycles and energies that I had felt before but never understood.",
-    name: "Vishal Patel",
-    title: "The Essentials of Self-Discovery",
+      "Working with this team was a smooth and rewarding experience. Their communication and execution were exceptional.",
   },
   {
-    id: "f4",
-    rating: 4,
+    id: 4,
+    name: "Augustine",
+  
+    image:
+      "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=1170&q=80",
     quote:
-      "Vahlay Sir doesn't just teach—he guides. The knowledge shared was practical and meaningful. I now feel more aware of my natural strengths.",
-    name: "Viren Tailor",
-    title: "Foundation of Vedic Astrology",
+      "They transformed our ideas into a polished digital experience that exceeded our expectations and impressed our customers.",
   },
   {
-    id: "f5",
-    rating: 5,
+    id: 5,
+    name: "Jack Danny",
+  
+    image:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=500&q=80",
     quote:
-      "Before this course, I only knew astrology at a surface level. This helped me understand the deeper logic behind planets, signs, and houses.",
-    name: "Nishant Tailor",
-    title: "Foundation of Vedic Astrology",
+      "The quality of work, timely delivery and ongoing support made the entire project successful from start to finish.",
   },
   {
-    id: "f6",
-    rating: 5,
+    id: 6,
+    name: "Luich Harry",
+  
+    image:
+      "https://images.unsplash.com/photo-1504439904031-93ded9f93e4e?auto=format&fit=crop&w=500&q=80",
     quote:
-      "This course gave me the confidence to read and understand a birth chart. I have even started helping friends interpret their charts.",
-    name: "Jay Kantharia",
-    title: "Foundation of Vedic Astrology",
+      "A reliable and creative team that consistently delivers premium results while maintaining clear and professional communication.",
+  },
+  {
+    id: 7,
+    name: "Alisha Angela",
+
+    image:
+      "https://images.unsplash.com/photo-1474176857210-7287d38d27c6?auto=format&fit=crop&w=500&q=80",
+    quote:
+      "Their strategic approach and technical expertise helped us improve our platform and provide a much better customer experience.",
+  },
+  {
+    id: 8,
+    name: "Lofy Sthamam",
+ 
+    image:
+      "https://images.unsplash.com/photo-1592621385612-4d7129426394?auto=format&fit=crop&w=500&q=80",
+    quote:
+      "Every stage of the project was handled professionally. The final result was modern, responsive and visually impressive.",
+  },
+  {
+    id: 9,
+    name: "Angela Baby",
+   
+    image:
+      "https://images.unsplash.com/photo-1557053910-d9eadeed1c58?auto=format&fit=crop&w=500&q=80",
+    quote:
+      "We appreciated their commitment, creativity and ability to understand the exact experience we wanted for our audience.",
+  },
+  {
+    id: 10,
+    name: "Hanry Harry",
+
+    image:
+      "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=500&q=80",
+    quote:
+      "The final website performs beautifully across devices and represents our brand with a premium and professional appearance.",
+  },
+  {
+    id: 11,
+    name: "Dlang Dhal",
+   
+    image:
+      "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=500&q=80",
+    quote:
+      "Their technical knowledge, responsiveness and dedication made them an excellent long-term technology partner for our business.",
   },
 ];
 
-const normalizeReview = (document) => {
-  const data = document.data();
-
-  const ratingValue = Number(data.rating);
-  const normalizedRating = Number.isFinite(ratingValue)
-    ? Math.min(5, Math.max(0, ratingValue))
-    : 5;
-
-  return {
-    id: document.id,
-    name:
-      data.name ||
-      data.userName ||
-      data.fullName ||
-      data.displayName ||
-      "Vahlay Astro Student",
-
-    quote:
-      data.quote ||
-      data.comment ||
-      data.text ||
-      data.message ||
-      data.review ||
-      "",
-
-    title:
-      data.courseName ||
-      data.course ||
-      data.title ||
-      data.designation ||
-      "Vahlay Astro",
-
-    rating: normalizedRating,
-
-    image:
-      data.image ||
-      data.photoURL ||
-      data.avatar ||
-      data.profileImage ||
-      "",
-  };
+/**
+ * Generates consistent pseudo-random values.
+ * This prevents avatar positions from changing on every render.
+ */
+const getSeededValue = (seed) => {
+  const value = Math.sin(seed * 999.91) * 10000;
+  return value - Math.floor(value);
 };
 
-const getInitials = (name = "") => {
-  const words = name.trim().split(/\s+/).filter(Boolean);
+const createFloatingLayout = (totalItems) => {
+  const leftCount = Math.ceil(totalItems / 2);
+  const rightCount = totalItems - leftCount;
 
-  if (!words.length) return "VA";
+  return Array.from({ length: totalItems }, (_, index) => {
+    const isLeftSide = index < leftCount;
 
-  return words
-    .slice(0, 2)
-    .map((word) => word.charAt(0).toUpperCase())
-    .join("");
-};
+    const sideIndex = isLeftSide
+      ? index
+      : totalItems - index - 1;
 
-const StarRating = ({ rating = 5 }) => {
-  const numericRating = Number(rating);
-  const safeRating = Number.isFinite(numericRating)
-    ? Math.min(5, Math.max(0, numericRating))
-    : 5;
+    const sideTotal = isLeftSide ? leftCount : rightCount;
 
-  return (
-    <div
-      className="testimonial-stars"
-      aria-label={`${safeRating} out of 5 stars`}
-    >
-      {Array.from({ length: 5 }, (_, index) => {
-        const starPosition = index + 1;
+    const randomX = getSeededValue(index + 3);
+    const randomSize = getSeededValue(index + 17);
+    const randomDuration = getSeededValue(index + 31);
 
-        if (safeRating >= starPosition) {
-          return <FaStar key={starPosition} aria-hidden="true" />;
-        }
+    const top =
+      sideTotal > 1
+        ? 8 + sideIndex * (72 / (sideTotal - 1))
+        : 50;
 
-        if (safeRating >= starPosition - 0.5) {
-          return <FaStarHalfAlt key={starPosition} aria-hidden="true" />;
-        }
+    const horizontalOffset = 4 + randomX * 14;
+    const avatarSize = 72 + randomSize * 42;
 
-        return <FaRegStar key={starPosition} aria-hidden="true" />;
-      })}
-    </div>
-  );
+    const tabletLeft =
+      totalItems > 1
+        ? 5 + index * (90 / (totalItems - 1))
+        : 50;
+
+    return {
+      side: isLeftSide ? "left" : "right",
+      top,
+      horizontalOffset,
+      avatarSize,
+      tabletLeft,
+      animationDuration: 5.5 + randomDuration * 3,
+      animationDelay: -(index * 0.45),
+      floatX: 8 + randomX * 12,
+      floatY: 8 + randomSize * 14,
+    };
+  });
 };
 
 const Testimonials = () => {
-  const [testimonialsData, setTestimonialsData] =
-    useState(fallbackTestimonials);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const [maximumItems, setMaximumItems] = useState(10);
+  const floatingLayout = useMemo(
+    () => createFloatingLayout(testimonialsData.length),
+    []
+  );
 
-  useEffect(() => {
-    const handleResize = () => {
-      setMaximumItems(window.innerWidth < 640 ? 8 : 10);
-    };
+  const changeTestimonial = (direction) => {
+    setActiveIndex((currentIndex) => {
+      const nextIndex = currentIndex + direction;
 
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    let componentMounted = true;
-
-    const fetchReviews = async () => {
-      const reviewSources = [
-        async () => {
-          const reviewsQuery = query(
-            collection(db, "Reviews"),
-            orderBy("createdAt", "desc"),
-            limit(12)
-          );
-
-          return getDocs(reviewsQuery);
-        },
-
-        async () => {
-          const commentsQuery = query(
-            collection(db, "Comments_Vahaly_Astro"),
-            limit(12)
-          );
-
-          return getDocs(commentsQuery);
-        },
-      ];
-
-      for (const getReviewSnapshot of reviewSources) {
-        try {
-          const snapshot = await getReviewSnapshot();
-
-          const reviews = snapshot.docs
-            .map(normalizeReview)
-            .filter((review) => review.quote.trim().length > 0);
-
-          if (reviews.length > 0) {
-            if (componentMounted) {
-              setTestimonialsData(reviews);
-            }
-
-            return;
-          }
-        } catch (error) {
-          console.warn("Unable to load testimonial source:", error);
-        }
+      if (nextIndex < 0) {
+        return testimonialsData.length - 1;
       }
-    };
 
-    fetchReviews();
+      if (nextIndex >= testimonialsData.length) {
+        return 0;
+      }
 
-    return () => {
-      componentMounted = false;
-    };
-  }, []);
+      return nextIndex;
+    });
+  };
 
-  const wheelTestimonials = useMemo(() => {
-    return testimonialsData
-      .filter((testimonial) => {
-        return (
-          testimonial &&
-          (testimonial.quote ||
-            testimonial.text ||
-            testimonial.comment)
-        );
-      })
-      .slice(0, maximumItems);
-  }, [testimonialsData, maximumItems]);
-
-  const totalItems = wheelTestimonials.length;
-
-  const spokeCount = Math.max(4, Math.ceil(totalItems / 2));
-
-  const rotationDuration = Math.max(48, totalItems * 6);
-
-  const desktopCardSize =
-    totalItems >= 10
-      ? "112px"
-      : totalItems >= 8
-      ? "126px"
-      : "148px";
-
-  if (!totalItems) {
-    return null;
-  }
+  const selectTestimonial = (index) => {
+    if (index !== activeIndex) {
+      setActiveIndex(index);
+    }
+  };
 
   return (
-    <section className="testimonial-section" id="testimonials">
-      <div className="section-container testimonial-section-container">
-        <div
-          className="testimonial-wheel-stage"
-          style={{
-            "--total-items": totalItems,
-            "--rotation-duration": `${rotationDuration}s`,
-            "--desktop-card-size": desktopCardSize,
-          }}
-        >
-          <div className="testimonial-wheel-rotor">
-            <div className="testimonial-outer-ring" />
-            <div className="testimonial-middle-ring" />
+    <section
+      className="testimonials-section"
+      aria-label="Client testimonials"
+    >
+      <div className="testimonials-background" aria-hidden="true" />
+      <div className="testimonials-overlay" aria-hidden="true" />
 
-            <div className="testimonial-spokes" aria-hidden="true">
-              {Array.from({ length: spokeCount }, (_, index) => {
-                const angle = (180 / spokeCount) * index;
+      <div className="testimonials-wrapper">
+        <div className="testimonials-quote-row">
+          {testimonialsData.map((testimonial, index) => {
+            const isActive = activeIndex === index;
+            const position = floatingLayout[index];
 
-                return (
-                  <span
-                    key={`spoke-${index}`}
-                    className="testimonial-spoke"
-                    style={{
-                      "--spoke-angle": `${angle}deg`,
-                    }}
-                  />
-                );
-              })}
-            </div>
+            const positionStyle = {
+              "--testimonial-top": `${position.top}%`,
+              "--testimonial-size": `${position.avatarSize}px`,
+              "--tablet-left": `${position.tabletLeft}%`,
+              "--animation-duration": `${position.animationDuration}s`,
+              "--animation-delay": `${position.animationDelay}s`,
+              "--float-x": `${position.floatX}px`,
+              "--float-y": `${position.floatY}px`,
+              ...(position.side === "left"
+                ? {
+                    left: `${position.horizontalOffset}%`,
+                    right: "auto",
+                  }
+                : {
+                    right: `${position.horizontalOffset}%`,
+                    left: "auto",
+                  }),
+            };
 
-            {wheelTestimonials.map((item, index) => {
-              const itemAngle = (360 / totalItems) * index;
+            return (
+              <article
+                key={testimonial.id}
+                style={positionStyle}
+                className={`testimonial-column ${
+                  isActive ? "testimonial-active testimonial-show" : ""
+                }`}
+                onClick={() => selectTestimonial(index)}
+                onKeyDown={(event) => {
+                  if (
+                    !isActive &&
+                    (event.key === "Enter" || event.key === " ")
+                  ) {
+                    event.preventDefault();
+                    selectTestimonial(index);
+                  }
+                }}
+                role={!isActive ? "button" : undefined}
+                tabIndex={!isActive ? 0 : -1}
+                aria-label={
+                  !isActive
+                    ? `View testimonial from ${testimonial.name}`
+                    : undefined
+                }
+              >
+                <div className="testimonial-col-inner">
+                  <div className="testimonial-author-meta">
+                    <div className="testimonial-image-cover">
+                      <img
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        loading={isActive ? "eager" : "lazy"}
+                        draggable="false"
+                      />
+                    </div>
 
-              const quote =
-                item.quote ||
-                item.text ||
-                item.comment ||
-                "A wonderful learning experience.";
+                    <div className="testimonial-author-info">
+                      <div className="testimonial-author-name">
+                        <h3>{testimonial.name}</h3>
+                      </div>
 
-              return (
-                <article
-                  className="testimonial-orbit-item"
-                  key={item.id || `${item.name}-${index}`}
-                  style={{
-                    "--item-angle": `${itemAngle}deg`,
-                    "--item-negative-angle": `${-itemAngle}deg`,
-                  }}
-                >
-                  <div className="testimonial-item-upright">
-                    <div className="testimonial-item-counter">
-                      <button
-                        type="button"
-                        className="testimonial-orbit-card"
-                        aria-label={`Read testimonial from ${item.name}`}
-                      >
-                        <span className="testimonial-card-face testimonial-card-front">
-                          {item.image ? (
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="testimonial-avatar-image"
-                              loading="lazy"
-                            />
-                          ) : (
-                            <span className="testimonial-avatar-initials">
-                              {getInitials(item.name)}
-                            </span>
-                          )}
-
-                          <strong className="testimonial-person-name">
-                            {item.name}
-                          </strong>
-
-                          {item.title && (
-                            <span className="testimonial-course-name">
-                              {item.title}
-                            </span>
-                          )}
-
-                          <span className="testimonial-tap-label">
-                            View story
-                          </span>
-                        </span>
-
-                        <span className="testimonial-card-face testimonial-card-back">
-                          <span className="testimonial-quote-mark">
-                            “
-                          </span>
-
-                          <StarRating rating={item.rating || 5} />
-
-                          <span className="testimonial-review-text">
-                            {quote}
-                          </span>
-
-                          <strong className="testimonial-review-author">
-                            {item.name}
-                          </strong>
-                        </span>
-                      </button>
+                      <div className="testimonial-author-status">
+                        <p>{testimonial.title}</p>
+                      </div>
                     </div>
                   </div>
-                </article>
-              );
-            })}
+
+                  <div className="testimonial-quote-wrapper">
+                    <span
+                      className="testimonial-quote-symbol testimonial-quote-left"
+                      aria-hidden="true"
+                    >
+                      ❛
+                    </span>
+
+                    <div className="testimonial-text-inner">
+                      <p>{testimonial.quote}</p>
+                    </div>
+
+                    <span
+                      className="testimonial-quote-symbol testimonial-quote-right"
+                      aria-hidden="true"
+                    >
+                      ❜
+                    </span>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+
+          <div className="testimonials-arrows">
+            <button
+              type="button"
+              className="testimonial-arrow testimonial-left-arrow"
+              onClick={() => changeTestimonial(-1)}
+              aria-label="Previous testimonial"
+            >
+              <span aria-hidden="true">‹</span>
+            </button>
+
+            <button
+              type="button"
+              className="testimonial-arrow testimonial-right-arrow"
+              onClick={() => changeTestimonial(1)}
+              aria-label="Next testimonial"
+            >
+              <span aria-hidden="true">›</span>
+            </button>
           </div>
 
-          <div className="testimonial-wheel-center">
-            <span className="testimonial-center-eyebrow">
-              Real Stories
-            </span>
-
-            <h2 className="title-batangas">
-              Celestial
-              <span>Experiences</span>
-            </h2>
-
-            <div className="testimonial-center-divider">
-              <span />
-              <i>✦</i>
-              <span />
-            </div>
-
-            <p>Hover or tap a circle to explore their journey.</p>
+          <div className="testimonial-counter">
+            <span>{String(activeIndex + 1).padStart(2, "0")}</span>
+            <span className="testimonial-counter-line" />
+            <span>{String(testimonialsData.length).padStart(2, "0")}</span>
           </div>
         </div>
       </div>
