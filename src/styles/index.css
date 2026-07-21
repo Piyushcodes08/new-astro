@@ -419,3 +419,32 @@ section {
 .bg-\[\#bf0603\] .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: white;
 }
+
+/* Premium section title theme matching Client Testimonials */
+.section-title-theme {
+  font-family: 'Batangas', sans-serif !important;
+  font-size: clamp(1.85rem, 3.2vw, 2.8rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: uppercase !important;
+  color: #fff7e8 !important;
+  text-shadow: 0 14px 46px rgba(0, 0, 0, 0.42) !important;
+  margin: 0 0 14px !important;
+  text-align: center !important;
+}
+
+.section-title-theme span {
+  color: #f2dda7 !important;
+  background: linear-gradient(180deg, #f7e6b8, #bc8f3e) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  display: inline-block !important;
+}
+
+@media (max-width: 720px) {
+  .section-title-theme {
+    font-size: clamp(1.6rem, 7vw, 2.2rem) !important;
+  }
+}

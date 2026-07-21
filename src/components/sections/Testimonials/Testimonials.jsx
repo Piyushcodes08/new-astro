@@ -1,112 +1,99 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./Testimonials.css";
 
 const testimonialsData = [
   {
     id: 1,
-    name: "Tom Hawck",
- 
+    name: "Aarav Sharma",
     image:
-      "https://images.unsplash.com/photo-1514222709107-a180c68d72b4?auto=format&fit=crop&w=500&q=80",
-    quote:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+    "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=848&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      quote:
+      "Valay Patel explained my birth chart with remarkable clarity. His guidance helped me understand my career direction and make decisions with greater confidence.",
   },
   {
     id: 2,
-    name: "Harry John",
-   
+    name: "Priya Mehta",
     image:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=687&q=80",
+       "https://images.unsplash.com/photo-1607189200597-4d0923ef98c6?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    
     quote:
-      "The team understood our requirements perfectly and delivered a highly professional solution with excellent attention to detail.",
+      "The consultation with Valay Patel was calm, detailed, and deeply insightful. He answered every question patiently and suggested practical remedies that were easy to follow.",
   },
   {
     id: 3,
-    name: "Larry Will",
-
+    name: "Rohan Desai",
     image:
-      "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=687&q=80",
+       "https://plus.unsplash.com/premium_photo-1722682239201-21c8173e776b?q=80&w=843&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     quote:
-      "Working with this team was a smooth and rewarding experience. Their communication and execution were exceptional.",
+      "I consulted Valay Patel regarding my business and financial concerns. His astrological analysis was structured, honest, and relevant to my present circumstances.",
   },
   {
     id: 4,
-    name: "Augustine",
-  
+    name: "Kavya Shah",
     image:
-      "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=1170&q=80",
+    "https://plus.unsplash.com/premium_photo-1682089810582-f7b200217b67?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+     
     quote:
-      "They transformed our ideas into a polished digital experience that exceeded our expectations and impressed our customers.",
+      "Valay Sir helped me understand several repeating patterns in my personal life. The reading gave me clarity, emotional reassurance, and a more positive direction.",
   },
   {
     id: 5,
-    name: "Jack Danny",
-  
+    name: "Dhruv Patel",
     image:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=500&q=80",
+      "https://plus.unsplash.com/premium_photo-1682092603230-1ce7cf8ca451?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     quote:
-      "The quality of work, timely delivery and ongoing support made the entire project successful from start to finish.",
+      "The predictions were explained logically without creating fear or confusion. Valay Patel combines traditional astrological knowledge with a practical and balanced approach.",
   },
   {
     id: 6,
-    name: "Luich Harry",
-  
+    name: "Neha Joshi",
     image:
-      "https://images.unsplash.com/photo-1504439904031-93ded9f93e4e?auto=format&fit=crop&w=500&q=80",
+      "https://plus.unsplash.com/premium_photo-1682098109069-0e49e3b42884?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     quote:
-      "A reliable and creative team that consistently delivers premium results while maintaining clear and professional communication.",
+      "My marriage consultation was handled with great sensitivity and respect. Valay Patel carefully explained the compatibility factors and provided thoughtful guidance.",
   },
   {
     id: 7,
-    name: "Alisha Angela",
-
+    name: "Kunal Verma",
     image:
-      "https://images.unsplash.com/photo-1474176857210-7287d38d27c6?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1509933551745-514268e48884?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     quote:
-      "Their strategic approach and technical expertise helped us improve our platform and provide a much better customer experience.",
+      "I was impressed by the depth of the horoscope analysis. Valay Sir highlighted both my strengths and challenges while giving me practical steps for improvement.",
   },
   {
     id: 8,
-    name: "Lofy Sthamam",
- 
+    name: "Ananya Iyer",
     image:
-      "https://images.unsplash.com/photo-1592621385612-4d7129426394?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=500&h=500&q=85",
     quote:
-      "Every stage of the project was handled professionally. The final result was modern, responsive and visually impressive.",
+      "The session felt personal and never generic. Valay Patel listened carefully, explained every planetary influence clearly, and gave me renewed confidence about the future.",
   },
   {
     id: 9,
-    name: "Angela Baby",
-   
+    name: "Raj Malhotra",
     image:
-      "https://images.unsplash.com/photo-1557053910-d9eadeed1c58?auto=format&fit=crop&w=500&q=80",
+      "https://plus.unsplash.com/premium_photo-1689977871600-e755257fb5f8?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     quote:
-      "We appreciated their commitment, creativity and ability to understand the exact experience we wanted for our audience.",
+      "Valay Patel's career guidance helped me evaluate an important professional opportunity from a clearer perspective. His communication was professional and straightforward.",
   },
   {
     id: 10,
-    name: "Hanry Harry",
-
+    name: "Ishita Kapoor",
     image:
-      "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&h=500&q=85",
     quote:
-      "The final website performs beautifully across devices and represents our brand with a premium and professional appearance.",
+      "The consultation gave me peace of mind during a difficult phase. The remedies suggested by Valay Sir were simple, meaningful, and explained with proper reasoning.",
   },
   {
     id: 11,
-    name: "Dlang Dhal",
-   
+    name: "Harsh Vyas",
     image:
-      "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1607227540760-62996d043bb9?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     quote:
-      "Their technical knowledge, responsiveness and dedication made them an excellent long-term technology partner for our business.",
+      "Valay Patel made complex astrological concepts easy to understand. I left the session with a clearer understanding of my abilities, timing, and future priorities.",
   },
 ];
 
-/**
- * Generates consistent pseudo-random values.
- * This prevents avatar positions from changing on every render.
- */
 const getSeededValue = (seed) => {
   const value = Math.sin(seed * 999.91) * 10000;
   return value - Math.floor(value);
@@ -117,219 +104,178 @@ const createFloatingLayout = (totalItems) => {
   const rightCount = totalItems - leftCount;
 
   return Array.from({ length: totalItems }, (_, index) => {
-    const isLeftSide = index < leftCount;
-
-    const sideIndex = isLeftSide
-      ? index
-      : totalItems - index - 1;
-
-    const sideTotal = isLeftSide ? leftCount : rightCount;
-
+    const isLeft = index < leftCount;
+    const sideIndex = isLeft ? index : totalItems - index - 1;
+    const sideTotal = isLeft ? leftCount : rightCount;
     const randomX = getSeededValue(index + 3);
     const randomSize = getSeededValue(index + 17);
     const randomDuration = getSeededValue(index + 31);
 
-    const top =
-      sideTotal > 1
-        ? 8 + sideIndex * (72 / (sideTotal - 1))
-        : 50;
-
-    const horizontalOffset = 4 + randomX * 14;
-    const avatarSize = 72 + randomSize * 42;
-
-    const tabletLeft =
-      totalItems > 1
-        ? 5 + index * (90 / (totalItems - 1))
-        : 50;
-
     return {
-      side: isLeftSide ? "left" : "right",
-      top,
-      horizontalOffset,
-      avatarSize,
-      tabletLeft,
-      animationDuration: 5.5 + randomDuration * 3,
-      animationDelay: -(index * 0.45),
-      floatX: 8 + randomX * 12,
-      floatY: 8 + randomSize * 14,
+      side: isLeft ? "left" : "right",
+      top: sideTotal > 1 ? 10 + sideIndex * (76 / (sideTotal - 1)) : 50,
+      horizontalOffset: 3 + randomX * 12,
+      avatarSize: 58 + randomSize * 30,
+      tabletLeft: totalItems > 1 ? 4 + index * (92 / (totalItems - 1)) : 50,
+      duration: 5.8 + randomDuration * 2.8,
+      delay: -(index * 0.42),
+      floatX: 7 + randomX * 10,
+      floatY: 7 + randomSize * 11,
     };
   });
 };
 
 const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
 
   const floatingLayout = useMemo(
     () => createFloatingLayout(testimonialsData.length),
     []
   );
 
-  const changeTestimonial = (direction) => {
-    setActiveIndex((currentIndex) => {
-      const nextIndex = currentIndex + direction;
-
-      if (nextIndex < 0) {
-        return testimonialsData.length - 1;
-      }
-
-      if (nextIndex >= testimonialsData.length) {
-        return 0;
-      }
-
-      return nextIndex;
-    });
-  };
+  const activeTestimonial = testimonialsData[activeIndex];
 
   const selectTestimonial = (index) => {
-    if (index !== activeIndex) {
-      setActiveIndex(index);
-    }
+    if (index === activeIndex) return;
+    setDirection(index > activeIndex ? 1 : -1);
+    setActiveIndex(index);
   };
 
-  return (
-    <section
-      className="testimonials-section"
-      aria-label="Client testimonials"
-    >
-      <div className="testimonials-background" aria-hidden="true" />
-      <div className="testimonials-overlay" aria-hidden="true" />
+  const changeTestimonial = (step) => {
+    setDirection(step);
+    setActiveIndex(
+      (current) =>
+        (current + step + testimonialsData.length) % testimonialsData.length
+    );
+  };
 
-      {/* ── Section Header ── */}
-      <div className="testimonials-header">
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "ArrowLeft") changeTestimonial(-1);
+      if (event.key === "ArrowRight") changeTestimonial(1);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  return (
+    <section className="testimonials-section" aria-labelledby="testimonials-title">
+      <div className="testimonials-glow testimonials-glow--left" aria-hidden="true" />
+      <div className="testimonials-glow testimonials-glow--right" aria-hidden="true" />
+
+      <header className="testimonials-header">
         <div className="testimonials-eyebrow-row">
           <span className="testimonials-eyebrow-line" />
-          <span className="testimonials-eyebrow-text">What They Say</span>
+          <span className="testimonials-eyebrow-text">Stories of transformation</span>
           <span className="testimonials-eyebrow-line" />
         </div>
-        <h2 className="title-batangas testimonials-title">
-          Client Testimonials
+
+        <h2 id="testimonials-title" className="title-batangas testimonials-title">
+          Client <span>Testimonials</span>
         </h2>
-        <p className="subtitle-poppins testimonials-subtitle">
-          Hear from those whose lives have been touched by the wisdom of Vahlay Astro.
-        </p>
-      </div>
+      </header>
 
-      <div className="testimonials-wrapper">
-        <div className="testimonials-quote-row">
-          {testimonialsData.map((testimonial, index) => {
-            const isActive = activeIndex === index;
-            const position = floatingLayout[index];
+      <div className="testimonials-stage">
 
-            const positionStyle = {
-              "--testimonial-top": `${position.top}%`,
-              "--testimonial-size": `${position.avatarSize}px`,
-              "--tablet-left": `${position.tabletLeft}%`,
-              "--animation-duration": `${position.animationDuration}s`,
-              "--animation-delay": `${position.animationDelay}s`,
-              "--float-x": `${position.floatX}px`,
-              "--float-y": `${position.floatY}px`,
-              ...(position.side === "left"
-                ? {
-                    left: `${position.horizontalOffset}%`,
-                    right: "auto",
-                  }
-                : {
-                    right: `${position.horizontalOffset}%`,
-                    left: "auto",
-                  }),
-            };
+        {testimonialsData.map((testimonial, index) => {
+          const position = floatingLayout[index];
+          const isActive = index === activeIndex;
+          const positionStyle = {
+            "--avatar-top": `${position.top}%`,
+            "--avatar-size": `${position.avatarSize}px`,
+            "--tablet-left": `${position.tabletLeft}%`,
+            "--float-duration": `${position.duration}s`,
+            "--float-delay": `${position.delay}s`,
+            "--float-x": `${position.floatX}px`,
+            "--float-y": `${position.floatY}px`,
+            ...(position.side === "left"
+              ? { left: `${position.horizontalOffset}%` }
+              : { right: `${position.horizontalOffset}%` }),
+          };
 
-            return (
-              <article
-                key={testimonial.id}
-                style={positionStyle}
-                className={`testimonial-column ${
-                  isActive ? "testimonial-active testimonial-show" : ""
-                }`}
-                onClick={() => selectTestimonial(index)}
-                onKeyDown={(event) => {
-                  if (
-                    !isActive &&
-                    (event.key === "Enter" || event.key === " ")
-                  ) {
-                    event.preventDefault();
-                    selectTestimonial(index);
-                  }
-                }}
-                role={!isActive ? "button" : undefined}
-                tabIndex={!isActive ? 0 : -1}
-                aria-label={
-                  !isActive
-                    ? `View testimonial from ${testimonial.name}`
-                    : undefined
-                }
-              >
-                <div className="testimonial-col-inner">
-                  <div className="testimonial-author-meta">
-                    <div className="testimonial-image-cover">
-                      <img
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        loading={isActive ? "eager" : "lazy"}
-                        draggable="false"
-                      />
-                    </div>
-
-                    <div className="testimonial-author-info">
-                      <div className="testimonial-author-name">
-                        <h3>{testimonial.name}</h3>
-                      </div>
-
-                      <div className="testimonial-author-status">
-                        <p>{testimonial.title}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="testimonial-quote-wrapper">
-                    <span
-                      className="testimonial-quote-symbol testimonial-quote-left"
-                      aria-hidden="true"
-                    >
-                      ❛
-                    </span>
-
-                    <div className="testimonial-text-inner">
-                      <p>{testimonial.quote}</p>
-                    </div>
-
-                    <span
-                      className="testimonial-quote-symbol testimonial-quote-right"
-                      aria-hidden="true"
-                    >
-                      ❜
-                    </span>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
-
-          <div className="testimonials-arrows">
+          return (
             <button
+              key={testimonial.id}
               type="button"
-              className="testimonial-arrow testimonial-left-arrow"
-              onClick={() => changeTestimonial(-1)}
-              aria-label="Previous testimonial"
+              style={positionStyle}
+              className={`testimonial-avatar ${isActive ? "is-active" : ""}`}
+              onClick={() => selectTestimonial(index)}
+              aria-label={`Read testimonial from ${testimonial.name}`}
+              aria-pressed={isActive}
             >
-              <span aria-hidden="true">‹</span>
+              <img src={testimonial.image} alt="" loading="lazy" draggable="false" />
+              <span className="testimonial-avatar-ring" aria-hidden="true" />
             </button>
+          );
+        })}
 
-            <button
-              type="button"
-              className="testimonial-arrow testimonial-right-arrow"
-              onClick={() => changeTestimonial(1)}
-              aria-label="Next testimonial"
-            >
-              <span aria-hidden="true">›</span>
-            </button>
+        <article className="testimonial-featured">
+          <span className="testimonial-corner testimonial-corner--tl" aria-hidden="true" />
+          <span className="testimonial-corner testimonial-corner--tr" aria-hidden="true" />
+          <span className="testimonial-corner testimonial-corner--bl" aria-hidden="true" />
+          <span className="testimonial-corner testimonial-corner--br" aria-hidden="true" />
+
+          <div
+            key={activeTestimonial.id}
+            className={`testimonial-featured-content ${
+              direction > 0 ? "from-right" : "from-left"
+            }`}
+          >
+            <div className="testimonial-featured-photo">
+              <img
+                src={activeTestimonial.image}
+                alt={activeTestimonial.name}
+                draggable="false"
+              />
+            </div>
+
+            <div className="testimonial-stars" aria-label="5 out of 5 stars">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+
+            <span className="testimonial-quote-mark" aria-hidden="true">“</span>
+
+            <blockquote>
+              <p>{activeTestimonial.quote}</p>
+            </blockquote>
+
+            <div className="testimonial-ornament" aria-hidden="true">
+              <span /><b>◆</b><span />
+            </div>
+
+            <div className="testimonial-author">
+              <h3>{activeTestimonial.name}</h3>
+              <p>Verified Vahlay Astro Client</p>
+            </div>
           </div>
+        </article>
 
-          <div className="testimonial-counter">
+        <div className="testimonials-navigation">
+          <button
+            type="button"
+            className="testimonial-arrow"
+            onClick={() => changeTestimonial(-1)}
+            aria-label="Previous testimonial"
+          >
+            <span aria-hidden="true">←</span>
+          </button>
+
+          <div className="testimonial-counter" aria-live="polite">
             <span>{String(activeIndex + 1).padStart(2, "0")}</span>
             <span className="testimonial-counter-line" />
             <span>{String(testimonialsData.length).padStart(2, "0")}</span>
           </div>
+
+          <button
+            type="button"
+            className="testimonial-arrow"
+            onClick={() => changeTestimonial(1)}
+            aria-label="Next testimonial"
+          >
+            <span aria-hidden="true">→</span>
+          </button>
         </div>
       </div>
     </section>

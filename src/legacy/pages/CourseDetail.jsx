@@ -258,109 +258,134 @@ const CourseDetail = () => {
   return (
     <div className="text-white selection:bg-brand-red/80 font-poppins bg-transparent">
       <Header />
-      <div id="top-sentinel" className="h-0 w-full pt-[80px]"></div>
       {getMetaTags()}
 
-      {/* Premium Hero Section */}
-      <section className="relative flex items-center pt-20 pb-8 overflow-hidden hero-section">
-     
+      {/* ── Hero Section ── */}
+      <section className="relative overflow-hidden" style={{ paddingTop: "100px", paddingBottom: "80px", minHeight: "calc(100dvh - 0px)" }}>
 
-        <div className="relative z-10 section-container pt-0! pb-0!">
-          <div className="flex flex-col lg:flex-row justify-between items-center gap-12 lg:gap-20">
+        {/* Background glows */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="absolute -left-40 top-1/4 h-[500px] w-[500px] rounded-full bg-[#bf0603] opacity-[0.07] blur-[130px]" />
+          <div className="absolute -right-40 bottom-1/4 h-[400px] w-[400px] rounded-full bg-[#d4af68] opacity-[0.05] blur-[120px]" />
+          <div className="absolute left-1/2 top-0 h-px w-3/4 -translate-x-1/2 bg-gradient-to-r from-transparent via-[#d4af68]/20 to-transparent" />
+        </div>
+
+        <div className="premium-container relative z-10 flex flex-col justify-center" style={{ minHeight: "calc(100dvh - 180px)" }}>
+          <div className="flex flex-col items-center gap-10 lg:flex-row lg:items-center lg:gap-16 xl:gap-24">
+
+            {/* ── Left: Text Content ── */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="flex flex-col gap-6 text-center lg:text-left lg:flex-1 py-[30px]"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="flex w-full flex-col text-center lg:flex-1 lg:text-left"
             >
-              {/* Red Pill Label */}
-              <div className="inline-block px-4 py-1 rounded-full border border-brand-red/30 bg-brand-red/5 mb-1 self-center lg:self-start">
-                <span className="text-brand-red text-[10px] font-black uppercase tracking-[0.4em]">
-                  {courseData.type === 'free' ? 'Sacred Wisdom' : 'Divine Mastery'}
+              {/* Kicker badge */}
+              <div className="mb-6 flex items-center justify-center gap-3 lg:justify-start">
+                <span className="h-px w-8 bg-gradient-to-r from-transparent to-[#d4af68]" />
+                <span className="rounded-full border border-[#d4af68]/30 bg-[#d4af68]/[0.08] px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.32em] text-[#e4c784] backdrop-blur-md sm:text-[10px]">
+                  {courseData.type === "free" ? "Sacred Wisdom Series" : "Divine Mastery Program"}
                 </span>
+                <span className="h-px w-8 bg-gradient-to-l from-transparent to-[#d4af68]" />
               </div>
 
-              <h1 className="title-batangas text-3xl md:text-5xl leading-[1.1] tracking-tight text-white drop-shadow-2xl">
+              {/* Heading */}
+              <h1 className="title-batangas mx-auto max-w-3xl text-[2.2rem] leading-[1.05] tracking-[-0.02em] text-[#fffaf0] drop-shadow-[0_8px_30px_rgba(0,0,0,0.6)] sm:text-[2.6rem] md:text-[3rem] lg:mx-0 lg:text-[2.8rem] xl:text-[3.4rem]">
                 {courseData.title}
               </h1>
 
-              <p className="subtitle-poppins text-sm md:text-base text-white/70 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium">
-                {courseData.Subtitle || "Embark on a journey to master ancient cosmic wisdom and transform your life path."}
+              {/* Ornamental divider */}
+             
+
+              {/* Subtitle */}
+              <p className="subtitle-poppins mx-auto max-w-xl text-[0.9rem] font-normal leading-[1.85] text-white/60 sm:text-[0.95rem] md:text-base lg:mx-0">
+                {courseData.Subtitle || "Embark on a transformative journey through ancient cosmic wisdom and discover a deeper understanding of your life path."}
               </p>
 
-              {/* Social Proof / Avatar Stack */}
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                <div className="flex -space-x-3 overflow-hidden">
-                  {[1, 2, 3, 4].map(i => (
-                    <img
-                      key={i}
-                      className="inline-block h-10 w-10 rounded-full ring-2 ring-black object-cover"
-                      src={`https://i.pravatar.cc/100?img=${i + 10}`}
-                      alt="Student"
-                    />
-                  ))}
-                  <div className="flex items-center justify-center h-10 w-10 rounded-full bg-white/10 ring-2 ring-black backdrop-blur-md text-[10px] font-black text-white/60">
-                    +1k
-                  </div>
-                </div>
-                <div className="text-[11px] font-black text-white/30 uppercase tracking-[0.2em]">
-                  <span className="text-white">1,200+</span> Souls Aligned
-                </div>
+              {/* Pills */}
+              <div className="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2.5 lg:justify-start">
+                <span className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#d4af68]" />
+                  Guided Learning
+                </span>
+                <span className="hidden h-3 w-px bg-white/15 sm:block" />
+                <span className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#bf0603]" />
+                  {courseData.type === "free" ? "Free Access" : "Premium Access"}
+                </span>
+                <span className="hidden h-3 w-px bg-white/15 sm:block" />
+                <span className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40">
+                  <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
+                  Certificate Included
+                </span>
               </div>
 
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-8">
-                <Link to={enrollUrl} className="group/btn relative">
-                  <div className="absolute -inset-1 bg-linear-to-r from-brand-red to-orange-500 rounded blur opacity-40 group-hover/btn:opacity-100 transition duration-1000 group-hover/btn:duration-200"></div>
-                  <button className="relative px-8 py-3.5 bg-white text-black rounded font-black uppercase tracking-[0.2em] text-[11px] hover:bg-black hover:text-white transition-all duration-500">
-                    {isEnrolled ? 'Open Course' : 'Join the Journey'}
-                  </button>
-                </Link>
-
-                <button
-                  onClick={shareArticle}
-                  className="flex items-center gap-3 text-white/40 hover:text-white transition-all text-[11px] uppercase tracking-[0.3em] font-black group/share"
+              {/* CTA */}
+              <div className="mt-10 flex w-full max-w-sm flex-col gap-3 self-center lg:self-start">
+                <Link
+                  to={enrollUrl}
+                  className="group relative flex w-full items-center justify-between overflow-hidden rounded-sm border border-[#bf0603] bg-[#bf0603] px-6 py-4 text-white shadow-[0_16px_45px_rgba(191,6,3,0.28)] transition-all duration-500 hover:-translate-y-0.5 hover:border-[#d4af68] hover:bg-[#fff8e8] hover:text-[#760503] hover:shadow-[0_20px_55px_rgba(0,0,0,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af68]"
                 >
-                  <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover/share:border-brand-red group-hover/share:text-brand-red transition-all bg-white/5">
-                    <RiShareForwardFill className="text-xl" />
-                  </div>
-                  Share Wisdom
-                </button>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1 }}
-              className="relative lg:w-[35%] w-full max-w-[420px] flex flex-col gap-8"
-            >
-              <div className="relative rounded overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(191, 6, 3,0.2)] group transition-all duration-700 hover:shadow-[0_0_80px_rgba(191, 6, 3,0.4)] hover:border-white/20">
-                <img
-                  src={courseData.imageUrl || "/src/assets/images/common/team/hansal sir.webp"}
-                  alt={courseData.title}
-                  className="w-full max-h-[380px] object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              </div>
-
-              <div className="w-full group">
-                <Link to={enrollUrl}>
-                  <button className="w-full py-3.5 rounded bg-brand-red text-white font-black uppercase tracking-[0.3em] text-[11px] shadow-2xl hover:bg-white hover:text-brand-red transition-all duration-500 transform hover:-translate-y-1 relative overflow-hidden">
-                    <span className="relative z-10">{enrollText}</span>
-                    <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                  </button>
+                  <span className="relative z-10 text-[10px] font-black uppercase tracking-[0.28em] sm:text-[11px]">
+                    {enrollText}
+                  </span>
+                  <span className="relative z-10 flex h-8 w-8 items-center justify-center border border-white/25 transition-all duration-500 group-hover:translate-x-0.5 group-hover:rotate-45 group-hover:border-[#760503]/30" aria-hidden="true">
+                    ↗
+                  </span>
+                  <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                 </Link>
+                <p className="text-center text-[9px] font-medium uppercase tracking-[0.2em] text-white/25 lg:text-left">
+                  Begin your journey into timeless wisdom
+                </p>
               </div>
             </motion.div>
+
+            {/* ── Right: Course Image Card ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+              className="w-full max-w-[400px] shrink-0 lg:w-[38%] lg:max-w-none"
+            >
+              {/* Outer glow ring */}
+              <div className="relative">
+                <div className="pointer-events-none absolute -inset-4 rounded bg-[#bf0603]/10 blur-2xl" aria-hidden="true" />
+
+                <div className="group relative overflow-hidden rounded border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-all duration-700 hover:border-[#d4af68]/25 hover:shadow-[0_30px_80px_rgba(0,0,0,0.6)]">
+
+                  {/* Corner accents */}
+                  <span className="pointer-events-none absolute left-2 top-2 z-20 h-5 w-5 border-l border-t border-[#d4af68]/50" aria-hidden="true" />
+                  <span className="pointer-events-none absolute bottom-2 right-2 z-20 h-5 w-5 border-b border-r border-[#d4af68]/50" aria-hidden="true" />
+
+                  <img
+                    src={courseData.imageUrl || hansalImg}
+                    alt={courseData.title}
+                    className="w-full object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
+                    style={{ maxHeight: "420px", minHeight: "280px" }}
+                  />
+
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+                  {/* Course type badge */}
+                  <div className="absolute right-4 top-4 rounded-sm border border-[#d4af68]/30 bg-black/60 px-3 py-1.5 backdrop-blur-md">
+                    <p className="text-[9px] font-black uppercase tracking-[0.25em] text-[#e4c784]">
+                      {courseData.type === "free" ? "Free" : "Premium"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
           </div>
         </div>
       </section>
 
       {/* Stats Grid */}
-      <section className="relative z-20 -mt-16">
+      <section className="relative z-20 pb-0 pt-0">
         <div className="premium-container">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-black/40 backdrop-blur-2xl border border-white/10 rounded p-8 shadow-2xl relative overflow-hidden">
-            <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent pointer-events-none"></div>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4 bg-black/40 backdrop-blur-2xl border border-white/10 rounded p-6 md:p-8 shadow-2xl relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
             {[
               { icon: <FaClock />, label: "Duration", val: courseData.duration || "24 Sessions" },
               { icon: <FaUserGraduate />, label: "Level", val: courseData.level || "All Levels" },

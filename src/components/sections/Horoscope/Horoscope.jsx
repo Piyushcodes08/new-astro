@@ -1,273 +1,234 @@
-import { useEffect, useState, useRef, useMemo, useCallback } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Horoscope.css";
 import { horoscopeData } from "../../../data/common/horoscope";
 import zodiacWheel from "../../../assets/images/sections/horoscope/new_wheel_s5ozry.png";
 
-export default function Horoscope({ onGetDetails }) {
-  const [rotation, setRotation] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const scrollContainerRef = useRef(null);
-  const lastScrollTime = useRef(0);
-  const wheelRef = useRef(null);
-  const navigate = useNavigate();
+const DATE_RANGES = {
+  Aries: "March 21 — April 19",
+  Taurus: "April 20 — May 20",
+  Gemini: "May 21 — June 20",
+  Cancer: "June 21 — July 22",
+  Leo: "July 23 — August 22",
+  Virgo: "August 23 — September 22",
+  Libra: "September 23 — October 22",
+  Scorpio: "October 23 — November 21",
+  Sagittarius: "November 22 — December 21",
+  Capricorn: "December 22 — January 19",
+  Aquarius: "January 20 — February 18",
+  Pisces: "February 19 — March 20",
+};
 
-  const COOLDOWN = 300;
+const ZODIAC_ORDER = [
+  "FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIXTH",
+  "SEVENTH", "EIGHTH", "NINTH", "TENTH", "ELEVENTH", "TWELFTH",
+];
+
+const TRAIT_ICONS = ["✦", "◆", "◈"];
+const COOLDOWN = 420;
+
+export default function Horoscope({ onGetDetails }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isInView, setIsInView] = useState(false);
+  const sectionRef = useRef(null);
+  const wheelRef = useRef(null);
+  const activeIndexRef = useRef(0);
+  const lastScrollTime = useRef(0);
+  const touchStartY = useRef(null);
+  const navigate = useNavigate();
   const zodiacs = horoscopeData;
 
-  const [isInView, setIsInView] = useState(false);
-  const activeIndexRef = useRef(activeIndex);
+  const currentZodiac = zodiacs[activeIndex] ?? zodiacs[0];
+  const traitsArray = useMemo(
+    () => currentZodiac?.traits?.split(/,\s*/).filter(Boolean).slice(0, 3) ?? [],
+    [currentZodiac]
+  );
 
   useEffect(() => {
     activeIndexRef.current = activeIndex;
   }, [activeIndex]);
 
   useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return undefined;
+
     const observer = new IntersectionObserver(
       ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.1 }
+      { threshold: 0.16 }
     );
-
-    if (scrollContainerRef.current) {
-      observer.observe(scrollContainerRef.current);
-    }
-
+    observer.observe(section);
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const wheelEl = wheelRef.current;
-    if (!wheelEl) return;
-
-    const handleWheel = (e) => {
-      const currentIndex = activeIndexRef.current;
-      const isAtEnd = currentIndex === zodiacs.length - 1;
-      const isAtStart = currentIndex === 0;
-
-      // Allow normal scroll if at boundaries
-      if (e.deltaY > 0 && isAtEnd) return;
-      if (e.deltaY < 0 && isAtStart) return;
-
-      // Stop page scroll and handle wheel rotation
-      e.preventDefault();
-
-      if (Date.now() - lastScrollTime.current < COOLDOWN) return;
-
-      const delta = Math.abs(e.deltaY);
-      if (delta < 15) return;
-
-      const power = Math.min(Math.max(Math.floor(delta / 100), 1), 4);
-
-      if (e.deltaY > 0) {
-        const nextIndex = Math.min(currentIndex + power, zodiacs.length - 1);
-        if (nextIndex !== currentIndex) {
-          const actualSteps = nextIndex - currentIndex;
-          setActiveIndex(nextIndex);
-          setRotation((prev) => prev - actualSteps * 30);
-          lastScrollTime.current = Date.now();
-        }
-      } else {
-        const prevIndex = Math.max(currentIndex - power, 0);
-        if (prevIndex !== currentIndex) {
-          const actualSteps = currentIndex - prevIndex;
-          setActiveIndex(prevIndex);
-          setRotation((prev) => prev + actualSteps * 30);
-          lastScrollTime.current = Date.now();
-        }
-      }
-    };
-
-    wheelEl.addEventListener("wheel", handleWheel, { passive: false });
-    return () => wheelEl.removeEventListener("wheel", handleWheel);
+  const selectSign = useCallback((nextIndex) => {
+    if (!zodiacs.length) return;
+    const normalized = (nextIndex + zodiacs.length) % zodiacs.length;
+    activeIndexRef.current = normalized;
+    setActiveIndex(normalized);
   }, [zodiacs.length]);
 
-  const currentZodiac = zodiacs[activeIndex];
+  const changeSign = useCallback((direction, wrap = true) => {
+    const current = activeIndexRef.current;
+    const next = current + direction;
+    selectSign(wrap ? next : Math.min(Math.max(next, 0), zodiacs.length - 1));
+  }, [selectSign, zodiacs.length]);
 
-  const traitsArray = currentZodiac?.traits
-    ? currentZodiac.traits.split(", ").slice(0, 3)
-    : [];
+  useEffect(() => {
+    const wheel = wheelRef.current;
+    if (!wheel) return undefined;
 
-  const dateRanges = useMemo(() => ({
-    Aries: "March 21 - April 19",
-    Taurus: "April 20 - May 20",
-    Gemini: "May 21 - June 20",
-    Cancer: "June 21 - July 22",
-    Leo: "July 23 - August 22",
-    Virgo: "August 23 - September 22",
-    Libra: "September 23 - October 22",
-    Scorpio: "October 23 - November 21",
-    Sagittarius: "November 22 - December 21",
-    Capricorn: "December 22 - January 19",
-    Aquarius: "January 20 - February 18",
-    Pisces: "February 19 - March 20",
-  }), []);
+    const handleWheel = (event) => {
+      const current = activeIndexRef.current;
+      const direction = event.deltaY > 0 ? 1 : -1;
+      const atBoundary =
+        (direction > 0 && current === zodiacs.length - 1) ||
+        (direction < 0 && current === 0);
 
-  const zodiacOrderText = useMemo(() => [
-    "FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIXTH",
-    "SEVENTH", "EIGHTH", "NINTH", "TENTH", "ELEVENTH", "TWELFTH",
-  ], []);
+      if (atBoundary || Math.abs(event.deltaY) < 12) return;
+      event.preventDefault();
+      if (Date.now() - lastScrollTime.current < COOLDOWN) return;
 
-  // eslint-disable-next-line no-unused-vars
-  const featureItems = useMemo(() => [
-    { icon: "🎯", title: "PIONEER MINDSET", desc: "Always first. Always ahead." },
-    { icon: "⚡", title: "FEARLESS SPIRIT", desc: "No fear. Only determination." },
-    { icon: "🔥", title: "BOUNDLESS ENERGY", desc: "Driven by passion and purpose." },
-    { icon: "🚩", title: "NATURAL LEADER", desc: "Born to inspire and lead." },
-  ], []);
+      lastScrollTime.current = Date.now();
+      changeSign(direction, false);
+    };
 
-  const handleWheelClick = useCallback(() => {
-    if (window.innerWidth >= 1180) return;
-    const nextIndex = (activeIndex + 1) % zodiacs.length;
-    setActiveIndex(nextIndex);
-    setRotation((prev) => prev - 30);
-  }, [activeIndex, zodiacs.length]);
+    wheel.addEventListener("wheel", handleWheel, { passive: false });
+    return () => wheel.removeEventListener("wheel", handleWheel);
+  }, [changeSign, zodiacs.length]);
+
+  const handleKeyDown = (event) => {
+    if (["ArrowRight", "ArrowDown"].includes(event.key)) {
+      event.preventDefault();
+      changeSign(1);
+    }
+    if (["ArrowLeft", "ArrowUp"].includes(event.key)) {
+      event.preventDefault();
+      changeSign(-1);
+    }
+  };
+
+  const handleTouchStart = (event) => {
+    touchStartY.current = event.touches[0]?.clientY ?? null;
+  };
+
+  const handleTouchEnd = (event) => {
+    if (touchStartY.current === null) return;
+    const endY = event.changedTouches[0]?.clientY ?? touchStartY.current;
+    const distance = touchStartY.current - endY;
+    touchStartY.current = null;
+    if (Math.abs(distance) > 42) changeSign(distance > 0 ? 1 : -1);
+  };
+
+  const openReading = () => {
+    onGetDetails?.();
+    navigate(`/horoscope/${currentZodiac.name.toLowerCase()}`);
+  };
+
+  if (!currentZodiac) return null;
 
   return (
     <section
       className={`horoscope-section ${isInView ? "in-view" : ""}`}
-      ref={scrollContainerRef}
+      ref={sectionRef}
+      aria-labelledby="horoscope-title"
     >
-      
+      <div className="horoscope-ambient" aria-hidden="true">
+        <span className="horoscope-orb orb-left" />
+        <span className="horoscope-orb orb-right" />
+        <span className="horoscope-stars" />
+      </div>
 
       <div className="horoscope-container">
-        {/* Common Section Header */}
-        <div className="flex flex-col items-center text-center gap-2 mx-auto max-w-4xl relative z-20">
-          <h2 className="title-batangas text-4xl md:text-5xl font-bold uppercase tracking-tight leading-tight text-white">
-            Daily Cosmic Horoscope
-          </h2>
-          <p className="subtitle-poppins text-lg md:text-base font-medium text-white/70">
-            Unlock the secrets of your celestial path with our daily zodiac insights.
+        <header className="horoscope-header">
+          <span className="horoscope-kicker">CELESTIAL GUIDANCE</span>
+          <h2 id="horoscope-title" className="section-title-theme">Daily Cosmic Horoscope</h2>
+          <p className="subtitle-poppins horoscope-subtitle">
+            Unlock the secrets of your celestial path with thoughtfully curated daily zodiac insights.
           </p>
-
-          {/* Scroll Indicator Design */}
-          <div className="scroll-reveal-indicator">
-            <span className="scroll-text">
-              <span className="desktop-text">SCROLL TO REVEAL YOUR COSMIC INSIGHTS</span>
-              <span className="mobile-text">TAP TO REVEAL YOUR COSMIC INSIGHTS</span>
-            </span>
-            <div className="mouse-icon desktop-only">
-              <div className="wheel-dot"></div>
-            </div>
+          <div className="scroll-reveal-indicator" aria-hidden="true">
+            <span className="desktop-text">SCROLL OVER THE WHEEL TO EXPLORE</span>
+            <span className="mobile-text">SWIPE OR USE THE ARROWS TO EXPLORE</span>
+            <span className="mouse-icon"><span className="wheel-dot" /></span>
           </div>
-        </div>
+        </header>
 
         <div className="zodiac-main-layout">
-          <div className="zodiac-side-panel left-aligned">
-            <div className="zodiac-hero-info">
-           
-
-              <h1 className="hero-zodiac-name">{currentZodiac.name}</h1>
-
-              <div className="title-divider"></div>
-
-              <p className="zodiac-date-range">
-                {dateRanges[currentZodiac.name]}
-              </p>
-
-              <div className="trait-badges">
-                {traitsArray.map((trait, i) => (
-                  <span key={i} className="trait-badge">
-                    <span className="badge-icon">
-                      {i === 0 ? "⚡" : i === 1 ? "🔥" : "🛡"}
-                    </span>
-                    {trait}
-                  </span>
-                ))}
-              </div>
-
+          <article className="zodiac-side-panel zodiac-identity" key={`identity-${activeIndex}`}>
+            <span className="zodiac-index">{String(activeIndex + 1).padStart(2, "0")}</span>
+            <p className="zodiac-eyebrow">The {ZODIAC_ORDER[activeIndex]} Zodiac Sign</p>
+            <h3 className="hero-zodiac-name">{currentZodiac.name}</h3>
+            <div className="title-divider"><span>✦</span></div>
+            <p className="zodiac-date-range">{DATE_RANGES[currentZodiac.name]}</p>
+            <div className="trait-badges" aria-label={`${currentZodiac.name} key traits`}>
+              {traitsArray.map((trait, index) => (
+                <span key={trait} className="trait-badge">
+                  <span className="badge-icon">{TRAIT_ICONS[index]}</span>{trait}
+                </span>
+              ))}
             </div>
-          </div>
+          </article>
 
           <div className="zodiac-center-column">
             <div
-              className="zodiac-wheel-wrapper"
               ref={wheelRef}
-              onClick={handleWheelClick}
-              style={{ cursor: window.innerWidth < 1180 ? 'pointer' : 'default' }}
+              className="zodiac-wheel-wrapper"
+              role="group"
+              aria-label={`Zodiac selector. Currently showing ${currentZodiac.name}`}
+              tabIndex={0}
+              onKeyDown={handleKeyDown}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
             >
-              <div className="wheel-orbit orbit-one"></div>
-            
-              <div className="wheel-outer-glow"></div>
-              <div className="wheel-inner-glow"></div>
-
+              <span className="wheel-orbit orbit-one" aria-hidden="true" />
+              <span className="wheel-orbit orbit-two" aria-hidden="true" />
+              <span className="wheel-outer-glow" aria-hidden="true" />
               <div
                 className="zodiac-wheel-outer"
-                style={{ transform: `rotate(${rotation}deg)` }}
+                style={{ transform: `rotate(${-activeIndex * 30}deg)` }}
               >
-                <img
-                  src={zodiacWheel}
-                  alt="Zodiac Wheel"
-                  loading="lazy"
-                  decoding="async"
-                  className="zodiac-wheel-image"
-                />
+                <img src={zodiacWheel} alt="" className="zodiac-wheel-image" draggable="false" />
               </div>
-
               <div className="zodiac-center-display">
-                <div className="center-pulse"></div>
+                <span className="center-pulse" aria-hidden="true" />
                 <img
+                  key={currentZodiac.name}
                   src={currentZodiac.icon}
-                  alt={currentZodiac.name}
+                  alt={`${currentZodiac.name} symbol`}
                   className="active-icon-large"
                 />
               </div>
             </div>
 
-            <div className="zodiac-navigation-indicator">
-              <span className="sign-position">
-                THE {zodiacOrderText[activeIndex]} SIGN OF THE ZODIAC
-              </span>
-
-              <div className="pagination-dots">
-                <span className="current-page">
-                  {String(activeIndex + 1).padStart(2, "0")}
-                </span>
-                <span className="separator">OF</span>
-                <span className="total-pages">12</span>
+            <div className="zodiac-controls">
+              <button type="button" onClick={() => changeSign(-1)} aria-label="Previous zodiac sign">←</button>
+              <div className="zodiac-pagination" aria-live="polite">
+                <strong>{String(activeIndex + 1).padStart(2, "0")}</strong>
+                <span />
+                <small>12</small>
               </div>
+              <button type="button" onClick={() => changeSign(1)} aria-label="Next zodiac sign">→</button>
             </div>
           </div>
 
-          <div className="zodiac-side-panel right-aligned">
-            <div className="glass-detail-card" key={`desc-${activeIndex}`}>
-              <div className="card-top-header">
-                <div className="header-line"></div>
-                <h3 className="section-label">{currentZodiac.name.toUpperCase()} TRAITS</h3>
-                <div className="header-line"></div>
-                <span className="header-diamond">✦</span>
-              </div>
-
-              <div className="key-traits-banners">
-                {traitsArray.map((trait, i) => (
-                  <div key={i} className="trait-banner-item">
-                    <div className="trait-number-box">
-                      <span className="trait-num">{String(i + 1).padStart(2, '0')}</span>
-                    </div>
-                    <div className="trait-content-box">
-                      <span className="trait-text-main">{trait.toUpperCase()}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <button 
-                className="premium-banner-btn" 
-                onClick={() => {
-                  if (onGetDetails) onGetDetails();
-                  navigate(`/horoscope/${currentZodiac.name.toLowerCase()}`);
-                }}
-              >
-                <span className="btn-text-content">
-                  EXPLORE FULL {currentZodiac.name.toUpperCase()} READING
-                </span>
-                <span className="btn-icon-box">
-                  <span className="arrow-icon">→</span>
-                </span>
-              </button>
+          <article className="zodiac-side-panel glass-detail-card" key={`details-${activeIndex}`}>
+            <div className="card-top-header">
+              <span>PERSONALITY PROFILE</span>
+              <h3>{currentZodiac.name} Traits</h3>
             </div>
-          </div>
+            <div className="key-traits-banners">
+              {traitsArray.map((trait, index) => (
+                <div key={trait} className="trait-banner-item">
+                  <span className="trait-num">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="trait-text-main">{trait}</span>
+                </div>
+              ))}
+            </div>
+            <button type="button" className="premium-banner-btn" onClick={openReading}>
+              <span>Explore Full {currentZodiac.name} Reading</span>
+              <span className="arrow-icon" aria-hidden="true">↗</span>
+            </button>
+          </article>
         </div>
-
       </div>
     </section>
   );

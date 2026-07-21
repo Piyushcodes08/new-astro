@@ -340,7 +340,7 @@ const AddCourse = () => {
                       <div className="flex space-x-6">
                         <button
                           onClick={() => handleEditCourse(course)}
-                          className="text-[10px] font-bold uppercase tracking-widest text-[#b0a102] hover:text-white transition-all border-b border-transparent hover:border-[#b0a102]"
+                          className="text-[10px] font-bold uppercase tracking-widest text-[#b0a102]  transition-all border-b border-transparent hover:border-[#b0a102]"
                         >
                           Edit
                         </button>

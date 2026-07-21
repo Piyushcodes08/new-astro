@@ -1,11 +1,22 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { Link } from 'react-router-dom';
-import SliderHeader from '../../ui/Slider/SliderHeader';
-import SliderControls from '../../ui/Slider/SliderControls';
-import Button from '../../ui/Button/Button';
-import { useProducts } from '../../../hooks/useProducts';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { Link } from "react-router-dom";
+import SliderHeader from "../../ui/Slider/SliderHeader";
+import SliderControls from "../../ui/Slider/SliderControls";
+import Button from "../../ui/Button/Button";
+import { useProducts } from "../../../hooks/useProducts";
+import pyriteImage from "../../../assets/images/products/pyritr.webp";
+import chakraImage from "../../../assets/images/products/7bracelate.webp";
+import nazarImage from "../../../assets/images/products/Nazarbatu.webp";
+import jadeImage from "../../../assets/images/products/green.webp";
+import rudrakshaImage from "../../../assets/images/products/rudraksh.webp";
+import roseQuartzImage from "../../../assets/images/products/Rose Quartz Bracelet.webp";
 import "./products.css";
-
 
 export const fallbackProducts = [
   {
@@ -14,7 +25,7 @@ export const fallbackProducts = [
     desc: "Attract wealth, confidence, and positive energy with this premium Pyrite crystal bracelet.",
     price: "₹999",
     oldPrice: "₹1499",
-    image: "src/assets/images/products/pyritr.webp",
+    image: pyriteImage,
   },
   {
     theme: "purple",
@@ -22,23 +33,23 @@ export const fallbackProducts = [
     desc: "Balance your chakras and improve spiritual harmony with natural healing stones.",
     price: "₹799",
     oldPrice: "₹1199",
-    image: "src/assets/images/products/7bracelate.webp",
+    image: chakraImage,
   },
   {
     theme: "cyan",
     title: "Nazar Suraksha Bracelet",
-    desc: "Designed to protect against negative energy and evil eye with spiritual power.",
+    desc: "Designed to protect against negative energy and the evil eye with spiritual power.",
     price: "₹699",
     oldPrice: "₹999",
-    image: "src/assets/images/products/Nazarbatu.webp",
+    image: nazarImage,
   },
   {
     theme: "green",
     title: "Green Jade Ring",
-    desc: "Elegant jade ring crafted for prosperity, peace, and emotional balance.",
+    desc: "An elegant jade ring crafted for prosperity, peace, and emotional balance.",
     price: "₹1299",
     oldPrice: "₹1799",
-    image: "src/assets/images/products/green.webp",
+    image: jadeImage,
   },
   {
     theme: "orange",
@@ -46,7 +57,7 @@ export const fallbackProducts = [
     desc: "Authentic spiritual Rudraksha mala for meditation, peace, and divine connection.",
     price: "₹1499",
     oldPrice: "₹2199",
-    image: "src/assets/images/products/rudraksh.webp",
+    image: rudrakshaImage,
   },
   {
     theme: "pink",
@@ -54,94 +65,124 @@ export const fallbackProducts = [
     desc: "Enhance love, self-confidence, and emotional healing with Rose Quartz crystals.",
     price: "₹899",
     oldPrice: "₹1399",
-    image: "src/assets/images/products/Rose Quartz Bracelet.webp",
+    image: roseQuartzImage,
   },
 ];
 
-// Helper to compute discount %
-const getDiscount = (price, oldPrice) => {
-  if (!price || !oldPrice) return null;
-  const p = parseFloat(String(price).replace(/[^\d.]/g, ''));
-  const op = parseFloat(String(oldPrice).replace(/[^\d.]/g, ''));
-  if (!p || !op || op <= p) return null;
-  return Math.round(((op - p) / op) * 100);
+const numericPrice = (value) =>
+  parseFloat(String(value ?? "").replace(/[^\d.]/g, ""));
+
+const formatPrice = (value) => {
+  const amount = numericPrice(value);
+  if (!Number.isFinite(amount)) return value || "";
+  return `₹${amount.toLocaleString("en-IN")}`;
 };
 
-export const ProductCard = ({ p }) => {
-  const productId = p.id || p.title.replace(/\s+/g, '-').toLowerCase();
-  const discount = getDiscount(p.price, p.oldPrice);
+const getDiscount = (price, oldPrice) => {
+  const current = numericPrice(price);
+  const original = numericPrice(oldPrice);
+
+  if (!current || !original || original <= current) return null;
+  return Math.round(((original - current) / original) * 100);
+};
+
+export const ProductCard = ({ product }) => {
+  const productId =
+    product.id || product.title.replace(/\s+/g, "-").toLowerCase();
+  const productUrl = `/products/${productId}`;
+  const discount = getDiscount(product.price, product.oldPrice);
 
   return (
-    <div className="pc-card">
-      {/* Discount Badge */}
-      {discount && (
-        <div className="pc-badge">{discount}% OFF</div>
-      )}
+    <article className={`pc-card pc-card--${product.theme || "gold"}`}>
+      <span className="pc-corner pc-corner--tl" aria-hidden="true" />
+      <span className="pc-corner pc-corner--br" aria-hidden="true" />
 
-      {/* Image Area */}
-      <Link to={`/products/${productId}`} className="pc-image-link" tabIndex={-1}>
+      <Link
+        to={productUrl}
+        className="pc-image-link"
+        aria-label={`View ${product.title}`}
+      >
         <div className="pc-image">
-          <img src={p.image} alt={p.title} loading="lazy" />
-          <div className="pc-image-overlay" />
+          <img src={product.image} alt={product.title} loading="lazy" />
+          <div className="pc-image-vignette" />
+          <div className="pc-image-shine" />
+
+          {discount && <span className="pc-badge">Save {discount}%</span>}
+
+          <span className="pc-view-label">
+            View details <span aria-hidden="true">↗</span>
+          </span>
         </div>
       </Link>
 
-      {/* Card Content */}
       <div className="pc-body">
-        <Link to={`/products/${productId}`} className="pc-title-link">
-          <h3 className="pc-title">{p.title}</h3>
+        <div className="pc-kicker">
+          <span />
+          Sacred Collection
+        </div>
+
+        <Link to={productUrl} className="pc-title-link">
+          <h3 className="pc-title">{product.title}</h3>
         </Link>
-        <p className="pc-desc">{p.desc}</p>
+
+        <p className="pc-desc">{product.desc}</p>
 
         <div className="pc-footer">
           <div className="pc-price-block">
-            <span className="pc-price">₹ {p.price}</span>
-            {p.oldPrice && <span className="pc-old-price">₹ {p.oldPrice}</span>}
+            <span className="pc-price">{formatPrice(product.price)}</span>
+            {product.oldPrice && (
+              <span className="pc-old-price">
+                {formatPrice(product.oldPrice)}
+              </span>
+            )}
           </div>
-          <Link
-            to={`/products/${productId}`}
-            className="pc-btn"
-            id={`product-card-${productId}`}
-          >
-            Buy Now
+
+          <Link to={productUrl} className="pc-btn">
+            <span>Buy now</span>
+            <span className="pc-btn-arrow" aria-hidden="true">→</span>
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
+const getVisibleItems = () => {
+  if (typeof window === "undefined") return 3;
+  if (window.innerWidth < 640) return 1;
+  if (window.innerWidth < 1024) return 2;
+  return 3;
+};
+
 const Products = () => {
-  const { products, loading } = useProducts();
-  const displayProducts = products.length > 0 ? products : fallbackProducts;
+  const { products = [], loading } = useProducts();
+  const displayProducts = products.length ? products : fallbackProducts;
 
-  const [currentIndex, setCurrentIndex] = useState(3);
+  const cloneCount = 3;
+  const [currentIndex, setCurrentIndex] = useState(cloneCount);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [visibleItems, setVisibleItems] = useState(3);
+  const [visibleItems, setVisibleItems] = useState(getVisibleItems);
   const touchStartRef = useRef(0);
-
-  const clonedData = useMemo(() => {
-    if (displayProducts.length === 0) return [];
-    return [
-      ...displayProducts.slice(-3),
-      ...displayProducts,
-      ...displayProducts.slice(0, 3)
-    ];
-  }, [displayProducts]);
 
   const totalRealItems = displayProducts.length;
 
+  const clonedData = useMemo(() => {
+    if (!totalRealItems) return [];
+
+    return [
+      ...displayProducts.slice(-cloneCount),
+      ...displayProducts,
+      ...displayProducts.slice(0, cloneCount),
+    ];
+  }, [displayProducts, totalRealItems]);
+
   useEffect(() => {
-    setCurrentIndex(3);
+    setCurrentIndex(cloneCount);
+    setIsTransitioning(false);
   }, [totalRealItems]);
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) setVisibleItems(1);
-      else if (window.innerWidth < 1024) setVisibleItems(2);
-      else setVisibleItems(3);
-    };
-    handleResize();
+    const handleResize = () => setVisibleItems(getVisibleItems());
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -152,74 +193,64 @@ const Products = () => {
   }, []);
 
   const nextSlide = useCallback(() => {
-    moveToIndex(currentIndex + 1);
-  }, [currentIndex, moveToIndex]);
+    if (!isTransitioning) moveToIndex(currentIndex + 1);
+  }, [currentIndex, isTransitioning, moveToIndex]);
 
   const prevSlide = useCallback(() => {
-    moveToIndex(currentIndex - 1);
-  }, [currentIndex, moveToIndex]);
-
-  const getTranslateX = () => {
-    const percentage = (100 / visibleItems) * currentIndex;
-    return `translateX(-${percentage}%)`;
-  };
+    if (!isTransitioning) moveToIndex(currentIndex - 1);
+  }, [currentIndex, isTransitioning, moveToIndex]);
 
   useEffect(() => {
-    if (!isTransitioning) return;
-    if (currentIndex >= totalRealItems + 3) {
-      const timer = setTimeout(() => {
+    if (!isTransitioning) return undefined;
+
+    const timer = window.setTimeout(() => {
+      if (currentIndex >= totalRealItems + cloneCount) {
         setIsTransitioning(false);
-        setCurrentIndex(3);
-      }, 700);
-      return () => clearTimeout(timer);
-    }
-    if (currentIndex <= 2) {
-      const timer = setTimeout(() => {
+        setCurrentIndex(cloneCount);
+      } else if (currentIndex < cloneCount) {
         setIsTransitioning(false);
-        setCurrentIndex(totalRealItems + 2);
-      }, 700);
-      return () => clearTimeout(timer);
-    }
+        setCurrentIndex(totalRealItems + currentIndex);
+      } else {
+        setIsTransitioning(false);
+      }
+    }, 720);
+
+    return () => window.clearTimeout(timer);
   }, [currentIndex, isTransitioning, totalRealItems]);
 
-  // Autoplay removed: slider will not auto-advance.
-
-  const handleTouchStart = (e) => {
-    touchStartRef.current = e.touches[0].clientX;
+  const handleTouchStart = (event) => {
+    touchStartRef.current = event.touches[0].clientX;
   };
 
-  const handleTouchEnd = (e) => {
-    const touchEnd = e.changedTouches[0].clientX;
-    const diff = touchStartRef.current - touchEnd;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) nextSlide();
-      else prevSlide();
-    }
+  const handleTouchEnd = (event) => {
+    const difference = touchStartRef.current - event.changedTouches[0].clientX;
+    if (Math.abs(difference) < 45) return;
+    difference > 0 ? nextSlide() : prevSlide();
   };
 
   if (loading) {
     return (
-      <section className="products-section">
-        <div className="section-container">
-          <div className="py-20 flex items-center justify-center">
-            <div className="text-brand-red text-xl font-bold animate-pulse uppercase tracking-[0.3em]">
-              Loading Products...
-            </div>
-          </div>
-        </div>
+      <section className="products-section products-section--loading">
+        <span className="products-loading-text">Curating sacred pieces...</span>
       </section>
     );
   }
 
-  if (totalRealItems === 0) return null;
+  if (!totalRealItems) return null;
 
   return (
     <section className="products-section">
-      <div className="section-container">
-        <SliderHeader
-          title="Our Sacred Products"
-          subTitle="Handpicked spiritual products to elevate your energy and transform your life."
-        />
+      <div className="products-orb products-orb--left" aria-hidden="true" />
+      <div className="products-orb products-orb--right" aria-hidden="true" />
+
+      <div className="section-container products-inner">
+        <div className="products-heading-wrap">
+          <span className="products-eyebrow">Curated for your spiritual path</span>
+          <SliderHeader
+            title="Our Sacred Products"
+            subTitle="Handpicked spiritual products to elevate your energy and transform your life."
+          />
+        </div>
 
         <div
           className="product-slider-container"
@@ -229,32 +260,37 @@ const Products = () => {
           <div
             className="product-track"
             style={{
-              transform: getTranslateX(),
+              transform: `translate3d(-${
+                (100 / visibleItems) * currentIndex
+              }%, 0, 0)`,
               transition: isTransitioning
-                ? 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
-                : 'none'
+                ? "transform 0.72s cubic-bezier(0.22, 1, 0.36, 1)"
+                : "none",
             }}
           >
-            {clonedData.map((p, index) => (
+            {clonedData.map((product, index) => (
               <div
                 className="product-slide"
-                key={`${p.id || p.title}-${index}`}
+                key={`${product.id || product.title}-${index}`}
                 style={{ flex: `0 0 ${100 / visibleItems}%` }}
               >
-                <ProductCard p={p} />
+                <ProductCard product={product} />
               </div>
             ))}
           </div>
         </div>
 
-        <SliderControls
-          onNext={nextSlide}
-          onPrev={prevSlide}
-          isPrevDisabled={false}
-          isNextDisabled={false}
-        />
+        <div className="products-navigation">
+          <SliderControls
+            onNext={nextSlide}
+            onPrev={prevSlide}
+            isPrevDisabled={isTransitioning}
+            isNextDisabled={isTransitioning}
+          />
+          <span className="products-swipe-hint">Swipe to explore</span>
+        </div>
 
-        <div className="flex justify-center mt-10">
+        <div className="products-view-all">
           <Button to="/products" variant="primary" size="md" arrow>
             View All Products
           </Button>

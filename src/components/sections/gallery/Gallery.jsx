@@ -1,290 +1,369 @@
-import { useLayoutEffect, useRef, useState, useEffect, useCallback } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import "./gallery.css";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
-import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import "./gallery.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-
-
-// ── Scroll-driven text slides ──
 const TEXT_SLIDES = [
   {
     title: "Our Spiritual Gallery",
-    desc: "Witness the divine moments, sacred ceremonies and spiritual gatherings that define Vahlay Astro's journey.",
+    desc: "Witness the divine moments, sacred ceremonies, and spiritual gatherings that define Vahlay Astro's journey.",
   },
   {
     title: "Sacred Rituals",
-    desc: "Ancient Vedic rituals performed to invoke divine blessings and harness positive cosmic energy for all seekers.",
+    desc: "Ancient Vedic rituals performed to invoke divine blessings and channel positive cosmic energy for every seeker.",
   },
   {
     title: "Spiritual Union",
-    desc: "A community bound by faith, wisdom and the eternal pursuit of cosmic truth through sacred astrology.",
+    desc: "A community united by faith, wisdom, and the eternal pursuit of cosmic truth through sacred astrology.",
   },
   {
     title: "Cosmic Journey",
-    desc: "Every image tells a story of transformation, healing and the beautiful interplay between the stars and our souls.",
+    desc: "Every image tells a story of transformation, healing, and the beautiful relationship between the stars and our souls.",
   },
 ];
 
-// ── Fibonacci sphere position calculator ──
-function getSpherePos(index, total, radius) {
-  const phi   = Math.acos(1 - (2 * (index + 0.5)) / total);
+const FALLBACK_IMAGES = [
+  {
+    id: "fallback-1",
+    title: "Sacred Gathering",
+    description: "A moment of spiritual connection and shared wisdom.",
+    image: "https://images.unsplash.com/photo-1604608672516-f1b9b1d37076?auto=format&fit=crop&w=900&q=82",
+  },
+  {
+    id: "fallback-2",
+    title: "Vedic Ritual",
+    description: "Traditional offerings prepared with devotion and intention.",
+    image: "https://images.unsplash.com/photo-1567591370504-80142dc2c55e?auto=format&fit=crop&w=900&q=82",
+  },
+  {
+    id: "fallback-3",
+    title: "Temple Light",
+    description: "Sacred light illuminating a timeless spiritual path.",
+    image: "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=82",
+  },
+  {
+    id: "fallback-4",
+    title: "Divine Wisdom",
+    description: "A quiet moment of reflection, faith, and inner clarity.",
+    image: "https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=900&q=82",
+  },
+  {
+    id: "fallback-5",
+    title: "Cosmic Devotion",
+    description: "Devotion expressed through traditional ceremony and prayer.",
+    image: "https://images.unsplash.com/photo-1591017403286-fd8493524e1e?auto=format&fit=crop&w=900&q=82",
+  },
+  {
+    id: "fallback-6",
+    title: "Spiritual Journey",
+    description: "A timeless journey toward harmony, purpose, and self-discovery.",
+    image: "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=900&q=82",
+  },
+];
+
+const getRadiusForViewport = () => {
+  if (typeof window === "undefined") return 175;
+  if (window.innerWidth < 520) return 95;
+  if (window.innerWidth < 768) return 175;
+  if (window.innerWidth < 1100) return 215;
+  return 265;
+};
+
+const getSpherePosition = (index, total, radius) => {
+  const phi = Math.acos(1 - (2 * (index + 0.5)) / total);
   const theta = Math.PI * (1 + Math.sqrt(5)) * index;
   const x = radius * Math.cos(theta) * Math.sin(phi);
   const y = radius * Math.sin(theta) * Math.sin(phi);
   const z = radius * Math.cos(phi);
-  const rotY = Math.atan2(x, z) * (180 / Math.PI);
-  const rotX = Math.asin(-y / radius) * (180 / Math.PI);
-  return { x, y, z, rotY, rotX };
-}
+
+  return {
+    x,
+    y,
+    z,
+    rotateY: Math.atan2(x, z) * (180 / Math.PI),
+    rotateX: Math.asin(-y / radius) * (180 / Math.PI),
+  };
+};
 
 const Gallery = () => {
-  const sectionRef      = useRef(null);
-  const sphereRef       = useRef(null);
-  const titleRef        = useRef(null);
-  const descRef         = useRef(null);
+  const sectionRef = useRef(null);
+  const sphereRef = useRef(null);
+  const titleRef = useRef(null);
+  const descRef = useRef(null);
+  const progressRef = useRef(null);
   const currentSlideRef = useRef(0);
+  const closeTimerRef = useRef(null);
 
-  const [photos, setPhotos]         = useState([]);
-  const [isReady, setIsReady]       = useState(false);
-  const [lightbox, setLightbox]     = useState(null); // { image, title, description }
+  const [photos, setPhotos] = useState([]);
+  const [isReady, setIsReady] = useState(false);
+  const [radius, setRadius] = useState(getRadiusForViewport);
+  const [lightbox, setLightbox] = useState(null);
   const [showLightbox, setShowLightbox] = useState(false);
 
-  const getRadius = useCallback(() => {
-    if (window.innerWidth < 768)  return 175;
-    if (window.innerWidth < 1100) return 270;
-    return 355;
-  }, []);
-
-  const [radius, setRadius] = useState(getRadius);
-
-  // ── Fetch latest 8 images from Firestore ──
   useEffect(() => {
-    (async () => {
+    let active = true;
+
+    const fetchGallery = async () => {
       try {
-        const q    = query(collection(db, "gallery"), orderBy("createdAt", "desc"), limit(20));
-        const snap = await getDocs(q);
-        const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        setPhotos(data.length > 0 ? data : FALLBACK_IMAGES);
+        const galleryQuery = query(
+          collection(db, "gallery"),
+          orderBy("createdAt", "desc"),
+          limit(20)
+        );
+        const snapshot = await getDocs(galleryQuery);
+        const items = snapshot.docs
+          .map((document) => ({ id: document.id, ...document.data() }))
+          .filter((item) => item.image);
+
+        if (active) setPhotos(items.length ? items : FALLBACK_IMAGES);
       } catch {
-        setPhotos(FALLBACK_IMAGES);
+        if (active) setPhotos(FALLBACK_IMAGES);
       } finally {
-        setIsReady(true);
+        if (active) setIsReady(true);
       }
-    })();
+    };
+
+    fetchGallery();
+    return () => {
+      active = false;
+    };
   }, []);
 
-  // ── Handle resize ──
   useEffect(() => {
-    const onResize = () => setRadius(getRadius());
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [getRadius]);
+    let frameId;
+    const handleResize = () => {
+      window.cancelAnimationFrame(frameId);
+      frameId = window.requestAnimationFrame(() => {
+        setRadius(getRadiusForViewport());
+        ScrollTrigger.refresh();
+      });
+    };
 
-  // ── Duplicate photos to fill sphere (min 20 cards) ──
-  const sphereItems = (() => {
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const sphereItems = useMemo(() => {
     if (!photos.length) return [];
-    const needed = Math.max(20, photos.length);
-    const result = [];
-    while (result.length < needed) result.push(...photos);
-    return result.slice(0, needed);
-  })();
+    const minimumCards = radius <= 172 ? 16 : 20;
+    const targetLength = Math.max(minimumCards, photos.length);
+    return Array.from(
+      { length: targetLength },
+      (_, index) => photos[index % photos.length]
+    );
+  }, [photos, radius]);
 
   const openLightbox = useCallback((item) => {
+    window.clearTimeout(closeTimerRef.current);
     setLightbox(item);
-    setShowLightbox(true);
+    requestAnimationFrame(() => setShowLightbox(true));
   }, []);
 
   const closeLightbox = useCallback(() => {
     setShowLightbox(false);
-    setTimeout(() => setLightbox(null), 320);
+    window.clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = window.setTimeout(() => setLightbox(null), 360);
   }, []);
 
-  // Close on Escape key
   useEffect(() => {
-    const onKey = (e) => { if (e.key === "Escape") closeLightbox(); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [closeLightbox]);
+    if (!lightbox) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
-  // ── GSAP ScrollTrigger sphere animation ──
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") closeLightbox();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightbox, closeLightbox]);
+
+  useEffect(
+    () => () => window.clearTimeout(closeTimerRef.current),
+    []
+  );
+
   useLayoutEffect(() => {
-    if (!isReady || !sphereItems.length) return;
+    if (!isReady || !sphereItems.length) return undefined;
 
     const section = sectionRef.current;
-    const sphere  = sphereRef.current;
-    if (!section || !sphere) return;
+    const sphere = sphereRef.current;
+    if (!section || !sphere) return undefined;
 
-    const ctx = gsap.context(() => {
-      gsap.set(sphere, { rotateX: -15, rotateY: 0 });
+    currentSlideRef.current = 0;
+
+    const context = gsap.context(() => {
+      gsap.set(sphere, {
+        rotateX: -13,
+        rotateY: -18,
+        transformPerspective: 1400,
+      });
+
+      gsap.set(progressRef.current, { scaleX: 0, transformOrigin: "left center" });
 
       gsap.to(sphere, {
-        rotateY: 360 ,
-        rotateX: 40,
+        rotateY: 442,
+        rotateX: 30,
         ease: "none",
         scrollTrigger: {
           trigger: section,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1,
-          onUpdate(self) {
-            animateText(self.progress);
-            highlightCards(sphere, self.progress, sphereItems.length);
+          scrub: 1.95,
+          invalidateOnRefresh: true,
+          fastScrollEnd: true,
+          onUpdate: ({ progress }) => {
+            updateText(progress);
+            updateFocusedCards(sphere, progress, sphereItems.length);
+            gsap.set(progressRef.current, { scaleX: progress });
           },
         },
       });
-    }, sectionRef);
+    }, section);
 
-    return () => ctx.revert();
+    return () => context.revert();
   }, [isReady, radius, sphereItems.length]);
 
-  function animateText(progress) {
+  const updateText = (progress) => {
     const nextSlide = Math.min(
       Math.floor(progress * TEXT_SLIDES.length),
       TEXT_SLIDES.length - 1
     );
     if (nextSlide === currentSlideRef.current) return;
-    currentSlideRef.current = nextSlide;
 
-    gsap.to([titleRef.current, descRef.current], {
-      opacity: 0, y: 10, duration: 0.18,
-      onComplete() {
+    currentSlideRef.current = nextSlide;
+    const elements = [titleRef.current, descRef.current].filter(Boolean);
+
+    gsap.killTweensOf(elements);
+    gsap.to(elements, {
+      opacity: 0,
+      y: 14,
+      duration: 0.2,
+      ease: "power2.in",
+      onComplete: () => {
         if (titleRef.current) titleRef.current.textContent = TEXT_SLIDES[nextSlide].title;
-        if (descRef.current)  descRef.current.textContent  = TEXT_SLIDES[nextSlide].desc;
+        if (descRef.current) descRef.current.textContent = TEXT_SLIDES[nextSlide].desc;
+
         gsap.fromTo(
-          [titleRef.current, descRef.current],
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.38, stagger: 0.06 }
+          elements,
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.52, stagger: 0.07, ease: "power3.out" }
         );
       },
     });
-  }
+  };
 
-  function highlightCards(sphere, progress, total) {
+  const updateFocusedCards = (sphere, progress, total) => {
     const focusIndex = Math.round(progress * (total - 1));
-    sphere.querySelectorAll(".gallery-photo-card").forEach((card, i) => {
-      card.classList.toggle("card-active", Math.abs(i - focusIndex) <= 2);
+    sphere.querySelectorAll(".gallery-photo-card").forEach((card, index) => {
+      card.classList.toggle("card-active", Math.abs(index - focusIndex) <= 1);
     });
-  }
+  };
 
   return (
     <>
       <section ref={sectionRef} className="gallery-container" id="gallery">
         <div className="gallery-sticky">
+   
 
-
-          {/* ── Left Text Panel — site-standard style ── */}
           <div className="gallery-text-panel">
-            {/* Eyebrow — matches site section label style */}
             <div className="gallery-eyebrow-row">
-              <span className="gallery-eyebrow-line" />
+           
               <span className="gallery-eyebrow-text">Sacred Collection</span>
             </div>
 
-            {/* Main title — uses title-batangas font class like all other sections */}
-            <h2
-              ref={titleRef}
-              className="title-batangas gallery-main-title"
-            >
+            <h2 ref={titleRef} className="title-batangas gallery-main-title">
               {TEXT_SLIDES[0].title}
             </h2>
 
-            {/* Description — matches subtitle-poppins style */}
-            <p
-              ref={descRef}
-              className="subtitle-poppins gallery-desc"
-            >
+            <p ref={descRef} className="subtitle-poppins gallery-desc">
               {TEXT_SLIDES[0].desc}
             </p>
 
-            {/* Scroll indicator */}
-            <div className="gallery-scroll-indicator">
+            <div className="gallery-scroll-indicator" aria-hidden="true">
               <div className="gallery-scroll-line-wrap">
-                <div className="gallery-scroll-line-fill" />
+                <div ref={progressRef} className="gallery-scroll-line-fill" />
               </div>
               <span className="gallery-scroll-indicator-text">Scroll to explore</span>
             </div>
           </div>
 
-          {/* ── 3D Sphere ── */}
           <div className="gallery-scene">
             <div ref={sphereRef} className="gallery-sphere">
-              {sphereItems.map((item, i) => {
-                const { x, y, z, rotY, rotX } = getSpherePos(i, sphereItems.length, radius);
-                // Map index back to a real photo for the lightbox
-                const sourcePhoto = photos[i % photos.length];
+              {sphereItems.map((item, index) => {
+                const position = getSpherePosition(index, sphereItems.length, radius);
                 return (
-                  <div
-                    key={`card-${i}`}
+                  <button
+                    type="button"
+                    key={`${item.id || "gallery"}-${index}`}
                     className="gallery-photo-card"
                     style={{
-                      transform: `translate3d(${x}px,${y}px,${z}px) rotateY(${rotY}deg) rotateX(${rotX}deg)`,
+                      transform: `translate3d(${position.x}px, ${position.y}px, ${position.z}px) rotateY(${position.rotateY}deg) rotateX(${position.rotateX}deg)`,
                     }}
-                    onClick={() => openLightbox(sourcePhoto)}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`View ${sourcePhoto?.title || "gallery image"}`}
-                    onKeyDown={(e) => e.key === "Enter" && openLightbox(sourcePhoto)}
+                    onClick={() => openLightbox(item)}
+                    aria-label={`View ${item.title || "gallery image"}`}
                   >
                     <img
                       src={item.image}
-                      alt={item.title || `Gallery ${i + 1}`}
-                      loading="lazy"
+                      alt={item.title || `Gallery moment ${index + 1}`}
+                      loading={index < 6 ? "eager" : "lazy"}
                       draggable="false"
                     />
-                  </div>
+                    <span className="gallery-card-shine" aria-hidden="true" />
+                  </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Bottom-right decorative count badge */}
-          <div className="gallery-badge">
-            <span className="gallery-badge-count">
-              {String(photos.length).padStart(2, "0")}
-            </span>
+          <div className="gallery-badge" aria-hidden="true">
+            <span className="gallery-badge-count">{String(photos.length).padStart(2, "0")}</span>
             <span className="gallery-badge-label">Sacred Moments</span>
           </div>
-
         </div>
       </section>
 
-      {/* ── Lightbox Modal ── */}
       {lightbox && (
         <div
           className={`gallery-lightbox-overlay ${showLightbox ? "show" : ""}`}
           onClick={closeLightbox}
           role="dialog"
           aria-modal="true"
-          aria-label={lightbox.title}
+          aria-label={lightbox.title || "Gallery image"}
         >
-          <div
-            className="gallery-lightbox"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="gallery-lightbox-close"
-              onClick={closeLightbox}
-              aria-label="Close"
-            >
-              &times;
+          <div className="gallery-lightbox" onClick={(event) => event.stopPropagation()}>
+            <button type="button" className="gallery-lightbox-close" onClick={closeLightbox} aria-label="Close gallery image">
+              <span aria-hidden="true">×</span>
             </button>
 
             <div className="gallery-lightbox-img">
-              <img src={lightbox.image} alt={lightbox.title} />
+              <img src={lightbox.image} alt={lightbox.title || "Gallery moment"} />
             </div>
 
             <div className="gallery-lightbox-info">
-              <span className="gallery-lightbox-tag">Vahlay Astro</span>
-              <h3 className="title-batangas gallery-lightbox-title">
-                {lightbox.title}
-              </h3>
+              <span className="gallery-lightbox-tag">Vahlay Astro · Sacred Gallery</span>
+              <h3 className="title-batangas gallery-lightbox-title">{lightbox.title || "Sacred Moment"}</h3>
               <p className="subtitle-poppins gallery-lightbox-desc">
-                {lightbox.description || "Sacred moments captured from Vahlay Astro's spiritual journey."}
+                {lightbox.description || "A sacred moment captured from Vahlay Astro's spiritual journey."}
               </p>
+              <div className="gallery-lightbox-ornament" aria-hidden="true"><span /><b>◆</b><span /></div>
             </div>
           </div>
         </div>

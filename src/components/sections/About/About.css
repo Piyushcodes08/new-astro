@@ -146,13 +146,15 @@
 }
 
 .about-title {
-  font-size: clamp(2.4rem, 5.2vw, 4.8rem);
+  font-size: clamp(1.85rem, 3.2vw, 2.8rem);
   line-height: 1.05;
-  color: #ffffff;
+  color: #fff7e8;
   margin: 0 0 1.8rem 0;
-  font-weight: 900;
+  font-weight: 400;
   font-family: "Batangas", sans-serif;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-shadow: 0 14px 46px rgba(0, 0, 0, 0.42);
   max-width: 720px;
 }
 
@@ -206,7 +208,7 @@
   }
 
   .about-title {
-    font-size: clamp(2.15rem, 10vw, 3rem);
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
     line-height: 1.08;
     margin-bottom: 1.35rem;
     max-width: 760px;

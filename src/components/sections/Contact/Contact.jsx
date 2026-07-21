@@ -54,8 +54,8 @@ const Contact = () => {
     <section className="contact-section" id="contact">
       <div className="section-container">
         <div className="contact-header">
-          <p className="contact-label">{contactContent.label}</p>
-          <h2 className="title-batangas text-4xl md:text-5xl font-bold uppercase tracking-tight leading-tight">
+  
+          <h2 className="section-title-theme">
             {contactContent.title}
           </h2>
           <p className="subtitle-poppins text-lg md:text-xl font-medium">
