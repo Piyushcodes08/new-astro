@@ -355,30 +355,28 @@
     line-height: 1.7;
   }
 
+  /* ── Vertical stack on mobile ── */
   .course-grid {
     display: flex;
-    gap: 16px;
-    overflow-x: auto;
+    flex-direction: column;
+    gap: 20px;
     padding: 8px 22px 24px;
-    scroll-padding-inline: 22px;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    overscroll-behavior-inline: contain;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    overflow-x: visible;
+    scroll-snap-type: none;
   }
 
   .course-grid::-webkit-scrollbar { display: none; }
 
   .course-card {
-    flex: 0 0 min(78vw, 320px);
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-    filter: drop-shadow(0 20px 28px rgba(0, 0, 0, 0.3));
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 100%;
+    scroll-snap-align: unset;
+    filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.3));
   }
 
   .course-card-media {
-    min-height: min(104vw, 420px);
+    min-height: min(90vw, 400px);
   }
 
   .course-card-copy {
@@ -394,28 +392,8 @@
   .course-card-number { left: 20px; }
   .course-card-badge { right: 20px; }
 
-  .course-mobile-hint {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 2px;
-    color: rgba(255, 244, 225, 0.5);
-    font: 500 0.62rem/1 "Poppins", sans-serif;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  .course-mobile-hint-line {
-    width: 28px;
-    height: 1px;
-    background: rgba(213, 173, 101, 0.5);
-  }
-
-  .course-mobile-hint-arrow {
-    color: var(--course-gold-light);
-    animation: course-arrow 1.7s ease-in-out infinite;
-  }
+  /* Hide swipe hint — not needed for vertical */
+  .course-mobile-hint { display: none; }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -440,16 +418,11 @@
 
 @media (max-width: 390px) {
   .course-grid {
-    padding-inline: 18px;
-    scroll-padding-inline: 18px;
-  }
-
-  .course-card {
-    flex-basis: 82vw;
+    padding-inline: 16px;
   }
 
   .course-card-media {
-    min-height: 390px;
+    min-height: 85vw;
   }
 }
 

@@ -59,9 +59,8 @@ const CourseSection = () => {
           </div>
 
           <h2 id="course-section-title" className="title-batangas course-section-title">
-            Courses for astrologer
+            Courses for <span>astrologer</span>
           </h2>
-
           <p className="subtitle-poppins course-section-subtitle">
             More than a course—an immersive journey into celestial wisdom,
             self-discovery, and timeless Vedic knowledge.

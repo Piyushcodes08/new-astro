@@ -128,108 +128,131 @@ export default function Dashboard() {
   const firstName = user?.displayName?.trim().split(/\s+/)[0] || "Seeker";
 
   return (
-    <div className="admin-layout flex min-h-screen flex-col bg-[#f4efe7] text-[#221512]">
+    <div className="flex min-h-screen flex-col bg-[#0c0b09] text-white">
       <div id="top-sentinel" className="pointer-events-none absolute left-0 top-0 -z-10 h-px w-full" />
       <Header />
 
       <div className="relative z-10 flex flex-1 gap-0 pt-16">
         <Aside />
 
-        <main className="min-w-0 flex-1 overflow-x-hidden bg-[#f4efe7] px-4 py-6 sm:px-6 lg:px-10 xl:px-14">
-          <div className="mx-auto max-w-[1440px] space-y-8 pb-10 pt-3 md:space-y-10 md:pt-6">
-            <section className="relative isolate overflow-hidden rounded-[28px] border border-[#d6b56f]/25 bg-[#160909] px-6 py-10 shadow-[0_30px_90px_rgba(52,15,13,0.22)] sm:px-10 md:rounded-[36px] md:px-14 md:py-14 lg:px-16">
-              <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_80%_10%,rgba(168,83,45,0.28),transparent_34%),radial-gradient(circle_at_8%_90%,rgba(117,16,23,0.42),transparent_36%),linear-gradient(135deg,#130808_0%,#260d0e_52%,#110807_100%)]" />
-              <div className="absolute -right-24 -top-28 -z-10 h-80 w-80 rounded-full border border-[#e5c27b]/10" />
-              <div className="absolute -right-10 -top-16 -z-10 h-56 w-56 rounded-full border border-[#e5c27b]/10" />
-              <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-[#d6b56f]/65 to-transparent" />
+        {/* ── Main Content ── */}
+        <main className="min-w-0 flex-1 overflow-x-hidden px-4 py-6 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-5xl space-y-8 pb-12 pt-4">
 
-              <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
-                <div className="max-w-3xl">
-                  <div className="mb-6 flex items-center gap-3">
-                    <span className="h-px w-9 bg-[#d7b66f]" />
-                    <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#e0c17e] sm:text-xs">
+            {/* ── Hero Welcome Banner ── */}
+            <section className="relative isolate overflow-hidden rounded-2xl border border-[rgba(212,175,104,0.2)] bg-[#161412] shadow-[0_20px_70px_rgba(0,0,0,0.5)]">
+              {/* Background radial glows */}
+              <div className="pointer-events-none absolute inset-0 -z-10"
+                style={{ background: "radial-gradient(circle at 80% 10%, rgba(140,60,30,0.22) 0%, transparent 40%), radial-gradient(circle at 5% 90%, rgba(100,12,18,0.3) 0%, transparent 38%), linear-gradient(135deg, #130808 0%, #1e0a0a 50%, #110707 100%)" }}
+              />
+              {/* Top gold line */}
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[rgba(212,175,104,0.5)] to-transparent" />
+              {/* Bottom gold line */}
+              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[rgba(212,175,104,0.3)] to-transparent" />
+              {/* Decorative rings */}
+              <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full border border-[rgba(212,175,104,0.08)]" />
+              <div className="pointer-events-none absolute -right-8 -top-8 h-44 w-44 rounded-full border border-[rgba(212,175,104,0.06)]" />
+
+              <div className="grid items-center gap-8 px-6 py-8 sm:px-10 md:px-12 md:py-10 lg:grid-cols-[1fr_260px]">
+
+                {/* Left: Greeting */}
+                <div>
+                  {/* Kicker */}
+                  <div className="mb-5 flex items-center gap-3">
+                    <span className="h-px w-8 bg-[rgba(212,175,104,0.7)]" />
+                    <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#d4af68]">
                       Your celestial learning space
                     </p>
                   </div>
 
-                  <h1 className="font-serif text-4xl leading-[1.05] text-[#fff8eb] sm:text-5xl md:text-6xl lg:text-[68px]">
+                  {/* Title — reduced from 68px */}
+                  <h1 className="font-serif leading-[1.08] text-[#fff8eb]" style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)" }}>
                     Welcome back,
-                    <span className="mt-1 block italic text-[#d9b66c]">{firstName}.</span>
+                    <span className="mt-1 block italic text-[#d4af68]">{firstName}.</span>
                   </h1>
 
-                  <p className="mt-6 max-w-2xl text-sm leading-7 text-[#d8ccc0] sm:text-base">
+                  <p className="mt-4 max-w-xl text-sm leading-7 text-[rgba(255,255,255,0.5)]">
                     Continue your path of self-discovery, revisit your lessons and deepen your understanding of timeless astrological wisdom.
                   </p>
 
-                  <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  {/* CTA Buttons */}
+                  <div className="mt-7 flex flex-wrap gap-3">
                     <Link
                       to="/enrolledcourse"
-                      className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#d5b36b] px-7 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#24110d] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ecd08d] hover:shadow-[0_14px_35px_rgba(213,179,107,0.22)] focus:outline-none focus:ring-2 focus:ring-[#f0d99f] focus:ring-offset-2 focus:ring-offset-[#160909]"
+                      className="group inline-flex min-h-11 items-center gap-2.5 rounded border border-[rgba(212,175,104,0.55)] bg-[rgba(255,255,255,0.025)] px-6 text-[10px] font-extrabold uppercase tracking-[0.22em] text-[#f0d99d] transition duration-300 hover:-translate-y-0.5 hover:bg-[rgba(212,175,104,0.12)] hover:border-[rgba(212,175,104,0.8)] focus:outline-none focus:ring-2 focus:ring-[rgba(212,175,104,0.4)]"
                     >
-                      Resume learning <ArrowIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      Resume learning <ArrowIcon className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </Link>
                     <Link
                       to="/courses"
-                      className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#d9b970]/35 bg-white/[0.04] px-7 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#fff8eb] backdrop-blur-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#d9b970]/70 hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-[#d9b970]"
+                      className="inline-flex min-h-11 items-center gap-2.5 rounded border border-white/10 bg-white/[0.03] px-6 text-[10px] font-extrabold uppercase tracking-[0.22em] text-white/60 transition duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:text-white/90 focus:outline-none focus:ring-2 focus:ring-white/20"
                     >
                       Explore courses
                     </Link>
                   </div>
                 </div>
 
+                {/* Right: Stat Cards */}
                 <div className="grid grid-cols-2 gap-3 lg:grid-cols-1">
-                  <div className="rounded-2xl border border-[#d8b971]/20 bg-white/[0.055] p-5 backdrop-blur-md">
-                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-[#d8b971]/30 bg-[#d8b971]/10 text-[#e4c57f]">
+                  {/* Enrolled count */}
+                  <div className="rounded border border-[rgba(212,175,104,0.15)] bg-[rgba(255,255,255,0.03)] p-5 backdrop-blur-sm">
+                    <div className="mb-3 flex h-9 w-9 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.08)] text-[#d4af68]">
                       <BookIcon />
                     </div>
                     <p className="font-serif text-3xl text-[#fff7e9]">{loading ? "—" : String(totalEnrolled).padStart(2, "0")}</p>
-                    <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.24em] text-[#bbaa99]">Enrolled courses</p>
+                    <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.24em] text-[rgba(255,255,255,0.35)]">Enrolled courses</p>
                   </div>
-                  <div className="rounded-2xl border border-[#d8b971]/20 bg-white/[0.055] p-5 backdrop-blur-md">
-                    <div className="mb-4 flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-[#82b879] shadow-[0_0_0_5px_rgba(130,184,121,0.12)]" />
-                      <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#bbaa99]">Connection active</span>
+
+                  {/* Status card */}
+                  <div className="rounded border border-[rgba(212,175,104,0.15)] bg-[rgba(255,255,255,0.03)] p-5 backdrop-blur-sm">
+                    <div className="mb-3 flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-[#82b879] shadow-[0_0_0_4px_rgba(130,184,121,0.15)]" />
+                      <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[rgba(255,255,255,0.35)]">Active</span>
                     </div>
-                    <p className="font-serif text-xl text-[#fff7e9]">Your journey awaits</p>
-                    <p className="mt-2 text-xs leading-5 text-[#bbaa99]">Return anytime and continue from your enrolled course.</p>
+                    <p className="font-serif text-base text-[#fff7e9] leading-snug">Your journey<br/>awaits</p>
+                    <p className="mt-2 text-[11px] leading-5 text-[rgba(255,255,255,0.35)]">Return anytime and pick up where you left off.</p>
                   </div>
                 </div>
               </div>
             </section>
 
+            {/* ── Recent Enrollments ── */}
             <section aria-labelledby="recent-enrollments-title">
-              <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              {/* Section header */}
+              <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <div className="mb-2 flex items-center gap-3">
-                    <span className="h-px w-8 bg-[#8e302d]" />
-                    <p className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#8e302d]">Continue your path</p>
+                    <span className="h-px w-7 bg-[rgba(212,175,104,0.6)]" />
+                    <p className="text-[9px] font-extrabold uppercase tracking-[0.3em] text-[#d4af68]">Continue your path</p>
                   </div>
-                  <h2 id="recent-enrollments-title" className="font-serif text-3xl text-[#281714] sm:text-4xl">
-                    Recent enrollments
+                  <h2 id="recent-enrollments-title" className="font-serif text-2xl text-white sm:text-3xl">
+                    Recent Enrollments
                   </h2>
                 </div>
                 <Link
                   to="/enrolledcourse"
-                  className="group inline-flex w-fit items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.22em] text-[#6f5b53] transition hover:text-[#8e302d] focus:outline-none focus:ring-2 focus:ring-[#8e302d]/30"
+                  className="group inline-flex w-fit items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.22em] text-[rgba(255,255,255,0.4)] transition hover:text-[#d4af68] focus:outline-none"
                 >
-                  View all <ArrowIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  View all <ArrowIcon className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
 
+              {/* Error */}
               {error && (
-                <div role="alert" className="mb-5 rounded-2xl border border-[#a43c37]/20 bg-[#fff8f2] px-5 py-4 text-sm text-[#8b302c]">
+                <div role="alert" className="mb-5 rounded border border-[rgba(212,175,104,0.2)] bg-[rgba(212,175,104,0.05)] px-5 py-4 text-sm text-[#d4af68]">
                   {error}
                 </div>
               )}
 
+              {/* Cards Grid */}
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
                 {loading ? (
                   [1, 2, 3].map((item) => (
-                    <div key={item} className="overflow-hidden rounded-[24px] border border-[#cfbfae]/60 bg-[#fbf8f2]">
-                      <div className="aspect-[16/10] animate-pulse bg-[#e8dfd3]" />
-                      <div className="space-y-3 p-6">
-                        <div className="h-3 w-20 animate-pulse rounded bg-[#e8dfd3]" />
-                        <div className="h-5 w-4/5 animate-pulse rounded bg-[#e8dfd3]" />
+                    <div key={item} className="overflow-hidden rounded border border-[rgba(212,175,104,0.12)] bg-[#1e1b17]">
+                      <div className="aspect-[16/10] animate-pulse bg-[#252118]" />
+                      <div className="space-y-3 p-5">
+                        <div className="h-2.5 w-16 animate-pulse rounded bg-[#252118]" />
+                        <div className="h-4 w-4/5 animate-pulse rounded bg-[#252118]" />
                       </div>
                     </div>
                   ))
@@ -238,13 +261,18 @@ export default function Dashboard() {
                     <Link
                       to={`/course/${encodeURIComponent(course.name)}`}
                       key={course.name}
-                      className="group relative overflow-hidden rounded-[24px] border border-[#cdbca8]/70 bg-[#fffdf8] shadow-[0_12px_40px_rgba(66,37,29,0.07)] transition duration-500 hover:-translate-y-1.5 hover:border-[#b3894c]/70 hover:shadow-[0_24px_60px_rgba(66,37,29,0.14)] focus:outline-none focus:ring-2 focus:ring-[#9b433d]/40"
+                      className="group relative overflow-hidden rounded border border-[rgba(212,175,104,0.15)] bg-[#1e1b17] shadow-[0_10px_35px_rgba(0,0,0,0.4)] transition duration-500 hover:-translate-y-1 hover:border-[rgba(212,175,104,0.4)] hover:shadow-[0_20px_55px_rgba(0,0,0,0.55)] focus:outline-none focus:ring-2 focus:ring-[rgba(212,175,104,0.3)]"
                     >
-                      <div className="relative aspect-[16/10] overflow-hidden bg-[#20100e]">
+                      {/* Corner accents */}
+                      <span className="pointer-events-none absolute left-2 top-2 z-20 h-4 w-4 border-l border-t border-[rgba(212,175,104,0.4)]" aria-hidden="true" />
+                      <span className="pointer-events-none absolute bottom-2 right-2 z-20 h-4 w-4 border-b border-r border-[rgba(212,175,104,0.4)]" aria-hidden="true" />
+
+                      {/* Image */}
+                      <div className="relative aspect-[16/10] overflow-hidden bg-[#110f0d]">
                         <img
                           src={course.image}
                           alt=""
-                          className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                          className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
                           loading="lazy"
                           decoding="async"
                           onError={(event) => {
@@ -252,36 +280,39 @@ export default function Dashboard() {
                             event.currentTarget.src = getFallbackImage(course.name);
                           }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#160909]/80 via-transparent to-transparent" />
-                        <span className="absolute left-5 top-5 rounded-full border border-white/20 bg-[#160909]/65 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.22em] text-[#f4ddb0] backdrop-blur-md">
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#1e1b17]/90 via-[#1e1b17]/20 to-transparent" />
+                        <span className="absolute left-4 top-4 rounded-sm border border-[rgba(212,175,104,0.3)] bg-black/50 px-2.5 py-1 text-[8px] font-bold uppercase tracking-[0.25em] text-[#d4af68] backdrop-blur-sm">
                           Course {String(index + 1).padStart(2, "0")}
                         </span>
                       </div>
-                      <div className="flex min-h-[132px] items-center justify-between gap-5 p-6">
-                        <div>
-                          <p className="mb-2 text-[9px] font-extrabold uppercase tracking-[0.24em] text-[#9a443d]">Continue learning</p>
-                          <h3 className="line-clamp-2 font-serif text-xl leading-snug text-[#2a1815] transition group-hover:text-[#852a28]">
+
+                      {/* Card body */}
+                      <div className="flex items-center justify-between gap-4 p-5">
+                        <div className="min-w-0">
+                          <p className="mb-1.5 text-[8px] font-extrabold uppercase tracking-[0.28em] text-[rgba(212,175,104,0.7)]">Continue learning</p>
+                          <h3 className="line-clamp-2 font-serif text-base leading-snug text-[#fff8eb] transition group-hover:text-[#d4af68]">
                             {course.name}
                           </h3>
                         </div>
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#cbb89d] text-[#7f302c] transition duration-300 group-hover:border-[#8e302d] group-hover:bg-[#8e302d] group-hover:text-white">
-                          <ArrowIcon />
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] text-[rgba(212,175,104,0.6)] transition duration-300 group-hover:border-[rgba(212,175,104,0.7)] group-hover:bg-[rgba(212,175,104,0.1)] group-hover:text-[#d4af68]">
+                          <ArrowIcon className="h-4 w-4" />
                         </span>
                       </div>
                     </Link>
                   ))
                 ) : (
-                  <div className="col-span-full rounded-[28px] border border-dashed border-[#bda98f] bg-[#fbf8f2] px-6 py-14 text-center sm:py-20">
-                    <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-[#c6ae88] bg-[#f4ead9] text-[#8c3a34]">
+                  /* Empty state */
+                  <div className="col-span-full rounded border border-dashed border-[rgba(212,175,104,0.2)] bg-[#131110] px-6 py-14 text-center sm:py-20">
+                    <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.06)] text-[#d4af68]">
                       <BookIcon />
                     </div>
-                    <h3 className="font-serif text-2xl text-[#2a1815]">Begin your first course</h3>
-                    <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#78665e]">
+                    <h3 className="font-serif text-xl text-white">Begin your first course</h3>
+                    <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[rgba(255,255,255,0.4)]">
                       Your enrolled courses will appear here, ready for you whenever you return.
                     </p>
                     <Link
                       to="/courses"
-                      className="mt-7 inline-flex min-h-11 items-center justify-center rounded-full bg-[#7f2928] px-7 text-[10px] font-extrabold uppercase tracking-[0.2em] text-white transition hover:-translate-y-0.5 hover:bg-[#651e1f] focus:outline-none focus:ring-2 focus:ring-[#7f2928]/40"
+                      className="mt-7 inline-flex min-h-11 items-center justify-center rounded border border-[rgba(212,175,104,0.5)] bg-[rgba(255,255,255,0.025)] px-7 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#f0d99d] transition hover:-translate-y-0.5 hover:bg-[rgba(212,175,104,0.1)] focus:outline-none focus:ring-2 focus:ring-[rgba(212,175,104,0.3)]"
                     >
                       Explore courses
                     </Link>

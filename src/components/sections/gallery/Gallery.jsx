@@ -226,7 +226,7 @@ const Gallery = () => {
           trigger: section,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1.95,
+          scrub: 2.95,
           invalidateOnRefresh: true,
           fastScrollEnd: true,
           onUpdate: ({ progress }) => {
@@ -258,7 +258,16 @@ const Gallery = () => {
       duration: 0.2,
       ease: "power2.in",
       onComplete: () => {
-        if (titleRef.current) titleRef.current.textContent = TEXT_SLIDES[nextSlide].title;
+        if (titleRef.current) {
+          const titleWords = TEXT_SLIDES[nextSlide].title.split(" ");
+          const highlightedWord = titleWords.pop();
+          const highlight = document.createElement("span");
+          highlight.textContent = highlightedWord;
+          titleRef.current.replaceChildren(
+            document.createTextNode(`${titleWords.join(" ")} `),
+            highlight
+          );
+        }
         if (descRef.current) descRef.current.textContent = TEXT_SLIDES[nextSlide].desc;
 
         gsap.fromTo(
@@ -290,7 +299,7 @@ const Gallery = () => {
             </div>
 
             <h2 ref={titleRef} className="title-batangas gallery-main-title">
-              {TEXT_SLIDES[0].title}
+              Our Spiritual <span>Gallery</span>
             </h2>
 
             <p ref={descRef} className="subtitle-poppins gallery-desc">

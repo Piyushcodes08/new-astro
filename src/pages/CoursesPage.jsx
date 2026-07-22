@@ -50,8 +50,8 @@ const CoursesPage = () => {
                         <div className="absolute bottom-0 left-[20%] w-[600px] h-[600px] bg-glow-red opacity-30"></div>
                     </div>
                     <div className="section-container">
-                        <div className="bg-linear-to-br from-brand-red/20 to-black border border-brand-red/30 rounded-xl py-16 md:py-24 px-[15px] md:px-[50px] text-center shadow-[0_30px_100px_rgba(191, 6, 3,0.25)] relative overflow-hidden group">
-                            <div className="absolute inset-0 bg-glow-red opacity-0 group-hover:opacity-40 transition-opacity duration-1000"></div>
+                        <div className="bg-[#1a0505] border border-[rgba(212,175,104,0.25)] rounded-xl py-16 md:py-24 px-[15px] md:px-[50px] text-center shadow-[0_30px_100px_rgba(0,0,0,0.5)] relative overflow-hidden group">
+                            <div className="absolute inset-0 bg-glow-red opacity-0 group-hover:opacity-20 transition-opacity duration-1000"></div>
                             <div className="relative z-10">
                                 <h2 className="title-batangas text-4xl md:text-7xl mb-8 text-white">Ready to start learning?</h2>
                                 <p className="subtitle-poppins text-white/90 text-xl mb-12 max-w-2xl mx-auto leading-relaxed">Enroll in our upcoming batches and begin your journey into cosmic wisdom.</p>

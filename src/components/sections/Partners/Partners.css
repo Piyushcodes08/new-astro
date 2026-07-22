@@ -92,25 +92,28 @@
 
 .partners-content h2.title-batangas {
   margin: 0 0 16px;
-  color: #fff9eb;
-  font-size: clamp(2.15rem, 4.5vw, 4rem);
+  color: #fff7e8;
+  font-size: clamp(1.85rem, 3.2vw, 2.8rem);
   font-weight: 400;
-  line-height: 1;
-  letter-spacing: -0.025em;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  text-shadow: 0 12px 38px rgba(0, 0, 0, 0.45);
+  text-shadow: 0 14px 46px rgba(0, 0, 0, 0.42);
 }
 
 .partners-content h2.title-batangas span {
-  color: var(--partner-gold);
+  background: linear-gradient(180deg, #f7e6b8, #bc8f3e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .partners-content .subtitle-poppins {
   max-width: 650px;
   margin: 0;
-  color: rgba(255, 248, 234, 0.68);
-  font-size: clamp(0.9rem, 1.3vw, 1rem);
-  line-height: 1.8;
+  color: rgba(255, 246, 230, 0.66);
+  font-size: clamp(0.88rem, 1.35vw, 1rem);
+  line-height: 1.78;
 }
 
 .partners-ornament {
@@ -275,12 +278,12 @@
 
 .partner-card h3 {
   margin: 0 0 9px;
-  color: #fff9eb;
+  color: #fff7e8;
   font-family: "Batangas", serif;
-  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  font-size: clamp(1.85rem, 3.2vw, 2.8rem);
   font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
 }
 
 .partner-card p {

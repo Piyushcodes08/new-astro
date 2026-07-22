@@ -435,8 +435,8 @@ section {
 }
 
 .section-title-theme span {
-  color: #f2dda7 !important;
-  background: linear-gradient(180deg, #f7e6b8, #bc8f3e) !important;
+  color: #f0daa2 !important;
+  background: linear-gradient(180deg, #f7e6b9, #bd9143) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
@@ -446,5 +446,56 @@ section {
 @media (max-width: 720px) {
   .section-title-theme {
     font-size: clamp(1.6rem, 7vw, 2.2rem) !important;
+  }
+}
+
+
+/* =====================================================
+   GLOBAL SECTION TITLE STANDARD
+   Applies to all h1/h2 .title-batangas inside sections.
+   Matches Course Section size + New Launches color.
+   ===================================================== */
+section h1.title-batangas,
+section h2.title-batangas {
+  font-size: clamp(1.85rem, 3.2vw, 2.8rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: uppercase !important;
+  color: #fff7e8 !important;
+  text-shadow: 0 14px 46px rgba(0, 0, 0, 0.42) !important;
+}
+
+/* Gold gradient on highlighted span inside any section title */
+section h1.title-batangas span,
+section h2.title-batangas span,
+section .about-title span {
+  color: #f0daa2 !important;
+  background: linear-gradient(180deg, #f7e6b9, #bd9143) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  display: inline-block !important;
+}
+
+/* Subtitle standard — all section subtitles/descriptions */
+section p.subtitle-poppins {
+  font-size: clamp(0.88rem, 1.35vw, 1rem) !important;
+  color: rgba(255, 246, 230, 0.66) !important;
+  line-height: 1.78 !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 720px) {
+  section h1.title-batangas,
+  section h2.title-batangas {
+    font-size: clamp(1.6rem, 7vw, 2.2rem) !important;
+  }
+}
+
+/* Keep every top-level landing-page section vertically consistent on mobile and tablet. */
+@media (max-width: 1023px) {
+  main > section {
+    padding-block: 50px !important;
   }
 }

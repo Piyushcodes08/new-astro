@@ -1,4 +1,4 @@
-/* Vahlay Astro — Premium Horoscope */
+﻿/* Vahlay Astro â€” Premium Horoscope */
 .horoscope-section {
   --h-gold: #e7bd70;
   --h-gold-light: #ffe2a6;
@@ -50,7 +50,7 @@
 }
 .horoscope-kicker::before,.horoscope-kicker::after { content:""; width: 30px; height: 1px; background: var(--h-gold); opacity: .55; }
 .horoscope-header .section-title-theme { margin: 0; text-wrap: balance; }
-.horoscope-subtitle { max-width: 650px; margin: 12px auto 0; color: rgba(255,255,255,.64); font-size: clamp(.92rem,1.3vw,1.06rem); line-height: 1.75; }
+.horoscope-subtitle { max-width: 650px; margin: 12px auto 0; color: rgba(255, 246, 230, 0.66); font-size: clamp(0.88rem, 1.35vw, 1rem); line-height: 1.78; }
 
 .scroll-reveal-indicator { margin-top: 18px; display: flex; justify-content: center; align-items: center; gap: 10px; color: rgba(231,189,112,.72); font: 600 .58rem/1 "Poppins",sans-serif; letter-spacing: .21em; }
 .mobile-text { display: none; }
@@ -95,7 +95,7 @@
 
 .glass-detail-card { position:relative; overflow:hidden; padding:clamp(24px,2.4vw,34px); border:1px solid var(--h-border); border-radius:6px; background:linear-gradient(145deg,rgba(50,7,11,.88),rgba(13,2,4,.9)); box-shadow:0 28px 70px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.05); backdrop-filter:blur(18px); animation:hReveal .55s .08s ease both; }
 .glass-detail-card::before { content:""; position:absolute; inset:8px; border:1px solid rgba(231,189,112,.08); pointer-events:none; }
-.glass-detail-card::after { content:"✦"; position:absolute; top:15px; right:17px; color:rgba(231,189,112,.34); font-size:10px; }
+.glass-detail-card::after { content:"âœ¦"; position:absolute; top:15px; right:17px; color:rgba(231,189,112,.34); font-size:10px; }
 .card-top-header { position:relative; z-index:1; padding-bottom:20px; margin-bottom:20px; border-bottom:1px solid rgba(231,189,112,.14); }
 .card-top-header span { display:block; margin-bottom:8px; color:rgba(231,189,112,.64); font:600 .54rem/1 "Poppins",sans-serif; letter-spacing:.26em; }
 .card-top-header h3 { margin:0; color:#fff4df;  font-size:clamp(1.35rem,2vw,1.75rem); font-weight:400; text-transform:uppercase; }
@@ -154,3 +154,7 @@
 @media (prefers-reduced-motion: reduce) {
   .horoscope-section * { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
 }
+.rashiphal-summary { position:relative; z-index:1; padding:14px 16px; border:1px solid rgba(231,189,112,.2); background:rgba(231,189,112,.055); text-align:center; }
+.rashiphal-summary p { margin:0; font-family:"Poppins",sans-serif; line-height:1.6; }
+.rashiphal-summary p:first-child { margin-bottom:5px; color:#fff1d0; font-size:.88rem; font-weight:400; }
+.rashiphal-summary p:last-child { color:rgba(255,255,255,.66); font-size:.8rem; }

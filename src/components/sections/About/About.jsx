@@ -23,7 +23,9 @@ const About = () => {
 
           <div className="about-content-right">
             <div className="about-text-content">
-              <h2 className="about-title">{title}</h2>
+              <h2 className="about-title">
+                {title.split(" ").slice(0, -1).join(" ")} <span>{title.split(" ").at(-1)}</span>
+              </h2>
 
               <div className="about-desc-wrapper">
                 {paragraphs.map((text, idx) => (

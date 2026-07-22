@@ -357,3 +357,47 @@
     animation-duration: .01ms !important;
   }
 }
+/* Center all footer content on tablet and mobile. */
+@media (max-width: 1023px) {
+  .footer-grid,
+  .footer-bottom { text-align: center; }
+
+  .footer-about { padding-right: 0; }
+  .footer-brand::after { margin-inline: auto; }
+
+  .footer-desc,
+  .footer-mission { margin-inline: auto; }
+
+  .footer-mission {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .footer-col-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .footer-links a,
+  .footer-social-icons { justify-content: center; }
+
+  .footer-links a svg { display: none; }
+
+  .footer-contact-item {
+    justify-content: center;
+    text-align: center;
+  }
+}
+@media (max-width: 1023px) {
+  .footer-bottom {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .footer-to-top { justify-self: center; }
+
+  .footer-contact-item {
+    grid-template-columns: 1fr;
+    place-items: center;
+  }
+}

@@ -56,7 +56,7 @@ const Contact = () => {
         <div className="contact-header">
   
           <h2 className="section-title-theme">
-            {contactContent.title}
+            {contactContent.title.split(" ").slice(0, -1).join(" ")} <span>{contactContent.title.split(" ").at(-1)}</span>
           </h2>
           <p className="subtitle-poppins text-lg md:text-xl font-medium">
             {contactContent.subtitle}

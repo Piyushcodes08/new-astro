@@ -31,9 +31,8 @@ const getDiscount = (price, oldPrice) => {
 };
 
 const getVisibleItems = () => {
-  if (typeof window === "undefined") return 3;
-  if (window.innerWidth < 640) return 1;
-  if (window.innerWidth < 1024) return 2;
+  if (typeof window === "undefined") return 1;
+  if (window.innerWidth < 1024) return 1;
   return 3;
 };
 
@@ -130,7 +129,7 @@ const NewLaunches = () => {
   const totalRealItems = displayProducts.length;
   const [currentIndex, setCurrentIndex] = useState(CLONE_COUNT);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [visibleItems, setVisibleItems] = useState(getVisibleItems);
+  const [visibleItems, setVisibleItems] = useState(1);
   const touchStartRef = useRef(0);
 
   const clonedData = useMemo(() => {
@@ -148,9 +147,20 @@ const NewLaunches = () => {
   }, [totalRealItems]);
 
   useEffect(() => {
-    const handleResize = () => setVisibleItems(getVisibleItems());
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const syncVisibleItems = () => {
+      const nextVisibleItems = getVisibleItems();
+      setVisibleItems((previousVisibleItems) => {
+        if (previousVisibleItems !== nextVisibleItems) {
+          setCurrentIndex(CLONE_COUNT);
+          setIsTransitioning(false);
+        }
+        return nextVisibleItems;
+      });
+    };
+
+    syncVisibleItems();
+    window.addEventListener("resize", syncVisibleItems);
+    return () => window.removeEventListener("resize", syncVisibleItems);
   }, []);
 
   const moveToIndex = useCallback((index) => {

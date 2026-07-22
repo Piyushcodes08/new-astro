@@ -493,6 +493,20 @@
   .nl-card { max-width: 340px; }
 }
 
+@media (max-width: 1023px) {
+  .nl-slider-container {
+    width: 100%;
+    overflow: hidden;
+    padding-inline: 16px;
+  }
+
+  .nl-slide {
+    flex: 0 0 100% !important;
+    width: 100%;
+  }
+
+  .nl-card { max-width: 340px; }
+}
 @media (max-width: 639px) {
   .new-launches-section { padding: 62px 0 70px; }
   .nl-inner { width: 100%; }
@@ -507,7 +521,7 @@
     letter-spacing: 0.17em;
   }
 
-  .nl-heading { font-size: clamp(2.5rem, 13vw, 3.4rem); }
+  .nl-heading { font-size: clamp(1.6rem, 7vw, 2.2rem); }
 
   .nl-subtitle {
     max-width: 340px;
@@ -522,7 +536,7 @@
 
   .nl-slide { padding: 8px 8px 24px; }
 
-  .nl-card { max-width: min(82vw, 330px); }
+  .nl-card { max-width: 340px; width: 100%; }
   .nl-image-wrap { aspect-ratio: 1 / 0.78; }
 
   .nl-body { padding: 18px 18px 20px; }
@@ -592,4 +606,10 @@
   .nl-btn-arrow { transition: none; }
 
   .nl-loading-mark { animation: none; }
+}
+@media (max-width: 639px) {
+  .nl-slider-container {
+    overflow: hidden;
+    padding-inline: 16px;
+  }
 }

@@ -90,7 +90,7 @@
   border: 1px solid rgba(205, 168, 93, 0.23);
   border-radius: 4px;
   background:
-    linear-gradient(150deg, rgba(117, 12, 10, 0.98), rgba(43, 5, 5, 0.99));
+    linear-gradient(150deg, rgba(42, 8, 8, 0.98), rgba(18, 4, 4, 0.99));
   transition:
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
     border-color 0.35s ease,
@@ -342,7 +342,6 @@
   align-items: center;
   justify-content: center;
   min-height: 52px;
-  margin-top: 4px;
 }
 
 .products-swipe-hint { display: none; }
@@ -392,6 +391,17 @@
   .pc-card { max-width: 340px; }
 }
 
+@media (max-width: 1023px) {
+  .product-slider-container {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .product-slide {
+    flex: 0 0 100% !important;
+    width: 100%;
+  }
+}
 @media (max-width: 639px) {
   .products-section { padding: 62px 0 70px; }
 
@@ -410,17 +420,20 @@
   .products-eyebrow::before,
   .products-eyebrow::after { width: 24px; }
 
+  /* Full-width single card — no peek from sides */
   .product-slider-container {
-    padding-inline: 8vw;
-    overflow: visible;
+    padding-inline: 16px;
+    overflow: hidden;
   }
 
   .product-slide {
     padding: 8px 8px 24px;
   }
 
+  /* Card takes full available width */
   .pc-card {
-    max-width: min(82vw, 330px);
+    max-width: 100%;
+    width: 100%;
   }
 
   .pc-image { aspect-ratio: 1 / 0.8; }
@@ -448,25 +461,21 @@
     font-size: 0.58rem;
   }
 
+  /* Navigation: proper spacing from card */
   .products-navigation {
-    flex-direction: column;
-    gap: 14px;
+    flex-direction: row;
+    gap: 16px;
   }
 
-  .products-swipe-hint {
-    display: block;
-    color: rgba(255, 244, 224, 0.46);
-    font: 600 0.56rem/1 "Poppins", sans-serif;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
+  .products-swipe-hint { display: none; }
 
   .products-view-all { margin-top: 24px; }
 }
 
 @media (max-width: 380px) {
-  .product-slider-container { padding-inline: 5vw; }
-  .pc-card { max-width: 88vw; }
+  .product-slider-container { padding-inline: 12px; }
+
+  .pc-card { max-width: 100%; width: 100%; }
 
   .pc-footer {
     align-items: stretch;

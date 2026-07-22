@@ -158,6 +158,13 @@
   max-width: 720px;
 }
 
+.about-title span {
+  background: linear-gradient(180deg, #f7e6b8, #bc8f3e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .about-desc-wrapper {
   display: flex;
   flex-direction: column;
@@ -165,9 +172,9 @@
 }
 
 .about-description {
-  font-size: clamp(1rem, 1.2vw, 1.12rem);
-  color: rgba(255, 255, 255, 0.78);
-  line-height: 1.85;
+  font-size: clamp(0.88rem, 1.35vw, 1rem);
+  color: rgba(255, 246, 230, 0.66);
+  line-height: 1.78;
   margin: 0;
   max-width: 610px;
 }

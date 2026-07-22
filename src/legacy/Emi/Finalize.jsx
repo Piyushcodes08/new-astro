@@ -122,141 +122,75 @@ const EMIDetails = () => {
 
     return (
       <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-[0_0_40px_rgba(191, 6, 3,0.2)] p-8 w-full max-w-md relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-brand-red to-[#b0a102]"></div>
+        <div className="bg-[#161412] border border-[rgba(212,175,104,0.2)] rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] p-8 w-full max-w-md relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[rgba(212,175,104,0.5)] to-transparent" />
+          {/* Corner accents */}
+          <span className="pointer-events-none absolute left-2 top-2 h-4 w-4 border-l border-t border-[rgba(212,175,104,0.4)]" />
+          <span className="pointer-events-none absolute bottom-2 right-2 h-4 w-4 border-b border-r border-[rgba(212,175,104,0.4)]" />
 
-          <h3 className="text-2xl font-bold mb-2 text-white">
-            Complete <span className="text-brand-red">Payment</span>
+          <div className="mb-2 flex items-center gap-3">
+            <span className="h-px w-7 bg-[rgba(212,175,104,0.6)]" />
+            <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#a07830]">Secure Payment</p>
+          </div>
+          <h3 className="font-serif text-2xl text-[#1c1a17] mb-5">
+            Complete Payment
           </h3>
 
-          <div className="bg-white/5 rounded-xl p-4 mb-6 border border-white/5">
-            <p className="text-gray-300 mb-1 font-medium">
-              Course: <span className="text-white">{paymentModal.courseId}</span>
+          <div className="rounded border border-[#e0d5c0] bg-[#1e1b17] p-5 mb-6">
+            <p className="text-[8px] font-bold uppercase tracking-[0.25em] text-[#b08840] mb-1">Course</p>
+            <p className="text-sm text-[#1c1a17] mb-3 font-serif">{paymentModal.courseId}</p>
+            <p className="text-[8px] font-bold uppercase tracking-[0.25em] text-[#7a6a52] mb-1">
+              EMI <span className="text-[#a07830]">#{paymentModal.emiNumber}</span>
             </p>
-            <p className="text-gray-400 text-sm mb-3">
-              EMI <span className="text-white font-bold">#{paymentModal.emiNumber}</span>
-            </p>
-            <div className="text-3xl font-bold text-brand-red">
-              ₹{Number(paymentModal.amount).toLocaleString("en-IN")}
-            </div>
+            <p className="font-serif text-2xl text-[#1c1a17] mt-2">₹{Number(paymentModal.amount).toLocaleString("en-IN")}</p>
           </div>
 
-          {error && <p className="text-red-400 text-sm mb-4 bg-red-400/10 p-3 rounded-lg border border-red-400/20">{error}</p>}
-          <div className="flex flex-col gap-4">
+          {error && (
+            <p className="text-[rgba(255,100,100,0.8)] text-sm mb-4 rounded border border-[rgba(255,100,100,0.2)] bg-[rgba(255,100,100,0.05)] p-3">{error}</p>
+          )}
+          <div className="flex flex-col gap-3">
             <button
-              onClick={() =>
-                handlePayment(
-                  paymentModal.courseId,
-                  paymentModal.emiNumber,
-                  paymentModal.amount,
-                  "razorpay"
-                )
-              }
-              className="bg-white text-black font-bold px-4 py-3 rounded-xl transition-all hover:bg-gray-200 flex justify-center items-center gap-2 uppercase tracking-wider shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+              onClick={() => handlePayment(paymentModal.courseId, paymentModal.emiNumber, paymentModal.amount, "razorpay")}
+              className="flex min-h-11 items-center justify-center gap-2 rounded border border-[rgba(212,175,104,0.45)] bg-[rgba(255,255,255,0.025)] text-[10px] font-bold uppercase tracking-[0.2em] text-[#f0d99d] hover:bg-[rgba(212,175,104,0.12)] hover:border-[rgba(212,175,104,0.7)] transition-all"
               disabled={isLoading}
             >
               {isLoading ? (
                 <>
-                  <svg className="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                  </svg>
+                  <div className="h-4 w-4 border-2 border-[rgba(212,175,104,0.3)] border-t-[#d4af68] rounded-full animate-spin" />
                   Processing...
                 </>
-              ) : (
-                "Pay with Razorpay"
-              )}
+              ) : "Pay with Razorpay"}
             </button>
             {usdAmount ? (
-              <div className="mt-2 relative z-10 paypal-button-container-dark">
-                <PayPalScriptProvider
-                  options={{
-                    "client-id": PAYPAL_CLIENT_ID,
-                    components: "buttons",
-                    currency: "USD",
-                  }}
-                >
+              <div className="mt-1 relative z-10">
+                <PayPalScriptProvider options={{ "client-id": PAYPAL_CLIENT_ID, components: "buttons", currency: "USD" }}>
                   <PayPalButtons
                     style={{ layout: "vertical" }}
-                    createOrder={(data, actions) => {
-                      return actions.order.create({
-                        purchase_units: [
-                          {
-                            amount: {
-                              currency_code: "USD",
-                              value: usdAmount, // Dynamically set
-                            },
-                          },
-                        ],
-                      });
-                    }}
+                    createOrder={(data, actions) => actions.order.create({ purchase_units: [{ amount: { currency_code: "USD", value: usdAmount } }] })}
                     onApprove={async (data, actions) => {
                       try {
                         const details = await actions.order.capture();
                         const paymentId = details.id;
-
-                        const userDetails = {
-                          email: userEmail, // Replace with user's email
-                          name: formData.fullName || "NA", // Replace with user's name
-                        };
-
-                        const backendResponse = await fetch(
-                          "https://backend-7e8f.onrender.com/api/final/paypal/success",
-                          {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                              paymentId,
-                              userDetails,
-                              amount: paymentModal.amount,
-                              courseId: paymentModal.courseId,
-                            }),
-                          }
-                        );
-
-                        if (!backendResponse.ok) {
-                          const errorData = await backendResponse.json();
-                          alert(`Error: ${errorData.error}`);
-                          return;
-                        }
-
-                        // Add payment to Firestore
-                        await addDoc(collection(db, "payments"), {
-                          userId: userEmail,
-                          courseId: paymentModal.courseId,
-                          emiNumber: paymentModal.emiNumber,
-                          amount: paymentModal.amount,
-                          paymentId,
-                          status: "paid",
-                          timestamp: new Date(),
-                        });
-
-                        alert(
-                          `Payment for EMI #${paymentModal.emiNumber} successful via PayPal!`
-                        );
+                        const userDetails = { email: userEmail, name: formData.fullName || "NA" };
+                        const backendResponse = await fetch("https://backend-7e8f.onrender.com/api/final/paypal/success", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ paymentId, userDetails, amount: paymentModal.amount, courseId: paymentModal.courseId }) });
+                        if (!backendResponse.ok) { const errorData = await backendResponse.json(); alert(`Error: ${errorData.error}`); return; }
+                        await addDoc(collection(db, "payments"), { userId: userEmail, courseId: paymentModal.courseId, emiNumber: paymentModal.emiNumber, amount: paymentModal.amount, paymentId, status: "paid", timestamp: new Date() });
+                        alert(`Payment for EMI #${paymentModal.emiNumber} successful via PayPal!`);
                         closePaymentModal();
-                      } catch (error) {
-                        alert(
-                          "An error occurred during payment. Please try again."
-                        );
-                      }
+                      } catch (error) { alert("An error occurred during payment. Please try again."); }
                     }}
-                    onError={(err) => {
-                      alert(
-                        "An error occurred during the PayPal payment process."
-                      );
-                    }}
+                    onError={() => alert("An error occurred during the PayPal payment process.")}
                   />
                 </PayPalScriptProvider>
               </div>
             ) : (
               <div className="flex justify-center items-center p-4">
-                <div className="w-6 h-6 border-2 border-brand-red border-t-transparent rounded-full animate-spin"></div>
+                <div className="h-5 w-5 border-2 border-[rgba(212,175,104,0.2)] border-t-[#d4af68] rounded-full animate-spin" />
               </div>
             )}
             <button
               onClick={closePaymentModal}
-              className="mt-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white px-4 py-3 rounded-xl transition-all uppercase tracking-wider font-bold"
+              className="flex min-h-10 items-center justify-center rounded border border-white/10 bg-white/[0.03] text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 hover:border-white/20 hover:text-white/80 transition-all"
             >
               Cancel
             </button>
@@ -491,46 +425,57 @@ const EMIDetails = () => {
   }, [payments, emiPlans]);
 
   return (
-    <div className="admin-layout min-h-screen flex flex-col">
+    <div className="flex min-h-screen flex-col bg-[#f0ece4]">
       <div id="top-sentinel" className="absolute top-0 left-0 w-full h-px pointer-events-none z-[-1]" />
       <Header />
 
       <div className="flex flex-1 relative z-10 pt-16 gap-0">
         <Aside />
 
-        <main className="flex-1 min-w-0 py-6 px-[15px] md:px-10 bg-white overflow-x-hidden">
-          <div className="max-w-7xl mx-auto space-y-10 pt-16 md:pt-6">
+        <main className="flex-1 min-w-0 py-6 px-4 sm:px-6 lg:px-10 overflow-x-hidden bg-[#f0ece4]">
+          <div className="max-w-4xl mx-auto space-y-8 pb-12 pt-4">
 
-            {/* Page Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-slate-200 pb-8 md:pb-12 pt-6">
+            {/* ── Page Header ── */}
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-[#e0d5c0]">
               <div>
-                <h4 className="text-brand-red font-black uppercase tracking-[0.3em] text-[8px] md:text-[10px] mb-1 md:mb-2">Financial Overview</h4>
-                <h1 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tight uppercase">
-                  EMI <span className="text-brand-red">Details</span>
+                <div className="mb-2 flex items-center gap-3">
+                  <span className="h-px w-7 bg-[rgba(212,175,104,0.6)]" />
+                  <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#a07830]">Financial Overview</p>
+                </div>
+                <h1 className="font-serif text-2xl sm:text-3xl text-[#1c1a17]">
+                  EMI <span className="text-[#d4af68]">Details</span>
                 </h1>
-                <p className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mt-3 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  Active for: <span className="text-slate-600 lowercase">{userEmail}</span>
+                <p className="mt-3 flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.25em] text-[#7a6a52]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#82b879] shadow-[0_0_0_4px_rgba(130,184,121,0.15)]" />
+                  Active for: <span className="text-[#6b5a40] lowercase">{userEmail}</span>
                 </p>
               </div>
             </div>
 
+            {/* ── Empty State ── */}
             {Object.keys(emiSchedules).length === 0 ? (
-              <div className="bg-white rounded-4xl md:rounded-[2.5rem] p-10 md:p-20 text-center border border-slate-100 shadow-sm">
-                <div className="text-4xl mb-6">💳</div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4 uppercase tracking-tight">No Active EMI Plans</h3>
-                <p className="text-slate-500 font-medium mb-10 max-w-md mx-auto text-sm leading-relaxed">
+              <div className="rounded border border-dashed border-[#d5c9b0] bg-white px-6 py-16 text-center">
+                {/* Gold credit card icon */}
+                <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.06)] text-[#d4af68]">
+                  <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"
+                      d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                  </svg>
+                </div>
+                <h3 className="font-serif text-xl text-[#1c1a17] mb-2">No Active EMI Plans</h3>
+                <p className="text-[#6b5a40] text-sm max-w-sm mx-auto mb-8 leading-relaxed">
                   You are not currently enrolled in any EMI plans. Check our premium courses for flexible payment options.
                 </p>
-                <Link 
-                  to="/courses" 
-                  className="inline-block bg-brand-red text-white px-10 py-4 rounded-xl font-black uppercase tracking-[0.2em] text-[10px] hover:shadow-xl transition-all hover:-translate-y-1 active:scale-95"
+                <Link
+                  to="/courses"
+                  className="inline-flex min-h-10 items-center rounded border border-[rgba(212,175,104,0.5)] bg-[rgba(255,255,255,0.025)] px-7 text-[10px] font-bold uppercase tracking-[0.2em] text-[#f0d99d] transition hover:-translate-y-0.5 hover:bg-[rgba(212,175,104,0.1)]"
                 >
                   Browse Premium Courses
                 </Link>
               </div>
             ) : (
-              <div className="grid grid-cols-1 gap-10 pb-20">
+              /* ── EMI Schedule Cards ── */
+              <div className="space-y-8 pb-10">
                 {Object.keys(emiSchedules).map((courseId) => {
                   const schedule = emiSchedules[courseId] || [];
                   const unpaidEMIs = schedule.filter(emi => emi.status === "unpaid");
@@ -539,70 +484,86 @@ const EMIDetails = () => {
                   const progress = (paidEMIs.length / schedule.length) * 100;
 
                   return (
-                    <div key={courseId} className="bg-white rounded-4xl md:rounded-[3rem] border border-slate-100 shadow-sm overflow-hidden flex flex-col">
-                      <div className="bg-slate-50/50 border-b border-slate-100 p-6 md:p-10">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    <div key={courseId} className="rounded border border-[#e0d5c0] bg-white overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.4)]">
+                      {/* Top gold line */}
+                      <div className="h-px bg-gradient-to-r from-transparent via-[rgba(212,175,104,0.4)] to-transparent" />
+
+                      {/* Course header */}
+                      <div className="bg-[#f5f0e6] border-b border-[#e0d5c0] px-6 py-6 md:px-8">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                           <div className="flex-1">
-                            <h3 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight mb-4 uppercase leading-tight">
-                              Course: <span className="text-brand-red">{courseId}</span>
-                            </h3>
-                            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Payment Progress</span>
-                              <div className="flex items-center gap-4 flex-1 max-w-xs">
-                                <div className="h-2 bg-slate-200 rounded-full overflow-hidden flex-1 shadow-inner">
-                                    <div className="h-full bg-brand-red transition-all duration-1000 shadow-[0_0_10px_rgba(191, 6, 3,0.3)]" style={{ width: `${progress}%` }}></div>
+                            <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#b08840] mb-1">Course</p>
+                            <h3 className="font-serif text-lg text-[#1c1a17] md:text-xl">{courseId}</h3>
+
+                            {/* Progress bar */}
+                            <div className="mt-4 flex items-center gap-4">
+                              <p className="text-[8px] font-bold uppercase tracking-[0.25em] text-[#9a8870] shrink-0">Progress</p>
+                              <div className="flex-1 max-w-xs">
+                                <div className="h-1.5 bg-[rgba(255,255,255,0.05)] rounded-full overflow-hidden">
+                                  <div
+                                    className="h-full bg-[#d4af68] transition-all duration-700"
+                                    style={{ width: `${progress}%` }}
+                                  />
                                 </div>
-                                <span className="text-[10px] font-black text-slate-900">{Math.round(progress)}%</span>
                               </div>
+                              <p className="text-[9px] font-bold text-[#d4af68] shrink-0">{Math.round(progress)}%</p>
                             </div>
                           </div>
-                          <div className="text-left md:text-right bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
-                            <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Total Remaining</p>
-                            <h4 className="text-xl md:text-2xl font-black text-slate-900 tracking-tighter">₹{totalUnpaid.toLocaleString("en-IN")}</h4>
+
+                          {/* Remaining amount */}
+                          <div className="rounded border border-[#e0d5c0] bg-[rgba(212,175,104,0.05)] px-6 py-4 text-center">
+                            <p className="text-[8px] font-bold uppercase tracking-[0.25em] text-[#b08840] mb-1">Remaining</p>
+                            <p className="font-serif text-xl text-[#1c1a17]">₹{totalUnpaid.toLocaleString("en-IN")}</p>
                           </div>
                         </div>
                       </div>
 
-                      <div className="p-4 md:p-10">
-                        <div className="grid grid-cols-1 gap-4">
-                          {schedule.map((emi, idx) => (
-                            <div
-                              key={idx}
-                              className="flex flex-col md:flex-row justify-between items-start md:items-center p-5 md:p-6 bg-slate-50/30 border border-slate-50 rounded-3xl hover:bg-slate-50 transition-all duration-300 group"
-                            >
-                              <div className="flex items-center gap-5">
-                                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-[10px] shadow-sm transition-transform group-hover:scale-105 ${emi.status === 'paid' ? 'bg-emerald-50 text-emerald-500 border border-emerald-100' : 'bg-white text-slate-400 border border-slate-100'}`}>
-                                  {emi.emiNumber.toString().padStart(2, '0')}
-                                </div>
-                                <div className="flex flex-col">
-                                  <span className="text-slate-900 font-black text-base md:text-lg tracking-tight uppercase">EMI Payment</span>
-                                  <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-0.5">
-                                    Due: <span className="text-slate-600">{emi.date.toLocaleDateString("en-IN")}</span>
-                                  </span>
-                                </div>
+                      {/* EMI rows */}
+                      <div className="divide-y divide-[#ede7db] p-4 space-y-0">
+                        {schedule.map((emi, idx) => (
+                          <div
+                            key={idx}
+                            className="flex flex-col md:flex-row justify-between items-start md:items-center py-4 px-2 gap-4 hover:bg-[#faf6ee] transition-colors group rounded"
+                          >
+                            <div className="flex items-center gap-4">
+                              {/* EMI number badge */}
+                              <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded border text-[10px] font-bold transition-transform group-hover:scale-105 ${
+                                emi.status === 'paid'
+                                  ? 'border-[rgba(130,184,121,0.3)] bg-[rgba(130,184,121,0.08)] text-[#82b879]'
+                                  : 'border-[#c9a55a]/30 bg-[#fdf7ec] text-[#a07830]'
+                              }`}>
+                                {String(emi.emiNumber).padStart(2, '0')}
                               </div>
-
-                              <div className="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto mt-6 md:mt-0 pt-6 md:pt-0 border-t md:border-t-0 border-slate-100">
-                                <span className="text-lg md:text-xl font-black text-slate-900 tracking-tighter">
-                                  ₹{Number(emi.amount).toLocaleString("en-IN")}
-                                </span>
-                                {emi.status === "paid" ? (
-                                  <div className="flex items-center gap-2 text-emerald-500 bg-emerald-50 px-5 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest border border-emerald-100">
-                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-                                    Paid
-                                  </div>
-                                ) : (
-                                  <button
-                                    onClick={() => openPaymentModal(courseId, emi.emiNumber, emi.amount)}
-                                    className="bg-slate-900 text-white px-8 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-brand-red transition-all shadow-lg hover:-translate-y-1 active:scale-95"
-                                  >
-                                    Pay Now
-                                  </button>
-                                )}
+                              <div>
+                                <p className="text-sm font-serif text-[#1c1a17]">EMI Payment</p>
+                                <p className="text-[8px] font-bold uppercase tracking-[0.25em] text-[#9a8870] mt-0.5">
+                                  Due: <span className="text-[#6b5a40]">{emi.date.toLocaleDateString("en-IN")}</span>
+                                </p>
                               </div>
                             </div>
-                          ))}
-                        </div>
+
+                            <div className="flex items-center justify-between md:justify-end gap-5 w-full md:w-auto mt-3 md:mt-0 pt-3 md:pt-0 border-t md:border-0 border-[rgba(212,175,104,0.08)]">
+                              <p className="font-serif text-base text-[#1c1a17]">
+                                ₹{Number(emi.amount).toLocaleString("en-IN")}
+                              </p>
+                              {emi.status === "paid" ? (
+                                <span className="flex items-center gap-1.5 rounded border border-[rgba(130,184,121,0.3)] bg-[rgba(130,184,121,0.08)] px-4 py-2 text-[8px] font-bold uppercase tracking-widest text-[#82b879]">
+                                  <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                                  </svg>
+                                  Paid
+                                </span>
+                              ) : (
+                                <button
+                                  onClick={() => openPaymentModal(courseId, emi.emiNumber, emi.amount)}
+                                  className="inline-flex min-h-9 items-center rounded border border-[rgba(212,175,104,0.45)] bg-[rgba(255,255,255,0.025)] px-5 text-[9px] font-bold uppercase tracking-[0.2em] text-[#f0d99d] hover:bg-[rgba(212,175,104,0.12)] hover:border-[rgba(212,175,104,0.7)] transition-all hover:-translate-y-0.5"
+                                >
+                                  Pay Now
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   );

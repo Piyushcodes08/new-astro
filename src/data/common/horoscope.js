@@ -97,3 +97,55 @@ export const horoscopeData = [
     description: "Pisces is deeply intuitive, emotional, and imaginative. These individuals are compassionate souls who connect easily with others on an emotional level. They are often drawn to art, creativity, and spirituality."
   }
 ];
+
+export const RASHIPHAL_SUMMARIES = {
+  Aries: {
+    hi: "आज का दिन आपके लिए ऊर्जा और उत्साह से भरा रहेगा। नए कार्यों की शुरुआत करने के लिए यह समय अनुकूल है। आत्मविश्वास के साथ आगे बढ़ेंगे तो सफलता निश्चित है।",
+    en: "Today is filled with energy and enthusiasm for you. This is a favorable time to start new endeavors. Success is certain if you move forward with confidence."
+  },
+  Taurus: {
+    hi: "धैर्य और स्थिरता के साथ अपने लक्ष्यों की ओर बढ़ें। आर्थिक मामलों में सावधानी बरतें। परिवार के साथ समय बिताने से मानसिक शांति मिलेगी।",
+    en: "Move towards your goals with patience and stability. Be cautious in financial matters. Spending time with family will bring mental peace."
+  },
+  Gemini: {
+    hi: "आपकी वाणी और विचार आज विशेष रूप से प्रभावशाली रहेंगे। नए लोगों से मुलाकात हो सकती है। किसी भी निर्णय को लेने से पहले अच्छी तरह सोच-विचार करें।",
+    en: "Your speech and thoughts will be particularly influential today. You may meet new people. Think carefully before making any decisions."
+  },
+  Cancer: {
+    hi: "भावनात्मक रूप से संवेदनशील रहेंगे। परिवार में सुख-शांति बनी रहेगी। किसी पुराने मित्र से मुलाकात हो सकती है। स्वास्थ्य का ध्यान रखें।",
+    en: "You will be emotionally sensitive. Peace and harmony will prevail in the family. You may meet an old friend. Take care of your health."
+  },
+  Leo: {
+    hi: "आज आपका आत्मविश्वास चरम पर रहेगा। नेतृत्व क्षमता का प्रदर्शन करने का समय है। करियर में उन्नति के योग हैं। संयम बनाए रखें।",
+    en: "Your confidence will be at its peak today. It's time to demonstrate your leadership skills. Career advancement is indicated. Maintain your composure."
+  },
+  Virgo: {
+    hi: "आपकी सूझबूझ और विश्लेषण क्षमता आज काम आएगी। कार्यक्षेत्र में सफलता मिलेगी। स्वास्थ्य संबंधी मामलों पर ध्यान दें। दिनचर्या में अनुशासन बनाए रखें।",
+    en: "Your wisdom and analytical skills will come in handy today. Success awaits in the workplace. Pay attention to health matters. Maintain discipline in your routine."
+  },
+  Libra: {
+    hi: "संतुलन और सामंजस्य बनाए रखें। रिश्तों में मधुरता आएगी। कला और सौंदर्य के प्रति आपकी रुचि बढ़ेगी। महत्वपूर्ण निर्णय टालने से बचें।",
+    en: "Maintain balance and harmony. Sweetness will come in relationships. Your interest in art and beauty will increase. Avoid postponing important decisions."
+  },
+  Scorpio: {
+    hi: "गहन ऊर्जा और दृढ़ संकल्प के साथ कार्य करें। आर्थिक लाभ के योग हैं। किसी रहस्य का पता चल सकता है। आत्मनिरीक्षण का समय है।",
+    en: "Work with intense energy and determination. Financial gains are indicated. A mystery may be revealed. It's time for self-introspection."
+  },
+  Sagittarius: {
+    hi: "साहस और आशावाद के साथ नए अवसरों को अपनाएं। यात्रा के योग हैं। ज्ञान वृद्धि के लिए यह समय उपयुक्त है। दूसरों की मदद करने से संतोष मिलेगा।",
+    en: "Embrace new opportunities with courage and optimism. Travel is indicated. This time is suitable for knowledge enhancement. Helping others will bring satisfaction."
+  },
+  Capricorn: {
+    hi: "अनुशासन और मेहनत से सफलता प्राप्त होगी। पेशेवर जीवन में उन्नति के अवसर मिलेंगे। पुराने लक्ष्यों को पूरा करने का समय है। परिवार का सहयोग मिलेगा।",
+    en: "Success will be achieved through discipline and hard work. Opportunities for advancement in professional life will arise. It's time to accomplish old goals. Family support will be there."
+  },
+  Aquarius: {
+    hi: "नवीन विचार और नवाचार आपको आगे बढ़ाएंगे। सामाजिक दायरा बढ़ेगा। मित्रों के साथ समय बिताने से प्रसन्नता मिलेगी। किसी नई योजना पर काम कर सकते हैं।",
+    en: "Innovative ideas and creativity will propel you forward. Your social circle will expand. Spending time with friends will bring joy. You can work on a new plan."
+  },
+  Pisces: {
+    hi: "आपकी संवेदनशीलता और कल्पनाशीलता आज चरम पर होगी। आध्यात्मिक गतिविधियों में रुचि बढ़ेगी। कला और संगीत का आनंद लें। सहज ज्ञान पर भरोसा करें।",
+    en: "Your sensitivity and imagination will be at their peak today. Interest in spiritual activities will increase. Enjoy art and music. Trust your intuition."
+  }
+};
+

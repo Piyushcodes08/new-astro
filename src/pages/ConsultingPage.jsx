@@ -79,7 +79,7 @@ const ConsultingPage = () => {
                             <div className="flex flex-wrap gap-6 justify-center items-center">
                                 <Link
                                     to="/appointment"
-                                    className="px-10 py-4 rounded font-black uppercase tracking-[0.2em] text-white transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(191, 6, 3,0.4)] bg-brand-red flex items-center gap-3 text-xs"
+                                    className="px-10 py-4 rounded font-black uppercase tracking-[0.2em] text-[#fff4d6] transition-all duration-500 hover:-translate-y-1 border border-[rgba(212,175,104,0.55)] bg-[rgba(255,255,255,0.025)] hover:bg-gradient-to-r hover:from-[#f0d99d] hover:to-[#cda85d] hover:text-[#1a0505] hover:border-[#cda85d] flex items-center gap-3 text-xs"
                                 >
                                     {hero.buttonText} <LuCalendar className="w-4 h-4" />
                                 </Link>
@@ -105,7 +105,7 @@ const ConsultingPage = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.1 }}
-                                    className="bg-[#0d0606] border border-[#fdfcf0]/10 rounded-lg py-6 px-[15px] md:px-[50px] text-center shadow-[0_10px_30px_rgba(0,0,0,0.3)] hover:border-brand-red/30 transition-all duration-500 group"
+                                    className="bg-[#1a0505] border border-[rgba(212,175,104,0.18)] rounded-lg py-6 px-[15px] md:px-[50px] text-center shadow-[0_10px_30px_rgba(0,0,0,0.3)] hover:border-[rgba(212,175,104,0.4)] transition-all duration-500 group"
                                 >
                                     <div className="title-batangas text-2xl md:text-4xl font-black text-brand-red mb-1 group-hover:scale-105 transition-transform duration-500">
                                         {s.num}
@@ -138,10 +138,10 @@ const ConsultingPage = () => {
                         >
                             {services.items.map((srv, i) => (
                                 <motion.div key={i} variants={itemVariants} className="group h-full">
-                                    <div className="relative bg-[#0d0606] border border-[#fdfcf0]/10 rounded-lg overflow-hidden h-full flex flex-col shadow-[0_15px_40px_rgba(0,0,0,0.4)] transition-all duration-500 hover:border-brand-red/40 hover:-translate-y-1 group/card">
+                                    <div className="relative bg-[#1a0505] border border-[rgba(212,175,104,0.18)] rounded-lg overflow-hidden h-full flex flex-col shadow-[0_15px_40px_rgba(0,0,0,0.5)] transition-all duration-500 hover:border-[rgba(212,175,104,0.4)] hover:-translate-y-1 group/card">
                                         {/* Image Area */}
                                         <div className="relative w-full aspect-video overflow-hidden">
-                                            <div className="absolute inset-0 bg-linear-to-t from-[#0d0606] via-transparent to-transparent z-10 opacity-70"></div>
+                                            <div className="absolute inset-0 bg-linear-to-t from-[#1a0505] via-transparent to-transparent z-10 opacity-70"></div>
                                             <img
                                                 src={srv.img}
                                                 alt={srv.title}
@@ -149,28 +149,28 @@ const ConsultingPage = () => {
                                             />
                                             {/* Tag */}
                                             <div className="absolute top-5 right-5 z-20">
-                                                <span className="px-3 py-1.5 rounded-sm bg-brand-red text-white text-[8px] font-black uppercase tracking-[0.2em] shadow-lg">
+                                                <span className="px-3 py-1.5 rounded-sm border border-[rgba(212,175,104,0.5)] bg-[rgba(255,255,255,0.025)] text-[#f0d99d] text-[8px] font-black uppercase tracking-[0.2em] shadow-lg backdrop-blur-sm">
                                                     {srv.tag}
                                                 </span>
                                             </div>
                                         </div>
 
                                         {/* Content */}
-                                        <div className="p-5 flex flex-col flex-1 bg-[#bf0603]">
+                                        <div className="p-5 flex flex-col flex-1 bg-[#200808]">
                                             <h3 className="title-batangas text-lg md:text-xl mb-4 text-white leading-[1.3] tracking-tight uppercase font-black">
                                                 {srv.title}
                                             </h3>
-                                            <p className="subtitle-poppins text-white text-sm md:text-base leading-relaxed mb-4 flex-1 italic">
+                                            <p className="subtitle-poppins text-white/65 text-sm md:text-base leading-relaxed mb-4 flex-1 italic">
                                                 {srv.description}
                                             </p>
-                                            <div className="mt-auto pt-6 border-t border-white/10 flex items-center justify-between">
+                                            <div className="mt-auto pt-6 border-t border-[rgba(212,175,104,0.15)] flex items-center justify-between">
                                                 <Link
                                                     to="/appointment"
-                                                    className="inline-flex items-center gap-3 font-black text-[9px] uppercase tracking-[0.3em] text-white hover:opacity-80 transition-all"
+                                                    className="inline-flex items-center gap-3 font-black text-[9px] uppercase tracking-[0.3em] text-[#f0d99d] hover:opacity-80 transition-all"
                                                 >
                                                     Book Session <LuArrowRight className="w-4 h-4" />
                                                 </Link>
-                                                <div className="flex text-white/20 group-hover/card:text-white/40 transition-all duration-500 gap-0.5">
+                                                <div className="flex text-[rgba(212,175,104,0.3)] group-hover/card:text-[rgba(212,175,104,0.6)] transition-all duration-500 gap-0.5">
                                                     {[...Array(5)].map((_, idx) => <LuStar key={idx} size={10} fill="currentColor" />)}
                                                 </div>
                                             </div>
@@ -185,7 +185,7 @@ const ConsultingPage = () => {
                 {/* ── Process Section ─────────────────────────────────────── */}
                 <section className="no-full-height">
                     <div className="section-container">
-                        <div className="bg-[#0d0606] border border-white/5 rounded-xl px-[15px] md:px-[50px] py-10 md:py-16 relative overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.5)]">
+                        <div className="bg-[#1a0505] border border-white/5 rounded-xl px-[15px] md:px-[50px] py-10 md:py-16 relative overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.5)]">
                             <div className="relative z-10 text-center mb-12 md:mb-20">
                                 <h2 className="title-batangas text-3xl md:text-6xl text-white mb-4 tracking-tight uppercase leading-none font-black">
                                     {process.title} <span className="text-brand-red">{process.titleHighlight}</span>
@@ -243,7 +243,7 @@ const ConsultingPage = () => {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ delay: i * 0.1 }}
-                                        className="bg-[#0d0606] border border-[#fdfcf0]/10 rounded-lg px-[15px] md:px-[50px] py-8 flex flex-col hover:border-brand-red/30 transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.4)] group relative"
+                                        className="bg-[#1a0505] border border-[rgba(212,175,104,0.18)] rounded-lg px-[15px] md:px-[50px] py-8 flex flex-col hover:border-[rgba(212,175,104,0.4)] transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.4)] group relative"
                                     >
                                         <div className="text-6xl mb-8 text-brand-red/10 group-hover:text-brand-red/20 transition-all font-serif italic">"</div>
                                         <p className="subtitle-poppins text-white/70 italic leading-relaxed flex-1 text-base mb-12 font-medium">
@@ -295,7 +295,7 @@ const ConsultingPage = () => {
                                 </p>
                                 <Link
                                     to="/appointment"
-                                    className="px-12 py-4 rounded font-black uppercase tracking-[0.3em] transition-all duration-500 hover:-translate-y-1 bg-brand-red text-white shadow-3xl text-xs inline-block"
+                                    className="px-12 py-4 rounded font-black uppercase tracking-[0.3em] transition-all duration-500 hover:-translate-y-1 border border-[rgba(212,175,104,0.55)] bg-[rgba(255,255,255,0.025)] text-[#fff4d6] hover:bg-gradient-to-r hover:from-[#f0d99d] hover:to-[#cda85d] hover:text-[#1a0505] hover:border-[#cda85d] text-xs inline-block"
                                 >
                                     {highlights.buttonText}
                                 </Link>
@@ -318,7 +318,7 @@ const ConsultingPage = () => {
                                 <div className="flex flex-wrap gap-8 justify-center items-center">
                                     <Link
                                         to="/appointment"
-                                        className="px-12 py-5 rounded font-black uppercase tracking-[0.2em] text-white transition-all duration-500 hover:-translate-y-1 bg-brand-red shadow-[0_20px_50px_rgba(191, 6, 3,0.4)] text-xs"
+                                        className="px-12 py-5 rounded font-black uppercase tracking-[0.2em] text-[#fff4d6] transition-all duration-500 hover:-translate-y-1 border border-[rgba(212,175,104,0.55)] bg-[rgba(255,255,255,0.025)] hover:bg-gradient-to-r hover:from-[#f0d99d] hover:to-[#cda85d] hover:text-[#1a0505] hover:border-[#cda85d] text-xs"
                                     >
                                         {cta.primaryButtonText}
                                     </Link>

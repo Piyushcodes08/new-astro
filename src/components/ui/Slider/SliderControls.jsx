@@ -3,7 +3,7 @@ import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 
 const SliderControls = ({ onNext, onPrev, isPrevDisabled, isNextDisabled }) => {
   return (
-    <div className="flex items-center justify-center gap-6 mt-12">
+    <div className="flex items-center justify-center gap-6 mt-4 lg:mt-12">
       <button 
         className="nav-btn flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95" 
         onClick={onPrev} 

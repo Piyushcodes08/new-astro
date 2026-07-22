@@ -532,7 +532,7 @@
   .numerology-container { width: calc(100% - 24px); }
   .numerology-cosmic-card { padding: 30px 15px 20px; }
   .numerology-header { margin-bottom: 30px; }
-  .numerology-title { font-size: clamp(2.35rem, 11vw, 3.05rem); }
+  .numerology-title { font-size: clamp(1.6rem, 7vw, 2.2rem); }
   .numerology-subtitle { font-size: 0.84rem; line-height: 1.68; }
   .numerology-calculator-card { padding: 22px 18px; }
   .numerology-calculator-heading { align-items: flex-start; gap: 13px; }

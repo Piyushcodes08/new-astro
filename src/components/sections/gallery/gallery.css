@@ -81,19 +81,26 @@
 .gallery-text-panel .gallery-main-title {
   margin: 0 0 18px;
   color: #fff7e8;
-  font-size: clamp(2.2rem, 4vw, 3.75rem);
+  font-size: clamp(1.85rem, 3.2vw, 2.8rem);
   font-weight: 400;
   line-height: 1.05;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
   text-wrap: balance;
-  text-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+  text-shadow: 0 14px 46px rgba(0, 0, 0, 0.42);
+}
+
+.gallery-text-panel .gallery-main-title span {
+  background: linear-gradient(180deg, #f7e6b8, #bc8f3e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .gallery-text-panel .gallery-desc {
   max-width: 350px;
   margin: 0;
-  color: rgba(255, 246, 229, 0.64);
-  font: 400 clamp(0.8rem, 1.1vw, 0.92rem)/1.78 "Poppins", sans-serif;
+  color: rgba(255, 246, 230, 0.66);
+  font: 400 clamp(0.88rem, 1.35vw, 1rem)/1.78 "Poppins", sans-serif;
 }
 
 .gallery-scroll-indicator {

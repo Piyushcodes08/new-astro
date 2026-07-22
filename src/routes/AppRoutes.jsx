@@ -80,7 +80,6 @@ const PaymentGuide      = lazy(() => import('../legacy/pages/PaymentGuide'));
 const CourseDetail      = lazy(() => import('../legacy/pages/CourseDetail'));
 const Services          = lazy(() => import('../legacy/pages/Services'));
 const AudioVisualizer   = lazy(() => import('../components/AudioVisualizer/AudioVisualizer'));
-const HoroscopePage     = lazy(() => import('../pages/horoscope/HoroscopePage'));
 
 // ── Additional Legacy Sub-pages — lazy loaded ──
 const BhagavadGita  = lazy(() => import('../legacy/pages/courses/BhagavadGita'));
@@ -120,7 +119,6 @@ const AppRoutes = () => {
                 <Route path="/finalize"       element={<Finalize />} />
                 <Route path="/notifications"  element={<Notifications />} />
                 <Route path="/pay/:courseId/:emiNumber/:planId/:encodedEmail" element={<Payment />} />
-                <Route path="/horoscope/:sign" element={<HoroscopePage />} />
 
                 {/* Additional Legacy Routes */}
                 <Route path="/bhagavad-gita"    element={<BhagavadGita />} />

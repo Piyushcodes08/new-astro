@@ -1,22 +1,22 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+﻿import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Horoscope.css";
-import { horoscopeData } from "../../../data/common/horoscope";
+import { horoscopeData, RASHIPHAL_SUMMARIES } from "../../../data/common/horoscope";
 import zodiacWheel from "../../../assets/images/sections/horoscope/new_wheel_s5ozry.png";
 
 const DATE_RANGES = {
-  Aries: "March 21 — April 19",
-  Taurus: "April 20 — May 20",
-  Gemini: "May 21 — June 20",
-  Cancer: "June 21 — July 22",
-  Leo: "July 23 — August 22",
-  Virgo: "August 23 — September 22",
-  Libra: "September 23 — October 22",
-  Scorpio: "October 23 — November 21",
-  Sagittarius: "November 22 — December 21",
-  Capricorn: "December 22 — January 19",
-  Aquarius: "January 20 — February 18",
-  Pisces: "February 19 — March 20",
+  Aries: "March 21 â€” April 19",
+  Taurus: "April 20 â€” May 20",
+  Gemini: "May 21 â€” June 20",
+  Cancer: "June 21 â€” July 22",
+  Leo: "July 23 â€” August 22",
+  Virgo: "August 23 â€” September 22",
+  Libra: "September 23 â€” October 22",
+  Scorpio: "October 23 â€” November 21",
+  Sagittarius: "November 22 â€” December 21",
+  Capricorn: "December 22 â€” January 19",
+  Aquarius: "January 20 â€” February 18",
+  Pisces: "February 19 â€” March 20",
 };
 
 const ZODIAC_ORDER = [
@@ -24,10 +24,10 @@ const ZODIAC_ORDER = [
   "SEVENTH", "EIGHTH", "NINTH", "TENTH", "ELEVENTH", "TWELFTH",
 ];
 
-const TRAIT_ICONS = ["✦", "◆", "◈"];
+const TRAIT_ICONS = ["âœ¦", "â—†", "â—ˆ"];
 const COOLDOWN = 420;
 
-export default function Horoscope({ onGetDetails }) {
+export default function Horoscope() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isInView, setIsInView] = useState(false);
   const sectionRef = useRef(null);
@@ -119,10 +119,6 @@ export default function Horoscope({ onGetDetails }) {
     if (Math.abs(distance) > 42) changeSign(distance > 0 ? 1 : -1);
   };
 
-  const openReading = () => {
-    onGetDetails?.();
-    navigate(`/horoscope/${currentZodiac.name.toLowerCase()}`);
-  };
 
   if (!currentZodiac) return null;
 
@@ -141,7 +137,7 @@ export default function Horoscope({ onGetDetails }) {
       <div className="horoscope-container">
         <header className="horoscope-header">
           <span className="horoscope-kicker">CELESTIAL GUIDANCE</span>
-          <h2 id="horoscope-title" className="section-title-theme">Daily Cosmic Horoscope</h2>
+          <h2 id="horoscope-title" className="section-title-theme">Daily Cosmic <span>Horoscope</span></h2>
           <p className="subtitle-poppins horoscope-subtitle">
             Unlock the secrets of your celestial path with thoughtfully curated daily zodiac insights.
           </p>
@@ -153,19 +149,13 @@ export default function Horoscope({ onGetDetails }) {
         </header>
 
         <div className="zodiac-main-layout">
-          <article className="zodiac-side-panel zodiac-identity" key={`identity-${activeIndex}`}>
+          <article className="zodiac-side-panel zodiac-identity lg:block hidden" key={`identity-${activeIndex}`}>
             <span className="zodiac-index">{String(activeIndex + 1).padStart(2, "0")}</span>
             <p className="zodiac-eyebrow">The {ZODIAC_ORDER[activeIndex]} Zodiac Sign</p>
             <h3 className="hero-zodiac-name">{currentZodiac.name}</h3>
-            <div className="title-divider"><span>✦</span></div>
-            <p className="zodiac-date-range">{DATE_RANGES[currentZodiac.name]}</p>
-            <div className="trait-badges" aria-label={`${currentZodiac.name} key traits`}>
-              {traitsArray.map((trait, index) => (
-                <span key={trait} className="trait-badge">
-                  <span className="badge-icon">{TRAIT_ICONS[index]}</span>{trait}
-                </span>
-              ))}
-            </div>
+            <div className="title-divider"><span>âœ¦</span></div>
+           
+            
           </article>
 
           <div className="zodiac-center-column">
@@ -200,13 +190,13 @@ export default function Horoscope({ onGetDetails }) {
             </div>
 
             <div className="zodiac-controls">
-              <button type="button" onClick={() => changeSign(-1)} aria-label="Previous zodiac sign">←</button>
+              <button type="button" onClick={() => changeSign(-1)} aria-label="Previous zodiac sign">â†</button>
               <div className="zodiac-pagination" aria-live="polite">
                 <strong>{String(activeIndex + 1).padStart(2, "0")}</strong>
                 <span />
                 <small>12</small>
               </div>
-              <button type="button" onClick={() => changeSign(1)} aria-label="Next zodiac sign">→</button>
+              <button type="button" onClick={() => changeSign(1)} aria-label="Next zodiac sign">â†’</button>
             </div>
           </div>
 
@@ -215,18 +205,11 @@ export default function Horoscope({ onGetDetails }) {
               <span>PERSONALITY PROFILE</span>
               <h3>{currentZodiac.name} Traits</h3>
             </div>
-            <div className="key-traits-banners">
-              {traitsArray.map((trait, index) => (
-                <div key={trait} className="trait-banner-item">
-                  <span className="trait-num">{String(index + 1).padStart(2, "0")}</span>
-                  <span className="trait-text-main">{trait}</span>
-                </div>
-              ))}
+           
+            <div className="rashiphal-summary">
+              <p lang="hi">{RASHIPHAL_SUMMARIES[currentZodiac.name].hi}</p>
+              <p>{RASHIPHAL_SUMMARIES[currentZodiac.name].en}</p>
             </div>
-            <button type="button" className="premium-banner-btn" onClick={openReading}>
-              <span>Explore Full {currentZodiac.name} Reading</span>
-              <span className="arrow-icon" aria-hidden="true">↗</span>
-            </button>
           </article>
         </div>
       </div>
