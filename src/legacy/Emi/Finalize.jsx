@@ -13,7 +13,6 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Aside from "../pages/Aside";
-import Header from "../../components/sections/Header/Header";
 
 const EMIDetails = () => {
   const [userEmail, setUserEmail] = useState(null);
@@ -129,18 +128,18 @@ const EMIDetails = () => {
           <span className="pointer-events-none absolute bottom-2 right-2 h-4 w-4 border-b border-r border-[rgba(212,175,104,0.4)]" />
 
           <div className="mb-2 flex items-center gap-3">
-            <span className="h-px w-7 bg-[rgba(212,175,104,0.6)]" />
-            <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#a07830]">Secure Payment</p>
+            <span className="h-px w-7" style={{ background: "var(--dash-accent,#bf0603)" }} className="" />
+            <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[var(--dash-accent,#bf0603)]">Secure Payment</p>
           </div>
           <h3 className="font-serif text-2xl text-[#1c1a17] mb-5">
             Complete Payment
           </h3>
 
-          <div className="rounded border border-[#e0d5c0] bg-[#1e1b17] p-5 mb-6">
+          <div className="rounded border border-[#e0d5c0] bg-white p-5 mb-6">
             <p className="text-[8px] font-bold uppercase tracking-[0.25em] text-[#b08840] mb-1">Course</p>
             <p className="text-sm text-[#1c1a17] mb-3 font-serif">{paymentModal.courseId}</p>
             <p className="text-[8px] font-bold uppercase tracking-[0.25em] text-[#7a6a52] mb-1">
-              EMI <span className="text-[#a07830]">#{paymentModal.emiNumber}</span>
+              EMI <span className="text-[var(--dash-accent,#bf0603)]">#{paymentModal.emiNumber}</span>
             </p>
             <p className="font-serif text-2xl text-[#1c1a17] mt-2">₹{Number(paymentModal.amount).toLocaleString("en-IN")}</p>
           </div>
@@ -156,7 +155,7 @@ const EMIDetails = () => {
             >
               {isLoading ? (
                 <>
-                  <div className="h-4 w-4 border-2 border-[rgba(212,175,104,0.3)] border-t-[#d4af68] rounded-full animate-spin" />
+                  <div className="h-4 w-4 border-2 border-[rgba(212,175,104,0.3)] border-t-[var(--dash-accent,#bf0603)] rounded-full animate-spin" />
                   Processing...
                 </>
               ) : "Pay with Razorpay"}
@@ -185,7 +184,7 @@ const EMIDetails = () => {
               </div>
             ) : (
               <div className="flex justify-center items-center p-4">
-                <div className="h-5 w-5 border-2 border-[rgba(212,175,104,0.2)] border-t-[#d4af68] rounded-full animate-spin" />
+                <div className="h-5 w-5 border-2 border-[rgba(212,175,104,0.2)] border-t-[var(--dash-accent,#bf0603)] rounded-full animate-spin" />
               </div>
             )}
             <button
@@ -425,25 +424,24 @@ const EMIDetails = () => {
   }, [payments, emiPlans]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#f0ece4]">
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "var(--dash-bg, #f8fafc)" }}>
       <div id="top-sentinel" className="absolute top-0 left-0 w-full h-px pointer-events-none z-[-1]" />
-      <Header />
 
-      <div className="flex flex-1 relative z-10 pt-16 gap-0">
+      <div className="flex flex-1 relative z-10 gap-0">
         <Aside />
 
-        <main className="flex-1 min-w-0 py-6 px-4 sm:px-6 lg:px-10 overflow-x-hidden bg-[#f0ece4]">
+        <main className="flex-1 min-w-0 py-6 px-4 sm:px-6 lg:px-10 overflow-x-hidden">
           <div className="max-w-4xl mx-auto space-y-8 pb-12 pt-4">
 
             {/* ── Page Header ── */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-[#e0d5c0]">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-[rgba(0,0,0,0.08)]">
               <div>
                 <div className="mb-2 flex items-center gap-3">
-                  <span className="h-px w-7 bg-[rgba(212,175,104,0.6)]" />
-                  <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#a07830]">Financial Overview</p>
+                  <span className="h-px w-7" style={{ background: "var(--dash-accent,#bf0603)" }} className="" />
+                  <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[var(--dash-accent,#bf0603)]">Financial Overview</p>
                 </div>
                 <h1 className="font-serif text-2xl sm:text-3xl text-[#1c1a17]">
-                  EMI <span className="text-[#d4af68]">Details</span>
+                  EMI <span className="" style={{ color: "var(--dash-accent,#bf0603)" }}>Details</span>
                 </h1>
                 <p className="mt-3 flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.25em] text-[#7a6a52]">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#82b879] shadow-[0_0_0_4px_rgba(130,184,121,0.15)]" />
@@ -456,7 +454,7 @@ const EMIDetails = () => {
             {Object.keys(emiSchedules).length === 0 ? (
               <div className="rounded border border-dashed border-[#d5c9b0] bg-white px-6 py-16 text-center">
                 {/* Gold credit card icon */}
-                <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.06)] text-[#d4af68]">
+                <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.06)] " style={{ color: "var(--dash-accent,#bf0603)" }}>
                   <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"
                       d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
@@ -484,12 +482,12 @@ const EMIDetails = () => {
                   const progress = (paidEMIs.length / schedule.length) * 100;
 
                   return (
-                    <div key={courseId} className="rounded border border-[#e0d5c0] bg-white overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.4)]">
+                    <div key={courseId} className="rounded border border-[#e0d5c0] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.4)]">
                       {/* Top gold line */}
                       <div className="h-px bg-gradient-to-r from-transparent via-[rgba(212,175,104,0.4)] to-transparent" />
 
                       {/* Course header */}
-                      <div className="bg-[#f5f0e6] border-b border-[#e0d5c0] px-6 py-6 md:px-8">
+                      <div className="bg-[#f5f0e6] border-b border-[rgba(0,0,0,0.08)] px-6 py-6 md:px-8">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                           <div className="flex-1">
                             <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#b08840] mb-1">Course</p>
@@ -506,7 +504,7 @@ const EMIDetails = () => {
                                   />
                                 </div>
                               </div>
-                              <p className="text-[9px] font-bold text-[#d4af68] shrink-0">{Math.round(progress)}%</p>
+                              <p className="text-[9px] font-bold text-[var(--dash-accent,#bf0603)] shrink-0">{Math.round(progress)}%</p>
                             </div>
                           </div>
 

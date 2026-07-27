@@ -64,7 +64,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-100 via-white to-orange-100 py-16 text-sm">
+    <div className="min-h-screen py-16 text-sm">
       <h1 className="text-center text-5xl mb-10">ContactUs</h1>
       <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10">
 

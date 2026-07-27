@@ -6,7 +6,6 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { app } from "../../firebaseConfig";
 import { updateProfile } from "firebase/auth";
 import Aside from "./Aside";
-import Header from "../../components/sections/Header/Header";
 import Footer from "../../components/sections/Footer/Footer";
 
 const Profile = () => {
@@ -90,10 +89,10 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#f0ece4] flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="w-12 h-12 border-2 border-[#e0d5c0] border-t-[#a07830] rounded-full animate-spin mx-auto" />
-          <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#a07830]">Loading...</p>
+          <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[var(--dash-accent,#bf0603)]">Loading...</p>
         </div>
       </div>
     );
@@ -109,20 +108,19 @@ const Profile = () => {
   ];
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#f0ece4]">
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "var(--dash-bg, #f8fafc)" }}>
       <div id="top-sentinel" className="absolute top-0 left-0 w-full h-px pointer-events-none -z-10" />
-      <Header />
-      <div className="flex flex-1 relative z-10 pt-16 gap-0">
+      <div className="flex flex-1 relative z-10 gap-0">
         <Aside />
-        <main className="flex-1 min-w-0 py-6 px-4 sm:px-6 lg:px-10 overflow-x-hidden bg-[#f0ece4]">
+        <main className="flex-1 min-w-0 py-6 px-4 sm:px-6 lg:px-10 overflow-x-hidden">
           <div className="max-w-3xl mx-auto space-y-8 pb-12 pt-4">
 
             {/* ── Page Header ── */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-[#e0d5c0]">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-[rgba(0,0,0,0.08)]">
               <div>
                 <div className="mb-2 flex items-center gap-3">
-                  <span className="h-px w-7 bg-[rgba(212,175,104,0.6)]" />
-                  <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#a07830]">Account Settings</p>
+                  <span className="h-px w-7" style={{ background: "var(--dash-accent,#bf0603)" }} className="" />
+                  <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[var(--dash-accent,#bf0603)]">Account Settings</p>
                 </div>
                 <h1 className="font-serif text-2xl sm:text-3xl text-[#1c1a17]">Student Profile</h1>
               </div>
@@ -135,7 +133,7 @@ const Profile = () => {
             </div>
 
             {user ? (
-              <div className="rounded-xl border border-[#e0d5c0] bg-white overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.4)]">
+              <div className="rounded-xl border border-[#e0d5c0] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.4)]">
                 {/* Top gold line */}
                 <div className="h-px bg-gradient-to-r from-transparent via-[rgba(212,175,104,0.4)] to-transparent" />
 
@@ -143,18 +141,18 @@ const Profile = () => {
                   /* ── Edit Form ── */
                   <form className="p-6 md:p-10 space-y-8">
                     {/* Avatar upload */}
-                    <div className="flex flex-col items-center pb-8 border-b border-[#e0d5c0]">
+                    <div className="flex flex-col items-center pb-8 border-b border-[rgba(0,0,0,0.08)]">
                       <div className="relative mb-4">
                         {/* Corner accents on avatar */}
                         <span className="absolute -top-1 -left-1 h-4 w-4 border-l-2 border-t-2 border-[rgba(212,175,104,0.5)]" />
                         <span className="absolute -bottom-1 -right-1 h-4 w-4 border-r-2 border-b-2 border-[rgba(212,175,104,0.5)]" />
-                        <div className="w-28 h-28 overflow-hidden border-2 border-[rgba(212,175,104,0.3)] bg-[#1e1b17]">
+                        <div className="w-28 h-28 overflow-hidden border-2 border-[rgba(212,175,104,0.3)] bg-white">
                           <img
                             src={imageFile ? URL.createObjectURL(imageFile) : (formData.profilePic || 'src/assets/images/common/logos/vahlay_astro logo.webp')}
                             alt="Profile Preview" className="w-full h-full object-cover"
                           />
                         </div>
-                        <label className="absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded border border-[rgba(212,175,104,0.5)] bg-[#1e1b17] text-[#d4af68] cursor-pointer hover:bg-[rgba(212,175,104,0.12)] transition-all">
+                        <label className="absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded border border-[rgba(212,175,104,0.5)] bg-white text-[var(--dash-accent,#bf0603)] cursor-pointer hover:bg-[rgba(212,175,104,0.12)] transition-all">
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                           <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files[0])} className="hidden" />
                         </label>
@@ -179,7 +177,7 @@ const Profile = () => {
                         { label: "Birth Place", name: "birthPlace", type: "text", placeholder: "City, State, Country" },
                       ].map((field) => (
                         <div key={field.name} className="space-y-2">
-                          <label className="block text-[9px] font-bold uppercase tracking-[0.25em] text-[#a07830]">{field.label}</label>
+                          <label className="block text-[9px] font-bold uppercase tracking-[0.25em] text-[var(--dash-accent,#bf0603)]">{field.label}</label>
                           <input
                             type={field.type} name={field.name} value={formData[field.name]}
                             onChange={handleChange} placeholder={field.placeholder}
@@ -189,7 +187,7 @@ const Profile = () => {
                       ))}
                     </div>
 
-                    <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-[rgba(212,175,104,0.1)]">
+                    <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-[rgba(0,0,0,0.06)]">
                       <button type="button" onClick={handleSave}
                         className="inline-flex min-h-11 items-center justify-center rounded border border-[rgba(212,175,104,0.5)] bg-[rgba(255,255,255,0.025)] px-8 text-[10px] font-bold uppercase tracking-[0.2em] text-[#f0d99d] transition hover:-translate-y-0.5 hover:bg-[rgba(212,175,104,0.1)]">
                         Save Profile
@@ -208,7 +206,7 @@ const Profile = () => {
                       <div className="relative mb-5">
                         <span className="absolute -top-1.5 -left-1.5 h-5 w-5 border-l-2 border-t-2 border-[rgba(212,175,104,0.5)]" />
                         <span className="absolute -bottom-1.5 -right-1.5 h-5 w-5 border-r-2 border-b-2 border-[rgba(212,175,104,0.5)]" />
-                        <div className="w-28 h-28 overflow-hidden border-2 border-[rgba(212,175,104,0.3)] bg-[#1e1b17]">
+                        <div className="w-28 h-28 overflow-hidden border-2 border-[rgba(212,175,104,0.3)] bg-white">
                           <img
                             src={formData.profilePic || 'src/assets/images/common/logos/vahlay_astro logo.webp'}
                             alt="Profile" className="w-full h-full object-cover"
@@ -221,7 +219,7 @@ const Profile = () => {
                     </div>
 
                     {/* Info Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-8 border-t border-[rgba(212,175,104,0.1)]">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-8 border-t border-[rgba(0,0,0,0.06)]">
                       {infoFields.map((info, idx) => (
                         <div key={idx} className="relative rounded border border-[#e0d8cc] bg-white p-4 group hover:border-[rgba(212,175,104,0.28)] transition-colors">
                           <span className="block text-[8px] font-bold uppercase tracking-[0.25em] text-[#b08840] mb-1.5">{info.label}</span>

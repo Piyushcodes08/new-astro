@@ -4,7 +4,6 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
 import Aside from "./Aside";
-import Header from "../../components/sections/Header/Header";
 import Footer from "../../components/sections/Footer/Footer";
 import { db } from "../../firebaseConfig";
 
@@ -35,6 +34,14 @@ const BookIcon = () => (
   </svg>
 );
 
+// Helper: get text color (dark vs light) based on bg
+const isLight = (hex = "#ffffff") => {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return (r * 299 + g * 587 + b * 114) / 1000 > 128;
+};
+
 export default function Dashboard() {
   const auth = getAuth();
   const [courses, setCourses] = useState([]);
@@ -45,172 +52,105 @@ export default function Dashboard() {
 
   useEffect(() => {
     let active = true;
-
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (!active) return;
       setUser(currentUser);
       setError("");
-
-      if (!currentUser?.email) {
-        setCourses([]);
-        setTotalEnrolled(0);
-        setLoading(false);
-        return;
-      }
-
+      if (!currentUser?.email) { setCourses([]); setTotalEnrolled(0); setLoading(false); return; }
       setLoading(true);
-
       try {
-        const [subscriptionSnap, freeCoursesSnap, paidCoursesSnap] = await Promise.all([
+        const [subscriptionSnap, freeSnap, paidSnap] = await Promise.all([
           getDoc(doc(db, "subscriptions", currentUser.email)),
           getDocs(collection(db, "freeCourses")),
           getDocs(collection(db, "paidCourses")),
         ]);
-
         if (!active) return;
-
-        if (!subscriptionSnap.exists()) {
-          setCourses([]);
-          setTotalEnrolled(0);
-          return;
-        }
-
-        const metadata = {};
-        [freeCoursesSnap, paidCoursesSnap].forEach((snapshot) => {
-          snapshot.forEach((courseDoc) => {
-            const data = courseDoc.data();
-            const title = data.Title || data.title;
-            if (title) {
-              metadata[title] =
-                data.imageUrl || data.image || data.thumbnail || data.courseImage || data.imgUrl || "";
-            }
-          });
-        });
-
-        const subscription = subscriptionSnap.data();
-        const paidCourseNames = Array.isArray(subscription.DETAILS)
-          ? subscription.DETAILS.flatMap((item) =>
-              item && typeof item === "object" ? Object.keys(item) : []
-            )
-          : [];
-
-        const enrolledNames = [
-          ...(Array.isArray(subscription.freecourses) ? subscription.freecourses : []),
-          ...paidCourseNames,
-        ].filter(Boolean);
-
-        const uniqueNames = [...new Set(enrolledNames)];
-        setTotalEnrolled(uniqueNames.length);
-        setCourses(
-          uniqueNames.slice(0, 3).map((name) => ({
-            name,
-            image: metadata[name] || getFallbackImage(name),
-          }))
-        );
-      } catch (fetchError) {
-        console.error("Dashboard data error:", fetchError);
-        if (active) {
-          setError("We could not load your learning journey. Please refresh and try again.");
-          setCourses([]);
-          setTotalEnrolled(0);
-        }
+        if (!subscriptionSnap.exists()) { setCourses([]); setTotalEnrolled(0); return; }
+        const meta = {};
+        [freeSnap, paidSnap].forEach(snap => snap.forEach(d => {
+          const data = d.data();
+          const title = data.Title || data.title;
+          if (title) meta[title] = data.imageUrl || data.image || data.thumbnail || data.courseImage || data.imgUrl || "";
+        }));
+        const sub = subscriptionSnap.data();
+        const paidNames = Array.isArray(sub.DETAILS)
+          ? sub.DETAILS.flatMap(item => item && typeof item === "object" ? Object.keys(item) : []) : [];
+        const names = [...new Set([...(Array.isArray(sub.freecourses) ? sub.freecourses : []), ...paidNames].filter(Boolean))];
+        setTotalEnrolled(names.length);
+        setCourses(names.slice(0, 3).map(name => ({ name, image: meta[name] || getFallbackImage(name) })));
+      } catch (e) {
+        if (active) { setError("Could not load your courses. Please refresh."); setCourses([]); setTotalEnrolled(0); }
       } finally {
         if (active) setLoading(false);
       }
     });
-
-    return () => {
-      active = false;
-      unsubscribe();
-    };
+    return () => { active = false; unsubscribe(); };
   }, []);
 
   const firstName = user?.displayName?.trim().split(/\s+/)[0] || "Seeker";
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#0c0b09] text-white">
-      <div id="top-sentinel" className="pointer-events-none absolute left-0 top-0 -z-10 h-px w-full" />
-      <Header />
-
-      <div className="relative z-10 flex flex-1 gap-0 pt-16">
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "var(--dash-bg, #f8fafc)" }}>
+      <div className="relative z-10 flex flex-1 gap-0">
         <Aside />
 
-        {/* ── Main Content ── */}
         <main className="min-w-0 flex-1 overflow-x-hidden px-4 py-6 sm:px-6 lg:px-10">
           <div className="mx-auto max-w-5xl space-y-8 pb-12 pt-4">
 
-            {/* ── Hero Welcome Banner ── */}
-            <section className="relative isolate overflow-hidden rounded-2xl border border-[rgba(212,175,104,0.2)] bg-[#161412] shadow-[0_20px_70px_rgba(0,0,0,0.5)]">
-              {/* Background radial glows */}
-              <div className="pointer-events-none absolute inset-0 -z-10"
-                style={{ background: "radial-gradient(circle at 80% 10%, rgba(140,60,30,0.22) 0%, transparent 40%), radial-gradient(circle at 5% 90%, rgba(100,12,18,0.3) 0%, transparent 38%), linear-gradient(135deg, #130808 0%, #1e0a0a 50%, #110707 100%)" }}
-              />
-              {/* Top gold line */}
-              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[rgba(212,175,104,0.5)] to-transparent" />
-              {/* Bottom gold line */}
-              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[rgba(212,175,104,0.3)] to-transparent" />
-              {/* Decorative rings */}
-              <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full border border-[rgba(212,175,104,0.08)]" />
-              <div className="pointer-events-none absolute -right-8 -top-8 h-44 w-44 rounded-full border border-[rgba(212,175,104,0.06)]" />
+            {/* ── Hero Banner — uses sidebar accent color ── */}
+            <section
+              className="relative overflow-hidden rounded-xl shadow-[0_4px_28px_rgba(0,0,0,0.14)]"
+              style={{ background: "var(--dash-sidebar-bg, #bf0603)", border: "1px solid rgba(255,255,255,0.1)" }}
+            >
+              <div className="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full border border-white/10" />
+              <div className="absolute top-0 left-0 right-0 h-px bg-white/20" />
 
-              <div className="grid items-center gap-8 px-6 py-8 sm:px-10 md:px-12 md:py-10 lg:grid-cols-[1fr_260px]">
-
-                {/* Left: Greeting */}
+              <div className="grid items-center gap-8 px-6 py-8 sm:px-10 md:py-10 lg:grid-cols-[1fr_250px]">
+                {/* Greeting */}
                 <div>
-                  {/* Kicker */}
-                  <div className="mb-5 flex items-center gap-3">
-                    <span className="h-px w-8 bg-[rgba(212,175,104,0.7)]" />
-                    <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#d4af68]">
-                      Your celestial learning space
-                    </p>
+                  <div className="mb-4 flex items-center gap-3">
+                    <span className="h-px w-8 bg-white/40" />
+                    <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-white/70">Your celestial learning space</p>
                   </div>
-
-                  {/* Title — reduced from 68px */}
-                  <h1 className="font-serif leading-[1.08] text-[#fff8eb]" style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)" }}>
+                  <h1 className="font-serif text-white leading-tight" style={{ fontSize: "clamp(1.7rem, 3vw, 2.4rem)" }}>
                     Welcome back,
-                    <span className="mt-1 block italic text-[#d4af68]">{firstName}.</span>
+                    <span className="mt-1 block italic text-white/80">{firstName}.</span>
                   </h1>
-
-                  <p className="mt-4 max-w-xl text-sm leading-7 text-[rgba(255,255,255,0.5)]">
-                    Continue your path of self-discovery, revisit your lessons and deepen your understanding of timeless astrological wisdom.
+                  <p className="mt-4 max-w-lg text-sm leading-7 text-white/65">
+                    Continue your path of self-discovery and deepen your understanding of timeless astrological wisdom.
                   </p>
-
-                  {/* CTA Buttons */}
-                  <div className="mt-7 flex flex-wrap gap-3">
-                    <Link
-                      to="/enrolledcourse"
-                      className="group inline-flex min-h-11 items-center gap-2.5 rounded border border-[rgba(212,175,104,0.55)] bg-[rgba(255,255,255,0.025)] px-6 text-[10px] font-extrabold uppercase tracking-[0.22em] text-[#f0d99d] transition duration-300 hover:-translate-y-0.5 hover:bg-[rgba(212,175,104,0.12)] hover:border-[rgba(212,175,104,0.8)] focus:outline-none focus:ring-2 focus:ring-[rgba(212,175,104,0.4)]"
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <Link to="/enrolledcourse"
+                      className="group inline-flex min-h-10 items-center gap-2 rounded px-5 text-[10px] font-bold uppercase tracking-[0.22em] text-white transition hover:-translate-y-0.5"
+                      style={{ background: "rgba(255,255,255,0.22)", border: "1px solid rgba(255,255,255,0.38)" }}
                     >
                       Resume learning <ArrowIcon className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </Link>
-                    <Link
-                      to="/courses"
-                      className="inline-flex min-h-11 items-center gap-2.5 rounded border border-white/10 bg-white/[0.03] px-6 text-[10px] font-extrabold uppercase tracking-[0.22em] text-white/60 transition duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:text-white/90 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    <Link to="/courses"
+                      className="inline-flex min-h-10 items-center rounded px-5 text-[10px] font-bold uppercase tracking-[0.22em] text-white/75 transition hover:text-white"
+                      style={{ background: "rgba(0,0,0,0.12)", border: "1px solid rgba(255,255,255,0.18)" }}
                     >
                       Explore courses
                     </Link>
                   </div>
                 </div>
 
-                {/* Right: Stat Cards */}
+                {/* Stat cards */}
                 <div className="grid grid-cols-2 gap-3 lg:grid-cols-1">
-                  {/* Enrolled count */}
-                  <div className="rounded border border-[rgba(212,175,104,0.15)] bg-[rgba(255,255,255,0.03)] p-5 backdrop-blur-sm">
-                    <div className="mb-3 flex h-9 w-9 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.08)] text-[#d4af68]">
+                  <div className="rounded p-4" style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)" }}>
+                    <div className="mb-3 flex h-9 w-9 items-center justify-center rounded text-white" style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.3)" }}>
                       <BookIcon />
                     </div>
-                    <p className="font-serif text-3xl text-[#fff7e9]">{loading ? "—" : String(totalEnrolled).padStart(2, "0")}</p>
-                    <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.24em] text-[rgba(255,255,255,0.35)]">Enrolled courses</p>
+                    <p className="font-serif text-3xl text-white">{loading ? "—" : String(totalEnrolled).padStart(2, "0")}</p>
+                    <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.24em] text-white/60">Enrolled courses</p>
                   </div>
-
-                  {/* Status card */}
-                  <div className="rounded border border-[rgba(212,175,104,0.15)] bg-[rgba(255,255,255,0.03)] p-5 backdrop-blur-sm">
+                  <div className="rounded p-4" style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)" }}>
                     <div className="mb-3 flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-[#82b879] shadow-[0_0_0_4px_rgba(130,184,121,0.15)]" />
-                      <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[rgba(255,255,255,0.35)]">Active</span>
+                      <span className="h-2 w-2 rounded-full bg-green-300 shadow-[0_0_0_4px_rgba(134,239,172,0.2)]" />
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-white/60">Active</span>
                     </div>
-                    <p className="font-serif text-base text-[#fff7e9] leading-snug">Your journey<br/>awaits</p>
-                    <p className="mt-2 text-[11px] leading-5 text-[rgba(255,255,255,0.35)]">Return anytime and pick up where you left off.</p>
+                    <p className="font-serif text-sm text-white leading-snug">Your journey<br />awaits</p>
+                    <p className="mt-2 text-[11px] leading-5 text-white/55">Pick up where you left off.</p>
                   </div>
                 </div>
               </div>
@@ -218,41 +158,38 @@ export default function Dashboard() {
 
             {/* ── Recent Enrollments ── */}
             <section aria-labelledby="recent-enrollments-title">
-              {/* Section header */}
-              <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                  <div className="mb-2 flex items-center gap-3">
-                    <span className="h-px w-7 bg-[rgba(212,175,104,0.6)]" />
-                    <p className="text-[9px] font-extrabold uppercase tracking-[0.3em] text-[#d4af68]">Continue your path</p>
+                  <div className="mb-1.5 flex items-center gap-3">
+                    <span className="h-px w-7" style={{ background: "var(--dash-accent, #bf0603)" }} />
+                    <p className="text-[9px] font-bold uppercase tracking-[0.3em]" style={{ color: "var(--dash-accent, #bf0603)" }}>Continue your path</p>
                   </div>
-                  <h2 id="recent-enrollments-title" className="font-serif text-2xl text-white sm:text-3xl">
+                  <h2 id="recent-enrollments-title" className="font-serif text-2xl sm:text-3xl" style={{ color: "var(--dash-accent, #bf0603)" }}>
                     Recent Enrollments
                   </h2>
                 </div>
-                <Link
-                  to="/enrolledcourse"
-                  className="group inline-flex w-fit items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.22em] text-[rgba(255,255,255,0.4)] transition hover:text-[#d4af68] focus:outline-none"
+                <Link to="/enrolledcourse"
+                  className="group inline-flex w-fit items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] transition"
+                  style={{ color: "var(--dash-accent, #bf0603)" }}
                 >
                   View all <ArrowIcon className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
 
-              {/* Error */}
               {error && (
-                <div role="alert" className="mb-5 rounded border border-[rgba(212,175,104,0.2)] bg-[rgba(212,175,104,0.05)] px-5 py-4 text-sm text-[#d4af68]">
+                <div role="alert" className="mb-5 rounded border px-5 py-4 text-sm" style={{ borderColor: "var(--dash-accent, #bf0603)", color: "var(--dash-accent, #bf0603)", background: "rgba(0,0,0,0.03)" }}>
                   {error}
                 </div>
               )}
 
-              {/* Cards Grid */}
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 {loading ? (
-                  [1, 2, 3].map((item) => (
-                    <div key={item} className="overflow-hidden rounded border border-[rgba(212,175,104,0.12)] bg-[#1e1b17]">
-                      <div className="aspect-[16/10] animate-pulse bg-[#252118]" />
+                  [1, 2, 3].map(i => (
+                    <div key={i} className="overflow-hidden rounded-lg border" style={{ background: "var(--dash-card, #ffffff)", borderColor: "rgba(0,0,0,0.08)" }}>
+                      <div className="aspect-16/10 animate-pulse" style={{ background: "rgba(0,0,0,0.06)" }} />
                       <div className="space-y-3 p-5">
-                        <div className="h-2.5 w-16 animate-pulse rounded bg-[#252118]" />
-                        <div className="h-4 w-4/5 animate-pulse rounded bg-[#252118]" />
+                        <div className="h-2.5 w-16 animate-pulse rounded" style={{ background: "rgba(0,0,0,0.06)" }} />
+                        <div className="h-4 w-4/5 animate-pulse rounded" style={{ background: "rgba(0,0,0,0.06)" }} />
                       </div>
                     </div>
                   ))
@@ -261,58 +198,65 @@ export default function Dashboard() {
                     <Link
                       to={`/course/${encodeURIComponent(course.name)}`}
                       key={course.name}
-                      className="group relative overflow-hidden rounded border border-[rgba(212,175,104,0.15)] bg-[#1e1b17] shadow-[0_10px_35px_rgba(0,0,0,0.4)] transition duration-500 hover:-translate-y-1 hover:border-[rgba(212,175,104,0.4)] hover:shadow-[0_20px_55px_rgba(0,0,0,0.55)] focus:outline-none focus:ring-2 focus:ring-[rgba(212,175,104,0.3)]"
+                      className="group relative overflow-hidden rounded-lg transition duration-300 hover:-translate-y-1 focus:outline-none"
+                      style={{ background: "var(--dash-card, #ffffff)", border: "1px solid rgba(0,0,0,0.09)", boxShadow: "0 2px 12px rgba(0,0,0,0.07)" }}
+                      onMouseEnter={e => e.currentTarget.style.boxShadow = "0 8px 28px rgba(0,0,0,0.14)"}
+                      onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 12px rgba(0,0,0,0.07)"}
                     >
-                      {/* Corner accents */}
-                      <span className="pointer-events-none absolute left-2 top-2 z-20 h-4 w-4 border-l border-t border-[rgba(212,175,104,0.4)]" aria-hidden="true" />
-                      <span className="pointer-events-none absolute bottom-2 right-2 z-20 h-4 w-4 border-b border-r border-[rgba(212,175,104,0.4)]" aria-hidden="true" />
+                      {/* Top accent bar */}
+                      <div className="h-1 w-full" style={{ background: "var(--dash-accent, #bf0603)" }} />
 
                       {/* Image */}
-                      <div className="relative aspect-[16/10] overflow-hidden bg-[#110f0d]">
+                      <div className="relative aspect-16/10 overflow-hidden" style={{ background: "rgba(0,0,0,0.06)" }}>
                         <img
-                          src={course.image}
-                          alt=""
+                          src={course.image} alt=""
                           className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
-                          loading="lazy"
-                          decoding="async"
-                          onError={(event) => {
-                            event.currentTarget.onerror = null;
-                            event.currentTarget.src = getFallbackImage(course.name);
-                          }}
+                          loading="lazy" decoding="async"
+                          onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = getFallbackImage(course.name); }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#1e1b17]/90 via-[#1e1b17]/20 to-transparent" />
-                        <span className="absolute left-4 top-4 rounded-sm border border-[rgba(212,175,104,0.3)] bg-black/50 px-2.5 py-1 text-[8px] font-bold uppercase tracking-[0.25em] text-[#d4af68] backdrop-blur-sm">
+                        <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
+                        <span
+                          className="absolute left-3 top-3 rounded px-2.5 py-1 text-[8px] font-bold uppercase tracking-[0.25em] text-white backdrop-blur-sm"
+                          style={{ background: "var(--dash-accent, #bf0603)" }}
+                        >
                           Course {String(index + 1).padStart(2, "0")}
                         </span>
                       </div>
 
                       {/* Card body */}
-                      <div className="flex items-center justify-between gap-4 p-5">
+                      <div className="flex items-center justify-between gap-4 p-4">
                         <div className="min-w-0">
-                          <p className="mb-1.5 text-[8px] font-extrabold uppercase tracking-[0.28em] text-[rgba(212,175,104,0.7)]">Continue learning</p>
-                          <h3 className="line-clamp-2 font-serif text-base leading-snug text-[#fff8eb] transition group-hover:text-[#d4af68]">
+                          <p className="mb-1 text-[8px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--dash-accent, #bf0603)" }}>
+                            Continue learning
+                          </p>
+                          <h3 className="line-clamp-2 font-serif text-base leading-snug text-gray-800 transition group-hover:opacity-80">
                             {course.name}
                           </h3>
                         </div>
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] text-[rgba(212,175,104,0.6)] transition duration-300 group-hover:border-[rgba(212,175,104,0.7)] group-hover:bg-[rgba(212,175,104,0.1)] group-hover:text-[#d4af68]">
+                        <span
+                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded border text-white transition duration-300"
+                          style={{ background: "var(--dash-accent, #bf0603)", borderColor: "var(--dash-accent, #bf0603)" }}
+                        >
                           <ArrowIcon className="h-4 w-4" />
                         </span>
                       </div>
                     </Link>
                   ))
                 ) : (
-                  /* Empty state */
-                  <div className="col-span-full rounded border border-dashed border-[rgba(212,175,104,0.2)] bg-[#131110] px-6 py-14 text-center sm:py-20">
-                    <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.06)] text-[#d4af68]">
+                  <div className="col-span-full rounded-lg border border-dashed px-6 py-14 text-center" style={{ background: "var(--dash-card, #ffffff)", borderColor: "rgba(0,0,0,0.12)" }}>
+                    <div
+                      className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-lg text-white"
+                      style={{ background: "var(--dash-accent, #bf0603)" }}
+                    >
                       <BookIcon />
                     </div>
-                    <h3 className="font-serif text-xl text-white">Begin your first course</h3>
-                    <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[rgba(255,255,255,0.4)]">
+                    <h3 className="font-serif text-xl text-gray-800">Begin your first course</h3>
+                    <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-gray-500">
                       Your enrolled courses will appear here, ready for you whenever you return.
                     </p>
-                    <Link
-                      to="/courses"
-                      className="mt-7 inline-flex min-h-11 items-center justify-center rounded border border-[rgba(212,175,104,0.5)] bg-[rgba(255,255,255,0.025)] px-7 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#f0d99d] transition hover:-translate-y-0.5 hover:bg-[rgba(212,175,104,0.1)] focus:outline-none focus:ring-2 focus:ring-[rgba(212,175,104,0.3)]"
+                    <Link to="/courses"
+                      className="mt-7 inline-flex min-h-11 items-center justify-center rounded px-7 text-[10px] font-bold uppercase tracking-[0.2em] text-white transition hover:opacity-90"
+                      style={{ background: "var(--dash-accent, #bf0603)" }}
                     >
                       Explore courses
                     </Link>
@@ -320,10 +264,10 @@ export default function Dashboard() {
                 )}
               </div>
             </section>
+
           </div>
         </main>
       </div>
-
       <Footer />
     </div>
   );

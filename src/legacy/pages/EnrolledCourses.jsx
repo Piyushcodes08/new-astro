@@ -4,7 +4,6 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import Aside from "./Aside";
-import Header from "../../components/sections/Header/Header";
 import Footer from "../../components/sections/Footer/Footer";
 import defaultCourseImage from '../../assets/images/pages/courses/courses.webp';
 import basicsImg from '../../assets/images/pages/courses/basics.webp';
@@ -123,29 +122,28 @@ const EnrollCourse = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#f0ece4] flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="w-12 h-12 border-2 border-[#e0d5c0] border-t-[#a07830] rounded-full animate-spin mx-auto" />
-          <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#a07830]">Syncing your path...</p>
+          <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[var(--dash-accent,#bf0603)]">Syncing your path...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#f0ece4]">
-      <Header />
-      <div className="flex flex-1 relative z-10 pt-16 gap-0">
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "var(--dash-bg, #f8fafc)" }}>
+      <div className="flex flex-1 relative z-10 gap-0">
         <Aside />
-        <main className="flex-1 min-w-0 py-6 px-4 sm:px-6 lg:px-10 overflow-x-hidden bg-[#f0ece4]">
+        <main className="flex-1 min-w-0 py-6 px-4 sm:px-6 lg:px-10 overflow-x-hidden">
           <div className="max-w-5xl mx-auto space-y-8 pb-12 pt-4">
 
             {/* ── Page Header ── */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-[#e0d5c0]">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-[rgba(0,0,0,0.08)]">
               <div>
                 <div className="mb-2 flex items-center gap-3">
-                  <span className="h-px w-7 bg-[rgba(212,175,104,0.6)]" />
-                  <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#a07830]">Academic Journey</p>
+                  <span className="h-px w-7" style={{ background: "var(--dash-accent,#bf0603)" }} className="" />
+                  <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[var(--dash-accent,#bf0603)]">Academic Journey</p>
                 </div>
                 <h1 className="font-serif text-2xl sm:text-3xl text-[#1c1a17]">
                   My Enrolled Courses
@@ -162,7 +160,7 @@ const EnrollCourse = () => {
             {/* ── Empty State ── */}
             {courses.length === 0 ? (
               <div className="rounded border border-dashed border-[#d5c9b0] bg-white px-6 py-16 text-center">
-                <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.06)] text-[#d4af68]">
+                <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.06)] " style={{ color: "var(--dash-accent,#bf0603)" }}>
                   <BookIcon />
                 </div>
                 <h3 className="font-serif text-xl text-white mb-2">No Cosmic Paths Yet</h3>
@@ -175,10 +173,10 @@ const EnrollCourse = () => {
               </div>
             ) : (
               /* ── Courses Table ── */
-              <div className="rounded border border-[#e0d5c0] bg-white overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.4)]">
+              <div className="rounded border border-[#e0d5c0] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.4)]">
 
                 {/* Desktop Header */}
-                <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-4 bg-[#f5f0e6] border-b border-[#e0d5c0]">
+                <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-4 bg-[#f5f0e6] border-b border-[rgba(0,0,0,0.08)]">
                   {["Course", "Type", "Status", "Access", "Action"].map((h, i) => (
                     <div key={h} className={`text-[9px] font-bold uppercase tracking-[0.25em] text-[#b08840] ${i === 0 ? "col-span-5" : i === 4 ? "col-span-2 text-right" : "col-span-1 text-center" + (i===3?" col-span-2":"")}`}>
                       {h}
@@ -196,14 +194,14 @@ const EnrollCourse = () => {
                             onError={(e) => { e.target.onerror = null; e.target.src = getFallbackImage(course.name); }} />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-sm font-serif text-[#1c1a17] leading-snug group-hover:text-[#d4af68] transition-colors line-clamp-2">{course.name}</h3>
+                          <h3 className="text-sm font-serif text-[#1c1a17] leading-snug group-hover:text-[var(--dash-accent,#bf0603)] transition-colors line-clamp-2">{course.name}</h3>
                           <div className="flex flex-wrap items-center gap-2 mt-2">
                             <span className="px-2 py-0.5 rounded border border-[#c9a55a]/40 bg-[#fdf7ec] text-[#8a6520] text-[8px] font-bold uppercase tracking-widest">{course.type}</span>
                             <span className="px-2 py-0.5 rounded border border-[rgba(130,184,121,0.3)] bg-[rgba(130,184,121,0.07)] text-[#82b879] text-[8px] font-bold uppercase tracking-widest">Active</span>
                             <span className="text-[8px] font-bold text-[#7a6a52] uppercase">{course.type === "Paid" ? `${course.daysLeft} days left` : "Lifetime"}</span>
                           </div>
                           <button onClick={() => navigate(`/course/${encodeURIComponent(course.name)}`)}
-                            className="mt-3 w-full py-2 rounded border border-[rgba(212,175,104,0.4)] bg-[rgba(255,255,255,0.025)] text-[#f0d99d] font-bold uppercase tracking-[0.15em] text-[9px] hover:bg-[rgba(212,175,104,0.1)] transition-all">
+                            className="mt-3 w-full py-2 rounded text-white" style={{ background: "var(--dash-accent,#bf0603)", borderColor: "var(--dash-accent,#bf0603)" }} className=" font-bold uppercase tracking-[0.15em] text-[9px] hover:bg-[rgba(212,175,104,0.1)] transition-all">
                             Continue
                           </button>
                         </div>
@@ -217,7 +215,7 @@ const EnrollCourse = () => {
                               onError={(e) => { e.target.onerror = null; e.target.src = getFallbackImage(course.name); }} />
                           </div>
                           <div>
-                            <h3 className="text-sm font-serif text-[#1c1a17] group-hover:text-[#d4af68] transition-colors">{course.name}</h3>
+                            <h3 className="text-sm font-serif text-[#1c1a17] group-hover:text-[var(--dash-accent,#bf0603)] transition-colors">{course.name}</h3>
                             <p className="text-[9px] text-[#b08840] font-bold uppercase tracking-widest mt-0.5">Enrolled</p>
                           </div>
                         </div>
@@ -242,7 +240,7 @@ const EnrollCourse = () => {
                         </div>
                         <div className="col-span-2 flex justify-end">
                           <button onClick={() => navigate(`/course/${encodeURIComponent(course.name)}`)}
-                            className="group/btn inline-flex items-center gap-2 min-h-9 px-5 rounded border border-[rgba(212,175,104,0.4)] bg-[rgba(255,255,255,0.025)] text-[#f0d99d] font-bold uppercase tracking-[0.18em] text-[9px] hover:bg-[rgba(212,175,104,0.12)] hover:border-[rgba(212,175,104,0.7)] transition-all">
+                            className="group/btn inline-flex items-center gap-2 min-h-9 px-5 rounded text-white" style={{ background: "var(--dash-accent,#bf0603)", borderColor: "var(--dash-accent,#bf0603)" }} className=" font-bold uppercase tracking-[0.18em] text-[9px] hover:bg-[rgba(212,175,104,0.12)] hover:border-[rgba(212,175,104,0.7)] transition-all">
                             Continue <ArrowIcon className="h-3 w-3 transition-transform group-hover/btn:translate-x-0.5" />
                           </button>
                         </div>
@@ -255,44 +253,44 @@ const EnrollCourse = () => {
 
             {/* ── Recorded Sessions ── */}
             <div className="space-y-6 pt-4">
-              <div className="flex items-center gap-3 pb-4 border-b border-[#e0d5c0]">
+              <div className="flex items-center gap-3 pb-4 border-b border-[rgba(0,0,0,0.08)]">
                 <div>
                   <div className="mb-1 flex items-center gap-3">
-                    <span className="h-px w-7 bg-[rgba(212,175,104,0.6)]" />
-                    <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#a07830]">Vault</p>
+                    <span className="h-px w-7" style={{ background: "var(--dash-accent,#bf0603)" }} className="" />
+                    <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[var(--dash-accent,#bf0603)]">Vault</p>
                   </div>
-                  <h2 className="font-serif text-2xl text-[#1c1a17]">Recorded Sessions</h2>
+                  <h2 className="font-serif text-2xl" style={{ color: "var(--dash-accent, #bf0603)" }}>Recorded Sessions</h2>
                 </div>
               </div>
 
               {Object.entries(groupedVideos).length === 0 ? (
-                <div className="rounded border border-dashed border-[#e0d5c0] bg-[#131110] px-6 py-10 text-center">
+                <div className="rounded border border-dashed border-[#e0d5c0] bg-white px-6 py-10 text-center">
                   <p className="text-[#9a8870] font-bold uppercase tracking-widest text-[9px]">No recorded sessions in the archive yet.</p>
                 </div>
               ) : (
                 <div className="space-y-8">
                   {Object.entries(groupedVideos).map(([title, modules]) => (
-                    <div key={title} className="rounded border border-[#e0d5c0] bg-white overflow-hidden">
+                    <div key={title} className="rounded border border-[#e0d5c0] overflow-hidden">
                       {/* Module Header */}
-                      <div className="flex items-center gap-3 px-5 py-4 bg-[#f5f0e6] border-b border-[#e0d5c0]">
+                      <div className="flex items-center gap-3 px-5 py-4 bg-[#f5f0e6] border-b border-[rgba(0,0,0,0.08)]">
                         <span className="h-4 w-px bg-[#d4af68]" />
-                        <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#d4af68]">{title}</p>
+                        <p className="text-[9px] font-bold uppercase tracking-[0.3em] " style={{ color: "var(--dash-accent,#bf0603)" }}>{title}</p>
                       </div>
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 p-4">
                         {modules.map((module) => (
                           <div key={module.id}
                             onClick={() => navigate(`/course/${encodeURIComponent(title)}/video/${module.id}`)}
-                            className="group relative flex items-center gap-4 p-4 rounded border border-[rgba(212,175,104,0.1)] bg-[#fffdf8] hover:border-[#c9a55a] hover:bg-[rgba(212,175,104,0.04)] transition-all duration-300 cursor-pointer"
+                            className="group relative flex items-center gap-4 p-4 rounded border border-[rgba(212,175,104,0.1)] bg-[#fffdf8] hover:border-[#c9a55a] hover:bg-gray-50 transition-all duration-300 cursor-pointer"
                           >
                             {/* Corner accents */}
                             <span className="pointer-events-none absolute left-1.5 top-1.5 h-3 w-3 border-l border-t border-[rgba(212,175,104,0.3)] opacity-0 group-hover:opacity-100 transition-opacity" />
                             <span className="pointer-events-none absolute bottom-1.5 right-1.5 h-3 w-3 border-b border-r border-[rgba(212,175,104,0.3)] opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-[rgba(212,175,104,0.2)] bg-[rgba(212,175,104,0.06)] text-[#a07830] group-hover:border-[rgba(212,175,104,0.5)] group-hover:text-[#d4af68] transition-all">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-[rgba(212,175,104,0.2)] bg-[rgba(212,175,104,0.06)] text-[#a07830] group-hover:border-[rgba(212,175,104,0.5)] group-hover:text-[var(--dash-accent,#bf0603)] transition-all">
                               <PlayIcon />
                             </div>
                             <div className="min-w-0 flex-1">
-                              <h4 className="font-serif text-sm text-[#1c1a17] leading-tight truncate group-hover:text-[#d4af68] transition-colors">
+                              <h4 className="font-serif text-sm text-[#1c1a17] leading-tight truncate group-hover:text-[var(--dash-accent,#bf0603)] transition-colors">
                                 {module.description || module.title || "Sacred Lecture"}
                               </h4>
                               <div className="flex items-center gap-2 mt-1">
@@ -301,7 +299,7 @@ const EnrollCourse = () => {
                                 <span className="text-[8px] font-bold text-[rgba(255,255,255,0.25)] uppercase tracking-widest">Chapter {module.order || 0}</span>
                               </div>
                             </div>
-                            <ArrowIcon className="h-4 w-4 text-[rgba(212,175,104,0.3)] group-hover:text-[#d4af68] shrink-0 transition-all group-hover:translate-x-0.5" />
+                            <ArrowIcon className="h-4 w-4 text-[rgba(212,175,104,0.3)] group-hover:text-[var(--dash-accent,#bf0603)] shrink-0 transition-all group-hover:translate-x-0.5" />
                           </div>
                         ))}
                       </div>

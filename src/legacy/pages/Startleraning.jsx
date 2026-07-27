@@ -23,7 +23,6 @@ import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Aside from '../pages/Aside'
-import Header from "../../components/sections/Header/Header";
 import Footer from "../../components/sections/Footer/Footer";
 
 const PersonalCourse = () => {
@@ -434,10 +433,10 @@ const PersonalCourse = () => {
    */
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#f0ece4] flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="w-12 h-12 border-2 border-[#e0d5c0] border-t-[#a07830] rounded-full animate-spin mx-auto" />
-          <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#a07830]">Loading course...</p>
+          <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[var(--dash-accent,#bf0603)]">Loading course...</p>
         </div>
       </div>
     );
@@ -451,24 +450,23 @@ const PersonalCourse = () => {
    * -----------------------
    */
   return (
-    <div className="flex min-h-screen flex-col bg-[#f0ece4]">
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "var(--dash-bg, #f8fafc)" }}>
       <div id="top-sentinel" className="absolute top-0 left-0 w-full h-px pointer-events-none z-[-1]" />
-      <Header />
 
-      <div className="flex flex-1 relative z-10 pt-16 gap-0">
+      <div className="flex flex-1 relative z-10 gap-0">
         <Aside />
 
-        <main className="flex-1 min-w-0 py-6 px-4 md:px-10 overflow-x-hidden bg-[#f0ece4]">
+        <main className="flex-1 min-w-0 py-6 px-4 md:px-10 overflow-x-hidden">
           <div className="max-w-6xl mx-auto pt-4 space-y-8 pb-12">
 
             {/* Page Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[#e0d5c0]">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[rgba(0,0,0,0.08)]">
               <div>
                 <div className="mb-2 flex items-center gap-3">
-                  <span className="h-px w-7 bg-[rgba(212,175,104,0.6)]" />
-                  <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#a07830]">Academic Portal</p>
+                  <span className="h-px w-7" style={{ background: "var(--dash-accent,#bf0603)" }} className="" />
+                  <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[var(--dash-accent,#bf0603)]">Academic Portal</p>
                 </div>
-                <h1 className="font-serif text-2xl text-[#1c1a17]">{courseName}</h1>
+                <h1 className="font-serif text-2xl" style={{ color: "var(--dash-accent, #bf0603)" }}>{courseName}</h1>
               </div>
             </div>
 
@@ -501,10 +499,10 @@ const PersonalCourse = () => {
 
             {/* Upcoming EMI Payments */}
             {upcomingEMIs.length > 0 && (
-              <div className="rounded border border-[#e0d5c0] bg-white overflow-hidden">
-                <div className="flex items-center gap-3 px-5 py-4 bg-[#f5f0e6] border-b border-[#e0d5c0]">
-                  <span className="h-px w-7 bg-[rgba(212,175,104,0.6)]" />
-                  <h3 className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#d4af68]">Upcoming Payments</h3>
+              <div className="rounded border border-[#e0d5c0] overflow-hidden">
+                <div className="flex items-center gap-3 px-5 py-4 bg-[#f5f0e6] border-b border-[rgba(0,0,0,0.08)]">
+                  <span className="h-px w-7" style={{ background: "var(--dash-accent,#bf0603)" }} className="" />
+                  <h3 className="text-[9px] font-bold uppercase tracking-[0.3em] " style={{ color: "var(--dash-accent,#bf0603)" }}>Upcoming Payments</h3>
                 </div>
                 <div className="space-y-3 p-4">
                   {upcomingEMIs.map((emi, index) => (
@@ -533,13 +531,13 @@ const PersonalCourse = () => {
 
             {/* COURSE VIDEOS */}
             <div className="space-y-6">
-              <div className="flex items-center gap-3 pb-4 border-b border-[#e0d5c0]">
+              <div className="flex items-center gap-3 pb-4 border-b border-[rgba(0,0,0,0.08)]">
                 <div>
                   <div className="mb-1 flex items-center gap-3">
-                    <span className="h-px w-7 bg-[rgba(212,175,104,0.6)]" />
-                    <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#a07830]">Course Content</p>
+                    <span className="h-px w-7" style={{ background: "var(--dash-accent,#bf0603)" }} className="" />
+                    <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[var(--dash-accent,#bf0603)]">Course Content</p>
                   </div>
-                  <h2 className="font-serif text-2xl text-[#1c1a17]">Course Videos</h2>
+                  <h2 className="font-serif text-2xl" style={{ color: "var(--dash-accent, #bf0603)" }}>Course Videos</h2>
                 </div>
               </div>
               {videos.length > 0 ? (
@@ -550,18 +548,18 @@ const PersonalCourse = () => {
   className="mb-8 overflow-hidden rounded-xl border border-[#e0d5c0] bg-[#161412] shadow-[0_10px_40px_rgba(0,0,0,0.4)]"
 >
   {/* Section Header */}
-  <div className="relative flex flex-col gap-4 overflow-hidden border-b border-[#e0d5c0] bg-[#110f0d] px-5 py-5 sm:px-7 md:flex-row md:items-center md:justify-between">
+  <div className="relative flex flex-col gap-4 overflow-hidden border-b border-[rgba(0,0,0,0.08)] bg-[#110f0d] px-5 py-5 sm:px-7 md:flex-row md:items-center md:justify-between">
     <div className="pointer-events-none absolute -right-12 -top-20 h-48 w-48 rounded-full bg-[rgba(212,175,104,0.04)] blur-2xl" />
 
     <div className="relative flex min-w-0 items-center gap-4">
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.06)] text-[#d4af68]">
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.06)] " style={{ color: "var(--dash-accent,#bf0603)" }}>
         <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7"
             d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
         </svg>
       </div>
       <div className="min-w-0">
-        <p className="mb-1 text-[9px] font-bold uppercase tracking-[0.28em] text-[#a07830]">Course Chapter</p>
+        <p className="mb-1 text-[9px] font-bold uppercase tracking-[0.28em] text-[var(--dash-accent,#bf0603)]">Course Chapter</p>
         <h3 className="truncate font-serif text-lg text-[#1c1a17] md:text-xl">{title}</h3>
       </div>
     </div>
@@ -606,7 +604,7 @@ const PersonalCourse = () => {
                       onEnded={() => handleMarkAsWatched(video.id)} muted />
                   )}
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1e1b17]/80 via-transparent to-black/10" />
-                  <span className="absolute left-3 top-3 rounded border border-[rgba(212,175,104,0.3)] bg-black/60 px-2 py-1 text-[8px] font-bold uppercase tracking-[0.18em] text-[#d4af68] backdrop-blur-sm">
+                  <span className="absolute left-3 top-3 rounded border border-[rgba(212,175,104,0.3)] bg-black/60 px-2 py-1 text-[8px] font-bold uppercase tracking-[0.18em] text-[var(--dash-accent,#bf0603)] backdrop-blur-sm">
                     Lesson {String(videoIndex + 1).padStart(2, "0")}
                   </span>
                   {isWatched && (
@@ -620,14 +618,14 @@ const PersonalCourse = () => {
                 </div>
                 {/* Card content */}
                 <div className="flex flex-1 flex-col p-3">
-                  <p className="line-clamp-2 font-serif text-sm leading-snug text-[#1c1a17] transition-colors group-hover:text-[#d4af68]">
+                  <p className="line-clamp-2 font-serif text-sm leading-snug text-[#1c1a17] transition-colors group-hover:" style={{ color: "var(--dash-accent,#bf0603)" }}>
                     {video.description || `Lesson ${videoIndex + 1}`}
                   </p>
-                  <div className="mt-auto flex items-center justify-between border-t border-[rgba(212,175,104,0.1)] pt-3 mt-3">
+                  <div className="mt-auto flex items-center justify-between border-t border-[rgba(0,0,0,0.06)] pt-3 mt-3">
                     <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#b08840]">
                       {isWatched ? "Completed" : "Start lesson"}
                     </span>
-                    <span className="flex h-7 w-7 items-center justify-center rounded border border-[rgba(212,175,104,0.2)] text-[#b08840] transition-all duration-300 group-hover:border-[rgba(212,175,104,0.5)] group-hover:bg-[rgba(212,175,104,0.08)] group-hover:text-[#d4af68]">
+                    <span className="flex h-7 w-7 items-center justify-center rounded border border-[rgba(212,175,104,0.2)] text-[#b08840] transition-all duration-300 group-hover:border-[rgba(212,175,104,0.5)] group-hover:bg-[rgba(212,175,104,0.08)] group-hover:" style={{ color: "var(--dash-accent,#bf0603)" }}>
                       <FaChevronRight className="h-3 w-3" />
                     </span>
                   </div>
@@ -644,7 +642,7 @@ const PersonalCourse = () => {
                 })
               ) : (
                 <div className="rounded border border-dashed border-[#d5c9b0] bg-white p-8 md:p-12 text-center max-w-2xl mx-auto space-y-5">
-                  <div className="mx-auto w-16 h-16 rounded border border-[rgba(212,175,104,0.2)] bg-[rgba(212,175,104,0.06)] flex items-center justify-center text-[#d4af68]">
+                  <div className="mx-auto w-16 h-16 rounded border border-[rgba(212,175,104,0.2)] bg-[rgba(212,175,104,0.06)] flex items-center justify-center " style={{ color: "var(--dash-accent,#bf0603)" }}>
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                     </svg>
@@ -652,7 +650,7 @@ const PersonalCourse = () => {
                   <div>
                     <h3 className="font-serif text-xl text-[#1c1a17] mb-2">Wisdom Teachings Preparing</h3>
                     <p className="text-[#6b5a40] text-sm leading-relaxed">
-                      We are preparing high-quality lessons for <span className="text-[#d4af68]">{courseName}</span>. They will be available very soon.
+                      We are preparing high-quality lessons for <span className="" style={{ color: "var(--dash-accent,#bf0603)" }}>{courseName}</span>. They will be available very soon.
                     </p>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
@@ -675,17 +673,17 @@ const PersonalCourse = () => {
   <div className="pointer-events-none absolute -bottom-24 -left-20 h-56 w-56 rounded-full bg-[rgba(212,175,104,0.03)] blur-3xl" />
 
   {/* Section header */}
-  <div className="relative border-b border-[#e0d5c0] bg-[#110f0d] px-6 py-6 md:px-8 md:py-7">
+  <div className="relative border-b border-[rgba(0,0,0,0.08)] bg-[#110f0d] px-6 py-6 md:px-8 md:py-7">
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
       <div className="flex items-center gap-4">
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.06)] text-[#d4af68]">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.06)] " style={{ color: "var(--dash-accent,#bf0603)" }}>
           <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"
               d="M8.625 9.75a3.375 3.375 0 117.5 0 3.375 3.375 0 01-7.5 0zM3.375 19.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
           </svg>
         </div>
         <div>
-          <p className="mb-1 text-[9px] font-bold uppercase tracking-[0.28em] text-[#a07830]">Community</p>
+          <p className="mb-1 text-[9px] font-bold uppercase tracking-[0.28em] text-[var(--dash-accent,#bf0603)]">Community</p>
           <h3 className="font-serif text-lg text-[#1c1a17]">Questions & Answers</h3>
         </div>
       </div>

@@ -58,7 +58,7 @@ const Contact = () => {
           <h2 className="section-title-theme">
             {contactContent.title.split(" ").slice(0, -1).join(" ")} <span>{contactContent.title.split(" ").at(-1)}</span>
           </h2>
-          <p className="subtitle-poppins text-lg md:text-xl font-medium">
+          <p className="subtitle-poppins" style={{ fontSize: "clamp(0.88rem, 1.35vw, 1rem)", color: "rgba(255, 246, 230, 0.66)", lineHeight: "1.78" }}>
             {contactContent.subtitle}
           </p>
         </div>

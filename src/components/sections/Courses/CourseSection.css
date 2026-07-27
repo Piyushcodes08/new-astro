@@ -85,6 +85,13 @@
   text-shadow: 0 14px 46px rgba(0, 0, 0, 0.42);
 }
 
+.course-section-title span {
+  background: linear-gradient(180deg, #f7e6b8, #bc8f3e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .course-section-subtitle {
   max-width: 640px;
   margin: 20px auto 0;
