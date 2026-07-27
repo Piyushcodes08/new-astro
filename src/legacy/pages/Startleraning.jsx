@@ -456,7 +456,7 @@ const PersonalCourse = () => {
       <div className="flex flex-1 relative z-10 gap-0">
         <Aside />
 
-        <main className="flex-1 min-w-0 py-6 px-4 md:px-10 overflow-x-hidden">
+        <main className="flex-1 min-w-0 py-6 pt-16 sm:pt-6 px-4 md:px-10 overflow-x-hidden">
           <div className="max-w-6xl mx-auto pt-4 space-y-8 pb-12">
 
             {/* Page Header */}

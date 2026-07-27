@@ -191,7 +191,8 @@ const Aside = () => {
       {!sidebarOpen && (
         <button
           onClick={() => setSidebarOpen(true)}
-          className="lg:hidden fixed top-6 left-4 w-11 h-11 border border-[rgba(212,175,104,0.35)] bg-[var(--dash-sidebar-bg,#161412)] text-[var(--dash-sidebar-text,#d4af68)] rounded shadow-[0_6px_20px_rgba(0,0,0,0.4)] z-[100] flex items-center justify-center"
+          className="lg:hidden fixed top-4 left-4 w-11 h-11 z-[100] flex items-center justify-center rounded shadow-[0_4px_16px_rgba(0,0,0,0.25)] transition-all"
+          style={{ background: "var(--dash-sidebar-bg, #bf0603)", border: "1px solid rgba(255,255,255,0.2)", color: "var(--dash-sidebar-text, #ffffff)" }}
         >
           <div className="flex flex-col gap-1.5">
             <span className="w-5 h-px bg-current rounded-full" />

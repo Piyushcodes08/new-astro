@@ -366,7 +366,7 @@
 
   .gallery-sticky {
     min-height: 600px;
-    padding-top: clamp(52px, 9vh, 76px);
+    padding-top: clamp(36px, 6vh, 56px);
   }
 
   .gallery-text-panel {
@@ -374,68 +374,65 @@
     top: auto;
     left: auto;
     width: 100%;
-    margin: 0 auto;
-    padding: 0 22px;
+    padding-inline: 22px;
     text-align: center;
     transform: none;
+    margin-bottom: 0;
   }
 
-  .gallery-eyebrow-row,
+  .gallery-eyebrow-row { justify-content: center; }
   .gallery-scroll-indicator { justify-content: center; }
 
   .gallery-text-panel .gallery-main-title {
-    max-width: 360px;
-    margin: 0 auto 12px;
-    font-size: clamp(2rem, 9vw, 2.8rem);
+    max-width: 320px;
+    font-size: clamp(1.7rem, 7.5vw, 2.3rem);
+    margin: 0 auto 10px;
   }
 
   .gallery-text-panel .gallery-desc {
-    max-width: 340px;
+    max-width: 300px;
     margin-inline: auto;
-    font-size: 0.76rem;
-    line-height: 1.68;
+    font-size: 0.75rem;
+    line-height: 1.65;
   }
 
-  .gallery-scroll-indicator { margin-top: 18px; }
+  .gallery-scroll-indicator { margin-top: 12px; }
 
+  /* Sphere — tighter gap below text panel */
   .gallery-scene {
-    top: 210px;
+    top: 180px;
     left: 0;
     width: 100%;
-    height: calc(100% - 210px);
+    height: calc(100% - 180px);
     perspective: 1000px;
     perspective-origin: center;
   }
 
   .gallery-photo-card {
-    top: -40px;
-    left: -30px;
-    width: 60px;
-    height: 80px;
+    left: -22px;
+    width: 64px;
+    height: 78px;
     padding: 2px;
     border-radius: 3px;
   }
-
-  .gallery-photo-card::after,
-  .gallery-card-shine { inset: 3px; }
-
-  .gallery-badge { display: none; }
 
   .gallery-lightbox {
     width: min(430px, 94vw);
     max-height: 90vh;
     grid-template-columns: 1fr;
   }
-
   .gallery-lightbox-img { min-height: 0; height: min(52vh, 430px); }
   .gallery-lightbox-info { padding: 26px 24px 30px; }
   .gallery-lightbox-title { font-size: 1.65rem; }
 }
 
 @media (max-width: 420px) {
-  .gallery-sticky { padding-top: 44px; }
-  .gallery-scene { top: 220px; height: calc(100% - 220px); }
+  .gallery-sticky { padding-top: 32px; }
+  .gallery-scene { top: 165px; height: calc(100% - 165px); }
   .gallery-scroll-indicator-text { font-size: 0.5rem; }
+  .gallery-text-panel .gallery-main-title { font-size: clamp(1.5rem, 8vw, 2rem); }
+  .gallery-text-panel .gallery-desc { font-size: 0.7rem; }
+  .gallery-photo-card { left: -18px; width: 56px; height: 68px; }
 }
 
 @media (hover: none) {

@@ -94,8 +94,9 @@ export default function Dashboard() {
       <div className="relative z-10 flex flex-1 gap-0">
         <Aside />
 
-        <main className="min-w-0 flex-1 overflow-x-hidden px-4 py-6 sm:px-6 lg:px-10">
-          <div className="mx-auto max-w-5xl space-y-8 pb-12 pt-4">
+        <main className="min-w-0 flex-1 overflow-x-hidden px-4 py-6 sm:px-6 lg:px-10
+                         pt-16 sm:pt-6">
+          <div className="mx-auto max-w-5xl space-y-6 pb-12 pt-2 sm:pt-4">
 
             {/* ── Hero Banner — uses sidebar accent color ── */}
             <section

@@ -74,8 +74,9 @@ const FALLBACK_IMAGES = [
 
 const getRadiusForViewport = () => {
   if (typeof window === "undefined") return 175;
-  if (window.innerWidth < 520) return 95;
-  if (window.innerWidth < 768) return 175;
+  if (window.innerWidth < 380) return 130;
+  if (window.innerWidth < 520) return 145;
+  if (window.innerWidth < 768) return 200;
   if (window.innerWidth < 1100) return 215;
   return 265;
 };
@@ -159,7 +160,7 @@ const Gallery = () => {
 
   const sphereItems = useMemo(() => {
     if (!photos.length) return [];
-    const minimumCards = radius <= 172 ? 16 : 20;
+    const minimumCards = radius <= 145 ? 12 : radius <= 200 ? 16 : 20;
     const targetLength = Math.max(minimumCards, photos.length);
     return Array.from(
       { length: targetLength },

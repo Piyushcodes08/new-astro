@@ -135,7 +135,7 @@ const EnrollCourse = () => {
     <div className="flex min-h-screen flex-col" style={{ backgroundColor: "var(--dash-bg, #f8fafc)" }}>
       <div className="flex flex-1 relative z-10 gap-0">
         <Aside />
-        <main className="flex-1 min-w-0 py-6 px-4 sm:px-6 lg:px-10 overflow-x-hidden">
+        <main className="flex-1 min-w-0 py-6 pt-16 sm:pt-6 px-4 sm:px-6 lg:px-10 overflow-x-hidden">
           <div className="max-w-5xl mx-auto space-y-8 pb-12 pt-4">
 
             {/* ── Page Header ── */}
