@@ -2,17 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { addDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import {
-  LuCheck,
-  LuMinus,
-  LuPackage,
-  LuPlus,
-  LuShield,
-  LuShoppingCart,
-  LuStar,
-  LuTruck,
-} from 'react-icons/lu';
-import { RiWhatsappFill } from 'react-icons/ri';
 
 import { db } from '../firebaseConfig';
 import { createLogger } from '../utils/logger';
@@ -20,6 +9,68 @@ import Header from '../components/sections/Header/Header';
 import Footer from '../components/sections/Footer/Footer';
 import Button from '../components/ui/Button/Button';
 import { fallbackProducts } from '../components/sections/products/Products';
+
+const WhatsappIcon = ({ className = 'w-4 h-4', ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" {...props}>
+    <path d="M12 2.04C6.47 2.04 2 6.52 2 12.06c0 2 .6 3.86 1.64 5.44L2 22l4.7-1.23A9.94 9.94 0 0 0 12 22.06c5.53 0 10-4.48 10-10 0-5.54-4.47-10.02-10-10.02Zm5.05 14.78c-.24.7-1.36 1.34-1.83 1.43-.47.08-1.06.13-2.14-.23-1.09-.36-2.04-1.13-3.24-2.22-1.2-1.09-1.99-2.42-2.23-3.51-.23-1.08-.03-1.58.29-1.7.24-.1.53-.14.8-.02.27.13.86.5 1.02.56.16.07.29.1.42-.02.12-.12.47-.56.59-.76.12-.2.24-.18.53-.06.28.11.9.34 1.37.74.48.4.58.67.65.98.07.31-.07.49-.16.64-.09.16-.2.35-.3.52-.12.17-.25.35-.1.6.15.26.66 1.03 1.43 1.67.97.81 1.79 1.03 2.08 1.15.29.11.47.09.64-.05.17-.15.73-.85.91-1.15.18-.3.37-.25.62-.15.24.1 1.54.73 1.8.86.26.13.42.2.48.31.05.11.05.67-.19 1.36Z" />
+  </svg>
+);
+
+const ShoppingCartIcon = ({ className = 'w-4 h-4', ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" {...props}>
+    <path d="M6 6h15l-1.5 9H8.5L6 6Zm-2-2h2l2 12h10l2-12H4Zm5 16a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm10 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
+  </svg>
+);
+
+const StarIcon = ({ className = 'w-3.5 h-3.5', ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" {...props}>
+    <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+  </svg>
+);
+
+const CheckIcon = ({ className = 'w-3.5 h-3.5', ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="m5 13 4 4L19 7" />
+  </svg>
+);
+
+const MinusIcon = ({ className = 'w-3.5 h-3.5', ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M5 12h14" />
+  </svg>
+);
+
+const PlusIcon = ({ className = 'w-3.5 h-3.5', ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M12 5v14" />
+    <path d="M5 12h14" />
+  </svg>
+);
+
+const ShieldIcon = ({ className = 'w-4 h-4', ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M12 2 4 5v6c0 5.2 3.5 10.8 8 11 4.5-.2 8-5.8 8-11V5l-8-3Z" />
+    <path d="M9.5 12.5 11 14l3.5-3.5" />
+  </svg>
+);
+
+const PackageIcon = ({ className = 'w-4 h-4', ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M5 8 12 4l7 4v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8Z" />
+    <path d="M12 4v16" />
+    <path d="M5 8h14" />
+  </svg>
+);
+
+const TruckIcon = ({ className = 'w-4 h-4', ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M1 15h15" />
+    <path d="M3 15V8a1 1 0 0 1 1-1h10v8H3Z" />
+    <path d="M16 15h3l2 3v3H16v-6Z" />
+    <circle cx="6.5" cy="19.5" r="1.5" />
+    <circle cx="18.5" cy="19.5" r="1.5" />
+  </svg>
+);
 
 const logger = createLogger('ProductDetailsPage');
 
@@ -464,7 +515,7 @@ const ProductDetailsPage = () => {
                 onClick={handleWhatsApp}
                 className="hidden items-center gap-2 rounded-lg border border-[#25D366]/45 px-4 py-3 text-[10px] font-black uppercase tracking-[0.14em] text-[#41d68a] transition-all hover:bg-[#25D366]/15 sm:flex"
               >
-                <RiWhatsappFill size={16} />
+                <WhatsappIcon />
                 Order
               </button>
 
@@ -474,11 +525,11 @@ const ProductDetailsPage = () => {
                 disabled={paymentLoading}
                 className="flex items-center gap-2 rounded-lg border border-[#ee7743]/55 bg-gradient-to-br from-[#c52f18] to-[#8f1a0c] px-5 py-3 text-[10px] font-black uppercase tracking-[0.14em] text-white shadow-[0_8px_28px_rgba(154,30,13,0.3)] transition-all hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <LuShoppingCart size={15} />
+                <ShoppingCartIcon />
                 {paymentLoading
                   ? 'Processing...'
                   : 'Buy Now'}
-              </button>  
+              </button>
             </div>
           </div>
         </div>
@@ -625,22 +676,22 @@ const ProductDetailsPage = () => {
               <div className="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {[
                   {
-                    icon: <LuShield size={18} />,
+                    icon: <ShieldIcon />,
                     label: 'Authentic',
                     sub: '100% Genuine',
                   },
                   {
-                    icon: <LuTruck size={18} />,
+                    icon: <TruckIcon />,
                     label: 'Fast Delivery',
                     sub: '5–7 Days',
                   },
                   {
-                    icon: <LuPackage size={18} />,
+                    icon: <PackageIcon />,
                     label: 'Safe Pack',
                     sub: 'Damage-Free',
                   },
                   {
-                    icon: <LuCheck size={18} />,
+                    icon: <CheckIcon />,
                     label: 'Easy Returns',
                     sub: 'Hassle-Free',
                   },
@@ -706,9 +757,8 @@ const ProductDetailsPage = () => {
                 <div className="flex items-center gap-0.5">
                   {Array.from({ length: 5 }).map(
                     (_, index) => (
-                      <LuStar
+                      <StarIcon
                         key={index}
-                        size={13}
                         className="fill-current text-[#f2bd36]"
                       />
                     )
@@ -831,8 +881,7 @@ const ProductDetailsPage = () => {
                           key={item}
                           className="flex items-start gap-2 text-[10px] leading-[1.45] text-white/55"
                         >
-                          <LuCheck
-                            size={12}
+                          <CheckIcon
                             className="mt-px shrink-0 text-[#d8ae4f]"
                           />
                           <span>{item}</span>
@@ -857,7 +906,7 @@ const ProductDetailsPage = () => {
                       aria-label="Decrease quantity"
                       className="inline-flex h-full items-center justify-center text-white/70 transition-all hover:bg-[#6d3215]/20 hover:text-[#f4cc77]"
                     >
-                      <LuMinus size={12} />
+                      <MinusIcon />
                     </button>
 
                     <span className="text-center text-xs font-extrabold">
@@ -870,7 +919,7 @@ const ProductDetailsPage = () => {
                       aria-label="Increase quantity"
                       className="inline-flex h-full items-center justify-center text-white/70 transition-all hover:bg-[#6d3215]/20 hover:text-[#f4cc77]"
                     >
-                      <LuPlus size={12} />
+                      <PlusIcon />
                     </button>
                   </div>
                 </div>
@@ -888,7 +937,7 @@ const ProductDetailsPage = () => {
                     </>
                   ) : (
                     <>
-                      <LuShoppingCart size={16} />
+                      <ShoppingCartIcon />
                       Buy Now · ₹
                       {totalPrice.toLocaleString(
                         'en-IN'
@@ -902,7 +951,7 @@ const ProductDetailsPage = () => {
                   onClick={handleWhatsApp}
                   className="inline-flex min-h-[42px] flex-1 items-center justify-center gap-2 rounded-lg border border-[#26bb6f]/50 bg-[#0f291e]/20 px-4 text-[9px] font-black uppercase tracking-[0.09em] text-[#44d68d] transition-all hover:-translate-y-px hover:bg-[#1a6e48]/20 hover:shadow-[0_12px_25px_rgba(10,86,53,0.13)]"
                 >
-                  <RiWhatsappFill size={16} />
+                  <WhatsappIcon />
                   WhatsApp Order
                 </button>
               </div>
@@ -927,7 +976,7 @@ const ProductDetailsPage = () => {
               <div className="mt-4 grid overflow-hidden rounded-xl border border-[#6e3d1f]/40 bg-gradient-to-br from-[#130b09]/80 to-[#080605]/95 shadow-[inset_0_1px_0_rgba(255,217,163,0.025)] sm:grid-cols-[minmax(0,1.28fr)_minmax(215px,0.92fr)]">
                 <div className="flex min-h-[82px] items-center gap-3 border-l border-[#b52d19]/75 px-4 py-[13px] shadow-[inset_5px_0_20px_rgba(121,19,10,0.07)]">
                   <span className="inline-flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle,rgba(190,38,24,0.9),rgba(107,14,8,0.9))] text-[#fff1e9] shadow-[0_0_22px_rgba(184,35,20,0.28)]">
-                    <LuTruck size={18} />
+                      <TruckIcon />
                   </span>
 
                   <div>

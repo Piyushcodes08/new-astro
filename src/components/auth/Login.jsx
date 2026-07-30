@@ -1,4 +1,3 @@
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -12,6 +11,20 @@ import {
 import { Link, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { useState } from "react";
 import Header from "../sections/Header/Header";
+
+const EyeIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12Z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
+
+const EyeSlashIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12Z" />
+    <path d="M4 4l16 16" />
+  </svg>
+);
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -155,7 +168,7 @@ const Login = () => {
               onClick={togglePasswordVisibility}
               aria-pressed={showPassword}
             >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
+              {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
             </span>
             <input
               type={showPassword ? "text" : "password"}

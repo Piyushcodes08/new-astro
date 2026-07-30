@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { LuShieldCheck, LuHeart, LuLightbulb, LuTrophy, LuArrowRight } from "react-icons/lu";
 import Header from '../components/sections/Header/Header';
 import Footer from '../components/sections/Footer/Footer';
 import Button from '../components/ui/Button/Button';
@@ -12,16 +11,47 @@ import aboutHero640Avif from '../assets/images/pages/about/Aboutus-pg-640.avif';
 import aboutHero960Avif from '../assets/images/pages/about/Aboutus-pg-960.avif';
 import aboutHero1440Avif from '../assets/images/pages/about/Aboutus-pg-1440.avif';
 
+const ShieldIcon = ({ className = 'w-5 h-5' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+    <path d="M12 2L4 5v6c0 5.2 3.5 10.8 8 11 4.5-.2 8-5.8 8-11V5l-8-3Zm0 16.5c-2.8-.3-5-3.4-5-6.5V6.8l5-1.8 5 1.8v5.2c0 3.1-2.2 6.2-5 6.5Z" />
+  </svg>
+);
+
+const HeartIcon = ({ className = 'w-5 h-5' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+    <path d="M12 21s-7-4.5-10-10c0-4 3-7 6-7 1.9 0 3.7 1 4 2.5.3-1.5 2.1-2.5 4-2.5 3 0 6 3 6 7-3 5.5-10 10-10 10Z" />
+  </svg>
+);
+
+const LightbulbIcon = ({ className = 'w-5 h-5' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+    <path d="M9 18h6v1a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1v-1Zm3-16C7.6 2 4 5.6 4 10c0 2.8 1.5 5.3 3.8 6.7.2.1.4.3.4.6v1.4c0 .6.4 1 1 1h6.6c.6 0 1-.4 1-1v-1.4c0-.3.2-.5.4-.6C18.5 15.3 20 12.8 20 10c0-4.4-3.6-8-8-8Z" />
+  </svg>
+);
+
+const TrophyIcon = ({ className = 'w-5 h-5' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+    <path d="M17 3H7V5H5v3c0 4.4 3.6 8 8 8s8-3.6 8-8V5h-2V3Zm-2 6c0 2.8-2.2 5-5 5s-5-2.2-5-5V7h10v2Zm-6 9h4v2H9v-2Z" />
+  </svg>
+);
+
+const ArrowRightIcon = ({ className = 'w-5 h-5' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12h14" />
+    <path d="M13 5l7 7-7 7" />
+  </svg>
+);
+
 const { hero, whoWeAre, services, ambition, values, cta } = aboutData;
 
 const AboutPage = () => {
     const getIcon = (type) => {
         switch (type) {
-            case 'shield': return <LuShieldCheck />;
-            case 'heart': return <LuHeart />;
-            case 'lightbulb': return <LuLightbulb />;
-            case 'trophy': return <LuTrophy />;
-            default: return <LuShieldCheck />;
+            case 'shield': return <ShieldIcon className="w-6 h-6" />;
+            case 'heart': return <HeartIcon className="w-6 h-6" />;
+            case 'lightbulb': return <LightbulbIcon className="w-6 h-6" />;
+            case 'trophy': return <TrophyIcon className="w-6 h-6" />;
+            default: return <ShieldIcon className="w-6 h-6" />;
         }
     };
 
@@ -120,7 +150,7 @@ const AboutPage = () => {
                                         </div>
                                         <span className="inline-flex items-center gap-3 text-sm font-bold uppercase tracking-[0.2em] text-brand-red group-hover:text-white transition-colors duration-300">
                                             Explore
-                                            <LuArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                                            <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
                                         </span>
                                     </Link>
                                 ))}

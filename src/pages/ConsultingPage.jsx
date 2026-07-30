@@ -1,18 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { LuArrowRight, LuCalendar, LuStar, LuClock, LuUserPlus, LuRocket } from 'react-icons/lu';
+const Motion = motion;
 import Header from '../components/sections/Header/Header';
 import Footer from '../components/sections/Footer/Footer';
 import { db } from '../firebaseConfig';
 import { createLogger } from '../utils/logger';
 
+const ArrowRightIcon = ({ className = 'w-4 h-4' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12h14" />
+    <path d="M13 5l7 7-7 7" />
+  </svg>
+);
+
+const CalendarIcon = ({ className = 'w-4 h-4' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2" />
+    <path d="M16 2v4" />
+    <path d="M8 2v4" />
+    <path d="M3 10h18" />
+  </svg>
+);
+
+const StarIcon = ({ className = 'w-3.5 h-3.5' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+    <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+  </svg>
+);
+
+const ClockIcon = ({ className = 'w-4 h-4' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 3" />
+  </svg>
+);
+
+const UserPlusIcon = ({ className = 'w-4 h-4' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+    <circle cx="8.5" cy="7" r="4" />
+    <path d="M20 8v6" />
+    <path d="M23 11h-6" />
+  </svg>
+);
+
+const RocketIcon = ({ className = 'w-4 h-4' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M9 15l-3 3 4 4 3-3" />
+    <path d="M12 15l6-6" />
+    <path d="M6 9l6-6 3 3-6 6" />
+    <path d="M15 6l3 3" />
+  </svg>
+);
+
 const logger = createLogger('ConsultingPage');
 import { collection, getDocs, limit, query } from 'firebase/firestore';
 import { consultingData } from '../data/pages/consulting';
-import consultingHero640 from '../assets/images/pages/consulting/consulting-640.webp';
-import consultingHero960 from '../assets/images/pages/consulting/consulting-960.webp';
-import consultingHero1440 from '../assets/images/pages/consulting/consulting-1440.webp';
 
 const { hero, stats, services, process, testimonials: testimonialsContent, highlights, cta } = consultingData;
 
@@ -45,11 +89,11 @@ const ConsultingPage = () => {
 
     const getIcon = (type) => {
         switch (type) {
-            case 'calendar': return <LuCalendar />;
-            case 'user': return <LuUserPlus />;
-            case 'clock': return <LuClock />;
-            case 'rocket': return <LuRocket />;
-            default: return <LuCalendar />;
+            case 'calendar': return <CalendarIcon />;
+            case 'user': return <UserPlusIcon />;
+            case 'clock': return <ClockIcon />;
+            case 'rocket': return <RocketIcon />;
+            default: return <CalendarIcon />;
         }
     };
 
@@ -64,7 +108,7 @@ const ConsultingPage = () => {
                     </div>
 
                     <div className="section-container relative">
-                        <motion.div
+                        <Motion.div
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             className="relative z-10 max-w-4xl mx-auto text-center"
@@ -84,7 +128,7 @@ const ConsultingPage = () => {
                                     to="/appointment"
                                     className="px-10 py-4 rounded font-black uppercase tracking-[0.2em] text-[#fff4d6] transition-all duration-500 hover:-translate-y-1 border border-[rgba(212,175,104,0.55)] bg-[rgba(255,255,255,0.025)] hover:bg-gradient-to-r hover:from-[#f0d99d] hover:to-[#cda85d] hover:text-[#1a0505] hover:border-[#cda85d] flex items-center gap-3 text-xs"
                                 >
-                                    {hero.buttonText} <LuCalendar className="w-4 h-4" />
+                                    {hero.buttonText} <CalendarIcon className="w-4 h-4" />
                                 </Link>
                                 <a
                                     href="#offerings"
@@ -93,7 +137,7 @@ const ConsultingPage = () => {
                                     {hero.secondaryButtonText}
                                 </a>
                             </div>
-                        </motion.div>
+                        </Motion.div>
                     </div>
                 </section>
 
@@ -102,7 +146,7 @@ const ConsultingPage = () => {
                     <div className="section-container py-0!">
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                             {stats.map((s, i) => (
-                                <motion.div
+                                <Motion.div
                                     key={i}
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
@@ -114,7 +158,7 @@ const ConsultingPage = () => {
                                         {s.num}
                                     </div>
                                     <div className="subtitle-poppins text-white/30 text-[8px] font-black uppercase tracking-[0.4em]">{s.label}</div>
-                                </motion.div>
+                                </Motion.div>
                             ))}
                         </div>
                     </div>
@@ -132,7 +176,7 @@ const ConsultingPage = () => {
                             </p>
                         </div>
 
-                        <motion.div
+                        <Motion.div
                             variants={containerVariants}
                             initial="hidden"
                             whileInView="visible"
@@ -140,7 +184,7 @@ const ConsultingPage = () => {
                             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                         >
                             {services.items.map((srv, i) => (
-                                <motion.div key={i} variants={itemVariants} className="group h-full">
+                                <Motion.div key={i} variants={itemVariants} className="group h-full">
                                     <div className="relative bg-[#1a0505] border border-[rgba(212,175,104,0.18)] rounded-lg overflow-hidden h-full flex flex-col shadow-[0_15px_40px_rgba(0,0,0,0.5)] transition-all duration-500 hover:border-[rgba(212,175,104,0.4)] hover:-translate-y-1 group/card">
                                         {/* Image Area */}
                                         <div className="relative w-full aspect-video overflow-hidden">
@@ -181,17 +225,17 @@ const ConsultingPage = () => {
                                                     to="/appointment"
                                                     className="inline-flex items-center gap-3 font-black text-[9px] uppercase tracking-[0.3em] text-[#f0d99d] hover:opacity-80 transition-all"
                                                 >
-                                                    Book Session <LuArrowRight className="w-4 h-4" />
+                                                    Book Session <ArrowRightIcon className="w-4 h-4" />
                                                 </Link>
                                                 <div className="flex text-[rgba(212,175,104,0.3)] group-hover/card:text-[rgba(212,175,104,0.6)] transition-all duration-500 gap-0.5">
-                                                    {[...Array(5)].map((_, idx) => <LuStar key={idx} size={10} fill="currentColor" />)}
+                                                    {[...Array(5)].map((_, idx) => <StarIcon key={idx} className="fill-current text-[#f2bd36]" />)}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </motion.div>
+                                </Motion.div>
                             ))}
-                        </motion.div>
+                        </Motion.div>
                     </div>
                 </section>
 
@@ -210,7 +254,7 @@ const ConsultingPage = () => {
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 relative z-10">
                                 {process.steps.map((step, i) => (
-                                    <motion.div
+                                    <Motion.div
                                         key={i}
                                         initial={{ opacity: 0, y: 20 }}
                                         whileInView={{ opacity: 1, y: 0 }}
@@ -230,7 +274,7 @@ const ConsultingPage = () => {
                                         <p className="subtitle-poppins text-white/30 text-xs leading-relaxed italic">
                                             {step.desc}
                                         </p>
-                                    </motion.div>
+                                    </Motion.div>
                                 ))}
                             </div>
                         </div>
@@ -250,7 +294,7 @@ const ConsultingPage = () => {
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                                 {testimonials.map((t, i) => (
-                                    <motion.div
+                                    <Motion.div
                                         key={t.id || i}
                                         initial={{ opacity: 0, y: 30 }}
                                         whileInView={{ opacity: 1, y: 0 }}
@@ -271,11 +315,11 @@ const ConsultingPage = () => {
                                                     {t.name || t.clientName || 'Happy Client'}
                                                 </div>
                                                 <div className="flex text-yellow-500/40 gap-1 mt-1">
-                                                    {[...Array(5)].map((_, idx) => <LuStar key={idx} size={10} fill="currentColor" />)}
+                                                    {[...Array(5)].map((_, idx) => <StarIcon key={idx} className="fill-current text-[#f2bd36]" />)}
                                                 </div>
                                             </div>
                                         </div>
-                                    </motion.div>
+                                    </Motion.div>
                                 ))}
                             </div>
                         </div>
@@ -285,7 +329,7 @@ const ConsultingPage = () => {
                 {/* ── Highlights Section ──────────────────────────────────── */}
                 <section className="mb-24">
                     <div className="section-container">
-                        <motion.div
+                        <Motion.div
                             initial={{ opacity: 0, scale: 0.98 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
@@ -313,7 +357,7 @@ const ConsultingPage = () => {
                                     {highlights.buttonText}
                                 </Link>
                             </div>
-                        </motion.div>
+                        </Motion.div>
                     </div>
                 </section>
 

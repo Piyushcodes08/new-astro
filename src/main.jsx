@@ -3,41 +3,27 @@ import { createRoot } from 'react-dom/client'
 import './styles/index.css'
 import App from './App.jsx'
 
-// Deferred firebase analytics load (after first interaction) to not block main thread
-const deferAnalytics = () => {
-  // Firebase analytics is already loaded via firebaseConfig
-  // But we avoid immediate initialization impact by deferring
-  requestIdleCallback(() => {
-    import('./firebaseConfig').then(({ analytics }) => {
-      if (analytics) {
-        // analytics is already initialized, just use it when needed
-      }
-    }).catch(() => {
-      // Silently fail - analytics is non-critical
-    });
-  }, { timeout: 2000 });
-};
-
 // Register service worker if supported
 const registerServiceWorker = () => {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js').catch(() => {
-        // Service worker registration failed - non-critical
-      });
+      const installWorker = () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(() => {
+          // Service worker registration failed - non-critical
+        });
+      };
+
+      if (typeof requestIdleCallback === 'function') {
+        requestIdleCallback(installWorker, { timeout: 5000 });
+      } else {
+        setTimeout(installWorker, 3000);
+      }
     });
   }
 };
 
 // Start performance-critical operations
 registerServiceWorker();
-
-// Defer non-critical operations
-if (typeof requestIdleCallback === 'function') {
-  requestIdleCallback(deferAnalytics, { timeout: 3000 });
-} else {
-  setTimeout(deferAnalytics, 3000);
-}
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

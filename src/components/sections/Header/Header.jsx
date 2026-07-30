@@ -1,7 +1,4 @@
 import logo from "../../../assets/images/common/logos/vahlay_astro logo.webp";
-import { auth, db } from '../../../firebaseConfig';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { headerData } from '../../../data/layout/header';
@@ -59,40 +56,85 @@ const Header = () => {
         };
     }, [isOpen]);
 
-    // Reset mobile submenu state when main menu closes
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     useEffect(() => {
-        if (!isOpen) {
-            setActiveMobileSubmenu(null);
-        }
-    }, [isOpen]);
+        let active = true;
+        let unsubscribe = null;
+        let idleCallbackId = null;
+        let timeoutId = null;
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-            setUser(currentUser);
-            if (currentUser) {
-                try {
-                    const q = query(collection(db, "users"), where("email", "==", currentUser.email));
-                    const querySnapshot = await getDocs(q);
-                    let adminStatus = false;
-                    querySnapshot.forEach((doc) => {
-                        if (doc.data().isAdmin) {
-                            adminStatus = true;
+        const initializeAuth = async () => {
+            try {
+                const [{ auth, db }, authModule, firestoreModule] = await Promise.all([
+                    import('../../../firebaseConfig'),
+                    import('firebase/auth'),
+                    import('firebase/firestore'),
+                ]);
+
+                if (!active) return;
+
+                const { onAuthStateChanged } = authModule;
+                const { collection, query, where, getDocs } = firestoreModule;
+
+                unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+                    if (!active) return;
+                    setUser(currentUser);
+
+                    if (currentUser) {
+                        try {
+                            const q = query(collection(db, "users"), where("email", "==", currentUser.email));
+                            const querySnapshot = await getDocs(q);
+                            let adminStatus = false;
+                            querySnapshot.forEach((doc) => {
+                                if (doc.data().isAdmin) {
+                                    adminStatus = true;
+                                }
+                            });
+                            setIsAdmin(adminStatus);
+                        } catch (error) {
+                            logger.error("Error checking admin status:", error);
                         }
-                    });
-                    setIsAdmin(adminStatus);
-                } catch (error) {
-                    logger.error("Error checking admin status:", error);
-                }
-            } else {
-                setIsAdmin(false);
+                    } else {
+                        setIsAdmin(false);
+                    }
+                });
+            } catch (error) {
+                logger.error("Header auth initialization failed:", error);
             }
-        });
-        return () => unsubscribe();
+        };
+
+        const scheduleAuthInit = () => {
+            if (typeof requestIdleCallback === 'function') {
+                idleCallbackId = requestIdleCallback(() => {
+                    if (active) initializeAuth();
+                }, { timeout: 3000 });
+            } else {
+                timeoutId = window.setTimeout(() => {
+                    if (active) initializeAuth();
+                }, 2500);
+            }
+        };
+
+        scheduleAuthInit();
+
+        return () => {
+            active = false;
+            if (unsubscribe) unsubscribe();
+            if (typeof cancelIdleCallback === 'function' && idleCallbackId != null) {
+                cancelIdleCallback(idleCallbackId);
+            }
+            if (timeoutId != null) {
+                clearTimeout(timeoutId);
+            }
+        };
     }, []);
 
     const handleLogout = async () => {
         try {
+            const [{ auth }, authModule] = await Promise.all([
+                import('../../../firebaseConfig'),
+                import('firebase/auth'),
+            ]);
+            const { signOut } = authModule;
             await signOut(auth);
             navigate("/");
         } catch (error) {
@@ -254,7 +296,10 @@ const Header = () => {
                         {/* Mobile Hamburger */}
                         <button
                             className="lg:hidden flex flex-col gap-1.5 p-2 z-1100 focus:outline-none"
-                            onClick={() => setIsOpen(!isOpen)}
+                            onClick={() => setIsOpen((prev) => {
+                                if (prev) setActiveMobileSubmenu(null);
+                                return !prev;
+                            })}
                             aria-label="Toggle Menu"
                         >
                             <span className={`w-6 h-0.5 bg-white transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
@@ -334,7 +379,7 @@ const Header = () => {
                                     {isAdmin ? "Admin" : "Dashboard"}
                                 </Link>
                                 <button
-                                    onClick={() => { setIsOpen(false); handleLogout(); }}
+                                    onClick={() => { setIsOpen(false); setActiveMobileSubmenu(null); handleLogout(); }}
                                     className="w-full text-center py-3.5 rounded font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black"
                                 >
                                     Logout
@@ -343,7 +388,7 @@ const Header = () => {
                         ) : (
                             <Link
                                   to="/login"
-                                  onClick={() => setIsOpen(false)}
+                                  onClick={() => { setIsOpen(false); setActiveMobileSubmenu(null); }}
                                   className="w-full text-center py-3.5 rounded font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black"
                               >
                                   Login
@@ -351,7 +396,7 @@ const Header = () => {
                         )}
                         <Link
                             to="/contact"
-                            onClick={() => setIsOpen(false)}
+                            onClick={() => { setIsOpen(false); setActiveMobileSubmenu(null); }}
                             className="w-full text-center py-4 rounded font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 bg-brand-red text-white hover:bg-white hover:text-brand-red shadow-[0_10px_30px_rgba(191, 6, 3,0.3)]"
                         >
                             Contact us

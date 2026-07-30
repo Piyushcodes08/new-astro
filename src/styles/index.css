@@ -3,26 +3,25 @@
 
 @font-face {
   font-family: 'Poppins';
-  src: url('../assets/fonts/Poppins/Poppins-Regular-subset.woff2') format('woff2');
+  src: url('../assets/fonts/Poppins/Poppins-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Poppins';
-  src: url('../assets/fonts/Poppins/Poppins-Medium-subset.woff2') format('woff2');
+  src: url('../assets/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Poppins';
-  src: url('../assets/fonts/Poppins/Poppins-SemiBold-subset.woff2') format('woff2');
+  src: url('../assets/fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
-
 
 @theme {
   --color-brand-red: #bf0603;
@@ -59,14 +58,6 @@ video {
 }
 
 /* Global Fonts */
-@font-face {
-  font-family: 'Poppins';
-  src: url('../assets/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 @font-face {
   font-family: 'Batangas';
   src: url('../assets/fonts/Batangas/Batangas-Bold.otf') format('opentype');

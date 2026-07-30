@@ -1,7 +1,5 @@
 // context/ArticlesContext.js
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebaseConfig";
 import { createLogger } from "../utils/logger";
 
 const logger = createLogger('ArticlesContext');
@@ -17,8 +15,17 @@ export const ArticlesProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let active = true;
+    let timeoutId = null;
+    let idleCallbackId = null;
+
     const fetchArticles = async () => {
       try {
+        const [{ collection, getDocs }, { db }] = await Promise.all([
+          import('firebase/firestore'),
+          import('../firebaseConfig'),
+        ]);
+
         const snapshot = await getDocs(collection(db, "Articles"));
         const map = {};
         snapshot.forEach((doc) => {
@@ -27,15 +34,29 @@ export const ArticlesProvider = ({ children }) => {
           map[slug] = { id: doc.id, slug, ...data };
         });
 
-        setSlugMap(map);
+        if (active) setSlugMap(map);
       } catch (error) {
         logger.error("Error loading articles:", error);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     };
 
-    fetchArticles();
+    if (typeof requestIdleCallback === 'function') {
+      idleCallbackId = requestIdleCallback(fetchArticles, { timeout: 2500 });
+    } else {
+      timeoutId = window.setTimeout(fetchArticles, 2500);
+    }
+
+    return () => {
+      active = false;
+      if (typeof cancelIdleCallback === 'function' && idleCallbackId != null) {
+        cancelIdleCallback(idleCallbackId);
+      }
+      if (timeoutId != null) {
+        window.clearTimeout(timeoutId);
+      }
+    };
   }, []);
 
   return (

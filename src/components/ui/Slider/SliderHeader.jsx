@@ -1,5 +1,4 @@
 import React from 'react';
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 
 const SliderHeader = ({ title, subTitle }) => {
   // Split title: all words except last are white, last word gets gold gradient

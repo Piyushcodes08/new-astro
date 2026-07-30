@@ -1,5 +1,16 @@
 import React from 'react';
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
+
+const ArrowLeft = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6">
+    <path d="M15 18l-6-6 6-6" />
+  </svg>
+);
+
+const ArrowRight = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6">
+    <path d="M9 6l6 6-6 6" />
+  </svg>
+);
 
 const SliderControls = ({ onNext, onPrev, isPrevDisabled, isNextDisabled }) => {
   return (
@@ -20,7 +31,7 @@ const SliderControls = ({ onNext, onPrev, isPrevDisabled, isNextDisabled }) => {
           cursor: 'pointer'
         }}
       >
-        <HiChevronLeft size={28} />
+        <ArrowLeft />
       </button>
       <button 
         className="nav-btn flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95" 
@@ -38,7 +49,7 @@ const SliderControls = ({ onNext, onPrev, isPrevDisabled, isNextDisabled }) => {
           cursor: 'pointer'
         }}
       >
-        <HiChevronRight size={28} />
+        <ArrowRight />
       </button>
     </div>
   );

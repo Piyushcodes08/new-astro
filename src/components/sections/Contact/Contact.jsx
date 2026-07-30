@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { IoLocationOutline, IoCallOutline, IoTimeOutline } from "react-icons/io5";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import { createLogger } from "../../../utils/logger";
@@ -7,6 +6,26 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { homeData } from "../../../data/pages/home";
 import { footerData } from "../../../data/layout/footer";
 import "./Contact.css";
+
+const LocationIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6">
+    <path d="M12 21s-6-5.4-6-10a6 6 0 1 1 12 0c0 4.6-6 10-6 10Z" />
+    <circle cx="12" cy="10" r="2" fill="currentColor" />
+  </svg>
+);
+
+const CallIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 3.08 4.18 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.72 12.6 12.6 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L9.11 9.11a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.6 12.6 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z" />
+  </svg>
+);
+
+const TimeIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6">
+    <circle cx="12" cy="12" r="8" />
+    <path d="M12 8v4l2 2" />
+  </svg>
+);
 
 const logger = createLogger('Contact');
 
@@ -72,7 +91,7 @@ const Contact = () => {
             <ul className="contact-list">
               <li>
                 <div className="contact-icon">
-                  <IoLocationOutline size={24} />
+                  <LocationIcon aria-hidden="true" />
                 </div>
                 <div className="contact-text-group">
                   <h3 className="title-batangas">Our Address</h3>
@@ -89,7 +108,7 @@ const Contact = () => {
 
               <li>
                 <div className="contact-icon">
-                  <IoCallOutline size={24} />
+                  <CallIcon aria-hidden="true" />
                 </div>
                 <div className="contact-text-group">
                   <h3 className="title-batangas">Contact</h3>
@@ -104,7 +123,7 @@ const Contact = () => {
 
               <li>
                 <div className="contact-icon">
-                  <IoTimeOutline size={24} />
+                  <TimeIcon aria-hidden="true" />
                 </div>
                 <div className="contact-text-group">
                   <h3 className="title-batangas">Working Hours</h3>

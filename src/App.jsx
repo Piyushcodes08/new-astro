@@ -1,4 +1,4 @@
-﻿import React, { lazy, Suspense } from 'react';
+﻿import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppRoutes from './routes/AppRoutes';
 import GlobalBackground from './components/GlobalBackground';
@@ -15,17 +15,53 @@ const ChatBot = lazy(() => import('./components/ChatBot/ChatBot'));
 const AnalyticsTracker = lazy(() => import('./components/AnalyticsTracker'));
 
 const App = () => {
+  const [showDeferredComponents, setShowDeferredComponents] = useState(false);
+
+  useEffect(() => {
+    let timeoutId;
+    let idleCallbackId;
+
+    const loadDeferred = () => setShowDeferredComponents(true);
+
+    if (typeof requestIdleCallback === 'function') {
+      idleCallbackId = requestIdleCallback(loadDeferred, { timeout: 3000 });
+    } else {
+      timeoutId = window.setTimeout(loadDeferred, 3000);
+    }
+
+    return () => {
+      if (typeof cancelIdleCallback === 'function' && idleCallbackId != null) {
+        cancelIdleCallback(idleCallbackId);
+      }
+      if (timeoutId != null) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, []);
+
+  const appContent = (
+    <>
+      <ScrollToTop />
+      {showDeferredComponents && (
+        <Suspense fallback={null}>
+          <AnalyticsTracker />
+        </Suspense>
+      )}
+      <GlobalBackground />
+      <AppRoutes />
+      {showDeferredComponents && (
+        <Suspense fallback={null}>
+          <ChatBot />
+        </Suspense>
+      )}
+    </>
+  );
+
   return (
     <Router>
       <HelmetProvider>
         <CoursesProvider>
-          <ArticlesProvider>
-            <ScrollToTop />
-            <Suspense fallback={null}><AnalyticsTracker /></Suspense>
-            <GlobalBackground />
-            <AppRoutes />
-            <Suspense fallback={null}><ChatBot /></Suspense>
-          </ArticlesProvider>
+          <ArticlesProvider>{appContent}</ArticlesProvider>
         </CoursesProvider>
 
         {/* WhatsApp Floating Button */}

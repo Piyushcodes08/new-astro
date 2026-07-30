@@ -1,8 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { LuArrowRight } from "react-icons/lu";
 import { useCourses } from '../../../context/CoursesContext';
 import './CourseSection.css';
+
+const ArrowRight = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4">
+    <path d="M5 12h14" />
+    <path d="M13 5l7 7-7 7" />
+  </svg>
+);
 
 /**
  * CourseGrid
@@ -78,7 +84,7 @@ const CourseGrid = () => {
                     className="inline-flex items-center gap-2 text-brand-red font-bold uppercase tracking-[0.2em] text-[9px] group/link py-1 hover:text-white transition-colors duration-300"
                   >
                     Enter Portal
-                    <LuArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1" />
+                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1" />
                   </Link>
 
                   <span className="text-[8px] font-black text-white/20 uppercase tracking-widest">

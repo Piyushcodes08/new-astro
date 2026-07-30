@@ -4,10 +4,41 @@ import Header from '../components/sections/Header/Header';
 import Footer from '../components/sections/Footer/Footer';
 import { useArticles } from '../context/ArticlesContext';
 import { createLogger } from '../utils/logger';
+import { Helmet } from 'react-helmet-async';
 
 const logger = createLogger('ArticleDetailsPage');
-import { RiShareForwardFill, RiFacebookFill, RiTwitterFill, RiLinkedinFill, RiWhatsappFill } from "react-icons/ri";
-import { Helmet } from 'react-helmet-async';
+
+const ShareForwardIcon = ({ className = 'w-4 h-4' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 12h16" />
+    <path d="M14 4l6 8-6 8" />
+    <path d="M14 12H4" />
+  </svg>
+);
+
+const FacebookIcon = ({ className = 'w-4 h-4' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+    <path d="M13 3h4.5V0H13c-3.9 0-7 3.1-7 7v3H2v4h4v9h4v-9h3l1-4h-4V7c0-1.1.9-2 2-2Z" />
+  </svg>
+);
+
+const TwitterIcon = ({ className = 'w-4 h-4' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+    <path d="M23 3a10.9 10.9 0 0 1-3.1.9 5.4 5.4 0 0 0 2.4-3 10.9 10.9 0 0 1-3.5 1.3 5.4 5.4 0 0 0-9.2 4.9A15.4 15.4 0 0 1 1.7 2.2 5.4 5.4 0 0 0 3.5 9.7a5.4 5.4 0 0 1-2.4-.7v.1a5.4 5.4 0 0 0 4.3 5.3 5.4 5.4 0 0 1-2.4.1 5.4 5.4 0 0 0 5 3.8 10.8 10.8 0 0 1-6.7 2.3c-.4 0-.7 0-1.1-.1A15.2 15.2 0 0 0 8.3 21c9.2 0 14.2-7.6 14.2-14.2 0-.2 0-.4 0-.6A10.2 10.2 0 0 0 23 3Z" />
+  </svg>
+);
+
+const LinkedinIcon = ({ className = 'w-4 h-4' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+    <path d="M4.98 3.5A2.5 2.5 0 1 0 4.98 8.5a2.5 2.5 0 0 0 0-5ZM2 21h6V9H2v12Zm7-12h4v1.7c.5-.9 1.4-1.7 3-1.7 3.2 0 3.8 2.1 3.8 4.9V21h-6v-5.4c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21h-6V9Z" />
+  </svg>
+);
+
+const WhatsappIcon = ({ className = 'w-4 h-4' }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+    <path d="M12 2.04C6.47 2.04 2 6.52 2 12.06c0 2 .6 3.86 1.64 5.44L2 22l4.7-1.23A9.94 9.94 0 0 0 12 22.06c5.53 0 10-4.48 10-10 0-5.54-4.47-10.02-10-10.02Zm5.05 14.78c-.24.7-1.36 1.34-1.83 1.43-.47.08-1.06.13-2.14-.23-1.09-.36-2.04-1.13-3.24-2.22-1.2-1.09-1.99-2.42-2.23-3.51-.23-1.08-.03-1.58.29-1.7.24-.1.53-.14.8-.02.27.13.86.5 1.02.56.16.07.29.1.42-.02.12-.12.47-.56.59-.76.12-.2.24-.18.53-.06.28.11.9.34 1.37.74.48.4.58.67.65.98.07.31-.07.49-.16.64-.09.16-.2.35-.3.52-.12.17-.25.35-.1.6.15.26.66 1.03 1.43 1.67.97.81 1.79 1.03 2.08 1.15.29.11.47.09.64-.05.17-.15.73-.85.91-1.15.18-.3.37-.25.62-.15.24.1 1.54.73 1.8.86.26.13.42.2.48.31.05.11.05.67-.19 1.36Z" />
+  </svg>
+);
 
 const ArticleDetailsPage = () => {
     const { id } = useParams();
@@ -225,17 +256,17 @@ const ArticleDetailsPage = () => {
                                     onClick={handleShareClick}
                                     className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full transition-all duration-300 border border-white/20 shadow-lg hover:scale-110"
                                 >
-                                    <RiShareForwardFill className="w-4 h-4 md:w-5 md:h-5" />
+                                    <ShareForwardIcon className="w-4 h-4 md:w-5 md:h-5" />
                                 </button>
 
                                 {showShareOptions && (
                                     <div className="absolute right-0 mt-4 w-52 bg-black/95 backdrop-blur-2xl rounded shadow-[0_20px_60px_rgba(0,0,0,0.8)] border border-white/20 z-50 overflow-hidden animate-in fade-in zoom-in duration-300">
                                         {[
-                                            { icon: RiFacebookFill, color: "text-blue-500", action: shareOnFacebook, text: "Facebook" },
-                                            { icon: RiTwitterFill, color: "text-blue-400", action: shareOnTwitter, text: "Twitter" },
-                                            { icon: RiLinkedinFill, color: "text-blue-600", action: shareOnLinkedIn, text: "LinkedIn" },
-                                            { icon: RiWhatsappFill, color: "text-green-500", action: shareOnWhatsApp, text: "WhatsApp" },
-                                            { icon: RiShareForwardFill, color: "text-gray-300", action: copyToClipboard, text: "Copy Link" },
+                                            { icon: FacebookIcon, color: "text-blue-500", action: shareOnFacebook, text: "Facebook" },
+                                            { icon: TwitterIcon, color: "text-blue-400", action: shareOnTwitter, text: "Twitter" },
+                                            { icon: LinkedinIcon, color: "text-blue-600", action: shareOnLinkedIn, text: "LinkedIn" },
+                                            { icon: WhatsappIcon, color: "text-green-500", action: shareOnWhatsApp, text: "WhatsApp" },
+                                            { icon: ShareForwardIcon, color: "text-gray-300", action: copyToClipboard, text: "Copy Link" },
                                         ].map((item, index) => (
                                             <button
                                                 key={index}

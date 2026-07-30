@@ -3,18 +3,77 @@ import { Link } from "react-router-dom";
 import Header from "../sections/Header/Header";
 import Footer from "../sections/Footer/Footer";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  FaStar,
-  FaClock,
-  FaUserGraduate,
-  FaCertificate,
-  FaBookOpen,
-  FaCheckCircle,
-  FaChevronDown,
-  FaQuoteLeft,
-  FaArrowRight,
-  FaPlay,
-} from "react-icons/fa";
+const Motion = motion;
+
+const StarIcon = ({ className = "w-3.5 h-3.5", ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" {...props}>
+    <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+  </svg>
+);
+
+const ClockIcon = ({ className = "w-5 h-5", ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 3" />
+  </svg>
+);
+
+const UserGraduateIcon = ({ className = "w-5 h-5", ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M12 3 4 7l8 4 8-4-8-4z" />
+    <path d="M4 7v4c0 4.4 3.6 8 8 8s8-3.6 8-8V7" />
+    <path d="M8 12h8" />
+  </svg>
+);
+
+const BookOpenIcon = ({ className = "w-5 h-5", ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M2 6.5 2 19a1 1 0 0 0 1 1h8V6.5" />
+    <path d="M22 6.5 22 19a1 1 0 0 1-1 1h-8V6.5" />
+    <path d="M2 6.5 12 2l10 4.5" />
+  </svg>
+);
+
+const CertificateIcon = ({ className = "w-5 h-5", ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M4 4h16v16H4z" />
+    <path d="M8 8h8" />
+    <path d="M8 12h8" />
+    <path d="M8 16h5" />
+  </svg>
+);
+
+const CheckCircleIcon = ({ className = "w-5 h-5", ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="m9 12 2 2 4-4" />
+  </svg>
+);
+
+const ChevronDownIcon = ({ className = "w-5 h-5", ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="m6 9 6 6 6-6" />
+  </svg>
+);
+
+const QuoteLeftIcon = ({ className = "w-8 h-8", ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" {...props}>
+    <path d="M7 7h3V3H7a4 4 0 0 0-4 4v2h4V7Zm10 0h3V3h-3a4 4 0 0 0-4 4v2h4V7Z" />
+  </svg>
+);
+
+const ArrowRightIcon = ({ className = "w-5 h-5", ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M5 12h14" />
+    <path d="M13 5l7 7-7 7" />
+  </svg>
+);
+
+const PlayIcon = ({ className = "w-5 h-5", ...props }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" {...props}>
+    <path d="M8 5.14v13.72L19 12 8 5.14Z" />
+  </svg>
+);
 
 const PremiumCourseLayout = ({
   title,
@@ -36,11 +95,11 @@ const PremiumCourseLayout = ({
   const [activeFaq, setActiveFaq] = useState(null);
 
   const stats = [
-    { icon: <FaClock />, label: "Duration", val: duration },
-    { icon: <FaUserGraduate />, label: "Level", val: level },
-    { icon: <FaBookOpen />, label: "Language", val: language },
+    { icon: <ClockIcon />, label: "Duration", val: duration },
+    { icon: <UserGraduateIcon />, label: "Level", val: level },
+    { icon: <BookOpenIcon />, label: "Language", val: language },
     {
-      icon: <FaCertificate />,
+      icon: <CertificateIcon />,
       label: "Outcome",
       val: isFree ? "Free Access" : "Verified Certificate",
     },
@@ -70,7 +129,7 @@ const PremiumCourseLayout = ({
 
           <div className="relative z-10 premium-container w-full grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] items-center gap-14 lg:gap-20">
             {/* Left Content */}
-            <motion.div
+            <Motion.div
               initial={{ opacity: 0, y: 35 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75 }}
@@ -79,7 +138,7 @@ const PremiumCourseLayout = ({
               <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/10 bg-white/6 backdrop-blur-xl shadow-[0_0_40px_rgba(191, 6, 3,0.12)]">
                 <span className="flex text-brand-red gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <FaStar key={i} size={11} />
+                    <StarIcon key={i} className="text-brand-red" />
                   ))}
                 </span>
                 <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.22em] text-white/75">
@@ -98,14 +157,14 @@ const PremiumCourseLayout = ({
 
               <div className="mt-10 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-5">
                 <Link to={enrollLink}>
-                  <motion.button
+                  <Motion.button
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.96 }}
                     className="group px-8 md:px-10 py-4 md:py-5 rounded-full bg-brand-red text-white font-black uppercase tracking-[0.22em] text-xs md:text-sm shadow-[0_18px_45px_rgba(191, 6, 3,0.35)] hover:bg-white hover:text-brand-red transition-all duration-500 flex items-center gap-3"
                   >
                     {isFree ? "Start Learning Free" : "Secure Your Seat"}
-                    <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-                  </motion.button>
+                    <ArrowRightIcon className="group-hover:translate-x-1 transition-transform" />
+                  </Motion.button>
                 </Link>
 
                 <div className="flex items-center gap-3 px-5 py-3 rounded-full border border-white/10 bg-white/4 backdrop-blur-md">
@@ -132,10 +191,10 @@ const PremiumCourseLayout = ({
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </Motion.div>
 
             {/* Right Image */}
-            <motion.div
+            <Motion.div
               initial={{ opacity: 0, scale: 0.92, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.75, delay: 0.15 }}
@@ -153,7 +212,7 @@ const PremiumCourseLayout = ({
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent" />
 
                 <div className="absolute top-6 right-6 w-14 h-14 rounded-full bg-white/10 border border-white/15 backdrop-blur-xl flex items-center justify-center">
-                  <FaPlay className="text-brand-red ml-1" />
+                    <PlayIcon className="text-brand-red ml-1" />
                 </div>
 
                 <div className="absolute bottom-5 left-5 right-5 md:bottom-8 md:left-8 md:right-8 p-5 md:p-6 rounded-3xl bg-black/45 backdrop-blur-2xl border border-white/10">
@@ -165,7 +224,7 @@ const PremiumCourseLayout = ({
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </Motion.div>
           </div>
         </section>
 
@@ -173,7 +232,7 @@ const PremiumCourseLayout = ({
         <section className="relative z-10 px-6 -mt-10 lg:-mt-16">
           <div className="premium-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-[#130707]/85 backdrop-blur-2xl border border-white/10 rounded-4xl md:rounded-[2.8rem] p-5 md:p-8 shadow-[0_25px_90px_rgba(0,0,0,0.45)]">
             {stats.map((stat, i) => (
-              <motion.div
+              <Motion.div
                 key={i}
                 whileHover={{ y: -6 }}
                 className="flex items-center gap-4 p-5 rounded-2xl bg-white/[0.035] hover:bg-white/[0.07] border border-white/5 hover:border-brand-red/25 transition-all"
@@ -189,7 +248,7 @@ const PremiumCourseLayout = ({
                     {stat.val}
                   </p>
                 </div>
-              </motion.div>
+              </Motion.div>
             ))}
           </div>
         </section>
@@ -214,16 +273,16 @@ const PremiumCourseLayout = ({
               {whatYouWillLearn.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12">
                   {whatYouWillLearn.map((item, i) => (
-                    <motion.div
+                    <Motion.div
                       key={i}
                       whileHover={{ x: 6 }}
                       className="flex items-start gap-4 p-5 rounded-2xl bg-white/4 border border-white/6 hover:border-brand-red/30 hover:bg-white/6.5 transition-all"
                     >
-                      <FaCheckCircle className="text-brand-red mt-1 shrink-0" />
+                      <CheckCircleIcon className="text-brand-red mt-1 shrink-0" />
                       <span className="text-white/82 font-medium leading-relaxed">
                         {item}
                       </span>
-                    </motion.div>
+                    </Motion.div>
                   ))}
                 </div>
               )}
@@ -297,7 +356,7 @@ const PremiumCourseLayout = ({
 
               <div className="space-y-5">
                 {curriculum.map((item, i) => (
-                  <motion.div
+                  <Motion.div
                     key={i}
                     whileHover={{ y: -4 }}
                     className="group p-6 md:p-8 rounded-4xl bg-[#120707]/80 border border-white/10 hover:border-brand-red/35 transition-all"
@@ -325,7 +384,7 @@ const PremiumCourseLayout = ({
                         </span>
                       )}
                     </div>
-                  </motion.div>
+                  </Motion.div>
                 ))}
               </div>
             </div>
@@ -356,7 +415,7 @@ const PremiumCourseLayout = ({
                       className="w-full flex justify-between items-center gap-5 p-6 text-left hover:bg-white/[0.035] transition-colors"
                     >
                       <span className="font-bold text-white/92">{faq.q}</span>
-                      <FaChevronDown
+                      <ChevronDownIcon
                         className={`text-brand-red shrink-0 transition-transform duration-500 ${
                           activeFaq === i ? "rotate-180" : ""
                         }`}
@@ -365,7 +424,7 @@ const PremiumCourseLayout = ({
 
                     <AnimatePresence>
                       {activeFaq === i && (
-                        <motion.div
+                        <Motion.div
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
@@ -375,7 +434,7 @@ const PremiumCourseLayout = ({
                           <div className="px-6 pb-6 pt-0 text-white/55 leading-relaxed text-sm border-t border-white/5">
                             <div className="pt-5">{faq.a}</div>
                           </div>
-                        </motion.div>
+                        </Motion.div>
                       )}
                     </AnimatePresence>
                   </div>
@@ -465,12 +524,12 @@ const PremiumCourseLayout = ({
                   r: "Yoga Instructor",
                 },
               ].map((t, i) => (
-                <motion.div
+                <Motion.div
                   key={i}
                   whileHover={{ y: -8 }}
                   className="p-7 md:p-9 rounded-[2.4rem] bg-white/[0.035] border border-white/8 hover:border-brand-red/30 transition-all duration-500 group"
                 >
-                  <FaQuoteLeft className="text-3xl text-brand-red opacity-25 mb-7 group-hover:opacity-100 transition-opacity" />
+                  <QuoteLeftIcon className="text-3xl text-brand-red opacity-25 mb-7 group-hover:opacity-100 transition-opacity" />
 
                   <p className="text-white/68 italic leading-relaxed mb-8">
                     “{t.q}”
@@ -484,7 +543,7 @@ const PremiumCourseLayout = ({
                       {t.r}
                     </p>
                   </div>
-                </motion.div>
+                </Motion.div>
               ))}
             </div>
           </div>
@@ -509,13 +568,13 @@ const PremiumCourseLayout = ({
             </p>
 
             <Link to={enrollLink}>
-              <motion.button
+              <Motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="mt-11 px-10 md:px-16 py-5 md:py-6 rounded-full bg-brand-red text-white font-black uppercase tracking-[0.3em] text-xs md:text-sm shadow-[0_22px_55px_rgba(191, 6, 3,0.45)] hover:bg-white hover:text-brand-red transition-all duration-700"
               >
                 Enroll Now
-              </motion.button>
+              </Motion.button>
             </Link>
 
             <p className="mt-7 text-white/30 text-[10px] uppercase tracking-[0.35em] font-black">

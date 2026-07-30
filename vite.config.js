@@ -63,9 +63,6 @@ export default defineConfig({
           if (id.includes('node_modules/date-fns')) {
             return 'datefns-vendor';
           }
-          if (id.includes('node_modules/react-icons')) {
-            return 'icons-vendor';
-          }
           // Helmet
           if (id.includes('node_modules/react-helmet-async')) {
             return 'helmet-vendor';
@@ -84,6 +81,15 @@ export default defineConfig({
     },
     // Reduce overhead
     reportCompressedSize: false,
+    modulePreload: {
+      resolveDependencies(chunk, deps) {
+        return deps.filter(dep => {
+          return !dep.includes('firebase-vendor') &&
+                 !dep.includes('firebase-analytics') &&
+                 !dep.includes('firebaseConfig');
+        });
+      },
+    },
   },
   optimizeDeps: {
     include: [

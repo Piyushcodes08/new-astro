@@ -7,7 +7,6 @@ import {
   persistentMultipleTabManager,
 } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { getAnalytics } from "firebase/analytics";
 
 // Firebase configuration using VITE_ prefixed environment variables
 const firebaseConfig = {
@@ -34,7 +33,23 @@ const db = initializeFirestore(app, {
 
 const auth = getAuth(app);
 const storage = getStorage(app);
-const analytics = getAnalytics(app);
 
-export { auth, db, storage, app, analytics };
+let analytics = null;
+const getAnalyticsInstance = async () => {
+  if (analytics) return analytics;
+  if (typeof window === 'undefined') return null;
+
+  try {
+    const analyticsModule = await import('firebase/analytics');
+    const { getAnalytics, isSupported } = analyticsModule;
+    const supported = await isSupported();
+    if (!supported) return null;
+    analytics = getAnalytics(app);
+    return analytics;
+  } catch {
+    return null;
+  }
+};
+
+export { auth, db, storage, app, getAnalyticsInstance };
 

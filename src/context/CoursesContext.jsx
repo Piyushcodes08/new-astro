@@ -1,6 +1,4 @@
 ﻿import React, { createContext, useContext, useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebaseConfig";
 import { createLogger } from "../utils/logger";
 
 const logger = createLogger('CoursesContext');
@@ -17,9 +15,17 @@ const loadCourses = async () => {
   if (pendingCoursesRequest) return pendingCoursesRequest;
 
   pendingCoursesRequest = Promise.all([
-    getDocs(collection(db, "freeCourses")),
-    getDocs(collection(db, "paidCourses")),
-  ]).then(([freeSnap, paidSnap]) => {
+    import('firebase/firestore'),
+    import('../firebaseConfig'),
+  ]).then(async ([firestoreModule, firebaseConfigModule]) => {
+    const { collection, getDocs } = firestoreModule;
+    const { db } = firebaseConfigModule;
+
+    const [freeSnap, paidSnap] = await Promise.all([
+      getDocs(collection(db, "freeCourses")),
+      getDocs(collection(db, "paidCourses")),
+    ]);
+
     const map = {};
 
     freeSnap.forEach((doc) => {
@@ -49,20 +55,34 @@ export const CoursesProvider = ({ children }) => {
 
   useEffect(() => {
     let active = true;
+    let timeoutId = null;
+    let idleCallbackId = null;
 
-    loadCourses()
-      .then((map) => {
+    const load = async () => {
+      try {
+        const map = await loadCourses();
         if (active) setSlugMap(map);
-      })
-      .catch((error) => {
+      } catch (error) {
         logger.error("Error loading courses:", error);
-      })
-      .finally(() => {
+      } finally {
         if (active) setLoading(false);
-      });
+      }
+    };
+
+    if (typeof requestIdleCallback === 'function') {
+      idleCallbackId = requestIdleCallback(load, { timeout: 2500 });
+    } else {
+      timeoutId = window.setTimeout(load, 2500);
+    }
 
     return () => {
       active = false;
+      if (typeof cancelIdleCallback === 'function' && idleCallbackId != null) {
+        cancelIdleCallback(idleCallbackId);
+      }
+      if (timeoutId != null) {
+        window.clearTimeout(timeoutId);
+      }
     };
   }, []);
 

@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import ProtectedRoute from '../components/auth/ProtectedRoute';
+
+// Lazy-load the route guard so Firebase auth/firestore isn't pulled into the initial app shell.
+const ProtectedRoute = lazy(() => import('../components/auth/ProtectedRoute'));
 
 // ── Page-level loading fallback ──
 const PageLoader = () => (

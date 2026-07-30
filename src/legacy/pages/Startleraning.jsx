@@ -483,7 +483,7 @@ const PersonalCourse = () => {
                       </div>
                       <div>
                         <p className="text-[9px] font-bold uppercase tracking-widest text-[#82b879]">Live Session Active</p>
-                        <h4 className="font-serif text-base text-[#1c1a17]">Join the live session for {courseName}</h4>
+                        <h4 className="font-serif text-base text-[#ffffff]">Join the live session for {courseName}</h4>
                       </div>
                     </div>
                     <div className="rounded border border-[rgba(130,184,121,0.4)] bg-[rgba(130,184,121,0.08)] px-5 py-2.5 text-[9px] font-bold uppercase tracking-widest text-[#82b879] group-hover:bg-[rgba(130,184,121,0.15)] transition-all">
@@ -548,7 +548,7 @@ const PersonalCourse = () => {
   className="mb-8 overflow-hidden rounded-xl border border-[#e0d5c0] bg-[#161412] shadow-[0_10px_40px_rgba(0,0,0,0.4)]"
 >
   {/* Section Header */}
-  <div className="relative flex flex-col gap-4 overflow-hidden border-b border-[rgba(0,0,0,0.08)] bg-[#110f0d] px-5 py-5 sm:px-7 md:flex-row md:items-center md:justify-between">
+  <div className="relative flex flex-col gap-4 overflow-hidden border-b border-[rgba(0,0,0,0.08)] bg-[#ffffff] px-5 py-5 sm:px-7 md:flex-row md:items-center md:justify-between">
     <div className="pointer-events-none absolute -right-12 -top-20 h-48 w-48 rounded-full bg-[rgba(212,175,104,0.04)] blur-2xl" />
 
     <div className="relative flex min-w-0 items-center gap-4">
@@ -560,7 +560,7 @@ const PersonalCourse = () => {
       </div>
       <div className="min-w-0">
         <p className="mb-1 text-[9px] font-bold uppercase tracking-[0.28em] text-[var(--dash-accent,#bf0603)]">Course Chapter</p>
-        <h3 className="truncate font-serif text-lg text-[#1c1a17] md:text-xl">{title}</h3>
+        <h3 className="truncate font-serif text-lg text-[#383531] md:text-xl">{title}</h3>
       </div>
     </div>
 
@@ -578,7 +578,7 @@ const PersonalCourse = () => {
   </div>
 
   {/* Videos Slider */}
-  <div className="px-4 pb-8 pt-5 sm:px-6">
+  <div className="px-4 pb-8 pt-5 sm:px-6 bg-gray-100">
     <Swiper
       modules={[Navigation, Pagination]}
       navigation={{ prevEl: `.swiper-prev-${index}`, nextEl: `.swiper-next-${index}` }}
@@ -673,7 +673,7 @@ const PersonalCourse = () => {
   <div className="pointer-events-none absolute -bottom-24 -left-20 h-56 w-56 rounded-full bg-[rgba(212,175,104,0.03)] blur-3xl" />
 
   {/* Section header */}
-  <div className="relative border-b border-[rgba(0,0,0,0.08)] bg-[#110f0d] px-6 py-6 md:px-8 md:py-7">
+  <div className="relative border-b border-[rgba(0,0,0,0.08)] bg-[#ffffff] px-6 py-6 md:px-8 md:py-7">
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
       <div className="flex items-center gap-4">
         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded border border-[rgba(212,175,104,0.25)] bg-[rgba(212,175,104,0.06)] " style={{ color: "var(--dash-accent,#bf0603)" }}>
@@ -690,7 +690,7 @@ const PersonalCourse = () => {
     </div>
   </div>
 
-  <div className="relative z-10 p-6 md:p-8">
+  <div className="relative z-10 p-6 md:p-8 bg-gray-100">
     <QandASection courseName={resolvedCourseId} />
   </div>
 </section>
