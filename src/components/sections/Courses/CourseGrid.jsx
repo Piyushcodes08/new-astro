@@ -33,12 +33,25 @@ const CourseGrid = () => {
             >
               {/* Image Area - No padding, no crop */}
               <div className="relative bg-[#080101] overflow-hidden">
-                <img
-                  src={course.imageUrl || course.bgImage}
-                  alt={course.title}
-                  className="w-full h-auto block object-contain transition-all duration-1000 group-hover:scale-[1.01]"
-                  loading="lazy"
-                />
+                {course.bgImageSet ? (
+                  <picture>
+                    <source type="image/avif" srcSet={course.bgImageSet.avif} />
+                    <source type="image/webp" srcSet={course.bgImageSet.webp} />
+                    <img
+                      src={course.bgImage}
+                      alt={course.title}
+                      className="w-full h-auto block object-contain transition-all duration-1000 group-hover:scale-[1.01]"
+                      loading="lazy"
+                    />
+                  </picture>
+                ) : (
+                  <img
+                    src={course.imageUrl || course.bgImage}
+                    alt={course.title}
+                    className="w-full h-auto block object-contain transition-all duration-1000 group-hover:scale-[1.01]"
+                    loading="lazy"
+                  />
+                )}
               </div>
 
               {/* Content Area */}
