@@ -1,6 +1,29 @@
 @import "tailwindcss";
 @source "../../src";
 
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/Poppins/Poppins-Regular-subset.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/Poppins/Poppins-Medium-subset.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/Poppins/Poppins-SemiBold-subset.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 @theme {
   --color-brand-red: #bf0603;
   --color-brand-cream: #ffead3;
@@ -498,4 +521,33 @@ section p.subtitle-poppins {
   main > section {
     padding-block: 50px !important;
   }
+}
+
+/* Page Loader (route transitions) */
+.page-loader {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #030106;
+}
+
+.page-loader-spinner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid #bf0603;
+  border-top-color: transparent;
+  animation: pageloader-spin 0.7s linear infinite;
+}
+
+@keyframes pageloader-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Content visibility for below-fold sections (improves LCP) */
+.section-content-visibility {
+  content-visibility: auto;
+  contain-intrinsic-size: 200px;
 }

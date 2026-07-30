@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { memo, useState, useEffect, useRef } from "react";
 import "./ChatBot.css";
 
 const PREDEFINED_ANSWERS = {
@@ -9,14 +9,13 @@ const PREDEFINED_ANSWERS = {
   "Where can I read articles?": "Check out our 'Featured Articles' section on the homepage. We regularly publish insights about planetary movements and sacred wisdom.",
 };
 
-const ChatBot = () => {
+const ChatBot = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     { type: "bot", text: "Hii! I am your Vahlay Assistant. Ask what you want! ✨" }
   ]);
   const messagesEndRef = useRef(null);
 
-  // ChatBot stays closed by default - user opens manually
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -28,11 +27,9 @@ const ChatBot = () => {
   }, [messages, isOpen]);
 
   const handleQuickReply = (question) => {
-    // Add user question
     const newMessages = [...messages, { type: "user", text: question }];
     setMessages(newMessages);
 
-    // Add bot answer with a small delay for "AI feel"
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
@@ -61,7 +58,7 @@ const ChatBot = () => {
             <div className="bot-avatar">VA</div>
             <div className="bot-name-group">
               <h4>Vahlay Assistant</h4>
-              <span>Online • Cosmic Guide</span>
+              <span>Online &bull; Cosmic Guide</span>
             </div>
           </div>
         </div>
@@ -91,11 +88,14 @@ const ChatBot = () => {
         </div>
 
         <div className="chat-footer">
-          <p>© {new Date().getFullYear()} Vahlay Astro Assistance</p>
+          <p>&copy; {new Date().getFullYear()} Vahlay Astro Assistance</p>
         </div>
       </div>
     </div>
   );
-};
+});
+
+ChatBot.displayName = 'ChatBot';
 
 export default ChatBot;
+

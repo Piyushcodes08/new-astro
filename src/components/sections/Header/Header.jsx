@@ -29,19 +29,22 @@ const Header = () => {
     const showBg = scrolled || isPortal;
 
     useEffect(() => {
-        const handleScroll = (e) => {
-            const scrollTop =
-                window.scrollY ||
-                document.documentElement.scrollTop ||
-                document.body.scrollTop ||
-                (e.target && e.target.scrollTop) ||
-                0;
-
-            setScrolled(scrollTop > 20);
+        // Use passive listener + requestAnimationFrame for scroll performance
+        let rafId = null;
+        const handleScroll = () => {
+            if (rafId) return;
+            rafId = requestAnimationFrame(() => {
+                const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+                setScrolled(scrollTop > 20);
+                rafId = null;
+            });
         };
 
-        window.addEventListener('scroll', handleScroll, true);
-        return () => window.removeEventListener('scroll', handleScroll, true);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            if (rafId) cancelAnimationFrame(rafId);
+        };
     }, []);
 
     // Body Scroll Lock for Mobile Menu
@@ -129,7 +132,7 @@ const Header = () => {
                             <img
                                 src={logo}
                                 alt="Vahlay Astro Logo"
-                                loading="lazy"
+                                fetchpriority="high"
                                 className={`transition-all duration-500 object-contain hover:scale-105 ${showBg ? 'h-12 w-12 md:h-14 md:w-14' : 'h-20 w-20 md:h-21.25 md:w-21.25'}`}
                             />
                         </Link>

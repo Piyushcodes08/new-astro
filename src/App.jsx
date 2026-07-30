@@ -7,10 +7,12 @@ import { CoursesProvider } from './context/CoursesContext';
 import { ArticlesProvider } from './context/ArticlesContext';
 import './App.css';
 
+// ScrollToTop must not be lazy since it needs to run immediately on route change
+import ScrollToTop from './components/ScrollToTop';
+
 // Non-critical - defer these until after main content renders
 const ChatBot = lazy(() => import('./components/ChatBot/ChatBot'));
 const AnalyticsTracker = lazy(() => import('./components/AnalyticsTracker'));
-const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
 
 const App = () => {
   return (
@@ -18,7 +20,7 @@ const App = () => {
       <HelmetProvider>
         <CoursesProvider>
           <ArticlesProvider>
-            <Suspense fallback={null}><ScrollToTop /></Suspense>
+            <ScrollToTop />
             <Suspense fallback={null}><AnalyticsTracker /></Suspense>
             <GlobalBackground />
             <AppRoutes />
@@ -53,3 +55,4 @@ const App = () => {
 };
 
 export default App;
+

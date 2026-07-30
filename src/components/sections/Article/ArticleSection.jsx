@@ -1,14 +1,13 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import SliderHeader from '../../ui/Slider/SliderHeader';
 import SliderControls from '../../ui/Slider/SliderControls';
-import { articlesData as rawArticles } from "../../../data/pages/articles";
 import { useArticles } from '../../../context/ArticlesContext';
 import './ArticleSection.css';
 
 const ArticleSection = () => {
   const { slugMap, loading } = useArticles();
-  const articlesData = React.useMemo(() => {
+  const articlesData = useMemo(() => {
     return Object.values(slugMap).sort((a, b) => {
       // Prioritize rawDate (Post Date) for editorial order
       const timeA = a.rawDate ? new Date(a.rawDate).getTime() : (a.createdAt?.seconds ? a.createdAt.seconds * 1000 : 0);
@@ -27,7 +26,7 @@ const ArticleSection = () => {
   const isMovingRef = useRef(false);
 
   // Extend data for seamless cloning
-  const clonedData = React.useMemo(() => {
+  const clonedData = useMemo(() => {
     if (articlesData.length === 0) return [];
     return [
       ...articlesData.slice(-4),

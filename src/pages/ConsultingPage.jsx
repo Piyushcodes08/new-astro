@@ -10,6 +10,9 @@ import { createLogger } from '../utils/logger';
 const logger = createLogger('ConsultingPage');
 import { collection, getDocs, limit, query } from 'firebase/firestore';
 import { consultingData } from '../data/pages/consulting';
+import consultingHero640 from '../assets/images/pages/consulting/consulting-640.webp';
+import consultingHero960 from '../assets/images/pages/consulting/consulting-960.webp';
+import consultingHero1440 from '../assets/images/pages/consulting/consulting-1440.webp';
 
 const { hero, stats, services, process, testimonials: testimonialsContent, highlights, cta } = consultingData;
 
@@ -142,11 +145,21 @@ const ConsultingPage = () => {
                                         {/* Image Area */}
                                         <div className="relative w-full aspect-video overflow-hidden">
                                             <div className="absolute inset-0 bg-linear-to-t from-[#1a0505] via-transparent to-transparent z-10 opacity-70"></div>
-                                            <img
-                                                src={srv.img}
-                                                alt={srv.title}
-                                                className="w-full h-full object-cover transition-transform duration-[3s] group-hover/card:scale-110"
-                                            />
+                                            <picture>
+                                                {srv.imgSetAvif && (
+                                                    <source type="image/avif" srcSet={srv.imgSetAvif} sizes="(max-width: 768px) 100vw, 33vw" />
+                                                )}
+                                                {srv.imgSet && (
+                                                    <source type="image/webp" srcSet={srv.imgSet} sizes="(max-width: 768px) 100vw, 33vw" />
+                                                )}
+                                                <img
+                                                    src={srv.img}
+                                                    alt={srv.title}
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    className="w-full h-full object-cover transition-transform duration-[3s] group-hover/card:scale-110"
+                                                />
+                                            </picture>
                                             {/* Tag */}
                                             <div className="absolute top-5 right-5 z-20">
                                                 <span className="px-3 py-1.5 rounded-sm border border-[rgba(212,175,104,0.5)] bg-[rgba(255,255,255,0.025)] text-[#f0d99d] text-[8px] font-black uppercase tracking-[0.2em] shadow-lg backdrop-blur-sm">

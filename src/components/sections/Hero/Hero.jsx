@@ -12,18 +12,10 @@ const Hero = () => {
     return (
         <section className="relative min-h-screen min-h-svh w-full overflow-hidden bg-transparent text-white flex items-center justify-center text-center px-4 ">
 
-            {/* Canvas Background Support */}
-            <canvas
-                id="canvas"
-                className="fixed inset-0 z-1 pointer-events-none"
-            />
-
             {/* Main Content Container */}
             <div className="relative z-10 w-full max-w-max-width min-h-svh mx-auto px-[50px] max-lg:px-[30px] max-md:px-[15px] flex pt-12 items-center justify-center">
                 
                 <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center">
-                    
-
 
                     {/* Hero Title */}
                     <h1

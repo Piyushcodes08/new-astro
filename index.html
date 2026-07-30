@@ -5,24 +5,96 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/src/assets/images/common/logos/vahlay_astro logo.webp" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description"
-    content="Vahlay Astro - Your trusted partner in unlocking the mysteries of the cosmos with ancient Vedic wisdom for modern living." />
+  <meta name="description" content="Vahlay Astro - Your trusted partner in unlocking the mysteries of the cosmos with ancient Vedic wisdom for modern living." />
   <meta name="keywords" content="astrology, vedic astrology, horoscope, cosmic guidance, spiritual learning" />
   <meta name="theme-color" content="#030106" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Vahlay Astro" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="canonical" href="https://vahlayastro.com/" />
+
   <!-- Performance: Early connection to external origins -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://firebaseapp.com" />
+  <link rel="preconnect" href="https://firestore.googleapis.com" />
+  <link rel="preconnect" href="https://identitytoolkit.googleapis.com" />
+  <link rel="preconnect" href="https://securetoken.googleapis.com" />
 
+<link rel="preload" href="/src/assets/fonts/Poppins/Poppins-Medium-subset.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/src/assets/fonts/Poppins/Poppins-Regular-subset.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/src/assets/fonts/Poppins/Poppins-SemiBold-subset.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
   <link rel="dns-prefetch" href="https://firebaseapp.com" />
   <link rel="dns-prefetch" href="https://firestore.googleapis.com" />
-  <!-- Preload critical background image -->
+
+  <!-- Preload critical assets -->
   <link rel="preload" as="image" href="/src/assets/images/pages/home/bgimage.webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="/src/assets/images/common/logos/vahlay_astro logo.webp" fetchpriority="high" />
+
+  <!-- Preload local fonts (prefer woff2 in future builds) -->
+  <link rel="preload" href="/src/assets/fonts/Poppins/Poppins-Medium.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="preload" href="/src/assets/fonts/Batangas/Batangas-Bold.otf" as="font" type="font/otf" crossorigin />
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Vahlay Astro" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Vahlay Astro",
+    "url": "https://vahlayastro.com/",
+    "logo": "https://vahlayastro.com/src/assets/images/common/logos/vahlay_astro%20logo.webp",
+    "description": "Your trusted partner in unlocking the mysteries of the cosmos with ancient Vedic wisdom for modern living.",
+    "foundingDate": "2020",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-79-4921-7538",
+      "contactType": "customer service",
+      "email": "contact@vahlayastro.com"
+    },
+    "sameAs": [
+      "https://www.facebook.com/vahlayastro",
+      "https://www.instagram.com/vahlayastro",
+      "https://www.youtube.com/@vahlayastro",
+      "https://wa.me/918849092183"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Vahlay Astro",
+    "url": "https://vahlayastro.com/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://vahlayastro.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
   <title>Vahlay Astro | Celestial Wisdom &amp; Spiritual Guidance</title>
 </head>
 
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <!-- Pre-rendered loading indicator for instant first paint -->
+    <div style="display:flex;min-height:100vh;align-items:center;justify-content:center;background:#030106;">
+      <div style="width:40px;height:40px;border-radius:50%;border:3px solid #bf0603;border-top-color:transparent;animation:sp 0.7s linear infinite;"></div>
+      <style>@keyframes sp{to{transform:rotate(360deg)}}</style>
+    </div>
+  </div>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 
 </html>
+

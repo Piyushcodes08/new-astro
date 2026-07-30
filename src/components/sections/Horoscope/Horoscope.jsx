@@ -2,7 +2,12 @@
 import { useNavigate } from "react-router-dom";
 import "./Horoscope.css";
 import { horoscopeData, RASHIPHAL_SUMMARIES } from "../../../data/common/horoscope";
-import zodiacWheel from "../../../assets/images/sections/horoscope/new_wheel_s5ozry.png";
+import zodiacWheel640 from "../../../assets/images/sections/horoscope/new_wheel_s5ozry-640.webp";
+import zodiacWheel960 from "../../../assets/images/sections/horoscope/new_wheel_s5ozry-960.webp";
+import zodiacWheel1440 from "../../../assets/images/sections/horoscope/new_wheel_s5ozry-1440.webp";
+import zodiacWheel640Avif from "../../../assets/images/sections/horoscope/new_wheel_s5ozry-640.avif";
+import zodiacWheel960Avif from "../../../assets/images/sections/horoscope/new_wheel_s5ozry-960.avif";
+import zodiacWheel1440Avif from "../../../assets/images/sections/horoscope/new_wheel_s5ozry-1440.avif";
 
 const DATE_RANGES = {
   Aries: "March 21 â€” April 19",
@@ -176,7 +181,18 @@ export default function Horoscope() {
                 className="zodiac-wheel-outer"
                 style={{ transform: `rotate(${-activeIndex * 30}deg)` }}
               >
-                <img src={zodiacWheel} alt="" className="zodiac-wheel-image" draggable="false" />
+                <picture>
+                  <source type="image/avif" srcSet={`${zodiacWheel640Avif} 640w, ${zodiacWheel960Avif} 960w, ${zodiacWheel1440Avif} 1440w`} sizes="(max-width: 768px) 90vw, 45vw" />
+                  <source type="image/webp" srcSet={`${zodiacWheel640} 640w, ${zodiacWheel960} 960w, ${zodiacWheel1440} 1440w`} sizes="(max-width: 768px) 90vw, 45vw" />
+                  <img
+                    src={zodiacWheel960}
+                    alt=""
+                    className="zodiac-wheel-image"
+                    draggable="false"
+                    loading="eager"
+                    decoding="async"
+                  />
+                </picture>
               </div>
               <div className="zodiac-center-display">
                 <span className="center-pulse" aria-hidden="true" />

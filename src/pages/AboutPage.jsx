@@ -5,6 +5,12 @@ import Header from '../components/sections/Header/Header';
 import Footer from '../components/sections/Footer/Footer';
 import Button from '../components/ui/Button/Button';
 import { aboutData } from '../data/pages/about';
+import aboutHero640 from '../assets/images/pages/about/Aboutus-pg-640.webp';
+import aboutHero960 from '../assets/images/pages/about/Aboutus-pg-960.webp';
+import aboutHero1440 from '../assets/images/pages/about/Aboutus-pg-1440.webp';
+import aboutHero640Avif from '../assets/images/pages/about/Aboutus-pg-640.avif';
+import aboutHero960Avif from '../assets/images/pages/about/Aboutus-pg-960.avif';
+import aboutHero1440Avif from '../assets/images/pages/about/Aboutus-pg-1440.avif';
 
 const { hero, whoWeAre, services, ambition, values, cta } = aboutData;
 
@@ -56,12 +62,17 @@ const AboutPage = () => {
                     <div className="section-container">
                         <div className="grid md:grid-cols-2 gap-8 items-center">
                             <div className="rounded-xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.35)] flex items-center justify-center p-1.5 max-w-md">
-                                <img
-                                    src={whoWeAre.image}
-                                    alt={whoWeAre.title}
-                                    loading="lazy"
-                                    className="w-full h-full object-cover rounded-lg"
-                                />
+                                <picture>
+                                    <source type="image/avif" srcSet={`${aboutHero640Avif} 640w, ${aboutHero960Avif} 960w, ${aboutHero1440Avif} 1440w`} sizes="(max-width: 768px) 100vw, 50vw" />
+                                    <source type="image/webp" srcSet={`${aboutHero640} 640w, ${aboutHero960} 960w, ${aboutHero1440} 1440w`} sizes="(max-width: 768px) 100vw, 50vw" />
+                                    <img
+                                        src={aboutHero960}
+                                        alt={whoWeAre.title}
+                                        loading="lazy"
+                                        decoding="async"
+                                        className="w-full h-full object-cover rounded-lg"
+                                    />
+                                </picture>
                             </div>
 
                             <div className="space-y-8">

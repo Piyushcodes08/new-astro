@@ -3,7 +3,6 @@ import Hero from '../components/sections/Hero/Hero';
 import Header from '../components/sections/Header/Header';
 import CourseSection from '../components/sections/Courses/CourseSection';
 
-
 // Below-fold sections — lazy loaded
 const ArticleSection = lazy(() => import('../components/sections/Article/ArticleSection'));
 const About          = lazy(() => import('../components/sections/About/About'));
@@ -19,7 +18,7 @@ const Footer         = lazy(() => import('../components/sections/Footer/Footer')
 
 // Minimal section placeholder while loading
 const SectionPlaceholder = () => (
-  <div style={{ minHeight: '200px' }} />
+  <div className="section-content-visibility" />
 );
 
 const Home = () => {
@@ -32,48 +31,72 @@ const Home = () => {
             <Header />
             <main>
                 <Hero />
-                {/* Below-fold — lazy loaded */}
- 
-               
-                <Suspense fallback={<SectionPlaceholder />}>
-                    <ArticleSection />
-                </Suspense>
-                 <Suspense fallback={<SectionPlaceholder />}>
-                   <CourseSection />
-                </Suspense>
-                <Suspense fallback={<SectionPlaceholder />}>
-                    <About />
-                </Suspense>
-                <Suspense fallback={<SectionPlaceholder />}>
-                    <Products />
-                </Suspense>
-                <Suspense fallback={<SectionPlaceholder />}>
-                    <NewLaunches />
-                </Suspense>
+
+                {/* Below-fold sections with content-visibility for better LCP */}
+                <div className="section-content-visibility">
                   <Suspense fallback={<SectionPlaceholder />}>
-                    <Numerology />
-                </Suspense>
-                <Suspense fallback={<SectionPlaceholder />}>
-                    <Horoscope />
-                </Suspense>
-                <Suspense fallback={<SectionPlaceholder />}>
-                    <Testimonials />
-                </Suspense>
-                 <Suspense fallback={<SectionPlaceholder />}>
-                   <Gallery/>
-                </Suspense>
-                <Suspense fallback={<SectionPlaceholder />}>
-                    <Partners />
-                </Suspense>  
-                <Suspense fallback={<SectionPlaceholder />}>
-                    <Contact />
-                </Suspense>
+                      <ArticleSection />
+                  </Suspense>
+                </div>
+                <div className="section-content-visibility">
+                  <Suspense fallback={<SectionPlaceholder />}>
+                     <CourseSection />
+                  </Suspense>
+                </div>
+                <div className="section-content-visibility">
+                  <Suspense fallback={<SectionPlaceholder />}>
+                      <About />
+                  </Suspense>
+                </div>
+                <div className="section-content-visibility">
+                  <Suspense fallback={<SectionPlaceholder />}>
+                      <Products />
+                  </Suspense>
+                </div>
+                <div className="section-content-visibility">
+                  <Suspense fallback={<SectionPlaceholder />}>
+                      <NewLaunches />
+                  </Suspense>
+                </div>
+                <div className="section-content-visibility">
+                  <Suspense fallback={<SectionPlaceholder />}>
+                      <Numerology />
+                  </Suspense>
+                </div>
+                <div className="section-content-visibility">
+                  <Suspense fallback={<SectionPlaceholder />}>
+                      <Horoscope />
+                  </Suspense>
+                </div>
+                <div className="section-content-visibility">
+                  <Suspense fallback={<SectionPlaceholder />}>
+                      <Testimonials />
+                  </Suspense>
+                </div>
+                <div className="section-content-visibility">
+                  <Suspense fallback={<SectionPlaceholder />}>
+                     <Gallery/>
+                  </Suspense>
+                </div>
+                <div className="section-content-visibility">
+                  <Suspense fallback={<SectionPlaceholder />}>
+                      <Partners />
+                  </Suspense>
+                </div>
+                <div className="section-content-visibility">
+                  <Suspense fallback={<SectionPlaceholder />}>
+                      <Contact />
+                  </Suspense>
+                </div>
             </main>
-            <Suspense fallback={null}>
-                <Footer />
-            </Suspense>
+            <div className="section-content-visibility">
+              <Suspense fallback={null}>
+                  <Footer />
+              </Suspense>
+            </div>
         </>
     );
 };
 
 export default Home;
+
