@@ -5,7 +5,6 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [
     react({
-      // Enable automatic JSX runtime (already default)
       // Strip data-testid in production
       babel: {
         plugins: process.env.NODE_ENV === 'production'
@@ -21,10 +20,14 @@ export default defineConfig({
     cssMinify: 'lightningcss',
     rollupOptions: {
       output: {
-        // Granular manual chunk splitting for optimal caching
         manualChunks(id) {
-          // Core React
-          if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/')) {
+          // Core React — react, react-dom AND scheduler must stay together so
+          // they share the same ReactCurrentDispatcher singleton at runtime.
+          if (
+            id.includes('node_modules/react/') ||
+            id.includes('node_modules/react-dom/') ||
+            id.includes('node_modules/scheduler/')
+          ) {
             return 'react-vendor';
           }
           // Router
@@ -73,13 +76,15 @@ export default defineConfig({
     minify: 'oxc',
     sourcemap: false,
     cssCodeSplit: true,
-    // Enable tree-shaking
     treeshake: {
-      moduleSideEffects: false,
+      // Protect hook modules and Firebase config from being inlined/dropped.
+      moduleSideEffects(id) {
+        if (id.includes('/hooks/') || id.includes('firebaseConfig')) return true;
+        return false;
+      },
       propertyReadSideEffects: false,
       tryCatchDeoptimization: false,
     },
-    // Reduce overhead
     reportCompressedSize: false,
     modulePreload: {
       resolveDependencies(chunk, deps) {
@@ -103,13 +108,27 @@ export default defineConfig({
       'firebase/auth',
       'firebase/analytics',
       'firebase/storage',
+      'recharts',
+      'gsap',
+      'gsap/ScrollTrigger',
+      'react/jsx-runtime',
+      'react/jsx-dev-runtime',
+      // scheduler holds the shared React dispatcher — co-bundle with react
+      'scheduler',
     ],
+    exclude: ['react-minimal-pie-chart'],
+  },
+  resolve: {
+    // Force all packages (including deep node_modules) to use the same
+    // React instance — prevents duplicate ReactCurrentDispatcher objects.
+    dedupe: ['react', 'react-dom', 'react-router-dom', 'scheduler'],
   },
   server: {
-    // Faster cold start in dev
+    headers: {
+      'Cache-Control': 'no-store',
+    },
     warmup: {
       clientFiles: ['./index.html', './src/main.jsx'],
     },
   },
 })
-

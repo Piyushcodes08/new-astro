@@ -174,7 +174,7 @@ const Header = () => {
                             <img
                                 src={logo}
                                 alt="Vahlay Astro Logo"
-                                fetchpriority="high"
+                                fetchPriority="high"
                                 className={`transition-all duration-500 object-contain hover:scale-105 ${showBg ? 'h-12 w-12 md:h-14 md:w-14' : 'h-20 w-20 md:h-21.25 md:w-21.25'}`}
                             />
                         </Link>

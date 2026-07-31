@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { Link } from "react-router-dom";
 import { useProducts } from "../../../hooks/useProducts";
-import { fallbackProducts } from "../products/Products";
+import { fallbackProducts } from "../products/productData";
 import Button from "../../ui/Button/Button";
 import SliderControls from "../../ui/Slider/SliderControls";
 import "./newLaunches.css";

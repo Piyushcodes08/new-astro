@@ -8,7 +8,7 @@ import { createLogger } from '../utils/logger';
 import Header from '../components/sections/Header/Header';
 import Footer from '../components/sections/Footer/Footer';
 import Button from '../components/ui/Button/Button';
-import { fallbackProducts } from '../components/sections/products/Products';
+import { fallbackProducts } from '../components/sections/products/productData';
 
 const WhatsappIcon = ({ className = 'w-4 h-4', ...props }) => (
   <svg viewBox="0 0 24 24" className={className} fill="currentColor" {...props}>

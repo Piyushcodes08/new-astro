@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { getAnalyticsInstance } from "../firebaseConfig";
 
 const AnalyticsTracker = () => {
   const location = useLocation();
@@ -8,7 +7,9 @@ const AnalyticsTracker = () => {
   useEffect(() => {
     let canceled = false;
 
-    getAnalyticsInstance()
+    // Dynamic import avoids static module cache issues between dev server restarts
+    import("../firebaseConfig")
+      .then(({ getAnalyticsInstance }) => getAnalyticsInstance())
       .then(async (analytics) => {
         if (!canceled && analytics) {
           const { logEvent } = await import('firebase/analytics');
@@ -19,7 +20,7 @@ const AnalyticsTracker = () => {
         }
       })
       .catch(() => {
-        // Analytics is non-critical
+        // Analytics is non-critical — silently ignore all errors
       });
 
     return () => {

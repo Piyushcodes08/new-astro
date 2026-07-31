@@ -1,10 +1,10 @@
-// context/ArticlesContext.js
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 import { createLogger } from "../utils/logger";
 
 const logger = createLogger('ArticlesContext');
 
-// Util to convert title to URL slug
 const slugify = (text) =>
   text?.toLowerCase().replace(/[^\w ]+/g, "").replace(/ +/g, "-");
 
@@ -21,11 +21,6 @@ export const ArticlesProvider = ({ children }) => {
 
     const fetchArticles = async () => {
       try {
-        const [{ collection, getDocs }, { db }] = await Promise.all([
-          import('firebase/firestore'),
-          import('../firebaseConfig'),
-        ]);
-
         const snapshot = await getDocs(collection(db, "Articles"));
         const map = {};
         snapshot.forEach((doc) => {
@@ -33,7 +28,6 @@ export const ArticlesProvider = ({ children }) => {
           const slug = slugify(data.title);
           map[slug] = { id: doc.id, slug, ...data };
         });
-
         if (active) setSlugMap(map);
       } catch (error) {
         logger.error("Error loading articles:", error);
@@ -66,4 +60,8 @@ export const ArticlesProvider = ({ children }) => {
   );
 };
 
-export const useArticles = () => useContext(ArticlesContext);
+export const useArticles = () => {
+  const ctx = useContext(ArticlesContext);
+  // Return safe fallback during HMR or if used outside provider
+  return ctx ?? { slugMap: {}, loading: true };
+};

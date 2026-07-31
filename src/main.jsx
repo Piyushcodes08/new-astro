@@ -47,7 +47,7 @@ const applyImageOptimizations = () => {
       if (!img.getAttribute('decoding')) img.setAttribute('decoding', 'async');
 
       // Hint resource priority (supported in modern browsers)
-      if (!img.hasAttribute('fetchpriority')) img.setAttribute('fetchpriority', 'low');
+      if (!img.hasAttribute('fetchPriority')) img.setAttribute('fetchPriority', 'low');
     });
   } catch (e) {
     // Fail silently - non-critical enhancement

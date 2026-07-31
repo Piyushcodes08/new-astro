@@ -10,7 +10,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { PieChart } from "react-minimal-pie-chart";
+import { PieChart, Pie, Cell } from "recharts";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db } from "../../firebaseConfig";
 import QandASection from "./QuestionAndAns"; // Your Q&A section component
@@ -286,23 +286,23 @@ const PersonalCourse = () => {
           <p className="text-center text-xl text-slate-900">Expired</p>
         ) : (
           <div>
-            <PieChart
-              data={[
-                {
-                  title: "Remaining",
-                  value: parseInt(validityPercentage) || 0,
-                  color: "#0f172a",
-                },
-                {
-                  title: "Expired",
-                  value: 100 - (parseInt(validityPercentage) || 0),
-                  color: "#e2e8f0",
-                },
-              ]}
-              lineWidth={20}
-              rounded
-              animate
-            />
+            <PieChart width={160} height={160}>
+              <Pie
+                data={[
+                  { value: parseInt(validityPercentage) || 0 },
+                  { value: 100 - (parseInt(validityPercentage) || 0) },
+                ]}
+                innerRadius={48}
+                outerRadius={68}
+                startAngle={90}
+                endAngle={-270}
+                dataKey="value"
+                stroke="none"
+              >
+                <Cell fill="#0f172a" />
+                <Cell fill="#e2e8f0" />
+              </Pie>
+            </PieChart>
             <p className="text-center mt-2 text-slate-700">
               {validityPercentage || 0}% Validity Remaining
             </p>

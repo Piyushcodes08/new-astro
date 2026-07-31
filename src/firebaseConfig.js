@@ -3,6 +3,7 @@ import { initializeApp, getApps } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import {
   initializeFirestore,
+  getFirestore,
   persistentLocalCache,
   persistentMultipleTabManager,
 } from 'firebase/firestore';
@@ -20,36 +21,39 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize Firebase only if it hasn't been initialized already
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
+// Track whether this is a fresh app initialization
+const existingApps = getApps();
+const isNewApp = !existingApps.length;
 
-// ✅ FIX: New Firebase 12.x API — persistent cache with multi-tab support
-// Courses will load from IndexedDB on repeat visits — zero Firebase wait
-const db = initializeFirestore(app, {
-  localCache: persistentLocalCache({
-    tabManager: persistentMultipleTabManager(),
-  }),
-});
+// Initialize Firebase only if it hasn't been initialized already
+const app = isNewApp ? initializeApp(firebaseConfig) : existingApps[0];
+
+// ✅ FIX: Only call initializeFirestore on a brand-new app instance.
+// If the app was already initialized (e.g. HMR / module re-evaluation),
+// getFirestore() retrieves the existing Firestore instance safely.
+const db = isNewApp
+  ? initializeFirestore(app, {
+      localCache: persistentLocalCache({
+        tabManager: persistentMultipleTabManager(),
+      }),
+    })
+  : getFirestore(app);
 
 const auth = getAuth(app);
 const storage = getStorage(app);
 
-let analytics = null;
-const getAnalyticsInstance = async () => {
-  if (analytics) return analytics;
+let _analytics = null;
+export async function getAnalyticsInstance() {
+  if (_analytics) return _analytics;
   if (typeof window === 'undefined') return null;
-
   try {
-    const analyticsModule = await import('firebase/analytics');
-    const { getAnalytics, isSupported } = analyticsModule;
-    const supported = await isSupported();
-    if (!supported) return null;
-    analytics = getAnalytics(app);
-    return analytics;
+    const { getAnalytics, isSupported } = await import('firebase/analytics');
+    if (!(await isSupported())) return null;
+    _analytics = getAnalytics(app);
+    return _analytics;
   } catch {
     return null;
   }
-};
+}
 
-export { auth, db, storage, app, getAnalyticsInstance };
-
+export { auth, db, storage, app };

@@ -62,6 +62,8 @@ const QuestionAndAns          = lazy(() => import('../legacy/pages/QuestionAndAn
 const AdminGallery            = lazy(() => import('../legacy/pages/AdminGallery'));
 
 // ── Legacy Pages (User) — lazy loaded ──
+const UserTrashCourses = lazy(() => import('../legacy/pages/UserTrashCourses'));
+
 const Dashboard         = lazy(() => import('../legacy/pages/Dashboard'));
 const Profile           = lazy(() => import('../legacy/pages/Profile'));
 const EnrolledCourses   = lazy(() => import('../legacy/pages/EnrolledCourses'));
@@ -145,6 +147,7 @@ const AppRoutes = () => {
                 <Route path="/dashboard"    element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                 <Route path="/profile"      element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                 <Route path="/enrolledcourse" element={<ProtectedRoute><EnrolledCourses /></ProtectedRoute>} />
+                <Route path="/trashed-courses" element={<ProtectedRoute><UserTrashCourses /></ProtectedRoute>} />
                 <Route path="/course/:courseName" element={<ProtectedRoute><Startlearning /></ProtectedRoute>} />
                 <Route path="/course/:courseName/video/:videoId" element={<ProtectedRoute><VedioDetail /></ProtectedRoute>} />
                 <Route path="/enroll/:courseId/:courseType" element={<ProtectedRoute><Enroll /></ProtectedRoute>} />

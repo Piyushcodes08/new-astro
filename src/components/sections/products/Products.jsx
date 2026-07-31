@@ -10,83 +10,11 @@ import SliderHeader from "../../ui/Slider/SliderHeader";
 import SliderControls from "../../ui/Slider/SliderControls";
 import Button from "../../ui/Button/Button";
 import { useProducts } from "../../../hooks/useProducts";
-import pyriteImage from "../../../assets/images/products/pyritr.webp";
-import chakraImage from "../../../assets/images/products/7bracelate.webp";
-import nazarImage from "../../../assets/images/products/Nazarbatu.webp";
-import jadeImage from "../../../assets/images/products/green.webp";
-import rudrakshaImage from "../../../assets/images/products/rudraksh.webp";
-import roseQuartzImage from "../../../assets/images/products/Rose Quartz Bracelet.webp";
+import { fallbackProducts, formatPrice, getDiscount } from "./productData";
 import "./products.css";
 
-export const fallbackProducts = [
-  {
-    theme: "gold",
-    title: "Pyrite Bracelet",
-    desc: "Attract wealth, confidence, and positive energy with this premium Pyrite crystal bracelet.",
-    price: "₹999",
-    oldPrice: "₹1499",
-    image: pyriteImage,
-  },
-  {
-    theme: "purple",
-    title: "7 Chakra Bracelet",
-    desc: "Balance your chakras and improve spiritual harmony with natural healing stones.",
-    price: "₹799",
-    oldPrice: "₹1199",
-    image: chakraImage,
-  },
-  {
-    theme: "cyan",
-    title: "Nazar Suraksha Bracelet",
-    desc: "Designed to protect against negative energy and the evil eye with spiritual power.",
-    price: "₹699",
-    oldPrice: "₹999",
-    image: nazarImage,
-  },
-  {
-    theme: "green",
-    title: "Green Jade Ring",
-    desc: "An elegant jade ring crafted for prosperity, peace, and emotional balance.",
-    price: "₹1299",
-    oldPrice: "₹1799",
-    image: jadeImage,
-  },
-  {
-    theme: "orange",
-    title: "Rudraksha Mala",
-    desc: "Authentic spiritual Rudraksha mala for meditation, peace, and divine connection.",
-    price: "₹1499",
-    oldPrice: "₹2199",
-    image: rudrakshaImage,
-  },
-  {
-    theme: "pink",
-    title: "Rose Quartz Bracelet",
-    desc: "Enhance love, self-confidence, and emotional healing with Rose Quartz crystals.",
-    price: "₹899",
-    oldPrice: "₹1399",
-    image: roseQuartzImage,
-  },
-];
-
-const numericPrice = (value) =>
-  parseFloat(String(value ?? "").replace(/[^\d.]/g, ""));
-
-const formatPrice = (value) => {
-  const amount = numericPrice(value);
-  if (!Number.isFinite(amount)) return value || "";
-  return `₹${amount.toLocaleString("en-IN")}`;
-};
-
-const getDiscount = (price, oldPrice) => {
-  const current = numericPrice(price);
-  const original = numericPrice(oldPrice);
-
-  if (!current || !original || original <= current) return null;
-  return Math.round(((original - current) / original) * 100);
-};
-
-export const ProductCard = ({ product }) => {
+// ─── ProductCard ─────────────────────────────────────────────────────────────
+const ProductCard = ({ product }) => {
   const productId =
     product.id || product.title.replace(/\s+/g, "-").toLowerCase();
   const productUrl = `/products/${productId}`;
@@ -147,19 +75,21 @@ export const ProductCard = ({ product }) => {
   );
 };
 
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+const CLONE_COUNT = 3;
+
 const getVisibleItems = () => {
   if (typeof window === "undefined") return 1;
-  // Keep a single, centered card across phone and tablet breakpoints.
   if (window.innerWidth < 1024) return 1;
   return 3;
 };
 
+// ─── Products (default export — component only) ───────────────────────────────
 const Products = () => {
   const { products = [], loading } = useProducts();
   const displayProducts = products.length ? products : fallbackProducts;
 
-  const cloneCount = 3;
-  const [currentIndex, setCurrentIndex] = useState(cloneCount);
+  const [currentIndex, setCurrentIndex] = useState(CLONE_COUNT);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [visibleItems, setVisibleItems] = useState(1);
   const touchStartRef = useRef(0);
@@ -168,25 +98,24 @@ const Products = () => {
 
   const clonedData = useMemo(() => {
     if (!totalRealItems) return [];
-
     return [
-      ...displayProducts.slice(-cloneCount),
+      ...displayProducts.slice(-CLONE_COUNT),
       ...displayProducts,
-      ...displayProducts.slice(0, cloneCount),
+      ...displayProducts.slice(0, CLONE_COUNT),
     ];
   }, [displayProducts, totalRealItems]);
 
   useEffect(() => {
-    setCurrentIndex(cloneCount);
+    setCurrentIndex(CLONE_COUNT);
     setIsTransitioning(false);
   }, [totalRealItems]);
 
   useEffect(() => {
     const syncVisibleItems = () => {
       const nextVisibleItems = getVisibleItems();
-      setVisibleItems((previousVisibleItems) => {
-        if (previousVisibleItems !== nextVisibleItems) {
-          setCurrentIndex(cloneCount);
+      setVisibleItems((prev) => {
+        if (prev !== nextVisibleItems) {
+          setCurrentIndex(CLONE_COUNT);
           setIsTransitioning(false);
         }
         return nextVisibleItems;
@@ -215,10 +144,10 @@ const Products = () => {
     if (!isTransitioning) return undefined;
 
     const timer = window.setTimeout(() => {
-      if (currentIndex >= totalRealItems + cloneCount) {
+      if (currentIndex >= totalRealItems + CLONE_COUNT) {
         setIsTransitioning(false);
-        setCurrentIndex(cloneCount);
-      } else if (currentIndex < cloneCount) {
+        setCurrentIndex(CLONE_COUNT);
+      } else if (currentIndex < CLONE_COUNT) {
         setIsTransitioning(false);
         setCurrentIndex(totalRealItems + currentIndex);
       } else {

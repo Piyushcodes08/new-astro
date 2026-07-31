@@ -227,7 +227,7 @@ const Gallery = () => {
           trigger: section,
           start: "top top",
           end: "bottom bottom",
-          scrub: 2.15,
+          scrub: 1.15,
           invalidateOnRefresh: true,
           fastScrollEnd: true,
           onUpdate: ({ progress }) => {

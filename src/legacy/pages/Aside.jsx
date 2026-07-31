@@ -183,6 +183,7 @@ const Aside = () => {
     { title: "Enrolled Courses", path: "/enrolledcourse" },
     { title: "Add Courses",      path: "/courses" },
     { title: "Payments",         path: "/finalize" },
+    { title: "Course Trash",     path: "/trashed-courses" },
   ];
 
   return (

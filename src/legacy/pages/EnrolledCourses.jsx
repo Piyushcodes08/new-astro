@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import Aside from "./Aside";
 import Footer from "../../components/sections/Footer/Footer";
@@ -39,6 +39,12 @@ const PlayIcon = () => (
   </svg>
 );
 
+const TrashIcon = ({ className = "h-4 w-4" }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+  </svg>
+);
+
 const EnrollCourse = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -46,18 +52,6 @@ const EnrollCourse = () => {
   const [groupedVideos, setGroupedVideos] = useState({});
   const navigate = useNavigate();
   const auth = getAuth();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        await fetchCourses(currentUser.email);
-      } else {
-        navigate("/login");
-      }
-    });
-    return () => unsubscribe();
-  }, [auth, navigate]);
 
   const fetchCourses = async (email) => {
     try {
@@ -117,6 +111,70 @@ const EnrollCourse = () => {
     } catch (error) {
       console.error("Error fetching courses:", error);
       setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+        await fetchCourses(currentUser.email);
+      } else {
+        navigate("/login");
+      }
+    });
+    return () => unsubscribe();
+  }, [auth, navigate]);
+
+  const [deletingCourse, setDeletingCourse] = useState(null);
+
+  const handleDeleteCourse = async (courseToDelete) => {
+    if (!user?.email) return;
+    if (!window.confirm(`Are you sure you want to move "${courseToDelete.name}" to trash?`)) return;
+
+    setDeletingCourse(courseToDelete.name);
+    try {
+      const docRef = doc(db, "subscriptions", user.email);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+
+        if (courseToDelete.type === "Free") {
+          const currentFree = data.freecourses || [];
+          const updatedFree = currentFree.filter(name => name !== courseToDelete.name);
+          const currentTrashedFree = data.trashed_freecourses || [];
+          const updatedTrashedFree = currentTrashedFree.includes(courseToDelete.name)
+            ? currentTrashedFree
+            : [...currentTrashedFree, courseToDelete.name];
+
+          await updateDoc(docRef, {
+            freecourses: updatedFree,
+            trashed_freecourses: updatedTrashedFree
+          });
+        } else {
+          const currentDetails = data.DETAILS || [];
+          const targetDetail = currentDetails.find(item => item && typeof item === "object" && Object.keys(item)[0] === courseToDelete.name);
+          const updatedDetails = currentDetails.filter(item => !(item && typeof item === "object" && Object.keys(item)[0] === courseToDelete.name));
+
+          const currentTrashedDetails = data.trashed_DETAILS || [];
+          const updatedTrashedDetails = targetDetail
+            ? [...currentTrashedDetails.filter(item => !(item && typeof item === "object" && Object.keys(item)[0] === courseToDelete.name)), targetDetail]
+            : currentTrashedDetails;
+
+          await updateDoc(docRef, {
+            DETAILS: updatedDetails,
+            trashed_DETAILS: updatedTrashedDetails
+          });
+        }
+
+        setCourses(prev => prev.filter(c => c.name !== courseToDelete.name));
+      }
+    } catch (err) {
+      console.error("Error moving course to trash:", err);
+      alert("Failed to move course to trash. Please try again.");
+    } finally {
+      setDeletingCourse(null);
     }
   };
 
@@ -200,10 +258,16 @@ const EnrollCourse = () => {
                             <span className="px-2 py-0.5 rounded border border-[rgba(130,184,121,0.3)] bg-[rgba(130,184,121,0.07)] text-[#82b879] text-[8px] font-bold uppercase tracking-widest">Active</span>
                             <span className="text-[8px] font-bold text-[#7a6a52] uppercase">{course.type === "Paid" ? `${course.daysLeft} days left` : "Lifetime"}</span>
                           </div>
-                          <button onClick={() => navigate(`/course/${encodeURIComponent(course.name)}`)}
-                            className="mt-3 w-full py-2 rounded text-white" style={{ background: "var(--dash-accent,#bf0603)", borderColor: "var(--dash-accent,#bf0603)" }} className=" font-bold uppercase tracking-[0.15em] text-[9px] hover:bg-[rgba(212,175,104,0.1)] transition-all">
-                            Continue
-                          </button>
+                          <div className="flex items-center gap-2 mt-3">
+                            <button onClick={() => navigate(`/course/${encodeURIComponent(course.name)}`)}
+                              className="flex-1 py-2 rounded text-white font-bold uppercase tracking-[0.15em] text-[9px] hover:opacity-90 transition-all" style={{ background: "var(--dash-accent,#bf0603)", borderColor: "var(--dash-accent,#bf0603)" }}>
+                              Continue
+                            </button>
+                            <button onClick={() => handleDeleteCourse(course)} disabled={deletingCourse === course.name} title="Delete Course"
+                              className="p-2 rounded border border-red-200 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all">
+                              <TrashIcon className="h-4 w-4" />
+                            </button>
+                          </div>
                         </div>
                       </div>
 
@@ -238,10 +302,14 @@ const EnrollCourse = () => {
                             </div>
                           )}
                         </div>
-                        <div className="col-span-2 flex justify-end">
+                        <div className="col-span-2 flex items-center justify-end gap-2">
                           <button onClick={() => navigate(`/course/${encodeURIComponent(course.name)}`)}
-                            className="group/btn inline-flex items-center gap-2 min-h-9 px-5 rounded text-white" style={{ background: "var(--dash-accent,#bf0603)", borderColor: "var(--dash-accent,#bf0603)" }} className=" font-bold uppercase tracking-[0.18em] text-[9px] hover:bg-[rgba(212,175,104,0.12)] hover:border-[rgba(212,175,104,0.7)] transition-all">
+                            className="group/btn inline-flex items-center gap-1.5 min-h-9 px-4 rounded text-white font-bold uppercase tracking-[0.18em] text-[9px] hover:opacity-90 transition-all" style={{ background: "var(--dash-accent,#bf0603)", borderColor: "var(--dash-accent,#bf0603)" }}>
                             Continue <ArrowIcon className="h-3 w-3 transition-transform group-hover/btn:translate-x-0.5" />
+                          </button>
+                          <button onClick={() => handleDeleteCourse(course)} disabled={deletingCourse === course.name} title="Delete Course"
+                            className="inline-flex items-center justify-center min-h-9 w-9 rounded border border-[rgba(191,6,3,0.2)] bg-[rgba(191,6,3,0.05)] text-[#bf0603] hover:bg-[#bf0603] hover:text-white hover:border-[#bf0603] transition-all">
+                            <TrashIcon className="h-4 w-4" />
                           </button>
                         </div>
                       </div>

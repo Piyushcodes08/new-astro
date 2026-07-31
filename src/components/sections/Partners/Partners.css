@@ -10,7 +10,7 @@
 }
 
 /* Premium soft background glow */
-.partners-section::before {
+/* .partners-section::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -24,7 +24,7 @@
   opacity: 0.7;
   transform: scale(1.1);
   z-index: -1;
-}
+} */
 
 
 .partners-ambient {
@@ -47,7 +47,7 @@
 .partners-ambient--right {
   right: -18%;
   bottom: -35%;
-  background: #b47d28;
+  /* background: #b47d28; */
   opacity: 0.13;
 }
 

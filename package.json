@@ -3,7 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css",
+    "./src/styles/**/*",
+    "./src/firebaseConfig.js",
+    "./src/hooks/**/*"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -31,10 +36,10 @@
     "framer-motion": "^12.38.0",
     "gsap": "^3.15.0",
     "libphonenumber-js": "^1.12.42",
-    "react": "18.3.1",
+    "react": "^19.2.8",
     "react-beautiful-dnd": "^13.1.1",
     "react-calendar": "^6.0.1",
-    "react-dom": "18.3.1",
+    "react-dom": "^19.2.8",
     "react-draggable": "^4.5.0",
     "react-firebase-hooks": "^5.1.1",
     "react-google-recaptcha": "^3.1.0",

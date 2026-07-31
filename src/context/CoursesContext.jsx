@@ -1,4 +1,6 @@
 ﻿import React, { createContext, useContext, useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 import { createLogger } from "../utils/logger";
 
 const logger = createLogger('CoursesContext');
@@ -14,13 +16,7 @@ const loadCourses = async () => {
   if (cachedSlugMap) return cachedSlugMap;
   if (pendingCoursesRequest) return pendingCoursesRequest;
 
-  pendingCoursesRequest = Promise.all([
-    import('firebase/firestore'),
-    import('../firebaseConfig'),
-  ]).then(async ([firestoreModule, firebaseConfigModule]) => {
-    const { collection, getDocs } = firestoreModule;
-    const { db } = firebaseConfigModule;
-
+  pendingCoursesRequest = (async () => {
     const [freeSnap, paidSnap] = await Promise.all([
       getDocs(collection(db, "freeCourses")),
       getDocs(collection(db, "paidCourses")),
@@ -42,7 +38,7 @@ const loadCourses = async () => {
 
     cachedSlugMap = map;
     return map;
-  }).finally(() => {
+  })().finally(() => {
     pendingCoursesRequest = null;
   });
 

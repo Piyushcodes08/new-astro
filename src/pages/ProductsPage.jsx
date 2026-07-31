@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import Header from '../components/sections/Header/Header';
 import Footer from '../components/sections/Footer/Footer';
 import Button from '../components/ui/Button/Button';
-import { fallbackProducts } from '../components/sections/products/Products';
+import { fallbackProducts } from '../components/sections/products/productData';
 import { useProducts } from '../hooks/useProducts';
 
 const getProductCategory = (p) => {
